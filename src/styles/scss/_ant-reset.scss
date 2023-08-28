@@ -1,0 +1,12 @@
+.ant-input-number,
+.ant-input-number-group-wrapper {
+  width: 100% !important;
+}
+.ant-card-meta-description {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 44px;
+}

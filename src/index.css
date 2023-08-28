@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* @font-face {
+  font-family: 'MyFont';
+  src: url('./assets/fonts/my-font.ttf') format('truetype');
+  font-weight: 400;
+} */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 4px;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--stroke-test, #1a202f);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--linear, linear-gradient(217deg, #e250e5 0%, #4b50e6 100%));
+  border-radius: 12px;
+}
+
+@media screen and (max-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 5px;
+  }
+}
+
+
+.Toastify__toast-container {
+  width: 400px !important;
+  z-index: 10001 !important;
+}
+.Toastify__toast--error {
+  text-align: center;
+  /* height: 48px; */
+  /* border-radius: 8px !important;
+  background: #d0302f !important; */
+  border-radius: 8px !important;
+  /*border: 1px solid #ffccc7 !important;*/
+  background: #282843 !important;
+}
+.Toastify__toast--error::after {
+  /*content : url('../assets/images/svg/closeToast.svg');*/
+  position: absolute;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 700;
+  left: 265px;
+  padding-top: 14px !important;
+  z-index: 100000;
+}
+/* .Toastify__toast--error::before {
+  content: url('./assets/icons/icon_error.svg') !important;
+  position: relative;
+  z-index: 100000;
+  left: 12px;
+  top: 9px;
+} */
+.Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
+  height: 48px;
+}
+
+.Toastify__toast--success {
+  height: 48px;
+  border-radius: 8px !important;
+  background: #282843 !important;
+}
+.Toastify__toast--success::after {
+  /*content : url('../assets/images/svg/closeToast.svg');*/
+  position: absolute;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 700;
+  left: 265px;
+  padding-top: 14px !important;
+}
+.Toastify__toast--success::before {
+  /*content: url('./assets/icons/icon_success.svg') !important;*/
+  position: relative;
+  z-index: 100000;
+  left: 12px;
+  top: 6px;
+}
+.Toastify__progress-bar-theme--colored.Toastify__progress-bar--success {
+  height: 48px;
+}
+
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container {
+    top: 20px !important;
+    width: 90vw !important;
+    left: 5vw !important;
+  }
+
+  .ant-select-item-empty {
+    display: none !important;
+  }
+}
+
+:root {
+  --toastify-toast-min-height: 48px;
+  --toastify-toast-width: auto;
+}
