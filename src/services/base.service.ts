@@ -183,11 +183,12 @@ class BaseRequest {
   }
 }
 
-export const baseRequest = new BaseRequest();
+export const baseRequest = new BaseRequest('', {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
 
-export const baseRequestExample = new BaseRequest(
-  'http://localhost:8080/nextapi',
-  {},
-  true
-);
+export const generateRequest = new BaseRequest();
+
 export const authRequest = new BaseRequest(CONFIG.AUTHEN_BASE_URL);

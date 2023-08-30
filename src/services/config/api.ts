@@ -1,8 +1,19 @@
+export const VERSION = {
+  v1: '/v1',
+  v2: '/v2',
+  v3: '/v3',
+  'v3.1': '/v3.1',
+  'v3.2': '/v3.2',
+};
+
 export const APIs = {
   LOGIN: '/auth',
   USERS: '/users',
   GET_ME: '/profile',
   GENERATE_TOKEN: '/auth/generate/token',
+  CHECKING_UPLOAD: '/upload/avatar',
+  GET_LIST_STYLES: '/resources/avatar-styles',
+  GENERATE_IMAGE: '/generate/avatar-session',
 };
 
 export const HTTP_STATUS = {
