@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { HomeWrapper } from './style';
+import { useQuery } from 'react-query';
 import { Helmet } from 'react-helmet';
+import { HomeWrapper } from './style';
 import Step1 from './components/Step1';
 import StepHeader from './components/StepHeader';
 import Step2 from './components/Step2';
 import Step3 from './components/Step3';
 import Step4 from './components/Step4';
 import ModalGenerateSuccess from './components/Modals/ModalGenerateSuccess';
+import generateService from '@/services/generate.service';
 
-const Home = () => {
+export default function GenerateAvatar() {
   const [step, setStep] = useState(1);
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
@@ -16,6 +18,23 @@ const Home = () => {
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
+
+  useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
+    onSuccess: (res: any) => {
+      const stylesFilter = res?.data?.data?.values[gender.toLowerCase()] || [];
+
+      const listStyles = stylesFilter.map((style: any) => ({
+        id: style._id,
+        thumbnail:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-hIGZLu2ePulh7ycFBxMhkE_2SccWiRqCOKP9SQRbcjMPnaNsrC3FjhcLEci7r-Jg4IQ&usqp=CAU',
+        alias: style.alias,
+        displayName: style.displayName,
+      }));
+
+      setListStyles(listStyles);
+    },
+    enabled: !!gender,
+  });
 
   const [showModalGenerateSuccess, setShowModalGenerateSuccess] =
     useState(false);
@@ -31,9 +50,8 @@ const Home = () => {
     } else if (step === 2) {
       setStep(1);
     } else if (step === 3) {
-      localStorage.setItem('passGender', gender);
       setStep(2);
-      setListStyles([]);
+      localStorage.setItem('passGender', gender);
     } else if (step === 4) {
       setStep(3);
       localStorage.removeItem('passGender');
@@ -69,7 +87,6 @@ const Home = () => {
             styles={styles}
             setStyles={setStyles}
             listStyles={listStyles}
-            setListStyles={setListStyles}
             gender={gender}
           />
         )}
@@ -94,6 +111,4 @@ const Home = () => {
       </HomeWrapper>
     </>
   );
-};
-
-export default Home;
+}
