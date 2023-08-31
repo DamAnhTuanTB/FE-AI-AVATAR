@@ -1,9 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { Wrapper } from './style';
 import IconGenerateActive from '@/assets/images/icon-generate-active.svg';
 import IconGenerateNotActive from '@/assets/images/icon-generate-not-active.svg';
 import IconMyAvatarActive from '@/assets/images/icon-my-avatar-active.svg';
 import IconMyAvatarNotActive from '@/assets/images/icon-my-avatar-not-active.svg';
-import { useNavigate } from 'react-router-dom';
 
 export default function TabBottom() {
   const path = window.location.pathname;

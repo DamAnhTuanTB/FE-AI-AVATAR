@@ -49,12 +49,29 @@ export const Wrapper = styled.div`
         border-radius: 4px;
       }
       .icon-delete {
+        z-index: 5;
         cursor: pointer;
         width: 16px;
         position: absolute;
         top: 0;
         right: 0;
         transform: translateX(50%) translateY(-50%);
+      }
+      .item-error {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 5px;
+        color: var(--status-alert, #ef4444);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 18px */
       }
     }
     .upload-image {
@@ -83,6 +100,7 @@ export const Wrapper = styled.div`
     right: 0px;
     bottom: 0;
     background: transparent;
+    z-index: 6;
   }
 `;
 

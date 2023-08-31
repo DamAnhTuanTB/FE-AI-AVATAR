@@ -1,9 +1,7 @@
-import { useQuery } from 'react-query';
+import { useEffect } from 'react';
 import { Wrapper } from './style';
-import generateService from '@/services/generate.service';
 import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
-import { useEffect } from 'react';
 
 interface IProps {
   setStep: (step: number) => void;
@@ -11,7 +9,6 @@ interface IProps {
   setStyles: any;
   gender: string;
   listStyles: any;
-  setListStyles: any;
 }
 
 export default function Step3({
@@ -20,8 +17,9 @@ export default function Step3({
   setStyles,
   gender,
   listStyles,
-  setListStyles,
 }: IProps) {
+  console.log('styles', styles);
+  console.log('listStyles', listStyles);
   useEffect(() => {
     if (
       localStorage.getItem('passGender') &&
@@ -30,21 +28,7 @@ export default function Step3({
       setStyles([]);
     }
   }, []);
-  useQuery(['get-list-style'], () => generateService.getListStyles(), {
-    onSuccess: (res: any) => {
-      const stylesFilter = res?.data?.data?.values[gender.toLowerCase()] || [];
 
-      const listStyles = stylesFilter.map((style: any) => ({
-        id: style._id,
-        thumbnail:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-hIGZLu2ePulh7ycFBxMhkE_2SccWiRqCOKP9SQRbcjMPnaNsrC3FjhcLEci7r-Jg4IQ&usqp=CAU',
-        alias: style.alias,
-        displayName: style.displayName,
-      }));
-
-      setListStyles(listStyles);
-    },
-  });
   const handleClickStyle = (alias: string) => {
     const index = styles.findIndex((style: string) => style === alias);
     if (index !== -1) {

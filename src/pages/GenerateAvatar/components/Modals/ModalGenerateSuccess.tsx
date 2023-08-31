@@ -23,7 +23,12 @@ export default function ModalGenerateSuccess({ open, setOpen }: IProps) {
       footer={false}
       closable={false}
     >
-      <img className="icon-close" src={IconClose} alt="" />
+      <img
+        className="icon-close"
+        src={IconClose}
+        alt=""
+        onClick={handleCancel}
+      />
       <img className="icon-success" src={IconGenerateSuccess} alt="" />
       <div className="title-success">On our way! About 15 minutes left...</div>
       <div className="description-success">

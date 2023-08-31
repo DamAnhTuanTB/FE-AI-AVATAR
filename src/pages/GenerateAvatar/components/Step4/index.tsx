@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
+import { useMutation } from 'react-query';
 import { Wrapper } from './style';
 import IconCheck from '@/assets/images/icon-check.svg';
 import Button from '../Button';
-import { useMutation } from 'react-query';
 import generateService from '@/services/generate.service';
 import { shuffleArray } from '@/utils/helpers';
 
@@ -49,7 +49,9 @@ export default function Step4({
   setStep,
 }: IProps) {
   useEffect(() => {
-    setPrice(prices[1]);
+    if (!price) {
+      setPrice(prices[1]);
+    }
   }, []);
 
   const mutationGenerate = useMutation(

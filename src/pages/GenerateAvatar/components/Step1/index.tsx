@@ -1,14 +1,15 @@
+import { useEffect, useRef, useState } from 'react';
+import Lottie from 'react-lottie';
+import { useMutation } from 'react-query';
 import { LoadingWrapper, Wrapper } from './style';
 import IconDeleteImage from '@/assets/images/icon-delete-image.svg';
 import Button from '../Button';
-import { useEffect, useRef } from 'react';
 import UploadGuide from '../UploadGuide';
-import Lottie from 'react-lottie';
 import LoadingLottie from '@/assets/jsons/loading-upload.json';
-import { useMutation } from 'react-query';
 import generateService from '@/services/generate.service';
 import TabBottom from '../TabBottom';
 import IconPlus from '@/assets/images/icon-plus.svg';
+import IconError from '@/assets/images/icon-error.svg';
 
 const defaultOptions = {
   loop: true,
@@ -34,6 +35,7 @@ export default function Step1({
 }: IProps) {
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
+  const [countImageValid, setCountImageValid] = useState(0);
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -43,7 +45,6 @@ export default function Step1({
         setStep(2);
       },
       onError: (err: any) => {
-        console.log('loi roi');
         const errArr: any = err?.response?.data?.error?.data || [];
         errArr.forEach((item: any) => {
           images.forEach((image: any, index: number) => {
@@ -52,6 +53,7 @@ export default function Step1({
             }
           });
         });
+        setCountImageValid(images.length - errArr.length);
         setImages([...images]);
       },
     }
@@ -61,15 +63,38 @@ export default function Step1({
     const files = e.target.files;
     const listImages: any = [];
     Array.from(files).forEach((file: any, index: number) => {
+      let originFile: any = file;
+      let name = file.name;
+      images.forEach((image: any) => {
+        if (image.name === file.name) {
+          name =
+            'avatar' +
+            (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
+            file.name;
+          const blob = originFile.slice(0, file.size, file.type);
+          const newFile = new File([blob], name, {
+            type: file.type,
+          });
+          originFile = newFile;
+        }
+      });
       listImages.push({
         src: URL.createObjectURL(file),
-        file,
+        file: originFile,
         textError: '',
-        name: file.name,
+        name,
       });
     });
+    // const countAddtionsAbleToAdd = 15 - images.length;
+    // const countAddtionsValid =
+    //   countAddtionsAbleToAdd === 0
+    //     ? 0
+    //     : listImages.length > countAddtionsAbleToAdd
+    //     ? countAddtionsAbleToAdd
+    //     : listImages.length;
     const arrImage = [...images, ...listImages].slice(0, 15);
     setImages(arrImage);
+    // setCountImageValid(countImageValid + countAddtionsValid);
     uploadRef.current.value = '';
   };
 
@@ -80,10 +105,9 @@ export default function Step1({
   };
 
   const handleClickUpload = () => {
-    if (images.length < 3) {
+    if (countImageValid < 3) {
       uploadRef.current?.click();
     } else {
-      // setStep(2);
       const formData = new FormData();
       images.forEach((item: any) => {
         formData.append('files', item.file);
@@ -103,6 +127,18 @@ export default function Step1({
     }
   };
 
+  useEffect(() => {
+    let countValid = 0;
+    images.forEach((image: any) => {
+      if (!image.textError) {
+        countValid += 1;
+      }
+    });
+    setCountImageValid(countValid);
+  }, [images]);
+
+  console.log(countImageValid);
+
   return (
     <Wrapper>
       {images.length === 0 ? (
@@ -119,13 +155,19 @@ export default function Step1({
           <div className="list-images">
             {images.map((item: any, index: number) => (
               <div className="parent-image" key={index}>
-                <img className="image" src={item.src} alt="" />
+                <img className="image" src={item?.src} alt="" />
                 <img
                   className="icon-delete"
                   src={IconDeleteImage}
                   alt=""
                   onClick={() => handleDeleteImage(index)}
                 />
+                {item?.textError && (
+                  <div className="item-error">
+                    <img src={IconError} alt="" />
+                    <div>Image error</div>
+                  </div>
+                )}
               </div>
             ))}
             <div
@@ -156,7 +198,7 @@ export default function Step1({
             text={
               images.length === 0
                 ? 'Select 3-20 photos'
-                : images.length < 3
+                : countImageValid < 3
                 ? 'Upload more photos'
                 : 'Next'
             }
