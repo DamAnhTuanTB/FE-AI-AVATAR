@@ -32,6 +32,9 @@ export const Wrapper = styled.div`
     border: 1px solid var(--secondary-stroke, #f5f5f5);
     /* box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.09); */
     margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   .gender-active {
     border-radius: 12px;

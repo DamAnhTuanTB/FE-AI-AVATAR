@@ -4,22 +4,20 @@ import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 
 interface IProps {
-  setStep: (step: number) => void;
   styles: any;
   setStyles: any;
   gender: string;
   listStyles: any;
+  handleGenerate: any;
 }
 
 export default function Step3({
-  setStep,
   styles,
   setStyles,
   gender,
   listStyles,
+  handleGenerate,
 }: IProps) {
-  console.log('styles', styles);
-  console.log('listStyles', listStyles);
   useEffect(() => {
     if (
       localStorage.getItem('passGender') &&
@@ -44,7 +42,7 @@ export default function Step3({
   };
 
   const handleClickNext = () => {
-    setStep(4);
+    handleGenerate();
   };
 
   return (

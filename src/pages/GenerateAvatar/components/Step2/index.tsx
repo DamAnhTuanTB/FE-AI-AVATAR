@@ -1,5 +1,7 @@
 import Button from '../Button';
 import { Wrapper } from './style';
+import IconFemale from '@/assets/images/icon-female.svg';
+import IconMale from '@/assets/images/icon-male.svg';
 
 interface IProps {
   gender: string;
@@ -18,7 +20,7 @@ export default function Step2({
   };
 
   const handleClickNext = () => {
-    setStep(3);
+    setStep(2.5);
   };
 
   return (
@@ -34,6 +36,7 @@ export default function Step2({
           key={index}
           onClick={() => handleClickGender(item)}
         >
+          <img src={item === 'Female' ? IconFemale : IconMale} alt="" />
           {item}
         </div>
       ))}

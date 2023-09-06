@@ -137,8 +137,6 @@ export default function Step1({
     setCountImageValid(countValid);
   }, [images]);
 
-  console.log(countImageValid);
-
   return (
     <Wrapper>
       {images.length === 0 ? (

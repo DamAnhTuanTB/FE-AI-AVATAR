@@ -10,7 +10,7 @@ const Header = () => {
         <span>AI AVATAR</span>
         <img className="star-header" src={StarHeader} alt="" />
       </div>
-      <div className="text-navigate">Sign in</div>
+      <div className="text-navigate">Sign In</div>
     </HeaderWrapper>
   );
 };

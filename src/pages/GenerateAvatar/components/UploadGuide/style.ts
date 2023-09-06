@@ -8,9 +8,9 @@ export const Wrapper = styled.div`
     font-style: normal;
     font-weight: 600;
     line-height: 150%; /* 24px */
-    margin: 12px 0px;
   }
   .section {
+    margin-top: 13.5px;
     .section-title {
       color: var(--text-primary, #18181b);
       font-family: Montserrat;

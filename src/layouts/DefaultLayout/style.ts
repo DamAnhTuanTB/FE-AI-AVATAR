@@ -8,6 +8,5 @@ export const DefaultLayoutWrapper: any = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  padding-top: 4px;
   height: calc(100vh - 40px);
 `;
