@@ -1,11 +1,11 @@
 export const firebaseConfig = {
-  apiKey: 'AIzaSyBjQY0m0zDEbzodC8CXD7iHcf8fueiBhUQ',
-  authDomain: 'creatorhub-ai.firebaseapp.com',
-  projectId: 'creatorhub-ai',
-  storageBucket: 'creatorhub-ai.appspot.com',
-  messagingSenderId: '699198093069',
-  appId: '1:699198093069:web:625c37cd04f0ddc27aa244',
-  measurementId: 'G-W0X5EG9HZ6',
+  apiKey: 'AIzaSyDZlrGHkSKaxoUM-VY3nZfjoTEg4aeyHNU',
+  authDomain: 'ai-avatar---web.firebaseapp.com',
+  projectId: 'ai-avatar---web',
+  storageBucket: 'ai-avatar---web.appspot.com',
+  messagingSenderId: '440595538066',
+  appId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
+  measurementId: 'G-6RGWWSF4M4',
 };
 
 export const eventTracking = {

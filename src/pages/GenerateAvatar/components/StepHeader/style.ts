@@ -8,8 +8,7 @@ export const Wrapper = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  padding: 8px 16px;
-  padding-bottom: 12px;
+  padding: 12px 16px;
   border-bottom: 1px solid #f5f5f5;
   position: relative;
   display: flex;

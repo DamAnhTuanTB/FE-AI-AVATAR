@@ -10,7 +10,7 @@ export default function StepHeader({ step, onClick }: IProps) {
   return (
     <Wrapper>
       <img src={IconPrev} alt="" onClick={onClick} />
-      Step {step}/4
+      Step {Math.floor(step)}/4
     </Wrapper>
   );
 }
