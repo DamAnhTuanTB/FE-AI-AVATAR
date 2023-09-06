@@ -3,7 +3,7 @@ import { ROUTES } from './routes';
 import NotFound from '@/pages/NotFound/NotFound';
 import Login from '@/pages/Login/Login';
 import GenerateAvatar from '@/pages/GenerateAvatar';
-import GenerateAvatarLayout from '@/layouts/DefaultLayout';
+import GenerateAvatarLayout from '@/layouts/GenerateAvatarLayout';
 
 export const router = createBrowserRouter([
   {

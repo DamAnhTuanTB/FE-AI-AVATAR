@@ -20,6 +20,25 @@ const defaultOptions = {
   },
 };
 
+const mesageError: any = {
+  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif, heic':
+    'Wrong format',
+  'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
+    'Size < 768px',
+  'File too large.': 'Size > 8MB',
+  'Unable to detect any face in the provided image. Please provide another clear image.':
+    'Unable to detect any face',
+  'The detected face size is too small or too big. Please ensure the face size is appropriate.':
+    'The face is too small',
+  'The detected face is significantly different from the majority in the cluster. Please use images with face similarity.':
+    'Faces detected with differences',
+  'The provided image is blurry. Please provide a clearer image.':
+    'Blurred image',
+  'The provided image contains multiple faces, please provide an image containing only one face.':
+    'Multiple faces',
+  'The image is duplicated. Please provide different images.': 'Duplicated',
+};
+
 interface IProps {
   setStep: any;
   images: any[];
@@ -49,7 +68,7 @@ export default function Step1({
         errArr.forEach((item: any) => {
           images.forEach((image: any, index: number) => {
             if (image.name === item.filename) {
-              images[index].textError = item.reason;
+              images[index].textError = mesageError[item.reason];
             }
           });
         });
@@ -163,7 +182,7 @@ export default function Step1({
                 {item?.textError && (
                   <div className="item-error">
                     <img src={IconError} alt="" />
-                    <div>Image error</div>
+                    <div>{item?.textError}</div>
                   </div>
                 )}
               </div>
