@@ -72,6 +72,13 @@ export const Wrapper = styled.div`
         font-style: normal;
         font-weight: 500;
         line-height: 150%; /* 18px */
+        text-align: center;
+        img {
+          margin-top: 22px;
+        }
+        div {
+          height: 35px;
+        }
       }
     }
     .upload-image {
