@@ -3,6 +3,8 @@ import { Wrapper } from './style';
 import IconClose from '@/assets/images/icon-delete-image.svg';
 import IconCheck from '@/assets/images/icon-check.svg';
 import IconBestSale from '@/assets/images/best-sale.svg';
+import IconInfo from '@/assets/images/icon-info.svg';
+import { Tooltip } from 'antd';
 
 interface IProps {
   prices: any;
@@ -47,7 +49,12 @@ export default function ModalPayment({
         onClick={handleCancel}
       />
       <div className="modal-payment">
-        <div className="title">Choose a package</div>
+        <div className="title">
+          Choose a package
+          <Tooltip title="Special AI-driven algorithm in AI Avatar instantly generates awesome portraits of a hand-drawn quality making it a go-to app for all non-artists out there. Just upload a selfie and get ready to meet another version of yourself.  We've got a plan that s perfect for you!">
+            <img src={IconInfo} alt="" />
+          </Tooltip>
+        </div>
         <div className="description">
           We&apos;ve got a plan that s perfect for you!
         </div>

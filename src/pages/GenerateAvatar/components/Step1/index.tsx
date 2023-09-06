@@ -195,7 +195,7 @@ export default function Step1({
             onClick={handleClickUpload}
             text={
               images.length === 0
-                ? 'Select 3-20 photos'
+                ? 'Upload 3-15 photos'
                 : countImageValid < 3
                 ? 'Upload more photos'
                 : 'Next'

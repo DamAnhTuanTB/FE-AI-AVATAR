@@ -25,6 +25,13 @@ export const Wrapper = styled(Modal)`
           font-weight: 600;
           line-height: 150%; /* 24px */
           margin-bottom: 8px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          img {
+            width: 24px;
+            cursor: pointer;
+          }
         }
         .description {
           color: var(--text-secondary, #737373);
