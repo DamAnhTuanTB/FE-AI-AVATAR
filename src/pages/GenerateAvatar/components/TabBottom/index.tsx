@@ -17,7 +17,7 @@ export default function TabBottom() {
           src={generateActive ? IconGenerateActive : IconGenerateNotActive}
           alt=""
         />
-        <div>Generate</div>
+        <div className={`${generateActive && 'active'} text`}>Generate</div>
         {generateActive && <div className="horizontal" />}
       </div>
       <div>
@@ -25,7 +25,8 @@ export default function TabBottom() {
           src={avatarActive ? IconMyAvatarActive : IconMyAvatarNotActive}
           alt=""
         />
-        <div>My avatars</div>
+        <div className={`${avatarActive && 'active'} text`}>My avatars</div>
+        {avatarActive && <div className="horizontal" />}
       </div>
     </Wrapper>
   );

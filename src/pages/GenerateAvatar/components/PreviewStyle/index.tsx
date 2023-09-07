@@ -2,16 +2,24 @@ import { Wrapper } from './style';
 import Button from '../Button';
 
 interface IProps {
+  setStep: any;
   listStyles: any;
   setShowModalPayment: any;
+  successPurchase: boolean;
 }
 
 export default function PreviewStyle({
+  setStep,
   listStyles,
   setShowModalPayment,
+  successPurchase,
 }: IProps) {
   const handleClickNext = () => {
-    setShowModalPayment(true);
+    if (successPurchase) {
+      setStep(3);
+    } else {
+      setShowModalPayment(true);
+    }
   };
 
   return (
