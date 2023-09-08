@@ -1,3 +1,4 @@
+import { StepEnum } from '../../contants';
 import Button from '../Button';
 import { Wrapper } from './style';
 import IconFemale from '@/assets/images/icon-female.svg';
@@ -20,7 +21,7 @@ export default function Step2({
   };
 
   const handleClickNext = () => {
-    setStep(2.5);
+    setStep(StepEnum.PREVIEW_STYLE);
   };
 
   return (

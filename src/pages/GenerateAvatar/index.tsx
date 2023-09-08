@@ -10,6 +10,7 @@ import Step4 from './components/Step4';
 import generateService from '@/services/generate.service';
 import PreviewStyle from './components/PreviewStyle';
 import ModalPayment from './components/Modals/ModalPayment';
+import { StepEnum } from './contants';
 
 const prices = [
   {
@@ -34,7 +35,7 @@ const prices = [
 ];
 
 export default function GenerateAvatar() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(StepEnum.GUIDE);
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
   const [gender, setGender] = useState('');
@@ -66,7 +67,7 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.generateImage(payload),
     {
       onSuccess: (res: any) => {
-        setStep(4);
+        setStep(StepEnum.GENERATE_SUCCESS);
         setSuccessPurchase(false);
       },
     }
@@ -101,29 +102,29 @@ export default function GenerateAvatar() {
   };
 
   const handleClickBack = () => {
-    if (step === 1.5) {
-      setStep(1);
+    if (step === StepEnum.UPLOAD_IMAGE) {
+      setStep(StepEnum.GUIDE);
       setImages([]);
       setGender('');
       setSessionId('');
       setStyles([]);
       setListStyles([]);
       setPrice('');
-    } else if (step === 2) {
-      setStep(1.5);
-    } else if (step === 2.5) {
-      setStep(2);
-    } else if (step === 3) {
-      setStep(2.5);
+    } else if (step === StepEnum.PICK_GENDER) {
+      setStep(StepEnum.UPLOAD_IMAGE);
+    } else if (step === StepEnum.PREVIEW_STYLE) {
+      setStep(StepEnum.PICK_GENDER);
+    } else if (step === StepEnum.CHOOSE_STYLE) {
+      setStep(StepEnum.PREVIEW_STYLE);
       localStorage.setItem('passGender', gender);
-    } else if (step === 4) {
-      setStep(3);
+    } else if (step === StepEnum.GENERATE_SUCCESS) {
+      setStep(StepEnum.CHOOSE_STYLE);
       localStorage.removeItem('passGender');
     }
   };
 
   const handleClickBackToHome = () => {
-    setStep(1);
+    setStep(StepEnum.GUIDE);
     setImages([]);
     setGender('');
     setSessionId('');
@@ -144,7 +145,7 @@ export default function GenerateAvatar() {
           successPurchase={successPurchase}
           onClick={handleClickBack}
         />
-        {(step === 1 || step === 1.5) && (
+        {(step === StepEnum.GUIDE || step === StepEnum.UPLOAD_IMAGE) && (
           <Step1
             step={step}
             setStep={setStep}
@@ -153,7 +154,7 @@ export default function GenerateAvatar() {
             setSessionId={setSessionId}
           />
         )}
-        {step === 2 && (
+        {step === StepEnum.PICK_GENDER && (
           <Step2
             setStep={setStep}
             gender={gender}
@@ -161,7 +162,7 @@ export default function GenerateAvatar() {
             setStyles={setStyles}
           />
         )}
-        {step === 2.5 && (
+        {step === StepEnum.PREVIEW_STYLE && (
           <PreviewStyle
             setStep={setStep}
             listStyles={listStyles}
@@ -169,7 +170,7 @@ export default function GenerateAvatar() {
             setShowModalPayment={setShowModalPayment}
           />
         )}
-        {step === 3 && (
+        {step === StepEnum.CHOOSE_STYLE && (
           <Step3
             styles={styles}
             setStyles={setStyles}
@@ -179,7 +180,9 @@ export default function GenerateAvatar() {
             handleGenerate={handleGenerate}
           />
         )}
-        {step === 4 && <Step4 handleClickBackToHome={handleClickBackToHome} />}
+        {step === StepEnum.GENERATE_SUCCESS && (
+          <Step4 handleClickBackToHome={handleClickBackToHome} />
+        )}
 
         {showModalPayment && !successPurchase && (
           <ModalPayment
