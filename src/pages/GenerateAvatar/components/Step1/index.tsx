@@ -94,7 +94,16 @@ export default function Step1({
     }
     const files = e.target.files;
     const listImages: any = [];
+    const allowedMimeTypes = [
+      'image/png',
+      'image/jpeg',
+      'image/jfif',
+      'image/heic',
+    ];
     Array.from(files).forEach((file: any, index: number) => {
+      if (!allowedMimeTypes.includes(file.type)) {
+        return;
+      }
       let originFile: any = file;
       let name = file.name;
       images.forEach((image: any) => {
@@ -203,7 +212,7 @@ export default function Step1({
             ))}
             <div
               className={`parent-image upload-image ${
-                images.length >= 15 && 'disable'
+                countImageValid >= 15 && 'disable'
               }`}
               onClick={handleClickIconPlus}
             >

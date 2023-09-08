@@ -62,6 +62,7 @@ export const Wrapper = styled.div`
           rgba(9, 9, 23, 0) 0%,
           rgba(9, 9, 23, 0.3) 100%
         );
+        -webkit-backdrop-filter: blur(9px);
         backdrop-filter: blur(9px);
       }
     }
