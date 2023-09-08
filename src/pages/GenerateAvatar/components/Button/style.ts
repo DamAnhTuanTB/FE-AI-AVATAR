@@ -1,9 +1,9 @@
 import { Button } from 'antd';
 import { styled } from 'styled-components';
 
-export const Wrapper: any = styled(Button)`
+export const Wrapper: any = styled(Button)<{ isMobile: boolean }>`
   border-radius: 100px;
-  color: var(--text-primary, #18181b) !important;
+  color: var(--secondary-black, #262626) !important;
   text-align: center;
   font-size: 14px;
   font-style: normal;
@@ -13,7 +13,8 @@ export const Wrapper: any = styled(Button)`
   align-items: center;
   justify-content: center;
   &:hover {
-    filter: brightness(0.8);
+    filter: ${(props: any) =>
+      props.isMobile ? `brightness(1)` : `brightness(0.8)`};
   }
   &:disabled {
     background: #a3a3a3 !important;

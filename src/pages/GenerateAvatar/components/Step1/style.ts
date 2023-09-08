@@ -55,9 +55,10 @@ export const Wrapper = styled.div`
         position: absolute;
         top: 0;
         right: 0;
-        transform: translateX(50%) translateY(-50%);
+        transform: translateX(40%) translateY(-30%);
       }
       .item-error {
+        border-radius: 4px;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -87,6 +88,7 @@ export const Wrapper = styled.div`
       justify-content: center;
       align-items: center;
       background: var(--neutral-200, #e5e5e5);
+      border: 1px dashed var(--neutral-300, #d4d4d4);
       img {
         width: 40px;
       }
@@ -106,7 +108,7 @@ export const Wrapper = styled.div`
     left: 0px;
     right: 0px;
     bottom: 0;
-    background: transparent;
+    background: white;
     z-index: 6;
   }
 `;

@@ -10,6 +10,8 @@ import generateService from '@/services/generate.service';
 import TabBottom from '../TabBottom';
 import IconPlus from '@/assets/images/icon-plus.svg';
 import IconError from '@/assets/images/icon-error.svg';
+import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { StepEnum } from '../../contants';
 
 const defaultOptions = {
   loop: true,
@@ -40,6 +42,7 @@ const mesageError: any = {
 };
 
 interface IProps {
+  step: number;
   setStep: any;
   images: any[];
   setImages: any;
@@ -47,6 +50,7 @@ interface IProps {
 }
 
 export default function Step1({
+  step,
   setStep,
   images,
   setImages,
@@ -55,15 +59,21 @@ export default function Step1({
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
+  const [showLoading, setShowLoading] = useState(false);
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
     {
       onSuccess: (res: any) => {
         setSessionId(res?.data?.data?.sessionId);
-        setStep(2);
+        setStep(StepEnum.PICK_GENDER);
+        setShowLoading(false);
       },
       onError: (err: any) => {
+        setShowLoading(false);
+        // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
+        //   ToastError(err?.response?.data?.message);
+        // }
         const errArr: any = err?.response?.data?.error?.data || [];
         errArr.forEach((item: any) => {
           images.forEach((image: any, index: number) => {
@@ -79,6 +89,9 @@ export default function Step1({
   );
 
   const handleChangeFile = (e: any) => {
+    if (step === StepEnum.GUIDE) {
+      setStep(StepEnum.UPLOAD_IMAGE);
+    }
     const files = e.target.files;
     const listImages: any = [];
     Array.from(files).forEach((file: any, index: number) => {
@@ -131,6 +144,7 @@ export default function Step1({
       images.forEach((item: any) => {
         formData.append('files', item.file);
       });
+      setShowLoading(true);
       mutationUpload.mutate(formData);
     }
   };
@@ -158,12 +172,12 @@ export default function Step1({
 
   return (
     <Wrapper>
-      {images.length === 0 ? (
+      {step === StepEnum.GUIDE ? (
         <UploadGuide />
       ) : (
         <>
           <div className="title-list-image">
-            <div>Uploaded {images.length}/15 photos</div>
+            <div>Uploaded {countImageValid}/15 photos</div>
             <div>
               Choose 3-15 images to teach the AI what you look like. The avatars
               will be based on the images you upload, so choose wisely!
@@ -200,7 +214,7 @@ export default function Step1({
       )}
       <div
         className="bottom"
-        style={{ paddingBottom: images.length !== 0 ? '10px' : '0px' }}
+        style={{ paddingBottom: step !== StepEnum.GUIDE ? '10px' : '0px' }}
       >
         <div className="upload">
           <input
@@ -213,7 +227,7 @@ export default function Step1({
           <Button
             onClick={handleClickUpload}
             text={
-              images.length === 0
+              step === StepEnum.GUIDE
                 ? 'Upload 3-15 photos'
                 : countImageValid < 3
                 ? 'Upload more photos'
@@ -223,10 +237,10 @@ export default function Step1({
             height="45px"
           />
         </div>
-        {images.length === 0 && <TabBottom />}
+        {step === StepEnum.GUIDE && <TabBottom />}
       </div>
 
-      {mutationUpload.isLoading && (
+      {showLoading && (
         <LoadingWrapper onClick={handleClickLottie}>
           <div>
             <Lottie
