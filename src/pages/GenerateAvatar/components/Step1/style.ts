@@ -108,7 +108,7 @@ export const Wrapper = styled.div`
     left: 0px;
     right: 0px;
     bottom: 0;
-    background: transparent;
+    background: white;
     z-index: 6;
   }
 `;

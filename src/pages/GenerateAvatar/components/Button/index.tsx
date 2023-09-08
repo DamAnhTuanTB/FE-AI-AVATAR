@@ -1,3 +1,4 @@
+import useScreenSize from '@/hooks/useScreenSize';
 import { Wrapper } from './style';
 interface IProps {
   text: string;
@@ -17,8 +18,10 @@ export default function Button({
   disable = false,
   onClick,
 }: IProps) {
+  const { isMobile } = useScreenSize();
   return (
     <Wrapper
+      isMobile={isMobile}
       background={background}
       onClick={onClick}
       disabled={disable}

@@ -11,6 +11,7 @@ import TabBottom from '../TabBottom';
 import IconPlus from '@/assets/images/icon-plus.svg';
 import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { StepEnum } from '../../contants';
 
 const defaultOptions = {
   loop: true,
@@ -65,7 +66,7 @@ export default function Step1({
     {
       onSuccess: (res: any) => {
         setSessionId(res?.data?.data?.sessionId);
-        setStep(2);
+        setStep(StepEnum.PICK_GENDER);
         setShowLoading(false);
       },
       onError: (err: any) => {
@@ -88,8 +89,8 @@ export default function Step1({
   );
 
   const handleChangeFile = (e: any) => {
-    if (step === 1) {
-      setStep(1.5);
+    if (step === StepEnum.GUIDE) {
+      setStep(StepEnum.UPLOAD_IMAGE);
     }
     const files = e.target.files;
     const listImages: any = [];
@@ -171,7 +172,7 @@ export default function Step1({
 
   return (
     <Wrapper>
-      {step === 1 ? (
+      {step === StepEnum.GUIDE ? (
         <UploadGuide />
       ) : (
         <>
@@ -213,7 +214,7 @@ export default function Step1({
       )}
       <div
         className="bottom"
-        style={{ paddingBottom: step !== 1 ? '10px' : '0px' }}
+        style={{ paddingBottom: step !== StepEnum.GUIDE ? '10px' : '0px' }}
       >
         <div className="upload">
           <input
@@ -226,7 +227,7 @@ export default function Step1({
           <Button
             onClick={handleClickUpload}
             text={
-              step === 1
+              step === StepEnum.GUIDE
                 ? 'Upload 3-15 photos'
                 : countImageValid < 3
                 ? 'Upload more photos'
@@ -236,7 +237,7 @@ export default function Step1({
             height="45px"
           />
         </div>
-        {step === 1 && <TabBottom />}
+        {step === StepEnum.GUIDE && <TabBottom />}
       </div>
 
       {showLoading && (

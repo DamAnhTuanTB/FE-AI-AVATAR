@@ -1,3 +1,4 @@
+import { StepEnum } from '../../contants';
 import { Wrapper } from './style';
 import IconPrev from '@/assets/images/icon-prev.svg';
 
@@ -8,7 +9,9 @@ interface IProps {
 }
 
 export default function StepHeader({ step, successPurchase, onClick }: IProps) {
-  const isNotShowIconBack = step === 4 || (step === 2.5 && successPurchase);
+  const isNotShowIconBack =
+    step === StepEnum.GENERATE_SUCCESS ||
+    (step === StepEnum.PREVIEW_STYLE && successPurchase);
   return (
     <Wrapper>
       {!isNotShowIconBack && <img src={IconPrev} alt="" onClick={onClick} />}

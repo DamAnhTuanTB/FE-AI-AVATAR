@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
+  padding-bottom: 60px;
   .title {
     color: var(--secondary-black, #262626);
     font-family: Montserrat;
