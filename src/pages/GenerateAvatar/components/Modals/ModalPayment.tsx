@@ -5,6 +5,7 @@ import IconCheck from '@/assets/images/icon-check.svg';
 import IconBestSale from '@/assets/images/best-sale.svg';
 import IconInfo from '@/assets/images/icon-info.svg';
 import { Tooltip } from 'antd';
+import { useEffect } from 'react';
 
 interface IProps {
   prices: any;
@@ -25,6 +26,9 @@ export default function ModalPayment({
   setStep,
   setSuccessPurchase,
 }: IProps) {
+  useEffect(() => {
+    setPrice(prices[1]);
+  }, []);
   const handleCancel = () => {
     setOpen(false);
     setPrice(prices[1]);
@@ -35,7 +39,7 @@ export default function ModalPayment({
   const handleClickPurchase = () => {
     setStep(3);
     setSuccessPurchase(true);
-    handleCancel();
+    setOpen(false);
   };
   return (
     <Wrapper
