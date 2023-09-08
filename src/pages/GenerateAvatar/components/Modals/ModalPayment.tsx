@@ -13,6 +13,7 @@ interface IProps {
   price: any;
   setPrice: any;
   setStep: any;
+  setSuccessPurchase: any;
 }
 
 export default function ModalPayment({
@@ -22,15 +23,18 @@ export default function ModalPayment({
   price,
   setPrice,
   setStep,
+  setSuccessPurchase,
 }: IProps) {
   const handleCancel = () => {
     setOpen(false);
+    setPrice(prices[1]);
   };
   const handleClickPrice = (item: any) => {
     setPrice(item);
   };
   const handleClickPurchase = () => {
     setStep(3);
+    setSuccessPurchase(true);
     handleCancel();
   };
   return (

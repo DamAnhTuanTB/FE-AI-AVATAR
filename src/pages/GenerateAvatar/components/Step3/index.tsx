@@ -8,6 +8,7 @@ interface IProps {
   setStyles: any;
   gender: string;
   listStyles: any;
+  price: any;
   handleGenerate: any;
 }
 
@@ -16,6 +17,7 @@ export default function Step3({
   setStyles,
   gender,
   listStyles,
+  price,
   handleGenerate,
 }: IProps) {
   useEffect(() => {
@@ -32,8 +34,8 @@ export default function Step3({
     if (index !== -1) {
       styles.splice(index, 1);
     } else {
-      if (styles.length > 19) {
-        ToastError('Selected up to 20 styles');
+      if (styles.length > price.maxStyle - 1) {
+        ToastError('The maximum quantity has been selected.');
       } else {
         styles.push(alias);
       }
@@ -66,7 +68,7 @@ export default function Step3({
       <div className="bottom">
         <Button
           onClick={handleClickNext}
-          text="Next"
+          text="Generate"
           width="100%"
           height="45px"
           disable={!styles.length}

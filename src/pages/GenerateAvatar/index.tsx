@@ -10,7 +10,6 @@ import Step4 from './components/Step4';
 import generateService from '@/services/generate.service';
 import PreviewStyle from './components/PreviewStyle';
 import ModalPayment from './components/Modals/ModalPayment';
-import { shuffleArray } from '@/utils/helpers';
 
 const prices = [
   {
@@ -44,6 +43,7 @@ export default function GenerateAvatar() {
   const [price, setPrice] = useState<any>(prices[1]);
 
   const [showModalPayment, setShowModalPayment] = useState(false);
+  const [successPurchase, setSuccessPurchase] = useState(false);
 
   useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
     onSuccess: (res: any) => {
@@ -67,6 +67,7 @@ export default function GenerateAvatar() {
     {
       onSuccess: (res: any) => {
         setStep(4);
+        setSuccessPurchase(false);
       },
     }
   );
@@ -81,26 +82,27 @@ export default function GenerateAvatar() {
       notifyType: 'email',
       bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };
-    if (styles.length < price.maxStyle) {
-      const additionalStyles: any = [];
-      let restListStyles: any = listStyles.filter(
-        (item: any) => !styles.includes(item.alias)
-      );
-      const countRandom = price.maxStyle - styles.length;
+    // if (styles.length < price.maxStyle) {
+    //   const additionalStyles: any = [];
+    //   let restListStyles: any = listStyles.filter(
+    //     (item: any) => !styles.includes(item.alias)
+    //   );
+    //   const countRandom = price.maxStyle - styles.length;
 
-      for (let i = 0; i < countRandom; i++) {
-        const shuffArray = shuffleArray(restListStyles);
-        additionalStyles.push(shuffArray[0].alias);
-        restListStyles = shuffArray;
-        restListStyles.shift();
-      }
-      payload.styles = [...styles, ...additionalStyles];
-    }
+    //   for (let i = 0; i < countRandom; i++) {
+    //     const shuffArray = shuffleArray(restListStyles);
+    //     additionalStyles.push(shuffArray[0].alias);
+    //     restListStyles = shuffArray;
+    //     restListStyles.shift();
+    //   }
+    //   payload.styles = [...styles, ...additionalStyles];
+    // }
     mutationGenerate.mutate(payload);
   };
 
   const handleClickBack = () => {
-    if (step === 1 && images.length > 0) {
+    if (step === 1.5) {
+      setStep(1);
       setImages([]);
       setGender('');
       setSessionId('');
@@ -108,9 +110,8 @@ export default function GenerateAvatar() {
       setListStyles([]);
       setPrice('');
     } else if (step === 2) {
-      setStep(1);
+      setStep(1.5);
     } else if (step === 2.5) {
-      setPrice(prices[1]);
       setStep(2);
     } else if (step === 3) {
       setStep(2.5);
@@ -120,6 +121,17 @@ export default function GenerateAvatar() {
       localStorage.removeItem('passGender');
     }
   };
+
+  const handleClickBackToHome = () => {
+    setStep(1);
+    setImages([]);
+    setGender('');
+    setSessionId('');
+    setStyles([]);
+    setListStyles([]);
+    setPrice('');
+  };
+
   return (
     <>
       <Helmet>
@@ -127,9 +139,14 @@ export default function GenerateAvatar() {
         <meta name="description" content="Home" />
       </Helmet>
       <HomeWrapper>
-        <StepHeader step={step} onClick={handleClickBack} />
-        {step === 1 && (
+        <StepHeader
+          step={step}
+          successPurchase={successPurchase}
+          onClick={handleClickBack}
+        />
+        {(step === 1 || step === 1.5) && (
           <Step1
+            step={step}
             setStep={setStep}
             images={images}
             setImages={setImages}
@@ -146,7 +163,9 @@ export default function GenerateAvatar() {
         )}
         {step === 2.5 && (
           <PreviewStyle
+            setStep={setStep}
             listStyles={listStyles}
+            successPurchase={successPurchase}
             setShowModalPayment={setShowModalPayment}
           />
         )}
@@ -156,12 +175,13 @@ export default function GenerateAvatar() {
             setStyles={setStyles}
             listStyles={listStyles}
             gender={gender}
+            price={price}
             handleGenerate={handleGenerate}
           />
         )}
-        {step === 4 && <Step4 setStep={setStep} />}
+        {step === 4 && <Step4 handleClickBackToHome={handleClickBackToHome} />}
 
-        {showModalPayment && (
+        {showModalPayment && !successPurchase && (
           <ModalPayment
             setStep={setStep}
             prices={prices}
@@ -169,6 +189,7 @@ export default function GenerateAvatar() {
             setOpen={setShowModalPayment}
             price={price}
             setPrice={setPrice}
+            setSuccessPurchase={setSuccessPurchase}
           />
         )}
       </HomeWrapper>

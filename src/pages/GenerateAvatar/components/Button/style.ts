@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 export const Wrapper: any = styled(Button)`
   border-radius: 100px;
-  color: var(--text-primary, #18181b) !important;
+  color: var(--secondary-black, #262626) !important;
   text-align: center;
   font-size: 14px;
   font-style: normal;

@@ -3,11 +3,10 @@ import Button from '../Button';
 import IconGenerateSuccess from '@/assets/images/icon-generate-success.svg';
 
 interface IProps {
-  setStep: any;
+  handleClickBackToHome: any;
 }
 
-export default function Step4({ setStep }: IProps) {
-  const handleClickBackToHome = () => {};
+export default function Step4({ handleClickBackToHome }: IProps) {
   const handleClickMyAvatar = () => {};
   return (
     <Wrapper>
