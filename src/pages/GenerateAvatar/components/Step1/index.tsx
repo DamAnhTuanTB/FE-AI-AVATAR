@@ -133,14 +133,22 @@ export default function Step1({
     //     : listImages.length > countAddtionsAbleToAdd
     //     ? countAddtionsAbleToAdd
     //     : listImages.length;
-    const arrImage = [...images, ...listImages].slice(0, 15);
-    setImages(arrImage);
+    let validNumber = countImageValid;
+
+    const arrImage = [...images];
+
+    while (validNumber < 15 && listImages.length > 0) {
+      arrImage.push(listImages.shift());
+      validNumber += 1;
+    }
+    // const arrImage = [...images, ...listImages].slice(0, 15);
+    setImages([...arrImage]);
     // setCountImageValid(countImageValid + countAddtionsValid);
     uploadRef.current.value = '';
   };
 
   const handleClickIconPlus = () => {
-    if (images.length < 15) {
+    if (countImageValid < 15) {
       uploadRef.current?.click();
     }
   };
@@ -172,7 +180,7 @@ export default function Step1({
   useEffect(() => {
     let countValid = 0;
     images.forEach((image: any) => {
-      if (!image.textError) {
+      if (!image?.textError) {
         countValid += 1;
       }
     });
