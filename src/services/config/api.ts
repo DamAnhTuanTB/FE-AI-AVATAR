@@ -13,7 +13,8 @@ export const APIs = {
   GENERATE_TOKEN: '/auth/generate/token',
   CHECKING_UPLOAD: '/upload/avatar',
   GET_LIST_STYLES: '/resources/avatar-styles',
-  GENERATE_IMAGE: '/generate/avatar-session',
+  GENERATE_IMAGE: '/generate/avatar-session-no-signature',
+  CREATE_SESSION: '/session',
 };
 
 export const HTTP_STATUS = {

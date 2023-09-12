@@ -55,7 +55,7 @@ export const Wrapper = styled.div`
         font-weight: 500;
         line-height: 100%; /* 14px */
         padding-top: 13px;
-        padding-bottom: 6px;
+        padding-bottom: 13px;
         border-radius: 0px 0px 4px 4px;
         background: linear-gradient(
           180deg,

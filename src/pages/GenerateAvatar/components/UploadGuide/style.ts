@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   padding-bottom: 60px;
   .title {
     color: var(--secondary-black, #262626);
-    font-family: Montserrat;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -14,7 +13,6 @@ export const Wrapper = styled.div`
     margin-top: 13.5px;
     .section-title {
       color: var(--text-primary, #18181b);
-      font-family: Montserrat;
       font-size: 14px;
       font-style: normal;
       font-weight: 600;
@@ -26,7 +24,6 @@ export const Wrapper = styled.div`
     }
     .section-description {
       color: var(--text-secondary, #737373);
-      font-family: Montserrat;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
