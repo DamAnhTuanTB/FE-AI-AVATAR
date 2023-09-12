@@ -4,10 +4,46 @@ export const Wrapper = styled.div`
   flex: 1;
   overflow-y: auto;
   padding: 12px 16px;
-  .upload {
-    input {
-      display: none;
+  .top-upload {
+    .title-top-upload {
+      color: var(--secondary-black, #262626);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%;
     }
+    .des-top-upload {
+      color: var(--text-secondary, #737373);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%; /* 21px */
+      margin: 8px 0px;
+    }
+    .btn-top-upload {
+      cursor: pointer;
+      height: 140px;
+      border-radius: 12px;
+      border: 1px dashed var(--secondary-disable, #a3a3a3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      img {
+        width: 57px;
+      }
+      div {
+        color: var(--secondary-black, #262626);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 21px */
+      }
+    }
+  }
+  .input-upload {
+    display: none;
   }
   .title-list-image {
     & > div:first-child {
@@ -100,6 +136,7 @@ export const Wrapper = styled.div`
   }
   .bottom {
     padding: 0px 16px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
