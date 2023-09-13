@@ -14,7 +14,6 @@ export const Wrapper = styled.div`
   }
   .description {
     color: var(--text-secondary, #737373);
-    font-family: Montserrat;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

@@ -21,7 +21,7 @@ export default function Step2({
   };
 
   const handleClickNext = () => {
-    setStep(StepEnum.PREVIEW_STYLE);
+    setStep(StepEnum.CHOOSE_STYLE);
   };
 
   return (

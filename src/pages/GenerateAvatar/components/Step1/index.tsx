@@ -12,6 +12,7 @@ import IconPlus from '@/assets/images/icon-plus.svg';
 import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { StepEnum } from '../../contants';
+import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
 
 const defaultOptions = {
   loop: true,
@@ -190,15 +191,26 @@ export default function Step1({
   return (
     <Wrapper>
       {step === StepEnum.GUIDE ? (
-        <UploadGuide />
+        <>
+          <div className="top-upload">
+            <div className="title-top-upload">
+              Upload your 3 - 15 best images
+            </div>
+            <div className="des-top-upload">
+              Choose 3-15 images to teach the AI what you look like.
+            </div>
+            <div className="btn-top-upload" onClick={handleClickUpload}>
+              <img src={IconPlusUpload} alt="" />
+              <div>Drag and drop or click here to upload photos</div>
+            </div>
+          </div>
+          <UploadGuide />
+        </>
       ) : (
         <>
           <div className="title-list-image">
             <div>Uploaded {countImageValid}/15 photos</div>
-            <div>
-              Choose 3-15 images to teach the AI what you look like. The avatars
-              will be based on the images you upload, so choose wisely!
-            </div>
+            <div>Choose 3-15 images to teach the AI what you look like.</div>
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (
@@ -229,32 +241,26 @@ export default function Step1({
           </div>
         </>
       )}
-      <div
-        className="bottom"
-        style={{ paddingBottom: step !== StepEnum.GUIDE ? '10px' : '0px' }}
-      >
-        <div className="upload">
-          <input
-            ref={uploadRef}
-            type="file"
-            multiple={true}
-            onChange={handleChangeFile}
-            accept=".png,.jpg,.jpeg,.jfif,.heic"
-          />
+
+      <div className="bottom">
+        <input
+          className="input-upload"
+          ref={uploadRef}
+          type="file"
+          multiple={true}
+          onChange={handleChangeFile}
+          accept=".png,.jpg,.jpeg,.jfif,.heic"
+        />
+        {step === StepEnum.GUIDE ? (
+          <TabBottom />
+        ) : (
           <Button
             onClick={handleClickUpload}
-            text={
-              step === StepEnum.GUIDE
-                ? 'Upload 3-15 photos'
-                : countImageValid < 3
-                ? 'Upload more photos'
-                : 'Next'
-            }
+            text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
             width="100%"
             height="45px"
           />
-        </div>
-        {step === StepEnum.GUIDE && <TabBottom />}
+        )}
       </div>
 
       {showLoading && (

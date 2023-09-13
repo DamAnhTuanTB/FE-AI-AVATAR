@@ -27,7 +27,6 @@ export const HeaderWrapper = styled.div`
   .text-navigate {
     color: var(--text-primary, #18181b);
     text-align: center;
-    font-family: Montserrat;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

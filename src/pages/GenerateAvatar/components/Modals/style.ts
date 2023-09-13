@@ -21,7 +21,6 @@ export const Wrapper = styled(Modal)`
         .title {
           color: var(--text-primary, #18181b);
           font-size: 16px;
-          font-style: normal;
           font-weight: 600;
           line-height: 150%; /* 24px */
           margin-bottom: 8px;
@@ -93,6 +92,47 @@ export const Wrapper = styled(Modal)`
           }
           .icon-check {
             width: 24px;
+          }
+        }
+      }
+      .modal-press-email {
+        width: 100%;
+        .title-press-email {
+          color: var(--text-primary, #18181b);
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 150%; /* 24px */
+        }
+        .des-press-email {
+          color: var(--text-secondary, #737373);
+          font-family: Outfit;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 150%;
+          margin-top: 8px;
+          margin-bottom: 16px;
+        }
+        .title-email {
+          color: var(--secondary-black, #262626);
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 150%; /* 21px */
+        }
+        .input-email {
+          border-radius: 12px;
+          border: 1px solid var(--primary-1, #f6c447);
+          background: #fef9ed;
+          height: 49px;
+          margin-top: 8px;
+          margin-bottom: 24px;
+          &::placeholder {
+            color: var(--secondary-black, #262626);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 150%; /* 21px */
+          }
+          &:focus {
+            box-shadow: none;
           }
         }
       }

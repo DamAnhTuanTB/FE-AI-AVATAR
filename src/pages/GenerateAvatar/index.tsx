@@ -11,6 +11,8 @@ import generateService from '@/services/generate.service';
 import PreviewStyle from './components/PreviewStyle';
 import ModalPayment from './components/Modals/ModalPayment';
 import { StepEnum } from './contants';
+import { CONFIG } from '@/config/service';
+import ModalPressEmail from './components/Modals/ModalPressEmail';
 
 const prices = [
   {
@@ -42,8 +44,10 @@ export default function GenerateAvatar() {
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>(prices[1]);
+  const [email, setEmail] = useState('');
 
   const [showModalPayment, setShowModalPayment] = useState(false);
+  const [showModalPressEmail, setShowModalPressEmail] = useState(false);
   const [successPurchase, setSuccessPurchase] = useState(false);
 
   useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
@@ -52,8 +56,7 @@ export default function GenerateAvatar() {
 
       const listStyles = stylesFilter.map((style: any) => ({
         id: style._id,
-        thumbnail:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-hIGZLu2ePulh7ycFBxMhkE_2SccWiRqCOKP9SQRbcjMPnaNsrC3FjhcLEci7r-Jg4IQ&usqp=CAU',
+        thumbnail: style.thumbnail,
         alias: style.alias,
         displayName: style.displayName,
       }));
@@ -69,6 +72,22 @@ export default function GenerateAvatar() {
       onSuccess: (res: any) => {
         setStep(StepEnum.GENERATE_SUCCESS);
         setSuccessPurchase(false);
+        setShowModalPressEmail(false);
+        mutationCreateSession.mutate({
+          email,
+          name: 'you',
+          sessionId,
+        });
+      },
+    }
+  );
+
+  const mutationCreateSession = useMutation(
+    (payload: any) => generateService.createSession(payload),
+    {
+      onSuccess: (res: any) => {
+        setEmail('');
+        setSessionId('');
       },
     }
   );
@@ -79,9 +98,9 @@ export default function GenerateAvatar() {
       gender: gender.toLowerCase(),
       sessionId,
       numImagesEachStyle: 10,
-      notifyTo: 'anhtuantb2422@gmail.com',
-      notifyType: 'email',
-      bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
+      notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      notifyType: 'webhook',
+      // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };
     // if (styles.length < price.maxStyle) {
     //   const additionalStyles: any = [];
@@ -115,7 +134,7 @@ export default function GenerateAvatar() {
     } else if (step === StepEnum.PREVIEW_STYLE) {
       setStep(StepEnum.PICK_GENDER);
     } else if (step === StepEnum.CHOOSE_STYLE) {
-      setStep(StepEnum.PREVIEW_STYLE);
+      setStep(StepEnum.PICK_GENDER);
       localStorage.setItem('passGender', gender);
     } else if (step === StepEnum.GENERATE_SUCCESS) {
       setStep(StepEnum.CHOOSE_STYLE);
@@ -131,6 +150,7 @@ export default function GenerateAvatar() {
     setStyles([]);
     setListStyles([]);
     setPrice('');
+    setEmail('');
   };
 
   return (
@@ -178,6 +198,7 @@ export default function GenerateAvatar() {
             gender={gender}
             price={price}
             handleGenerate={handleGenerate}
+            setShowModalPressEmail={setShowModalPressEmail}
           />
         )}
         {step === StepEnum.GENERATE_SUCCESS && (
@@ -193,6 +214,15 @@ export default function GenerateAvatar() {
             price={price}
             setPrice={setPrice}
             setSuccessPurchase={setSuccessPurchase}
+          />
+        )}
+        {showModalPressEmail && (
+          <ModalPressEmail
+            open={showModalPressEmail}
+            setOpen={setShowModalPressEmail}
+            email={email}
+            setEmail={setEmail}
+            handleGenerate={handleGenerate}
           />
         )}
       </HomeWrapper>
