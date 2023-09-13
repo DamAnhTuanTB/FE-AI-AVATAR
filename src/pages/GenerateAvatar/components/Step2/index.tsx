@@ -26,7 +26,7 @@ export default function Step2({
 
   return (
     <Wrapper>
-      <div className="title">Pick your gender</div>
+      <div className="title">Select your gender</div>
       <div className="description">
         This information will improve our selection of model images for the
         generation of your photos.

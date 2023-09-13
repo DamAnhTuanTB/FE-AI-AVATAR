@@ -13,6 +13,12 @@ import ModalPayment from './components/Modals/ModalPayment';
 import { StepEnum } from './contants';
 import { CONFIG } from '@/config/service';
 import ModalPressEmail from './components/Modals/ModalPressEmail';
+import useScreenSize from '@/hooks/useScreenSize';
+import StepHeaderPC from './components/StepHeaderPC';
+import Step1PC from './components/Step1PC';
+import Step2PC from './components/Step2PC';
+import Step3PC from './components/Step3PC';
+import Step4PC from './components/Step4PC';
 
 const prices = [
   {
@@ -49,6 +55,8 @@ export default function GenerateAvatar() {
   const [showModalPayment, setShowModalPayment] = useState(false);
   const [showModalPressEmail, setShowModalPressEmail] = useState(false);
   const [successPurchase, setSuccessPurchase] = useState(false);
+
+  const { isDesktop } = useScreenSize();
 
   useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
     onSuccess: (res: any) => {
@@ -130,7 +138,11 @@ export default function GenerateAvatar() {
       setListStyles([]);
       setPrice('');
     } else if (step === StepEnum.PICK_GENDER) {
-      setStep(StepEnum.UPLOAD_IMAGE);
+      if (isDesktop) {
+        setStep(StepEnum.GUIDE);
+      } else {
+        setStep(StepEnum.UPLOAD_IMAGE);
+      }
     } else if (step === StepEnum.PREVIEW_STYLE) {
       setStep(StepEnum.PICK_GENDER);
     } else if (step === StepEnum.CHOOSE_STYLE) {
@@ -159,73 +171,109 @@ export default function GenerateAvatar() {
         <title>Home</title>
         <meta name="description" content="Home" />
       </Helmet>
-      <HomeWrapper>
-        <StepHeader
-          step={step}
-          successPurchase={successPurchase}
-          onClick={handleClickBack}
-        />
-        {(step === StepEnum.GUIDE || step === StepEnum.UPLOAD_IMAGE) && (
-          <Step1
+      {isDesktop ? (
+        <HomeWrapper>
+          <StepHeaderPC step={step} onClickBack={handleClickBack} />
+          {step === StepEnum.GUIDE && (
+            <Step1PC
+              step={step}
+              setStep={setStep}
+              images={images}
+              setImages={setImages}
+              setSessionId={setSessionId}
+            />
+          )}
+          {step === StepEnum.PICK_GENDER && (
+            <Step2PC
+              setStep={setStep}
+              gender={gender}
+              setGender={setGender}
+              setStyles={setStyles}
+            />
+          )}
+          {step === StepEnum.CHOOSE_STYLE && (
+            <Step3PC
+              styles={styles}
+              setStyles={setStyles}
+              listStyles={listStyles}
+              gender={gender}
+              price={price}
+              handleGenerate={handleGenerate}
+              setShowModalPressEmail={setShowModalPressEmail}
+            />
+          )}
+          {step === StepEnum.GENERATE_SUCCESS && (
+            <Step4PC handleClickBackToHome={handleClickBackToHome} />
+          )}
+        </HomeWrapper>
+      ) : (
+        <HomeWrapper>
+          <StepHeader
             step={step}
-            setStep={setStep}
-            images={images}
-            setImages={setImages}
-            setSessionId={setSessionId}
-          />
-        )}
-        {step === StepEnum.PICK_GENDER && (
-          <Step2
-            setStep={setStep}
-            gender={gender}
-            setGender={setGender}
-            setStyles={setStyles}
-          />
-        )}
-        {step === StepEnum.PREVIEW_STYLE && (
-          <PreviewStyle
-            setStep={setStep}
-            listStyles={listStyles}
             successPurchase={successPurchase}
-            setShowModalPayment={setShowModalPayment}
+            onClick={handleClickBack}
           />
-        )}
-        {step === StepEnum.CHOOSE_STYLE && (
-          <Step3
-            styles={styles}
-            setStyles={setStyles}
-            listStyles={listStyles}
-            gender={gender}
-            price={price}
-            handleGenerate={handleGenerate}
-            setShowModalPressEmail={setShowModalPressEmail}
-          />
-        )}
-        {step === StepEnum.GENERATE_SUCCESS && (
-          <Step4 handleClickBackToHome={handleClickBackToHome} />
-        )}
-
-        {showModalPayment && !successPurchase && (
-          <ModalPayment
-            setStep={setStep}
-            prices={prices}
-            open={showModalPayment}
-            setOpen={setShowModalPayment}
-            price={price}
-            setPrice={setPrice}
-            setSuccessPurchase={setSuccessPurchase}
-          />
-        )}
-        {showModalPressEmail && (
-          <ModalPressEmail
-            open={showModalPressEmail}
-            setOpen={setShowModalPressEmail}
-            email={email}
-            setEmail={setEmail}
-            handleGenerate={handleGenerate}
-          />
-        )}
-      </HomeWrapper>
+          {(step === StepEnum.GUIDE || step === StepEnum.UPLOAD_IMAGE) && (
+            <Step1
+              step={step}
+              setStep={setStep}
+              images={images}
+              setImages={setImages}
+              setSessionId={setSessionId}
+            />
+          )}
+          {step === StepEnum.PICK_GENDER && (
+            <Step2
+              setStep={setStep}
+              gender={gender}
+              setGender={setGender}
+              setStyles={setStyles}
+            />
+          )}
+          {step === StepEnum.PREVIEW_STYLE && (
+            <PreviewStyle
+              setStep={setStep}
+              listStyles={listStyles}
+              successPurchase={successPurchase}
+              setShowModalPayment={setShowModalPayment}
+            />
+          )}
+          {step === StepEnum.CHOOSE_STYLE && (
+            <Step3
+              styles={styles}
+              setStyles={setStyles}
+              listStyles={listStyles}
+              gender={gender}
+              price={price}
+              handleGenerate={handleGenerate}
+              setShowModalPressEmail={setShowModalPressEmail}
+            />
+          )}
+          {step === StepEnum.GENERATE_SUCCESS && (
+            <Step4 handleClickBackToHome={handleClickBackToHome} />
+          )}
+        </HomeWrapper>
+      )}
+      {showModalPayment && !successPurchase && (
+        <ModalPayment
+          setStep={setStep}
+          prices={prices}
+          open={showModalPayment}
+          setOpen={setShowModalPayment}
+          price={price}
+          setPrice={setPrice}
+          setSuccessPurchase={setSuccessPurchase}
+        />
+      )}
+      {showModalPressEmail && (
+        <ModalPressEmail
+          open={showModalPressEmail}
+          setOpen={setShowModalPressEmail}
+          email={email}
+          setEmail={setEmail}
+          handleGenerate={handleGenerate}
+        />
+      )}
     </>
   );
 }

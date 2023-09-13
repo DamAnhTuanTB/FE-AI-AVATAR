@@ -2,6 +2,7 @@ import { Input } from 'antd';
 import Button from '../Button';
 import { Wrapper } from './style';
 import IconClose from '@/assets/images/icon-delete-image.svg';
+import useScreenSize from '@/hooks/useScreenSize';
 
 interface IProps {
   open: boolean;
@@ -30,9 +31,11 @@ export default function ModalPressEmail({
     setEmail(e.target.value);
   };
 
+  const { isDesktop } = useScreenSize();
+
   return (
     <Wrapper
-      width={338}
+      width={isDesktop ? 589 : 338}
       centered
       open={open}
       onCancel={handleCancel}
