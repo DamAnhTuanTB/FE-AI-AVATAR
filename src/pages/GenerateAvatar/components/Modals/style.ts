@@ -8,7 +8,7 @@ export const Wrapper = styled(Modal)`
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 20px;
+      padding: 24px;
       .icon-close {
         width: 25px;
         position: absolute;
@@ -119,9 +119,9 @@ export const Wrapper = styled(Modal)`
           line-height: 150%; /* 21px */
         }
         .input-email {
+          border: none;
           border-radius: 12px;
-          border: 1px solid var(--primary-1, #f6c447);
-          background: #fef9ed;
+          background: var(--neutral-100, #f5f5f5);
           height: 49px;
           margin-top: 8px;
           margin-bottom: 24px;
