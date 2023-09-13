@@ -10,6 +10,7 @@ interface IProps {
   listStyles: any;
   price: any;
   handleGenerate: any;
+  setShowModalPressEmail: any;
 }
 
 export default function Step3({
@@ -19,6 +20,7 @@ export default function Step3({
   listStyles,
   price,
   handleGenerate,
+  setShowModalPressEmail,
 }: IProps) {
   useEffect(() => {
     if (
@@ -44,7 +46,8 @@ export default function Step3({
   };
 
   const handleClickNext = () => {
-    handleGenerate();
+    // handleGenerate();
+    setShowModalPressEmail(true);
   };
 
   return (

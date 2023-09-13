@@ -1,4 +1,4 @@
-import { baseRequest, generateRequest } from './base.service';
+import { baseRequest, generateRequest, sessionRequest } from './base.service';
 import { APIs, VERSION } from './config/api';
 
 const generateService = {
@@ -10,6 +10,9 @@ const generateService = {
   },
   generateImage(payload: any) {
     return generateRequest.post(VERSION.v1 + APIs.GENERATE_IMAGE, payload);
+  },
+  createSession(payload: any) {
+    return sessionRequest.post(VERSION.v1 + APIs.CREATE_SESSION, payload);
   },
 };
 

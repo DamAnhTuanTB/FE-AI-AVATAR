@@ -3,7 +3,6 @@ import { styled } from 'styled-components';
 export const Wrapper = styled.div`
   color: var(--text-primary, #18181b);
   text-align: center;
-  font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
