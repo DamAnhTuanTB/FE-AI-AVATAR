@@ -36,8 +36,10 @@ export const Wrapper = styled.div`
     flex-direction: column;
     gap: 24px;
     .gender {
-      width: 769px;
+      width: 789px;
+      height: 64px;
       background: #fff;
+      padding: 20px 24px;
       color: var(--text-primary, #18181b);
       text-align: center;
       font-size: 16px;
@@ -45,7 +47,6 @@ export const Wrapper = styled.div`
       font-weight: 500;
       line-height: 120%;
       letter-spacing: -1px;
-      padding: 20px 24px;
       border-radius: 12px;
       display: flex;
       align-items: center;

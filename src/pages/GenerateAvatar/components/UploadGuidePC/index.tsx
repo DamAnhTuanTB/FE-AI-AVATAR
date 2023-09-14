@@ -1,14 +1,14 @@
 import { Wrapper } from './style';
 import IconHeart from '@/assets/images/icon-heart-circle.svg';
 import IconBad from '@/assets/images/icon-bad.svg';
-import Good1 from '@/assets/images/GoodPC1.svg';
-import Good2 from '@/assets/images/GoodPC2.svg';
-import Good3 from '@/assets/images/GoodPC3.svg';
-import Good4 from '@/assets/images/GoodPC4.svg';
-import Bad1 from '@/assets/images/BadPC1.svg';
-import Bad2 from '@/assets/images/BadPC2.svg';
-import Bad3 from '@/assets/images/BadPC3.svg';
-import Bad4 from '@/assets/images/BadPC4.svg';
+import Good1 from '@/assets/images/gpc1.png';
+import Good2 from '@/assets/images/gpc2.png';
+import Good3 from '@/assets/images/gpc3.png';
+import Good4 from '@/assets/images/gpc4.png';
+import Bad1 from '@/assets/images/b1pc.png';
+import Bad2 from '@/assets/images/b2pc.png';
+import Bad3 from '@/assets/images/b3pc.png';
+import Bad4 from '@/assets/images/b4pc.png';
 
 export default function UploadGuidePC() {
   return (

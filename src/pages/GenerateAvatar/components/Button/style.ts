@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 export const Wrapper: any = styled(Button)<{ isMobile: boolean }>`
   border-radius: 100px;
-  color: var(--secondary-black, #262626) !important;
+  color: var(--secondary-black, #18181b) !important;
   text-align: center;
   font-size: 14px;
   font-style: normal;

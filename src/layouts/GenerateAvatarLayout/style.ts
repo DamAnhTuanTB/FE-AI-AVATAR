@@ -14,4 +14,5 @@ export const DefaultLayoutWrapper: any = styled.div`
 
 export const ContentWrapper = styled.div`
   height: calc(100vh - 40px);
+  overflow: hidden;
 `;

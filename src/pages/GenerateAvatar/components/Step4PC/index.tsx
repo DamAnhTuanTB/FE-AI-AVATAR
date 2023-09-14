@@ -28,14 +28,14 @@ export default function Step4PC({ handleClickBackToHome }: IProps) {
           height="45px"
           onClick={handleClickBackToHome}
         />
-        <Button
+        {/* <Button
           text="My Avatars"
           width="126px"
           height="45px"
           background={false}
           border={true}
           onClick={handleClickMyAvatar}
-        />
+        /> */}
       </div>
     </Wrapper>
   );
