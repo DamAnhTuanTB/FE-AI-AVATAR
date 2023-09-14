@@ -143,14 +143,16 @@ export default function GenerateAvatar() {
       } else {
         setStep(StepEnum.UPLOAD_IMAGE);
       }
+      setGender('');
     } else if (step === StepEnum.PREVIEW_STYLE) {
       setStep(StepEnum.PICK_GENDER);
     } else if (step === StepEnum.CHOOSE_STYLE) {
       setStep(StepEnum.PICK_GENDER);
-      localStorage.setItem('passGender', gender);
+      setStyles([]);
+      // localStorage.setItem('passGender', gender);
     } else if (step === StepEnum.GENERATE_SUCCESS) {
       setStep(StepEnum.CHOOSE_STYLE);
-      localStorage.removeItem('passGender');
+      // localStorage.removeItem('passGender');
     }
   };
 

@@ -1,12 +1,15 @@
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 33px 0px;
+  padding-bottom: 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 10px;
+  position: relative;
   .back {
+    position: absolute;
+    left: 0;
     cursor: pointer;
     display: flex;
     align-items: center;

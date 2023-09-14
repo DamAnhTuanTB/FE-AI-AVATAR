@@ -21,6 +21,7 @@ export default function ModalPressEmail({
 }: IProps) {
   const handleCancel = () => {
     setOpen(false);
+    setEmail('');
   };
 
   const handleSubmit = () => {

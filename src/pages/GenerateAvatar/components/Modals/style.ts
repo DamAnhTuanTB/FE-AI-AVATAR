@@ -12,8 +12,8 @@ export const Wrapper = styled(Modal)`
       .icon-close {
         width: 25px;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 4px;
+        top: 5px;
         transform: translateX(50%) translateY(-50%);
       }
       .modal-payment {
@@ -125,6 +125,7 @@ export const Wrapper = styled(Modal)`
           height: 49px;
           margin-top: 8px;
           margin-bottom: 24px;
+          color: black;
           &::placeholder {
             color: var(--secondary-black, #262626);
             font-size: 14px;

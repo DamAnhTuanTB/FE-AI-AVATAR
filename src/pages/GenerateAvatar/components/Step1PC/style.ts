@@ -3,7 +3,6 @@ import { styled } from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   gap: 20px;
-  padding-bottom: 40px;
   height: calc(100% - 111px);
   .upload {
     height: 100%;
@@ -49,6 +48,7 @@ export const Wrapper = styled.div`
         }
       }
       .big-upload {
+        position: relative;
         width: 379px;
         height: 360px;
         border-radius: 12px;
@@ -70,6 +70,15 @@ export const Wrapper = styled.div`
           font-weight: 500;
           line-height: 150%; /* 21px */
         }
+        .big-input-upload {
+          cursor: pointer;
+          position: absolute;
+          opacity: 0;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
       }
       .content-upload {
         width: 100%;
@@ -79,7 +88,12 @@ export const Wrapper = styled.div`
           display: grid;
           grid-template-columns: repeat(6, 1fr);
           gap: 20px;
-
+          @media screen and (max-width: 1350px) {
+            grid-template-columns: repeat(4, 1fr);
+          }
+          @media screen and (max-width: 1200px) {
+            grid-template-columns: repeat(3, 1fr);
+          }
           .parent-image {
             position: relative;
             border-radius: 12px;
@@ -105,7 +119,7 @@ export const Wrapper = styled.div`
               transform: translateX(50%) translateY(-50%);
             }
             .item-error {
-              border-radius: 4px;
+              border-radius: 12px;
               position: absolute;
               width: 100%;
               height: 100%;
@@ -116,7 +130,7 @@ export const Wrapper = styled.div`
               flex-direction: column;
               gap: 5px;
               color: var(--status-alert, #ef4444);
-              font-size: 12px;
+              font-size: 14px;
               font-style: normal;
               font-weight: 500;
               line-height: 150%; /* 18px */
@@ -146,7 +160,11 @@ export const Wrapper = styled.div`
               gap: 14px;
               position: absolute;
               img {
+                margin-top: 20px;
                 width: 84px;
+                @media screen and (max-width: 1600px) {
+                  margin-top: 0px;
+                }
               }
               div {
                 color: var(--secondary-black, #262626);

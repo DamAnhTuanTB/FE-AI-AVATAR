@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
       margin: 8px 0px;
     }
     .btn-top-upload {
+      margin-bottom: 24px;
       cursor: pointer;
       height: 140px;
       border-radius: 12px;

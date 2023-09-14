@@ -204,9 +204,16 @@ export default function Step1PC({
             </div>
           </div>
           {images.length === 0 ? (
-            <div className="big-upload" onClick={handleClickBigUpload}>
+            <div className="big-upload">
               <img src={IconPlusUpload} alt="" />
               <div>Drag and drop or click here to upload photos</div>
+              <input
+                className="big-input-upload"
+                type="file"
+                multiple={true}
+                onChange={handleChangeFile}
+                accept=".png,.jpg,.jpeg,.jfif,.heic"
+              />
             </div>
           ) : (
             <div className="content-upload">

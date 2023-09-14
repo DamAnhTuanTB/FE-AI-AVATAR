@@ -66,7 +66,7 @@ export const Wrapper = styled.div`
         text-align: center;
         color: var(--gray-scale-white, #fff);
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
         font-style: normal;
         font-weight: 500;
         line-height: 100%; /* 14px */
@@ -84,10 +84,17 @@ export const Wrapper = styled.div`
       }
     }
     .style-active {
-      border: 2px solid #f6c447;
+      /* border: 2px solid #f6c447; */
       img {
-        /* transform: scale(1.01); */
+        border: 2px solid #f6c447;
       }
+      .name-style {
+        border: 2px solid #f6c447;
+        border-top: none;
+      }
+      /* img {
+        transform: scale(1.01);
+      } */
     }
   }
   .btn-generate {

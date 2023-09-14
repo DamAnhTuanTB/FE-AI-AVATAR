@@ -22,21 +22,22 @@ export default function Step3PC({
   handleGenerate,
   setShowModalPressEmail,
 }: IProps) {
-  useEffect(() => {
-    if (
-      localStorage.getItem('passGender') &&
-      localStorage.getItem('passGender') !== gender
-    ) {
-      setStyles([]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // if (
+  //   //   localStorage.getItem('passGender') &&
+  //   //   localStorage.getItem('passGender') !== gender
+  //   // ) {
+  //   setStyles([]);
+  //   // }
+  // }, []);
 
   const handleClickStyle = (alias: string) => {
     const index = styles.findIndex((style: string) => style === alias);
     if (index !== -1) {
       styles.splice(index, 1);
     } else {
-      if (styles.length > price.maxStyle - 1) {
+      if (styles.length > 19) {
+        // price.maxStyle - 1
         ToastError('The maximum quantity has been selected.');
       } else {
         styles.push(alias);
