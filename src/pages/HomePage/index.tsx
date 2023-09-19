@@ -12,6 +12,8 @@ import Header from '@/components/HomePage/Header';
 import Intro from '@/components/HomePage/Intro';
 import TransformPhoto from '@/components/HomePage/TransformPhoto';
 import StepsToCreate from '@/components/HomePage/StepsToCreate';
+import UsersSay from '@/components/HomePage/UsersSay';
+import MobileApp from '@/components/HomePage/MobileApp';
 
 export default function HomePage() {
   return (
@@ -29,6 +31,8 @@ export default function HomePage() {
         <Intro />
         <TransformPhoto />
         <StepsToCreate />
+        <UsersSay />
+        <MobileApp />
       </BodyWrapper>
     </Wrapper>
   );
