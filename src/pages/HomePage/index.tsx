@@ -14,6 +14,7 @@ import TransformPhoto from '@/components/HomePage/TransformPhoto';
 import StepsToCreate from '@/components/HomePage/StepsToCreate';
 import UsersSay from '@/components/HomePage/UsersSay';
 import MobileApp from '@/components/HomePage/MobileApp';
+import HomePageFooter from '@/components/HomePage/Footer';
 
 export default function HomePage() {
   return (
@@ -34,6 +35,8 @@ export default function HomePage() {
         <UsersSay />
         <MobileApp />
       </BodyWrapper>
+
+      <HomePageFooter />
     </Wrapper>
   );
 }
