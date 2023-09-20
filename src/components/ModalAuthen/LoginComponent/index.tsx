@@ -1,5 +1,5 @@
 import {LoginWithSocialWrapper, ModalTextTitle, OrTextWrapper} from "@/components/ModalAuthen/ModalLogin/styles";
-import {AuthEnum, loginWithSocialArr} from "@/components/ModalAuthen/constant";
+import {AUTH_ERROR_MESSAGE, AuthEnum, loginWithSocialArr} from "@/components/ModalAuthen/constant";
 import AuthenForm from "@/components/ModalAuthen/AuthenForm";
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import authServices from "@/services/auth.service";
@@ -8,6 +8,7 @@ import {loginWithSocialAccount} from "@/store/slices/authSlice";
 import {useAppDispatch} from "@/store/hooks";
 import {useSearchParams} from "react-router-dom";
 import {getCookie, setCookie} from "@/utils/cookies";
+import {CONFIG} from "@/config/service";
 
 const LoginComponent: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const LoginComponent: React.FC = () => {
     const errorMessage = searchParams.get('errorMessage');
     const platform = searchParams.get('platform');
 
-    const authUser = getCookie('auth-user');
+    const authUser = getCookie(CONFIG.COOKIE_AUTH_TOKEN);
     const parseAuthUser = authUser ? JSON.parse(authUser) : '';
     const cookieToken = parseAuthUser.token;
 
@@ -95,22 +96,13 @@ const LoginComponent: React.FC = () => {
             }
         } catch (err: any) {
             console.log('err', err);
-            let errMsg = err?.response?.data?.message || 'Sign up failed';
-            if (errMsg === 'Email or password is wrong') {
-                errMsg = 'Wrong email or password'
+            let errMsg = err?.response?.data?.message || AUTH_ERROR_MESSAGE.LOGIN.LOGIN_FAILED;
+            if (errMsg === AUTH_ERROR_MESSAGE.LOGIN.EMAIL_PASSWORD_WRONG_API) {
+                errMsg = AUTH_ERROR_MESSAGE.LOGIN.EMAIL_PASSWORD_WRONG_DISPLAY
             }
             setErrorMessageApi(errMsg)
         }
     }
-
-    useEffect(() => {
-        if (errorMessageApi) {
-            const timeout = setTimeout(() => {
-                setErrorMessageApi('');
-            }, 5000);
-            return () => clearTimeout(timeout)
-        }
-    }, [errorMessageApi]);
 
     return (
         <>

@@ -1,5 +1,6 @@
 import { LStorage } from '../utils/storage';
 import { getCookie, setCookie } from '@/utils/cookies';
+import {CONFIG} from "@/config/service";
 
 class TokenAuthService {
   getLocalRefreshToken() {
@@ -13,7 +14,7 @@ class TokenAuthService {
   }
 
   getLocalAccessToken() {
-    const authUser = LStorage.getItem('auth-user') || getCookie('auth-user');
+    const authUser = LStorage.getItem(CONFIG.COOKIE_AUTH_TOKEN) || getCookie(CONFIG.COOKIE_AUTH_TOKEN);
     if (!authUser) {
       return null;
     }
@@ -22,16 +23,16 @@ class TokenAuthService {
   }
 
   updateLocalAccessToken(token: string) {
-    const authUser = LStorage.getItem('auth-user');
+    const authUser = LStorage.getItem(CONFIG.COOKIE_AUTH_TOKEN);
     if (authUser) {
       const authUserObj = JSON.parse(authUser);
       authUserObj.token = token;
-      localStorage.setItem('auth-user', JSON.stringify(authUserObj));
+      localStorage.setItem(CONFIG.COOKIE_AUTH_TOKEN, JSON.stringify(authUserObj));
     }
   }
 
   getAuthUser() {
-    const authUser = LStorage.getItem('auth-user');
+    const authUser = LStorage.getItem(CONFIG.COOKIE_AUTH_TOKEN);
     if (!authUser) {
       return null;
     }
@@ -39,17 +40,17 @@ class TokenAuthService {
   }
 
   setAuthUser(authUser: any) {
-    LStorage.setItem('auth-user', JSON.stringify(authUser));
+    LStorage.setItem(CONFIG.COOKIE_AUTH_TOKEN, JSON.stringify(authUser));
   }
 
   removeAuthUser() {
-    LStorage.removeItem('auth-user');
+    LStorage.removeItem(CONFIG.COOKIE_AUTH_TOKEN);
   }
 
   setLocalAccessToken(token: string) {
-    const authUser = getCookie('auth-user');
+    const authUser = getCookie(CONFIG.COOKIE_AUTH_TOKEN);
     const authUserObj = JSON.parse(authUser || '{}');
-    setCookie('auth-user', JSON.stringify({ ...authUserObj, token }));
+    setCookie(CONFIG.COOKIE_AUTH_TOKEN, JSON.stringify({ ...authUserObj, token }));
   }
 
   setLocalRefreshToken(refreshToken: string) {
