@@ -5,12 +5,23 @@ import IconGenerateNotActive from '@/assets/images/icon-generate-not-active.svg'
 import IconMyAvatarActive from '@/assets/images/icon-my-avatar-active.svg';
 import IconMyAvatarNotActive from '@/assets/images/icon-my-avatar-not-active.svg';
 import { ROUTES } from '@/routes/routes';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 
 export default function TabBottom() {
   const path = window.location.pathname;
   const generateActive = path === '/';
   const avatarActive = path.includes('/list-avatar');
   const naviage = useNavigate();
+
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+
+  if (!isLoggedIn) {
+    return <></>;
+  }
+
   return (
     <Wrapper>
       <div onClick={() => naviage(ROUTES.HOME)}>

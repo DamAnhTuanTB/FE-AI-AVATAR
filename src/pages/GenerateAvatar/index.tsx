@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Helmet } from 'react-helmet';
 import { HomeWrapper } from './style';
 import Step1 from './components/Step1';
@@ -19,8 +19,12 @@ import Step2PC from './components/Step2PC';
 import Step3PC from './components/Step3PC';
 import Step4PC from './components/Step4PC';
 import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
+import { RootState } from '@/store/store';
+import { useAppSelector } from '@/store/hooks';
+import { useSearchParams } from 'react-router-dom';
 
 export default function GenerateAvatar() {
+  const queryClient = useQueryClient();
   const [step, setStep] = useState(StepEnum.GUIDE);
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
@@ -36,6 +40,16 @@ export default function GenerateAvatar() {
   const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
 
   const { isDesktop } = useScreenSize();
+
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('success-payment') === '1') {
+      setStep(StepEnum.CHOOSE_STYLE);
+    }
+  }, [searchParams]);
 
   useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
     onSuccess: (res: any) => {
@@ -92,7 +106,7 @@ export default function GenerateAvatar() {
         await generateService.uploadFileS3(presign?.data?.url, formData);
 
         mutationCreateSession.mutate({
-          email: 'tuandyniel@gmail.com',
+          email: userInfor.userEmail,
           name: 'you',
           sessionId,
           gender: gender.toLowerCase(),
@@ -107,6 +121,7 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.createSession(payload),
     {
       onSuccess: (res: any) => {
+        queryClient.refetchQueries({ queryKey: ['get-info-user'] });
         setSessionId('');
       },
     }

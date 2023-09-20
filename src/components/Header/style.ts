@@ -1,13 +1,16 @@
 import { breakpoints } from '@/config/breakpoints';
 import { styled } from 'styled-components';
-import {Avatar, Popover} from "antd";
+import { Avatar, Popover } from 'antd';
 
 export const HeaderWrapper = styled.div`
   padding-top: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  margin-bottom: 33px;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    margin-bottom: 0px;
+  }
   .sign-in {
     color: var(--secondary-black, #262626);
 
@@ -25,30 +28,30 @@ export const HeaderWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 12px;
-    
+
     .button {
       padding: 8px 16px;
       height: 40px;
       border-radius: 100px;
-      background: var(--primary-1, #F6C447);
+      background: var(--primary-1, #f6c447);
       cursor: pointer;
-      
-      color: var(--text-primary, #18181B);
+
+      color: var(--text-primary, #18181b);
       /* Sub-headings/Sub-head 1/Medium */
       font-family: Outfit;
       font-size: 16px;
       font-style: normal;
       font-weight: 500;
       line-height: 150%; /* 24px */
-      
+
       @media screen and (max-width: ${breakpoints.md}) {
         display: none;
       }
     }
-    
+
     .avatar-item {
       cursor: pointer;
-      
+
       @media screen and (max-width: ${breakpoints.md}) {
         img {
           width: 100%;
@@ -66,8 +69,7 @@ export const HeaderWrapper = styled.div`
   }
 `;
 
-export const PopoverAvatarWrapper = styled(Popover)``
-
+export const PopoverAvatarWrapper = styled(Popover)``;
 
 export const ContentPopoverWrapper = styled.div`
   .title {
@@ -78,7 +80,7 @@ export const ContentPopoverWrapper = styled.div`
 
     .infor {
       .name {
-        color: var(--text-primary, #18181B);
+        color: var(--text-primary, #18181b);
 
         /* Sub-headings/Sub-head 2/Medium */
         font-family: Outfit;
@@ -100,8 +102,6 @@ export const ContentPopoverWrapper = styled.div`
         line-height: 150%; /* 18px */
       }
     }
-
-
   }
 
   .remaining-generated-count {
@@ -120,7 +120,7 @@ export const ContentPopoverWrapper = styled.div`
     margin: 12px 0;
     width: 100%;
     height: 1px;
-    background: var(--neutral-200, #E5E5E5);
+    background: var(--neutral-200, #e5e5e5);
   }
 
   .sign-out-btn {
@@ -130,7 +130,7 @@ export const ContentPopoverWrapper = styled.div`
     justify-content: space-between;
 
     .text {
-      color: var(--text-primary, #18181B);
+      color: var(--text-primary, #18181b);
       text-align: center;
 
       /* Sub-headings/Sub-head 2/Regular */
@@ -141,4 +141,4 @@ export const ContentPopoverWrapper = styled.div`
       line-height: 150%; /* 21px */
     }
   }
-`
+`;

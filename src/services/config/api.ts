@@ -23,6 +23,8 @@ export const APIs = {
   GET_DETAIL_SESSION: '/session',
   DOWNLOAD_ALL_PACK: '/session/download',
   DOWNLOAD_ALL_AVATAR_WITH_STYLE: '/session/download-all-image-with-style',
+  GET_USER: '/user',
+  CHECK_USER_EXIST: '/user/check-user-exist',
 };
 
 export const HTTP_STATUS = {

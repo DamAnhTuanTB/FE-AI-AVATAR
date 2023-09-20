@@ -11,6 +11,8 @@ import ImagePayment from '@/assets/images/image-payment.svg';
 import { useMutation } from 'react-query';
 import generateService from '@/services/generate.service';
 import { StepEnum } from '../../contants';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 
 interface IProps {
   prices: any;
@@ -29,6 +31,11 @@ export default function ModalPayment({
   setPrice,
   setStep,
 }: IProps) {
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
   useEffect(() => {
     prices.forEach((item: any) => {
@@ -56,12 +63,23 @@ export default function ModalPayment({
     setPrice(item);
   };
   const handleClickPurchase = () => {
-    // const payload = {
-    //   priceId: price.id,
-    //   redirectUrl: 'https://avatar.apero.vn/',
-    // };
-    // purchaseMutation.mutate(payload);
-    setStep(StepEnum.CHOOSE_STYLE);
+    const payload: any = {
+      priceId: price.id,
+      redirectUrl: 'https://avatar.apero.vn/',
+    };
+    if (isLoggedIn) {
+      payload.userId = userInfor.id;
+      payload.email = userInfor.userEmail;
+    } else {
+      const userIdFake =
+        (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString() +
+        (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString();
+      payload.userId = 'fake' + userIdFake;
+      localStorage.setItem('userIdFake', 'fake' + userIdFake);
+    }
+    purchaseMutation.mutate(payload);
+    // setStep(StepEnum.CHOOSE_STYLE);
+    // setOpen(false);
     // setSuccessPurchase(true);
     // setOpen(false);
   };

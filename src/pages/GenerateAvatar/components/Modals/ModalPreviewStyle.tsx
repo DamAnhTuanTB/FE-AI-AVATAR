@@ -2,6 +2,8 @@ import useScreenSize from '@/hooks/useScreenSize';
 import Button from '../Button';
 import { Wrapper } from './style';
 import { StepEnum } from '../../contants';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 
 interface IProps {
   open: boolean;
@@ -19,17 +21,27 @@ export default function ModalPreviewStyle({
   setStep,
 }: IProps) {
   const { isMobile, isDesktop } = useScreenSize();
+
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+
+  const numberGen = userInfor?.listGenerate?.filter(
+    (item: any) => !item.used
+  )?.length;
+
   const handleCancel = () => {
     setOpen(false);
   };
   const handleClickNext = () => {
     handleCancel();
-    // if (successPurchase) {
-    //   setStep(StepEnum.CHOOSE_STYLE);
-    // } else {
-    //   setShowModalPayment(true);
-    // }
-    setStep(StepEnum.CHOOSE_STYLE);
+    if (!isLoggedIn || !numberGen) {
+      setShowModalPayment(true);
+    } else {
+      setStep(StepEnum.CHOOSE_STYLE);
+    }
   };
   return (
     <Wrapper

@@ -10,22 +10,12 @@ export interface AppSlice {
   showSidebar: any;
   hiddenSidebar: boolean;
   userInfor: any;
-  creditsConfig: any;
-  plans: any[];
-  currentSubscriptionPlan: any;
-  isFreeSubscription: boolean;
 }
 
 export const initialUserInfo = {
   userName: '',
   userAvatar: '',
   userEmail: '',
-  userCredits: '0',
-  stripeCustomerId: '',
-  stripePriceId: '',
-  stripeSubscriptionId: '',
-  creditExpiredAt: 0,
-  subscriptionExpiredAt: 0,
 };
 
 const initialState: AppSlice = {
@@ -35,10 +25,6 @@ const initialState: AppSlice = {
   showSidebar: null,
   hiddenSidebar: false,
   userInfor: initialUserInfo,
-  creditsConfig: {},
-  plans: [],
-  currentSubscriptionPlan: null,
-  isFreeSubscription: true,
 };
 
 export const appSlice = createSlice({
@@ -54,23 +40,10 @@ export const appSlice = createSlice({
       state.showSidebar = action.payload;
     },
     setUserInfor: (state, action: PayloadAction<any>) => {
-      state.userInfor = action.payload;
+      state.userInfor = { ...state.userInfor, ...action.payload };
     },
     setHiddenSidebar: (state, action: PayloadAction<boolean>) => {
       state.hiddenSidebar = action.payload;
-    },
-    setCreditsConfig: (state, action: PayloadAction<any>) => {
-      state.creditsConfig = { ...state.creditsConfig, ...action.payload };
-    },
-    setPlans: (state, action: PayloadAction<any[]>) => {
-      state.plans = action.payload;
-    },
-
-    setCurrentSubscriptionPlan: (state, action: PayloadAction<any>) => {
-      state.currentSubscriptionPlan = action.payload;
-    },
-    setIsFreeSubscriptionPlan: (state, action: PayloadAction<boolean>) => {
-      state.isFreeSubscription = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -82,14 +55,6 @@ export const appSlice = createSlice({
 
 export const selectAppSlice = (state: RootState) => state.app;
 
-export const {
-  setAppState,
-  setShowSidebar,
-  setUserInfor,
-  setHiddenSidebar,
-  setCreditsConfig,
-  setPlans,
-  setCurrentSubscriptionPlan,
-  setIsFreeSubscriptionPlan,
-} = appSlice.actions;
+export const { setAppState, setShowSidebar, setUserInfor, setHiddenSidebar } =
+  appSlice.actions;
 export default appSlice.reducer;

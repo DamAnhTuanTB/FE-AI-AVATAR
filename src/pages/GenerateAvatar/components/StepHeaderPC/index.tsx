@@ -28,7 +28,7 @@ export default function StepHeaderPC({ step, onClickBack }: IProps) {
   ];
   return (
     <Wrapper>
-      {step !== StepEnum.GENERATE_SUCCESS && (
+      {step !== StepEnum.GENERATE_SUCCESS && step !== StepEnum.GUIDE && (
         <div className="back" onClick={onClickBack}>
           <img src={IconPrev} alt="" />
           <span>Back</span>

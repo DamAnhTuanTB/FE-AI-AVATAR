@@ -7,6 +7,12 @@ import axios from 'axios';
 import { APIs, VERSION } from './config/api';
 
 const generateService = {
+  getInfoUser() {
+    return baseServerRequest.get(VERSION.v1 + APIs.GET_USER);
+  },
+  checkUserExist(id: string) {
+    return baseServerRequest.get(VERSION.v1 + APIs.CHECK_USER_EXIST + `/${id}`);
+  },
   checkingUpload(payload: any) {
     return baseRequest.post(VERSION.v1 + APIs.CHECKING_UPLOAD, payload);
   },
