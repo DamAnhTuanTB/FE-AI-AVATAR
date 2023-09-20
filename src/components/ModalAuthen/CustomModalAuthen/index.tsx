@@ -25,6 +25,7 @@ const  CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
     return (
         <CustomModalWrapper
             open={open}
+            centered
             width={940}
             footer={null}
             closable={false}

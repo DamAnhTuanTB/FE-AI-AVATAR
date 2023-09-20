@@ -14,9 +14,9 @@ import {Form} from "antd";
 import IcShowPassword from "@/assets/icons/ic_show_password.svg";
 import IcHidePassword from '@/assets/icons/ic_hide_password.svg';
 import IcErrorLogin from "@/assets/icons/ic_login_error.svg";
-import React, {useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {AuthEnum} from "@/components/ModalAuthen/constant";
-import {useLocation, useSearchParams, createSearchParams} from "react-router-dom";
+import {useSearchParams, createSearchParams} from "react-router-dom";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {TxtLabel} from "@/components/ModalAuthen/ModalLogin/styles";
 import IcBackToSignIn from '@/assets/icons/ic_back_to_sign_in.svg';
@@ -38,6 +38,7 @@ const bottomTextArr = [
 
 interface IAuthForm {
     errorMessageApi: string,
+    setErrorMessageApi: Dispatch<SetStateAction<string>>,
     typeForm: string;
     handleSubmit: (params: any) => void;
     submitButtonLabel: string,
@@ -105,10 +106,10 @@ const PasswordContainer: React.FC<IPasswordContainer> = (props) => {
 
 const AuthenForm: React.FC<IAuthForm> = (props) => {
     const [searchParams, setSearchParams] = useSearchParams()
-    const location = useLocation();
-    const pathname = location.pathname;
+
     const {
         errorMessageApi,
+        setErrorMessageApi,
         typeForm,
         handleSubmit,
         submitButtonLabel,
@@ -222,6 +223,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
             ...values,
             isChecked
         }
+        setErrorMessageApi('')
         handleSubmit(payload)
     }
 
@@ -250,7 +252,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                 {(showForm && typeForm !== AuthEnum.ResetPassword) && (
                     <Form.Item name={'email'} rules={[{validator: validateEmailField}]}>
                         <LoginInput
-                            placeholder={'Email address'}
+                            placeholder={typeForm === AuthEnum.ForgetPassword ? 'Enter email address' : 'Email address'}
                             maxLength={100}
                             className='login-input'
                         />
@@ -280,7 +282,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                 )}
 
                 {typeForm === AuthEnum.Login && (
-                    <RememberMeWrapper>
+                    <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
                         <div className="checkbox-container">
                             <CheckboxWrapper
                                 onChange={onChangeCheckbox}
@@ -298,7 +300,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
 
                 {typeForm === AuthEnum.SignUp && (
                     <>
-                        <RememberMeWrapper>
+                        <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
                             <div className="checkbox-container">
                                 <CheckboxWrapper
                                     onChange={onChangeCheckbox}

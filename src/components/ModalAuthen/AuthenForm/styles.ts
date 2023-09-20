@@ -1,5 +1,6 @@
 import {styled} from "styled-components";
 import {Checkbox, Form, Input} from "antd";
+import {breakpoints} from "@/config/breakpoints";
 
 export const ErrorMessageApi = styled.div`
   margin-bottom: 20px;
@@ -22,6 +23,7 @@ export const ErrorMessageApi = styled.div`
 
 export const FormWrapper = styled(Form)`
   width: 100%;
+
   .ant-form-item {
     margin-bottom: 12px !important;
   }
@@ -41,8 +43,18 @@ export const FormWrapper = styled(Form)`
     border-color: #F6C447;
   }
 
-  .ant-input-status-error{
+  .ant-input-status-error {
     border: 1px solid #F84848 !important;
+  }
+
+  .login-input::placeholder {
+    color: var(--text-secondary, #737373);
+
+    font-family: Outfit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
   }
 `
 
@@ -54,17 +66,7 @@ export const LoginInput = styled(Input)`
   border: 1px solid transparent;
   outline: 0 !important;
   box-shadow: none !important;
-
-
-  .login-input::placeholder {
-    color: var(--text-secondary, #737373) !important;
-
-    /* Sub-headings/Sub-head 2/Regular */
-    font-family: Outfit, sans-serif !important;
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    line-height: 150% !important; /* 21px */
-  }
+  
 `
 
 export const ErrorMessageWrapper = styled.p`
@@ -76,7 +78,7 @@ export const ErrorMessageWrapper = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 18px */
-  margin-top: 10px;
+  margin-top: 8px;
   margin-bottom: 12px;
 `
 
@@ -96,12 +98,16 @@ export const PasswordIcon = styled.div`
   cursor: pointer;
 `
 
-export const RememberMeWrapper = styled.div`
+export const RememberMeWrapper = styled.div<{isSignUpModal: boolean}>`
   margin-top: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
+  @media screen and (max-width: ${breakpoints.md}) {
+    margin-top: ${props => props.isSignUpModal ? '20px': '12px'};
+  }
 
   .checkbox-container {
     display: flex;
