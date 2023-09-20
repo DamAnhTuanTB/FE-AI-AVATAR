@@ -46,6 +46,10 @@ export default function GenerateAvatarLayout() {
     }
   }, [pathname, isLoggedIn]);
 
+  const caseSuccessPaymentButNotAuth = !!localStorage.getItem('userIdFake');
+
+  const openModal = (auth && !isLoggedIn) || caseSuccessPaymentButNotAuth;
+
   return (
     <DefaultLayoutWrapper>
       <Header />
@@ -53,7 +57,7 @@ export default function GenerateAvatarLayout() {
         <Outlet />
       </ContentWrapper>
       {/* <Footer /> */}
-      {auth && !isLoggedIn && <ModalLogin open={!!auth && !isLoggedIn} />}
+      {openModal && <ModalLogin open={openModal} />}
     </DefaultLayoutWrapper>
   );
 }

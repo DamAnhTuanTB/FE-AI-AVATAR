@@ -9,7 +9,7 @@ interface ICustomModalAuthentication {
     children?: any
 }
 
-const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
+const  CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
     open,
     children
 }) => {
