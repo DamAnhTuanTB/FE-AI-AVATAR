@@ -3,6 +3,13 @@ import {Modal} from "antd";
 import {breakpoints} from "@/config/breakpoints";
 
 export const CustomModalWrapper = styled(Modal)`
+  .ant-modal{
+    @media screen and (max-width: ${breakpoints.sm}) {
+      margin: 16px auto;
+    }
+  }
+
+ 
   .ant-modal-content {
     border-radius: 12px;
     height: 100%;
@@ -13,6 +20,10 @@ export const CustomModalWrapper = styled(Modal)`
       padding: 32px 24px;
       border-radius: 12px;
       background: #FFF;
+
+      @media screen and (max-width: ${breakpoints.sm}) {
+        padding: 48px 24px;
+      }
 
       .close-icon-wrapper {
         position: absolute;
@@ -29,6 +40,14 @@ export const CustomModalWrapper = styled(Modal)`
         height: calc(100% - 32px - 32px);
         display: flex;
         gap: 24px;
+
+        .ant-checkbox-wrapper:hover .ant-checkbox:after, .ant-checkbox:hover:after {
+            border: none;
+        }
+        .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus+.ant-checkbox-inner {
+          border-color: #F6C447;
+        }
+        
 
         .children-wrapper {
           max-width: 400px;
