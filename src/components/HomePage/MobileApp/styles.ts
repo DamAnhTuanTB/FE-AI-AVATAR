@@ -6,9 +6,13 @@ export const Wrapper = styled(HomepageContainer)`
   align-items: center;
   justify-content: center;
   border-radius: 23px;
-  border: 1px solid #d4d4d4;
+  /* border: 1px solid #d4d4d4; */
+  background: linear-gradient(216.56deg, #ffffff 100%, #ffffff 100%) padding-box,
+    linear-gradient(76.41deg, #d4d4d4 1.52%, rgba(212, 212, 212, 0) 99.99%)
+      border-box;
   padding: 24px 80px;
   gap: 55px;
+  border: 1px solid transparent;
 `;
 
 export const TitleWrapper = styled.div`
