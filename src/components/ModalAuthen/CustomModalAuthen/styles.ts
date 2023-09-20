@@ -40,6 +40,11 @@ export const CustomModalWrapper = styled(Modal)`
         height: calc(100% - 32px - 32px);
         display: flex;
         gap: 24px;
+        
+        @media screen and (max-width: ${breakpoints.lg}) {
+          align-items: center;
+          justify-content: center;
+        }
 
         .ant-checkbox-wrapper:hover .ant-checkbox:after, .ant-checkbox:hover:after {
             border: none;
@@ -60,6 +65,10 @@ export const CustomModalWrapper = styled(Modal)`
           align-items: center;
           justify-content: center;
           padding: 10px 0;
+          
+          @media screen and (max-width: ${breakpoints.lg}) {
+            display: none;
+          }
 
           .background {
             max-width: 469px;

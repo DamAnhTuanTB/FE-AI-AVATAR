@@ -173,10 +173,10 @@ export const CheckboxWrapper = styled(Checkbox)`
   }
 `
 
-export const ButtonLogin = styled.button<{primaryButton?: boolean}>`
+export const ButtonLogin = styled.button<{primaryButton?: boolean, isRequestNewLinkButton: boolean}>`
   width: 100%;
   height: 48px;
-  margin-top: 20px;
+  margin-top: ${(props) => props.isRequestNewLinkButton ? '0' : '20px'};
 
   border: none;
   outline: 0;
