@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 40px;
+      gap: 24px;
       .title {
         display: flex;
         align-items: center;
