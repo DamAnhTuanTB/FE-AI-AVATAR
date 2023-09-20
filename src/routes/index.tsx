@@ -4,6 +4,7 @@ import NotFound from '@/pages/NotFound/NotFound';
 import Login from '@/pages/Login/Login';
 import GenerateAvatar from '@/pages/GenerateAvatar';
 import GenerateAvatarLayout from '@/layouts/GenerateAvatarLayout';
+import HomePage from '@/pages/HomePage';
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
         element: <GenerateAvatar />,
       },
     ],
+  },
+  {
+    path: ROUTES.HOME_PAGE,
+    element: <HomePage />,
   },
   {
     path: ROUTES.LOGIN,
