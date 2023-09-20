@@ -3,7 +3,7 @@ import { APIs } from './config/api';
 import tokenAuthService from './tokenAuth.service';
 
 const authServices = {
-  login(payload: { email: string; password: string; userType: string }) {
+  login(payload: { email: string; password: string; userType?: string }) {
     return authRequest.post(`${APIs.LOGIN}/login`, payload);
   },
 
@@ -12,7 +12,11 @@ const authServices = {
   },
 
   signUp(payload: any) {
-    return authRequest.post(`${APIs.LOGIN}/register`, payload);
+    return authRequest.post(`${APIs.LOGIN}/register/no-verify`, payload);
+  },
+
+  getUserInforFromAuthenService() {
+    return authRequest.post(`${APIs.LOGIN}${APIs.ME}`)
   },
 
   forgetPassword(payload: any) {
