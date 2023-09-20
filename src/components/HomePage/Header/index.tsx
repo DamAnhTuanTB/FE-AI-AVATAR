@@ -11,6 +11,7 @@ import {
 } from './style';
 import ArrowRight from '@/components/Icons/ArrowRight';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/routes/routes';
 
 const links = [
   { title: 'Why AI Avatar', href: '#why-choose-avatar' },
@@ -36,7 +37,7 @@ export default function Header() {
 
         <GetStartedWrapper
           onClick={() => {
-            navigate('');
+            navigate(ROUTES.HOME);
           }}
         >
           <p>Get Started</p>

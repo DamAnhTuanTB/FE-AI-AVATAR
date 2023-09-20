@@ -39,6 +39,7 @@ import AvatarScroll10 from '@/assets/images/home-page/avt-scroll-10.svg';
 import ShadowTop from '@/assets/images/home-page/shadow-avt-scroll-top.png';
 import ShadowBottom from '@/assets/images/home-page/shadow-avt-scroll-bottom.png';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/routes/routes';
 
 const reviewers = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
 
@@ -82,7 +83,7 @@ export default function Intro() {
 
           <GetStartedWrapper
             onClick={() => {
-              navigate('');
+              navigate(ROUTES.HOME);
             }}
           >
             <p>Get started</p>

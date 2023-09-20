@@ -17,6 +17,7 @@ import WardIcon from '@/components/Icons/WardIcon';
 import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
 import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/routes/routes';
 
 export default function ReadyStarted() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function ReadyStarted() {
           </div>
           <CreateButtonWrapper
             onClick={() => {
-              navigate('');
+              navigate(ROUTES.HOME);
             }}
           >
             <WardIcon />
