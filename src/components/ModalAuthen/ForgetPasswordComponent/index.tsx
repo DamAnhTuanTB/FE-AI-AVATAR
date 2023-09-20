@@ -7,9 +7,10 @@ import {useSearchParams} from "react-router-dom";
 
 export default function ForgetPasswordComponent() {
     const [errorMessageApi, setErrorMessageApi] = useState('')
-    const [isSendMailSuccess, setIsSendMailSuccess] = useState(true)
+    const [isSendMailSuccess, setIsSendMailSuccess] = useState(false)
     const handleSubmit = (formData: any) => {
         console.log('formData', formData)
+        setIsSendMailSuccess(true)
     }
 
     return (
