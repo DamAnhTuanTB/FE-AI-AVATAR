@@ -82,6 +82,7 @@ export default function ResetPasswordComponent() {
 
             <AuthenForm
                 errorMessageApi={errorMessageApi}
+                setErrorMessageApi={setErrorMessageApi}
                 typeForm={AuthEnum.ResetPassword}
                 handleSubmit={handleSubmit}
                 submitButtonLabel={'Set new password'}
