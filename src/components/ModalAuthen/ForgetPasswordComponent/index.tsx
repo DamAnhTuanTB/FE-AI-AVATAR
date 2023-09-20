@@ -1,5 +1,5 @@
 import {ForgetPasswordWrapper} from "@/components/ModalAuthen/ModalLogin/styles";
-import IcForgetPasswordLogo from '@/assets/icons/ic_forget_password_logo.svg'
+import IcLogo from '@/assets/images/ic_logo.png'
 import AuthenForm from "@/components/ModalAuthen/AuthenForm";
 import {AUTH_ERROR_MESSAGE, AuthEnum} from "@/components/ModalAuthen/constant";
 import React, {useEffect, useState} from "react";
@@ -38,7 +38,7 @@ export default function ForgetPasswordComponent() {
     return (
         <ForgetPasswordWrapper>
             <div className="icon">
-                <img src={IcForgetPasswordLogo} alt=""/>
+                <img src={IcLogo} alt=""/>
             </div>
 
             {!isSendMailSuccess

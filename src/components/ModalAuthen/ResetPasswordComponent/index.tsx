@@ -1,11 +1,11 @@
 import {ForgetPasswordWrapper} from "@/components/ModalAuthen/ModalLogin/styles";
-import IcForgetPasswordLogo from '@/assets/icons/ic_forget_password_logo.svg'
 import AuthenForm from "@/components/ModalAuthen/AuthenForm";
 import {AUTH_ERROR_MESSAGE, AuthEnum} from "@/components/ModalAuthen/constant";
 import React, {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import authServices from "@/services/auth.service";
 import {HTTP_STATUS} from "@/services/config/api";
+import IcLogo from '@/assets/images/ic_logo.png'
 
 export default function ResetPasswordComponent() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -61,16 +61,13 @@ export default function ResetPasswordComponent() {
     return (
         <ForgetPasswordWrapper>
             <div className="icon">
-                <img src={IcForgetPasswordLogo} alt=""/>
+                <img src={IcLogo} alt=""/>
             </div>
 
             {!IsLinkInvalid
                 ? (
                     <div className="text-wrapper">
                         <div className="title">Set new password</div>
-                        {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        {/* <div className="subtitle">Enter your email and we'll send you a link to reset your password */}
-                        {/* </div> */}
                     </div>
                 )
                 : (
