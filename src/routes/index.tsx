@@ -11,13 +11,13 @@ export const router = createBrowserRouter([
     element: <GenerateAvatarLayout />,
     children: [
       {
-        path: ROUTES.HOME,
+        path: ROUTES.APP_PAGE,
         element: <GenerateAvatar />,
       },
     ],
   },
   {
-    path: ROUTES.HOME_PAGE,
+    path: ROUTES.HOME,
     element: <HomePage />,
   },
   {

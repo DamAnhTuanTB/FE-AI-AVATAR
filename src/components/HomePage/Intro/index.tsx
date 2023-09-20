@@ -83,7 +83,7 @@ export default function Intro() {
 
           <GetStartedWrapper
             onClick={() => {
-              navigate(ROUTES.HOME);
+              navigate(ROUTES.APP_PAGE);
             }}
           >
             <p>Get started</p>
