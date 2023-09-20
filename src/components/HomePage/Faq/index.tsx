@@ -19,12 +19,12 @@ export default function Faq() {
   const questions = [
     {
       key: '1',
-      title: 'Is the AI Avatar Maker suitable for all skill levels?',
+      title: 'Is Avatarist suitable for all skill levels?',
       content: `Absolutely! Our user-friendly interface makes avatar creation a breeze, whether you're a tech wizard or a complete novice.`,
     },
     {
       key: '2',
-      title: 'Is the AI Avatar Maker suitable for all skill levels?',
+      title: 'Can I use my avatars on multiple platforms?',
       content: `Absolutely! Your avatars are designed to shine on social media, gaming channels, professional platforms, and beyond.`,
     },
     {
@@ -46,8 +46,8 @@ export default function Faq() {
         <AnyQuestion>
           Have more questions? <br />
           Email us at
-          <ContactMail href={'mailto:support@aiavatar.ai'}>
-            support@aiavatar.ai
+          <ContactMail href={'mailto:hello@avatarist.ai'}>
+            hello@avatarist.ai
           </ContactMail>
         </AnyQuestion>
       </TitleWrapper>

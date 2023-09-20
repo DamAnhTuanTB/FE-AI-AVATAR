@@ -30,7 +30,7 @@ const users = [
     name: 'Sarah Johnson',
     job: 'Social Media Influencer',
     rate: 5,
-    said: `“The AI Avatar Maker is a game-changer! It's taken my online presence to a whole new level. My followers love the creativity, and it's boosted my engagement.”`,
+    said: `“Avatarist is a game-changer! It's taken my online presence to a whole new level. My followers love the creativity, and it's boosted my engagement.”`,
     avt: User1,
   },
   {
@@ -38,7 +38,7 @@ const users = [
     name: 'Jaylen Smith',
     job: 'Gamer & Streamer',
     rate: 5,
-    said: `“As a streamer, my avatar is my brand. The AI Avatar Maker gave me the freedom to design a character that represents my gaming style. It's been a hit on Twitch!”`,
+    said: `“As a streamer, my avatar is my brand. Avatarist gave me the freedom to design a character that represents my gaming style. It's been a hit on Twitch!”`,
     avt: User2,
   },
   {
@@ -54,7 +54,7 @@ const users = [
     name: 'David Rodriguez',
     job: 'Student & Content Creator',
     rate: 5,
-    said: `“Being a content creator on YouTube, I wanted a unique avatar that stands out. The AI Avatar Maker had me covered with its wide range of styles.”`,
+    said: `“Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
     avt: User4,
   },
   {
@@ -62,7 +62,7 @@ const users = [
     name: 'Laura Chen',
     job: 'Freelance Artist',
     rate: 4,
-    said: `“As an artist, I appreciate good design. The AI Avatar Maker's user-friendly interface made it easy for me to customize avatars for my clients.”`,
+    said: `“As an artist, I appreciate good design. Avatarist's user-friendly interface made it easy for me to customize avatars for my clients.”`,
     avt: User5,
   },
   {
@@ -78,7 +78,7 @@ const users = [
     name: 'Natalie Attired',
     job: 'Student & Content Creator',
     rate: 5,
-    said: `““Being a content creator on YouTube, I wanted a unique avatar that stands out. The AI Avatar Maker had me covered with its wide range of styles.”`,
+    said: `““Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
     avt: User7,
   },
   {
@@ -86,7 +86,7 @@ const users = [
     name: 'Nicole Anne Dime',
     job: 'Freelance Artist',
     rate: 4,
-    said: `“As an artist, I appreciate good design. The AI Avatar Maker's user-friendly interface made it easy for me to customize avatars for my clients.”`,
+    said: `“As an artist, I appreciate good design. Avatarist's user-friendly interface made it easy for me to customize avatars for my clients.”`,
     avt: User8,
   },
   {

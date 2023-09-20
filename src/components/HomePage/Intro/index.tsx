@@ -76,8 +76,8 @@ export default function Intro() {
             <Title>Express limitless versions of yourself with AI Avatar</Title>
             <IntroDescription>
               Transform your photos into AI-powered avatars that mirror your
-              style and persona. Elevate your digital presence with the AI
-              Avatar Maker today!
+              style and persona. Elevate your digital presence with
+              Avatarist today!
             </IntroDescription>
           </div>
 
