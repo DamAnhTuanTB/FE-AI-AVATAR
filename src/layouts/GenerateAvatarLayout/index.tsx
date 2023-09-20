@@ -51,7 +51,7 @@ export default function GenerateAvatarLayout() {
                 <Outlet/>
             </ContentWrapper>
             {/* <Footer /> */}
-            {auth && <ModalLogin open={!!auth}
+            {(auth && !isLoggedIn) && <ModalLogin open={!!auth && !isLoggedIn}
             />}
 
         </DefaultLayoutWrapper>

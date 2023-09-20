@@ -18,8 +18,7 @@ const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
 
     const handleCloseModal = () => {
         if (auth) {
-            searchParams.delete('auth');
-            setSearchParams(searchParams);
+            setSearchParams({});
         }
     }
 
