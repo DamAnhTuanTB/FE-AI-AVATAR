@@ -34,6 +34,7 @@ export const ContentWrapper = styled.div`
 
 export const IntroDescription = styled(Description)`
   margin-top: 16px;
+  text-align: left;
 `;
 
 export const GetStartedWrapper = styled.div`
