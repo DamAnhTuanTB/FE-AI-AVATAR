@@ -7,6 +7,7 @@ export const VERSION = {
 };
 
 export const APIs = {
+  ME: '/me',
   LOGIN: '/auth',
   USERS: '/users',
   GET_ME: '/profile',
