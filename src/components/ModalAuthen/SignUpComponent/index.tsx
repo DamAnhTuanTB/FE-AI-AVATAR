@@ -171,6 +171,7 @@ const SignUpComponent = () => {
                 errorMessageApi={errorMessageApi}
                 typeForm={AuthEnum.SignUp}
                 handleSubmit={handleSubmit}
+                submitButtonLabel={'Register'}
             />
         </>
     );

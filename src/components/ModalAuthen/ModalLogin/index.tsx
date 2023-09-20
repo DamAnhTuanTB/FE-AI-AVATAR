@@ -4,6 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import LoginComponent from "@/components/ModalAuthen/LoginComponent";
 import SignUpComponent from "@/components/ModalAuthen/SignUpComponent";
 import {AuthEnum} from "@/components/ModalAuthen/constant";
+import ForgetPasswordComponent from "@/components/ModalAuthen/ForgetPasswordComponent";
 
 interface IModalLogin {
     open: boolean;
@@ -19,6 +20,9 @@ export default function ModalLogin(props: IModalLogin) {
         }
         if (auth === AuthEnum.SignUp) {
             return <SignUpComponent/>
+        }
+        if (auth === AuthEnum.ForgetPassword) {
+            return <ForgetPasswordComponent />
         }
     }
 

@@ -69,8 +69,7 @@ const LoginComponent: React.FC = () => {
         if (errorCode) {
             searchParams.delete('errorCode');
         }
-        const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}&method=post`;
-        console.log('newPath', newPath)
+        const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}`;
 
         const redirectRoute = `${process.env.REACT_APP_AUTHEN_BASE_URL}/${platform}?redirect_url=${newPath}&user_type=${process.env.REACT_APP_USER_TYPE}&platform=${platform}`;
         window.location.href = redirectRoute;
@@ -151,6 +150,7 @@ const LoginComponent: React.FC = () => {
                 errorMessageApi={errorMessageApi}
                 typeForm={AuthEnum.Login}
                 handleSubmit={handleSubmit}
+                submitButtonLabel={'Sign In'}
             />
         </>
     );

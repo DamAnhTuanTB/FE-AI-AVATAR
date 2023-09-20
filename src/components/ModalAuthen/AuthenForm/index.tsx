@@ -1,4 +1,5 @@
 import {
+    BackToSignInButton,
     BottomTextWrapper,
     ButtonLogin,
     CheckboxWrapper,
@@ -15,9 +16,10 @@ import IcHidePassword from '@/assets/icons/ic_hide_password.svg';
 import IcErrorLogin from "@/assets/icons/ic_login_error.svg";
 import React, {useState} from "react";
 import {AuthEnum} from "@/components/ModalAuthen/constant";
-import {useLocation, useNavigate, useSearchParams, createSearchParams} from "react-router-dom";
-import {CheckboxValueType} from "antd/lib/checkbox/Group";
+import {useLocation, useSearchParams, createSearchParams} from "react-router-dom";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
+import {TxtLabel} from "@/components/ModalAuthen/ModalLogin/styles";
+import IcBackToSignIn from '@/assets/icons/ic_back_to_sign_in.svg';
 
 const bottomTextArr = [
     {
@@ -37,7 +39,10 @@ const bottomTextArr = [
 interface IAuthForm {
     errorMessageApi: string,
     typeForm: string;
-    handleSubmit: (params: any) => void
+    handleSubmit: (params: any) => void;
+    submitButtonLabel: string,
+    showBackToSignInButton?: boolean,
+    showForm?: boolean
 }
 
 interface IPasswordContainer {
@@ -102,7 +107,14 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
     const [searchParams, setSearchParams] = useSearchParams()
     const location = useLocation();
     const pathname = location.pathname;
-    const {errorMessageApi, typeForm, handleSubmit} = props;
+    const {
+        errorMessageApi,
+        typeForm,
+        handleSubmit,
+        submitButtonLabel,
+        showBackToSignInButton,
+        showForm
+    } = props;
     const [form] = Form.useForm();
 
     const [isChecked, setIsChecked] = useState(false);
@@ -184,6 +196,16 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
         setShowErrorMessageCheckbox(!e.target.checked)
     }
 
+    const handleShowSignInLayout = () => {
+        searchParams.set('auth', AuthEnum.Login)
+        setSearchParams(searchParams)
+    }
+
+    const handleMoveToForgetPasswordLayout = () => {
+        searchParams.set('auth', AuthEnum.ForgetPassword)
+        setSearchParams(searchParams)
+    }
+
     const onFinishFailed = (errorInfor: any) => {
         if (typeForm === AuthEnum.SignUp && !isChecked) {
             setShowErrorMessageCheckbox(true);
@@ -216,20 +238,33 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                 onFinishFailed={onFinishFailed}
                 onFinish={onFinish}
             >
-                <Form.Item name={'email'} rules={[{validator: validateEmailField}]}>
-                    <LoginInput
-                        placeholder={'Email address'}
-                        maxLength={100}
-                        className='login-input'
+                {(typeForm === AuthEnum.ForgetPassword && showForm) && (
+                    <TxtLabel>Email</TxtLabel>
+                )}
+                {showForm && (
+                    <Form.Item name={'email'} rules={[{validator: validateEmailField}]}>
+                        <LoginInput
+                            placeholder={'Email address'}
+                            maxLength={100}
+                            className='login-input'
+                        />
+                    </Form.Item>
+                )}
+
+                {typeForm === AuthEnum.ResetPassword && (
+                    <TxtLabel>New password</TxtLabel>
+                )}
+                {typeForm !== AuthEnum.ForgetPassword && (
+                    <PasswordContainer
+                        name={'password'}
+                        placeholder={'Password'}
+                        rules={[{validator: validatePasswordField}]}
                     />
-                </Form.Item>
+                )}
 
-                <PasswordContainer
-                    name={'password'}
-                    placeholder={'Password'}
-                    rules={[{validator: validatePasswordField}]}
-                />
-
+                {typeForm === AuthEnum.ResetPassword && (
+                    <TxtLabel>Confirm new password</TxtLabel>
+                )}
                 {(typeForm === AuthEnum.SignUp || typeForm === AuthEnum.ResetPassword) && (
                     <PasswordContainer
                         name={'confirm-password'}
@@ -249,7 +284,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                             </div>
                         </div>
 
-                        <div className='forget-password'>
+                        <div className='forget-password' onClick={() => handleMoveToForgetPasswordLayout()}>
                             Forgot Password?
                         </div>
                     </RememberMeWrapper>
@@ -269,24 +304,43 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                             </div>
                         </RememberMeWrapper>
                         {showErrorMessageCheckbox &&
-                            <ErrorMessage message={'Please checked this check box to continue'}/>}
+                            <ErrorMessage message={'Please check this check box to continue'}/>}
                     </>
 
                 )}
 
 
                 {/*    Button submit */}
-                <Form.Item>
-                    <ButtonLogin type={'submit'}>
-                        Sign In
-                    </ButtonLogin>
-                </Form.Item>
+                {showForm && (
+                    <Form.Item>
+                        <ButtonLogin
+                            type={'submit'}
+                            primaryButton={typeForm === AuthEnum.ForgetPassword || typeForm === AuthEnum.ResetPassword}
+                        >
+                            {submitButtonLabel}
+                        </ButtonLogin>
+                    </Form.Item>
+                )}
+
+
+                {showBackToSignInButton && (
+                    <BackToSignInButton onClick={() => handleShowSignInLayout()}>
+                        <img src={IcBackToSignIn} alt=""/>
+                        <div className="text">
+                            Back to sign in
+                        </div>
+                    </BackToSignInButton>
+                )}
 
                 {/*    Bottom text */}
                 {renderBottomText()}
             </FormWrapper>
         </>
     )
+}
+
+AuthenForm.defaultProps = {
+    showForm: true
 }
 
 export default AuthenForm;
