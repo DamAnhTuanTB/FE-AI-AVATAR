@@ -3,4 +3,5 @@ export const ROUTES = {
   LOGIN: '/login',
   HOME_PAGE: '/home-page',
   ERROR: '*',
+  SALE_PAGE: 'sales-page',
 };

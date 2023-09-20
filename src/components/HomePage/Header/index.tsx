@@ -10,15 +10,17 @@ import {
   Wrapper,
 } from './style';
 import ArrowRight from '@/components/Icons/ArrowRight';
+import { useNavigate } from 'react-router-dom';
 
 const links = [
-  { title: 'Why AI Avatar', href: '' },
-  { title: 'How it works?', href: '' },
-  { title: 'FAQs', href: '' },
-  { title: 'Testimonials', href: '' },
+  { title: 'Why AI Avatar', href: '#why-choose-avatar' },
+  { title: 'How it works?', href: '#how-it-works' },
+  { title: 'FAQs', href: '#faq' },
+  { title: 'Testimonials', href: '#testimonials' },
 ];
 
 export default function Header() {
+  const navigate = useNavigate();
   return (
     <ContainerWrapper>
       <Wrapper>
@@ -26,11 +28,17 @@ export default function Header() {
 
         <MenusLink>
           {links.map((link) => (
-            <MenuLink key={link.title}>{link.title}</MenuLink>
+            <MenuLink key={link.title} href={link.href}>
+              {link.title}
+            </MenuLink>
           ))}
         </MenusLink>
 
-        <GetStartedWrapper>
+        <GetStartedWrapper
+          onClick={() => {
+            navigate('');
+          }}
+        >
           <p>Get Started</p>
           <ArrowRight />
         </GetStartedWrapper>

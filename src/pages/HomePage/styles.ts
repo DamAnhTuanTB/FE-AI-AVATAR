@@ -15,6 +15,7 @@ export const HomepageContainer = styled.div`
 `;
 
 export const BannerWrapper = styled.div`
+  cursor: pointer;
   background: linear-gradient(
     90deg,
     #8170ea 0%,

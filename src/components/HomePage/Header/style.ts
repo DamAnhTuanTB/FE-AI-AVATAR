@@ -30,12 +30,13 @@ export const MenusLink = styled.div`
   align-items: center;
   justify-content: center;
   gap: 60px;
+
   @media screen and (max-width: ${breakpoints.md}) {
     display: none;
   }
 `;
 
-export const MenuLink = styled.p`
+export const MenuLink = styled.a`
   color: var(--text-primary, #18181b);
   font-family: Outfit;
   font-size: 16px;
@@ -43,6 +44,9 @@ export const MenuLink = styled.p`
   font-weight: 500;
   line-height: 150%;
   margin: 0;
+  &:hover {
+    color: var(--text-primary, #18181b);
+  }
 `;
 
 export const GetStartedWrapper = styled.div`

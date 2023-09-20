@@ -103,7 +103,7 @@ export default function UsersSay() {
   const { isMobile } = useScreenSize();
   const usersShowed = isMobile ? users.slice(0, 3) : users;
   return (
-    <Wrapper>
+    <Wrapper id="testimonials">
       <SubTitle>TESTIMONIALS</SubTitle>
       <CustomTitle>What our users say</CustomTitle>
       <Description>

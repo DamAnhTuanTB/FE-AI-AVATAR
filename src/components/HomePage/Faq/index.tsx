@@ -40,7 +40,7 @@ export default function Faq() {
   ];
 
   return (
-    <Wrapper>
+    <Wrapper id="faq">
       <TitleWrapper>
         <Title>FAQs</Title>
         <AnyQuestion>

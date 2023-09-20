@@ -16,8 +16,10 @@ import ReadyStartedImg from '@/assets/images/home-page/ready-started-img.png';
 import WardIcon from '@/components/Icons/WardIcon';
 import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
 import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function ReadyStarted() {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <BodyWrapper>
@@ -33,7 +35,11 @@ export default function ReadyStarted() {
               tell your unique story!
             </CustomDescription>
           </div>
-          <CreateButtonWrapper>
+          <CreateButtonWrapper
+            onClick={() => {
+              navigate('');
+            }}
+          >
             <WardIcon />
             <p>Create your AI Avatar now!</p>
           </CreateButtonWrapper>

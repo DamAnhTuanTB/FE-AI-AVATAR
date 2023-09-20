@@ -40,7 +40,7 @@ const steps = [
 
 export default function StepsToCreate() {
   return (
-    <Wrapper>
+    <Wrapper id="how-it-works">
       <SubTitle>HOW IT WORKS</SubTitle>
       <CustomTitle>Steps to create AI avatars</CustomTitle>
       <Description>
