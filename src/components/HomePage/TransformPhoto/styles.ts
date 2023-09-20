@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer, Title } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
 
@@ -18,6 +19,9 @@ export const FeaturesWrapper = styled.div`
   gap: 20px;
   width: 100%;
   margin-top: 60px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export const FeatureCard = styled.div`

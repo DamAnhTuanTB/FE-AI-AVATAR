@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer, Title } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
 
@@ -19,6 +20,10 @@ export const BodyWrapper = styled.div`
   width: 100%;
   margin-top: 60px;
   position: relative;
+  @media screen and (max-width: ${breakpoints.md}) {
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 40px;
+  }
 `;
 
 export const UserCard = styled.div<{ gradient?: boolean }>`
@@ -94,4 +99,7 @@ export const Shadow = styled.div`
     #fff 33.85%,
     rgba(255, 255, 255, 0) 100%
   );
+  @media screen and (max-width: ${breakpoints.md}) {
+    display: none;
+  }
 `;

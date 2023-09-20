@@ -3,6 +3,7 @@ import React from 'react';
 import {
   AvatarScroll,
   AvatarsColItem,
+  ContainerWrapper,
   ContentWrapper,
   GetStartedWrapper,
   IntroDescription,
@@ -65,7 +66,7 @@ const avatars = [
 
 export default function Intro() {
   return (
-    <HomepageContainer>
+    <ContainerWrapper>
       <Wrapper>
         <ContentWrapper>
           <div>
@@ -89,7 +90,7 @@ export default function Intro() {
                   key={index}
                   src={reviewer}
                   alt={`reviewer ${index + 1}`}
-                  style={{ marginLeft: index === 0 ? '0px' : '-17px' }}
+                  first={index === 0}
                 />
               ))}
             </ReviewersWrapper>
@@ -108,7 +109,7 @@ export default function Intro() {
           </ReviewsWrapper>
         </ContentWrapper>
 
-        <ScrollWrapper style={{ position: 'relative' }}>
+        <ScrollWrapper>
           <ScrollAvatarWrapper>
             {avatars.map((avatarsCol) => (
               <AvatarsColItem key={avatarsCol.key}>
@@ -130,6 +131,6 @@ export default function Intro() {
           />
         </ScrollWrapper>
       </Wrapper>
-    </HomepageContainer>
+    </ContainerWrapper>
   );
 }

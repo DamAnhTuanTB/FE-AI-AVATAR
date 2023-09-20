@@ -1,10 +1,21 @@
-import { Description } from '@/pages/HomePage/styles';
+import { breakpoints } from '@/config/breakpoints';
+import { Description, HomepageContainer } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
+
+export const ContainerWrapper = styled(HomepageContainer)`
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0px;
+  }
+`;
 
 export const Wrapper = styled.div`
   display: flex;
   /* align-items: center; */
   gap: 120px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    flex-direction: column;
+    gap: 13px;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -12,6 +23,13 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    margin-top: 40px;
+    padding: 0 20px;
+    p {
+      text-align: start;
+    }
+  }
 `;
 
 export const IntroDescription = styled(Description)`
@@ -56,7 +74,13 @@ export const ReviewersWrapper = styled.div`
   align-items: center;
 `;
 
-export const Reviewer = styled.img``;
+export const Reviewer = styled.img<{ first?: boolean }>`
+  margin-left: ${(props) => (props.first ? '0px' : '-17px')};
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 42px;
+    margin-left: ${(props) => (props.first ? '0px' : '-14px')};
+  }
+`;
 
 export const ReviewsContent = styled.div`
   display: flex;
@@ -103,6 +127,9 @@ export const ReviewsCount = styled.p`
 
 export const ScrollWrapper = styled.div`
   position: relative;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 export const ScrollAvatarWrapper = styled.div`
@@ -112,16 +139,37 @@ export const ScrollAvatarWrapper = styled.div`
   min-width: 450px;
   height: 614px;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 12px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #f5f5f5 !important;
+    border-radius: 12px;
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    min-width: auto;
+    width: 100%;
+  }
 `;
 
 export const AvatarsColItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14.57px;
+  width: 100%;
 `;
 
 export const AvatarScroll = styled.img`
   width: fit-content;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 export const Shadow = styled.img`

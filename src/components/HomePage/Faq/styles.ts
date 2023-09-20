@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer } from '@/pages/HomePage/styles';
 import { Collapse } from 'antd';
 import styled from 'styled-components';
@@ -7,6 +8,10 @@ export const Wrapper = styled(HomepageContainer)`
   justify-content: space-between;
   align-items: flex-start;
   gap: 76.5px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    flex-direction: column;
+    gap: 40px;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -63,6 +68,7 @@ export const CustomCollapsePanel = styled(Collapse.Panel)<{ first?: boolean }>`
     font-style: normal;
     font-weight: 500;
     line-height: 150%; /* 24px */
+    padding-right: 55px;
   }
   .ant-collapse-content-box {
     padding: 12px 55px 0px 0px !important;
@@ -78,6 +84,11 @@ export const CustomCollapsePanel = styled(Collapse.Panel)<{ first?: boolean }>`
       margin: 0;
     }
   }
+  @media screen and (max-width: ${breakpoints.md}) {
+    .ant-collapse-header-text {
+      padding-right: 64px;
+    }
+  }
 `;
 
 export const ExpandIconWrapper = styled.div`
@@ -89,4 +100,5 @@ export const ExpandIconWrapper = styled.div`
   display: flex !important;
   align-items: center;
   justify-content: center;
+  right: 0px !important;
 `;

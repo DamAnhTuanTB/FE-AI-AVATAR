@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -8,6 +9,9 @@ export const HomepageContainer = styled.div`
   max-width: 1083px;
   margin: 0px auto;
   width: 100vw;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    padding: 0 20px;
+  }
 `;
 
 export const BannerWrapper = styled.div`
@@ -58,6 +62,9 @@ export const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 120px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    gap: 40px;
+  }
 `;
 
 export const SubTitle = styled.p`
@@ -79,6 +86,9 @@ export const Title = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: 120%;
+  @media screen and (max-width: ${breakpoints.md}) {
+    font-size: 32px;
+  }
 `;
 
 export const Description = styled.p`
@@ -90,4 +100,7 @@ export const Description = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+  @media screen and (max-width: ${breakpoints.md}) {
+    font-size: 14px;
+  }
 `;

@@ -22,7 +22,6 @@ const steps = [
     description:
       'Start by uploading 3-15 images. These can be selfies, portraits, or any images that truly represent you. The avatars will be based on the images you upload, so choose carefully!',
     imageSrc: StepImage1,
-    maxWidth: '269px',
   },
   {
     key: 'step 2',
@@ -30,14 +29,12 @@ const steps = [
     description:
       'Let your creativity soar in this step. Customize your avatars with an endless range of aesthetics, styles, themes for multiple possible outcomes.',
     imageSrc: StepImage2,
-    maxWidth: '269px',
   },
   {
     key: 'step 3',
     title: 'Generate your avatar',
     description: `Now, it's time to sit back and relax as our advanced AI technology works its magic. In just a matter of minutes, your personalized AI avatar will be crafted and promptly delivered straight to your email inbox.`,
     imageSrc: StepImage3,
-    maxWidth: '320px',
   },
 ];
 
@@ -62,11 +59,7 @@ export default function StepsToCreate() {
                 <StepDescription>{step.description}</StepDescription>
               </div>
             </StepContent>
-            <StepImage
-              src={step.imageSrc}
-              alt={step.key}
-              max-width={step.maxWidth}
-            />
+            <StepImage src={step.imageSrc} alt={step.key} third={index === 2} />
           </StepWrapper>
         ))}
       </StepsWrapper>

@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { Description, HomepageContainer } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
 
@@ -10,6 +11,9 @@ export const BodyWrapper = styled(HomepageContainer)`
   display: flex;
   align-items: center;
   gap: 32px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    flex-direction: column;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -25,6 +29,15 @@ export const TitleWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
+export const UnderLine = styled.img`
+  position: absolute;
+  bottom: -10px;
+  right: 0px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    bottom: -15px;
+  }
+`;
+
 export const CustomDescription = styled(Description)`
   text-align: start;
 `;
@@ -37,16 +50,27 @@ export const UnderlineDecor = styled.div`
 
 export const ImageWrapper = styled.div`
   position: relative;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 export const Image = styled.img`
   max-width: 400px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 90%;
+  }
 `;
 
 export const ImageDecor = styled.img`
   position: absolute;
   right: -60px;
   top: 10px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 50px;
+    right: 20px;
+    top: 0px;
+  }
 `;
 
 export const CreateButtonWrapper = styled.div`
@@ -71,5 +95,8 @@ export const CreateButtonWrapper = styled.div`
     font-weight: 500;
     line-height: 150%; /* 24px */
     margin: 0;
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 100%;
   }
 `;

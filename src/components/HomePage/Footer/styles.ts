@@ -1,8 +1,12 @@
+import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding-top: 40px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding-top: 0px;
+  }
 `;
 
 export const ContentWrapper = styled(HomepageContainer)`
@@ -21,6 +25,10 @@ export const ContentWrapper = styled(HomepageContainer)`
     font-style: normal;
     font-weight: 400;
     line-height: 150%; /* 18px */
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    flex-direction: column;
+    gap: 40px;
   }
 `;
 

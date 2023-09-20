@@ -8,12 +8,14 @@ import {
   ImageDecor,
   ImageWrapper,
   TitleWrapper,
+  UnderLine,
   Wrapper,
 } from './styles';
 import { Description, Title } from '@/pages/HomePage/styles';
 import ReadyStartedImg from '@/assets/images/home-page/ready-started-img.png';
 import WardIcon from '@/components/Icons/WardIcon';
 import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
+import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
 
 export default function ReadyStarted() {
   return (
@@ -23,6 +25,7 @@ export default function ReadyStarted() {
           <div>
             <TitleWrapper>
               <Title>Ready to get started?</Title>
+              <UnderLine src={UnderlineSrc} alt={'underline'} />
             </TitleWrapper>
             <CustomDescription>
               Elevate your online persona, boost brand engagement, and embrace a

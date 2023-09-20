@@ -22,6 +22,7 @@ import User7 from '@/assets/images/home-page/user-7.svg';
 import User8 from '@/assets/images/home-page/user-8.svg';
 import User9 from '@/assets/images/home-page/user-9.svg';
 import Star from '@/components/Icons/Star';
+import useScreenSize from '@/hooks/useScreenSize';
 
 const users = [
   {
@@ -99,6 +100,8 @@ const users = [
 ];
 
 export default function UsersSay() {
+  const { isMobile } = useScreenSize();
+  const usersShowed = isMobile ? users.slice(0, 3) : users;
   return (
     <Wrapper>
       <SubTitle>TESTIMONIALS</SubTitle>
@@ -109,7 +112,7 @@ export default function UsersSay() {
 
       <BodyWrapper>
         <Shadow />
-        {users.map((user, index) => (
+        {usersShowed.map((user, index) => (
           <UserCard key={user.key} gradient={index + 1 >= 7}>
             <div>
               <UserInfoWrapper>

@@ -1,7 +1,14 @@
 import { HomepageContainer } from '@/pages/HomePage/styles';
 import React from 'react';
-import Logo from '@/assets/images/logo.svg';
-import { GetStartedWrapper, MenuLink, MenusLink, Wrapper } from './style';
+import LogoSrc from '@/assets/images/logo.svg';
+import {
+  ContainerWrapper,
+  GetStartedWrapper,
+  Logo,
+  MenuLink,
+  MenusLink,
+  Wrapper,
+} from './style';
 import ArrowRight from '@/components/Icons/ArrowRight';
 
 const links = [
@@ -13,9 +20,9 @@ const links = [
 
 export default function Header() {
   return (
-    <HomepageContainer>
+    <ContainerWrapper>
       <Wrapper>
-        <img src={Logo} alt="logo" />
+        <Logo src={LogoSrc} alt="logo" />
 
         <MenusLink>
           {links.map((link) => (
@@ -28,6 +35,6 @@ export default function Header() {
           <ArrowRight />
         </GetStartedWrapper>
       </Wrapper>
-    </HomepageContainer>
+    </ContainerWrapper>
   );
 }
