@@ -49,7 +49,10 @@ export const CustomModalWrapper = styled(Modal)`
         .ant-checkbox-wrapper:hover .ant-checkbox:after, .ant-checkbox:hover:after {
             border: none;
         }
-        .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus+.ant-checkbox-inner {
+         .ant-checkbox-input:focus+.ant-checkbox-inner {
+           border-color: #E5E5E5;
+         }
+        .ant-checkbox:hover .ant-checkbox-inner {
           border-color: #F6C447;
         }
         
@@ -72,6 +75,7 @@ export const CustomModalWrapper = styled(Modal)`
 
           .background {
             max-width: 469px;
+            min-width: 469px;
             max-height: 461px;
 
             img {

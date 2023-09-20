@@ -16,7 +16,7 @@ export default function ModalLogin(props: IModalLogin) {
     const auth = searchParams.get('auth');
 
     const renderForm = () => {
-        if (!auth || auth === AuthEnum.Login) {
+        if (auth === AuthEnum.Login) {
             return <LoginComponent/>
         }
         if (auth === AuthEnum.SignUp) {

@@ -3,7 +3,6 @@ import IcLogo from '@/assets/images/ic_logo.png'
 import AuthenForm from "@/components/ModalAuthen/AuthenForm";
 import {AUTH_ERROR_MESSAGE, AuthEnum} from "@/components/ModalAuthen/constant";
 import React, {useEffect, useState} from "react";
-import {useSearchParams} from "react-router-dom";
 import authServices from "@/services/auth.service";
 import {HTTP_STATUS} from "@/services/config/api";
 
@@ -70,6 +69,7 @@ export default function ForgetPasswordComponent() {
 
             <AuthenForm
                 errorMessageApi={errorMessageApi}
+                setErrorMessageApi={setErrorMessageApi}
                 typeForm={AuthEnum.ForgetPassword}
                 handleSubmit={handleSubmit}
                 submitButtonLabel={'Request password reset'}

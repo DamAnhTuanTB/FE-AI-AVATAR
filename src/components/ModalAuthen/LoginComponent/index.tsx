@@ -140,6 +140,7 @@ const LoginComponent: React.FC = () => {
             {/*    Form */}
             <AuthenForm
                 errorMessageApi={errorMessageApi}
+                setErrorMessageApi={setErrorMessageApi}
                 typeForm={AuthEnum.Login}
                 handleSubmit={handleSubmit}
                 submitButtonLabel={'Sign In'}

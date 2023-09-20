@@ -161,6 +161,7 @@ const SignUpComponent = () => {
             {/*    Form */}
             <AuthenForm
                 errorMessageApi={errorMessageApi}
+                setErrorMessageApi={setErrorMessageApi}
                 typeForm={AuthEnum.SignUp}
                 handleSubmit={handleSubmit}
                 submitButtonLabel={'Register'}
