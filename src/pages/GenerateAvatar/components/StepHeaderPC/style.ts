@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
     display: flex;
     gap: 24px;
     .item-step {
-      cursor: pointer;
+      cursor: not-allowed;
       width: 195px;
       height: 45px;
       display: flex;

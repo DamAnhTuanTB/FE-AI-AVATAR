@@ -6,3 +6,13 @@ export const shuffleArray = (array: any) => {
   }
   return shuffled;
 };
+
+export const capitalizeWords = (inputString: string) => {
+  const words = inputString.split('_');
+
+  const capitalizedWords = words.map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  const resultString = capitalizedWords.join(' ');
+  return resultString;
+};

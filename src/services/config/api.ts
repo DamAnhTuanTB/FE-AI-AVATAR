@@ -15,6 +15,13 @@ export const APIs = {
   GET_LIST_STYLES: '/resources/avatar-styles',
   GENERATE_IMAGE: '/generate/avatar-session-no-signature',
   CREATE_SESSION: '/session',
+  GET_LIST_PRICE: '/stripe/prices',
+  PURCHASE_NOW: '/stripe/order',
+  GET_PRESIGN_FILE: '/presign-link',
+  GET_LIST_SESSION: '/session',
+  GET_DETAIL_SESSION: '/session',
+  DOWNLOAD_ALL_PACK: '/session/download',
+  DOWNLOAD_ALL_AVATAR_WITH_STYLE: '/session/download-all-image-with-style',
 };
 
 export const HTTP_STATUS = {
