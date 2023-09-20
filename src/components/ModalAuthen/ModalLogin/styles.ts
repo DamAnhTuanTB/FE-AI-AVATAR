@@ -84,5 +84,82 @@ export const OrTextWrapper = styled.div`
   }
 `
 
+export const TxtLabel = styled.div`
+  color: var(--secondary-black, #262626);
 
+  /* Body/Body 1/Medium */
+  font-family: Outfit;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+  margin-bottom: 8px;
+`
+
+export const ForgetPasswordWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    height: 32px;
+    margin-bottom: 20px;
+  }
+
+  .text-wrapper {
+    margin-bottom: 16px;
+    text-align: center;
+
+    .title {
+      color: var(--text-primary, #18181B);
+      text-align: center;
+
+      /* Sub-headings/Sub-head 1/Semibold */
+      font-family: Outfit;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%; /* 24px */
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-primary, #18181B);
+      text-align: center;
+
+      /* Body/Body 1/Regular */
+      font-family: Outfit;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%; /* 21px */
+    }
+  }
+
+  .resend-email-wrapper {
+    color: var(--text-primary, #18181B);
+    text-align: center;
+
+    /* Sub-headings/Sub-head 2/Regular */
+    font-family: Outfit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
+
+    span {
+      color: var(--text-primary, #18181B);
+
+      /* Sub-headings/Sub-head 2/Semibold */
+      font-family: Outfit;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%;
+      cursor: pointer;
+    }
+  }
+`
 

@@ -72,6 +72,7 @@ export const PopoverAvatarWrapper = styled(Popover)``
 export const ContentPopoverWrapper = styled.div`
   .title {
     display: flex;
+    align-items: center;
     gap: 8px;
     margin-bottom: 8px;
 
