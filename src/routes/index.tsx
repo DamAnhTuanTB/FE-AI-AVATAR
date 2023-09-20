@@ -5,6 +5,7 @@ import Login from '@/pages/Login/Login';
 import GenerateAvatar from '@/pages/GenerateAvatar';
 import GenerateAvatarLayout from '@/layouts/GenerateAvatarLayout';
 import HomePage from '@/pages/HomePage';
+import SalePage from '@/pages/SalePage';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.HOME_PAGE,
     element: <HomePage />,
+  },
+  {
+    path: ROUTES.SALE_PAGE,
+    element: <SalePage />,
   },
   {
     path: ROUTES.LOGIN,
