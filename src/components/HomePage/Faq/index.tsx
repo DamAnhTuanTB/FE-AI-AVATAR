@@ -14,7 +14,7 @@ import PlusIcon from '@/components/Icons/PlusIcon';
 import { useState } from 'react';
 
 export default function Faq() {
-  const [activeKey, setActiveKey] = useState(['1']);
+  const [activeKey, setActiveKey] = useState<any>(['1']);
 
   const questions = [
     {
@@ -71,7 +71,9 @@ export default function Faq() {
             );
           }}
           onChange={(key) => {
-            if (typeof key !== 'string' && key.length > 0) {
+            if (key.length > 1) {
+              setActiveKey(key.slice(-1));
+            } else {
               setActiveKey(key);
             }
           }}

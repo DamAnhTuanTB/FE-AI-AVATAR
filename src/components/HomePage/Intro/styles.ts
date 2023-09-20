@@ -35,6 +35,9 @@ export const ContentWrapper = styled.div`
 export const IntroDescription = styled(Description)`
   margin-top: 16px;
   text-align: left;
+  @media screen and (max-width: ${breakpoints.md}) {
+    font-size: 16px;
+  }
 `;
 
 export const GetStartedWrapper = styled.div`
