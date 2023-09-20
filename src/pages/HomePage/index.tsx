@@ -15,6 +15,8 @@ import StepsToCreate from '@/components/HomePage/StepsToCreate';
 import UsersSay from '@/components/HomePage/UsersSay';
 import MobileApp from '@/components/HomePage/MobileApp';
 import HomePageFooter from '@/components/HomePage/Footer';
+import Faq from '@/components/HomePage/Faq';
+import ReadyStarted from '@/components/HomePage/ReadyStarted';
 
 export default function HomePage() {
   return (
@@ -28,12 +30,15 @@ export default function HomePage() {
       </BannerWrapper>
 
       <Header />
+
       <BodyWrapper>
         <Intro />
         <TransformPhoto />
         <StepsToCreate />
         <UsersSay />
         <MobileApp />
+        <Faq />
+        <ReadyStarted />
       </BodyWrapper>
 
       <HomePageFooter />

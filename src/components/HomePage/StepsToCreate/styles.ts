@@ -38,7 +38,10 @@ export const StepContent = styled.div`
   gap: 40px;
 `;
 
-export const StepImage = styled.img``;
+export const StepImage = styled.img<{ 'max-width': string }>`
+  max-width: ${(props) => props['max-width']};
+  width: 100%;
+`;
 
 export const StepIcon = styled.div`
   flex: 1 0 auto;
