@@ -106,7 +106,6 @@ export const ContentPopoverWrapper = styled.div`
 
   .remaining-generated-count {
     color: var(--neutral-800, #262626);
-    text-align: center;
 
     /* Body/Body 2/Regular */
     font-family: Outfit;

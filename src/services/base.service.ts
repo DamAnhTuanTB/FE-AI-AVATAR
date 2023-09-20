@@ -89,7 +89,7 @@ class BaseRequest {
 
         if (statusCode === HTTP_STATUS.UNAUTHORIZED) {
           await store.dispatch(logOut());
-          eraseCookie('auth-user');
+          eraseCookie(CONFIG.COOKIE_AUTH_TOKEN);
         }
 
         const originalConfig = err.config;

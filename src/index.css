@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 /* @font-face {
   font-family: 'MyFont';
   src: url('./assets/fonts/my-font.ttf') format('truetype');
   font-weight: 400;
 } */
+
+html{scroll-behavior:smooth}
 
 body {
   margin: 0;
@@ -19,7 +22,7 @@ code {
     monospace;
 }
 
-*{
+* {
   box-sizing: border-box;
   font-family: Outfit;
 }
@@ -31,11 +34,11 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--stroke-test, #1a202f);
+  background: var(--stroke-test, #fff);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--linear, linear-gradient(217deg, #e250e5 0%, #4b50e6 100%));
+  background: #f6c447;
   border-radius: 12px;
 }
 
@@ -45,7 +48,6 @@ code {
     height: 5px;
   }
 }
-
 
 .Toastify__toast-container {
   width: 400px !important;
@@ -122,4 +124,3 @@ code {
   --toastify-toast-min-height: 48px;
   --toastify-toast-width: auto;
 }
-

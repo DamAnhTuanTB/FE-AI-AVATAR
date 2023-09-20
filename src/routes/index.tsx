@@ -7,13 +7,14 @@ import GenerateAvatarLayout from '@/layouts/GenerateAvatarLayout';
 import ListAvatar from '@/pages/ListAvatar';
 import DetailAvatar from '@/pages/DetailAvatar';
 import DetailAvatarWithStyle from '@/pages/DetailAvatarWithStyle';
+import HomePage from '@/pages/HomePage';
 
 export const router = createBrowserRouter([
   {
     element: <GenerateAvatarLayout />,
     children: [
       {
-        path: ROUTES.HOME,
+        path: ROUTES.APP_PAGE,
         element: <GenerateAvatar />,
       },
       {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
         element: <DetailAvatarWithStyle />,
       },
     ],
+  },
+  {
+    path: ROUTES.HOME,
+    element: <HomePage />,
   },
   {
     path: ROUTES.LOGIN,

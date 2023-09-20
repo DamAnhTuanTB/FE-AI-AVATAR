@@ -11,9 +11,6 @@ import { getUserInfo } from '@/store/slices/app.thunk';
 import authServices from '@/services/auth.service';
 import { HTTP_STATUS } from '@/services/config/api';
 import { setUserInfor } from '@/store/slices/appSlice';
-import { generateRequest } from '@/services/base.service';
-import generateService from '@/services/generate.service';
-import { useQuery } from 'react-query';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
@@ -21,13 +18,9 @@ export default function GenerateAvatarLayout() {
   const pathname = location.pathname;
   const [searchParams] = useSearchParams();
   const auth = searchParams.get('auth');
-  const successPayment = searchParams.get('success-payment');
-
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
-
-  const openInCaseNotLoginAndSuccessPayment = !!successPayment && !isLoggedIn;
 
   const getMeFromAuthenService = async () => {
     try {
@@ -46,19 +39,9 @@ export default function GenerateAvatarLayout() {
     }
   };
 
-  useQuery(['get-info-user', isLoggedIn], () => generateService.getInfoUser(), {
-    onSuccess: (res: any) => {
-      const data = res.data;
-      const obj = {
-        listGenerate: data.listGenerate,
-      };
-      dispatch(setUserInfor(obj));
-    },
-    enabled: isLoggedIn,
-  });
-
   useEffect(() => {
     if (isLoggedIn) {
+      // getUserInfo()
       getMeFromAuthenService();
     }
   }, [pathname, isLoggedIn]);
@@ -70,7 +53,7 @@ export default function GenerateAvatarLayout() {
         <Outlet />
       </ContentWrapper>
       {/* <Footer /> */}
-      {auth && <ModalLogin open={!!auth} />}
+      {auth && !isLoggedIn && <ModalLogin open={!!auth && !isLoggedIn} />}
     </DefaultLayoutWrapper>
   );
 }

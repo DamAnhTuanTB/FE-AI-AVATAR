@@ -1,22 +1,44 @@
 import {ForgetPasswordWrapper} from "@/components/ModalAuthen/ModalLogin/styles";
-import IcForgetPasswordLogo from '@/assets/icons/ic_forget_password_logo.svg'
+import IcLogo from '@/assets/images/ic_logo.png'
 import AuthenForm from "@/components/ModalAuthen/AuthenForm";
-import {AuthEnum} from "@/components/ModalAuthen/constant";
-import React, {useState} from "react";
+import {AUTH_ERROR_MESSAGE, AuthEnum} from "@/components/ModalAuthen/constant";
+import React, {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
+import authServices from "@/services/auth.service";
+import {HTTP_STATUS} from "@/services/config/api";
 
 export default function ForgetPasswordComponent() {
     const [errorMessageApi, setErrorMessageApi] = useState('')
-    const [isSendMailSuccess, setIsSendMailSuccess] = useState(false)
-    const handleSubmit = (formData: any) => {
-        console.log('formData', formData)
-        setIsSendMailSuccess(true)
+    const [isSendMailSuccess, setIsSendMailSuccess] = useState(false);
+
+    const handleSubmit = async (formData: any) => {
+        const redirectUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${AuthEnum.ResetPassword}`;
+
+        const payload = {
+            email: formData?.email.trim(),
+            userType: process.env.REACT_APP_USER_TYPE,
+            redirectUrl
+        }
+        try {
+            const res = await authServices.forgetPassword(payload);
+            if (res && res.status === HTTP_STATUS.SUCCESS) {
+                setIsSendMailSuccess(true)
+            }
+        } catch (err: any) {
+            console.log('err', err)
+            let errMsg = err?.response.data.message || AUTH_ERROR_MESSAGE.FORGET_PASSWORD.FORGET_PASSWORD_FAILED;
+            if (errMsg === AUTH_ERROR_MESSAGE.FORGET_PASSWORD.NO_USER_FOUND) {
+                errMsg = AUTH_ERROR_MESSAGE.FORGET_PASSWORD.NO_EMAIL_FOUND
+            }
+
+            setErrorMessageApi(errMsg)
+        }
     }
 
     return (
         <ForgetPasswordWrapper>
             <div className="icon">
-                <img src={IcForgetPasswordLogo} alt=""/>
+                <img src={IcLogo} alt=""/>
             </div>
 
             {!isSendMailSuccess
@@ -32,7 +54,8 @@ export default function ForgetPasswordComponent() {
                     <div className="text-wrapper">
                         <div className="title">Email sent</div>
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        <div className="subtitle">We've sent you an email with a link to reset your password. Click link in email to verify.
+                        <div className="subtitle">We've sent you an email with a link to reset your password. Click link
+                            in email to verify.
                         </div>
                     </div>
                 )
