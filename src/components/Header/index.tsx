@@ -35,7 +35,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="remaining-generated-count">
-                    Remaining generate count: 1
+                    Remaining generate count: 0
                 </div>
                 <div className="dash" />
 

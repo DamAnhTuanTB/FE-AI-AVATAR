@@ -21,6 +21,7 @@ export const ErrorMessageApi = styled.div`
 `
 
 export const FormWrapper = styled(Form)`
+  width: 100%;
   .ant-form-item {
     margin-bottom: 12px !important;
   }
@@ -172,7 +173,7 @@ export const CheckboxWrapper = styled(Checkbox)`
   }
 `
 
-export const ButtonLogin = styled.button`
+export const ButtonLogin = styled.button<{primaryButton?: boolean}>`
   width: 100%;
   height: 48px;
   margin-top: 20px;
@@ -181,10 +182,10 @@ export const ButtonLogin = styled.button`
   outline: 0;
   padding: 14px 32px;
   border-radius: 100px;
-  background: var(--secondary-black, #262626);
+  background: ${props => props.primaryButton ? 'var(--primary-1, #F6C447)' : 'var(--secondary-black, #262626)'} ;
   cursor: pointer;
 
-  color: var(--secondary-white, #FFF);
+  color: ${props => props.primaryButton ? '#18181B' : '#FFF'};
   text-align: center;
 
   /* Body/Body 1/Medium */
@@ -225,3 +226,24 @@ export const BottomTextWrapper = styled.div`
   }
 `
 
+export const BackToSignInButton = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .text {
+    color: var(--secondary-black, #262626);
+    text-align: center;
+
+    /* Sub-headings/Sub-head 2/Regular */
+    font-family: Outfit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
+  }
+`
