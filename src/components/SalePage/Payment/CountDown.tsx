@@ -3,7 +3,7 @@ import { StatisticPrimaryText, TimeNumber } from './styles';
 import useCountDown from '@/hooks/useCountDown';
 
 function CountDown() {
-  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE}`);
+  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
   return (
     <StatisticPrimaryText>
       End in <TimeNumber>{cowndown.days}</TimeNumber> day{' '}

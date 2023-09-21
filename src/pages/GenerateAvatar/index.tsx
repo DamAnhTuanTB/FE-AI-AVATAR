@@ -11,7 +11,6 @@ import generateService from '@/services/generate.service';
 import PreviewStyle from './components/PreviewStyle';
 import ModalPayment from './components/Modals/ModalPayment';
 import { StepEnum } from './contants';
-import { CONFIG } from '@/config/service';
 import useScreenSize from '@/hooks/useScreenSize';
 import StepHeaderPC from './components/StepHeaderPC';
 import Step1PC from './components/Step1PC';
@@ -26,6 +25,7 @@ import { useNavigate } from 'react-router';
 import { ROUTES } from '@/routes/routes';
 import { useSearchParams } from 'react-router-dom';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
+import { CONFIG } from '@/config/service';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -39,10 +39,8 @@ export default function GenerateAvatar() {
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
   const [listPrice, setListPrice] = useState<any>([]);
-  // const [email, setEmail] = useState('');
 
   const [showModalPayment, setShowModalPayment] = useState(false);
-  // const [showModalPressEmail, setShowModalPressEmail] = useState(false);
   const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
 
   const { isDesktop } = useScreenSize();
@@ -193,8 +191,8 @@ export default function GenerateAvatar() {
       gender: gender.toLowerCase(),
       sessionId,
       numImagesEachStyle: 10,
-      // notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
-      notifyTo: `https://9610-222-252-18-109.ngrok-free.app/api/v1/webhook`,
+      notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      // notifyTo: `https://9610-222-252-18-109.ngrok-free.app/api/v1/webhook`,
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };

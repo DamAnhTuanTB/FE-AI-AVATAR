@@ -5,8 +5,8 @@ import {CONFIG} from "@/config/service";
 class TokenAuthService {
   getLocalRefreshToken() {
     const refreshToken =
-      localStorage.getItem('refresh-auth-user') ||
-      getCookie('refresh-auth-user');
+      localStorage.getItem(CONFIG.LOCAL_STORAGE_REFRESH_TOKEN) ||
+      getCookie(CONFIG.LOCAL_STORAGE_REFRESH_TOKEN);
     if (!refreshToken) {
       return null;
     }
@@ -54,7 +54,7 @@ class TokenAuthService {
   }
 
   setLocalRefreshToken(refreshToken: string) {
-    localStorage.setItem('refresh-auth-user', refreshToken);
+    localStorage.setItem(CONFIG.LOCAL_STORAGE_REFRESH_TOKEN, refreshToken);
   }
 }
 

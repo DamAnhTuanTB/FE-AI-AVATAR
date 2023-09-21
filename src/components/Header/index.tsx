@@ -12,11 +12,12 @@ import {
 import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import IcSignOut from '@/assets/icons/ic_signout.svg';
 import { logOut } from '@/store/slices/authSlice';
 import { initialUserInfo, setUserInfor } from '@/store/slices/appSlice';
+import DefaultAvatar from '@/assets/images/default_avatar.png';
+import { useEffect, useState } from 'react';
 import { ROUTES } from '@/routes/routes';
 
 const Header = () => {
@@ -27,6 +28,15 @@ const Header = () => {
   );
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [avatarUrl, setAvatarUrl] = useState('');
+
+  useEffect(() => {
+    if (userInfor?.userAvatar) {
+      setAvatarUrl(userInfor?.userAvatar);
+    } else {
+      setAvatarUrl(DefaultAvatar);
+    }
+  }, [userInfor?.userAvatar]);
 
   const handleShowSignInModal = () => {
     setSearchParams(createSearchParams({ auth: AuthEnum.Login }));
@@ -49,9 +59,12 @@ const Header = () => {
         <div className="title">
           <div className="image">
             <Avatar
-              src={userInfor?.userAvatar}
+              src={avatarUrl}
               size={32}
-              icon={<UserOutlined />}
+              onError={() => {
+                setAvatarUrl(DefaultAvatar);
+                return false;
+              }}
             />
           </div>
           <div className="infor">
@@ -82,9 +95,7 @@ const Header = () => {
         </div>
       ) : (
         <div className="avatar-wrapper">
-          <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
-            View My Generated Avatar
-          </div>
+          <div className="button">View My Generated Avatar</div>
           <div className="avatar-item">
             <PopoverAvatarWrapper
               placement="bottomRight"
@@ -92,9 +103,12 @@ const Header = () => {
               trigger={'click'}
             >
               <Avatar
-                src={userInfor?.userAvatar}
+                src={avatarUrl}
                 size={40}
-                icon={<UserOutlined />}
+                onError={() => {
+                  setAvatarUrl(DefaultAvatar);
+                  return false;
+                }}
               />
             </PopoverAvatarWrapper>
           </div>

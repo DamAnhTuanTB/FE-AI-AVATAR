@@ -119,7 +119,7 @@ class BaseRequest {
                       refreshToken: data.refreshToken,
                     })
                   );
-                  localStorage.setItem('check-auth-user', data.accessToken);
+                  localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, data.accessToken);
                 }
               } catch (_error) {
                 // Logging out the user by removing all the tokens from local

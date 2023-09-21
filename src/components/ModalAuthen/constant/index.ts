@@ -13,10 +13,12 @@ export const AUTH_ERROR_MESSAGE = {
     FORGET_PASSWORD: {
         FORGET_PASSWORD_FAILED: 'Send email failed. Please try again.',
         NO_USER_FOUND: 'Not found user.',
-        NO_EMAIL_FOUND: 'This email has not been signed up yet. Please try a new one.'
+        NO_EMAIL_FOUND: 'This email has not been signed up yet.'
     },
     RESET_PASSWORD: {
-        RESET_PASSWORD_FAILED: 'Reset password failed. Please try again.'
+        RESET_PASSWORD_FAILED: 'Reset password failed. Please try again.',
+        INVALID_TOKEN_API: 'Invalid token.',
+        INVALID_TOKEN_DISPLAY: 'This reset password link has expired.'
     }
 }
 
