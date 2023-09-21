@@ -1,6 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import { Description, HomepageContainer } from '@/pages/HomePage/styles';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const ContainerWrapper = styled(HomepageContainer)`
   @media screen and (max-width: ${breakpoints.md}) {
@@ -40,6 +40,16 @@ export const IntroDescription = styled(Description)`
   }
 `;
 
+const GetstartedAnimated = keyframes`
+  from{
+    background-color: #f6c447;
+  }
+  to
+  {
+    background-color:rgba(246, 196, 71, 0.8)
+    }
+`;
+
 export const GetStartedWrapper = styled.div`
   cursor: pointer;
   border-radius: 100px;
@@ -50,6 +60,10 @@ export const GetStartedWrapper = styled.div`
   align-items: center;
   gap: 12px;
   width: max-content;
+  &:hover {
+    animation: ${GetstartedAnimated} 0.5s;
+    -webkit-animation-fill-mode: forwards;
+  }
   p {
     margin: 0;
     color: var(--text-primary, #18181b);
@@ -142,9 +156,9 @@ export const ScrollAvatarWrapper = styled.div`
   grid-column-gap: 17.73px;
   min-width: 450px;
   height: 614px;
-  overflow-y: auto;
+  overflow-y: hidden;
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
     border-radius: 12px !important;
   }
 
@@ -162,15 +176,46 @@ export const ScrollAvatarWrapper = styled.div`
   }
 `;
 
-export const AvatarsColItem = styled.div`
+export const AvatarsColItemWrapper = styled.div`
+  position: relative;
+`;
+
+const ScrollLeftAnimated = keyframes`
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: -270%;
+  }
+  100% {
+    top: 0%;
+  }
+`;
+const ScrollRightAnimated = keyframes`
+  0% {
+    top: -270%;
+  }
+  50% {
+    top: 00%;
+  }
+  100% {
+    top: -270%;
+  }
+`;
+
+export const AvatarsColItem = styled.div<{ first: boolean }>`
+  position: absolute;
   display: flex;
   flex-direction: column;
   gap: 14.57px;
   width: 100%;
+  animation: ${(props) =>
+      props.first ? ScrollLeftAnimated : ScrollRightAnimated}
+    40s linear infinite;
 `;
 
 export const AvatarScroll = styled.img`
-  width: fit-content;
+  width: 100%;
   @media screen and (max-width: ${breakpoints.md}) {
     width: 100%;
   }

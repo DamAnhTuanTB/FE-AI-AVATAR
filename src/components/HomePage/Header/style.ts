@@ -1,6 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer } from '@/pages/HomePage/styles';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const ContainerWrapper = styled(HomepageContainer)`
   @media screen and (max-width: ${breakpoints.md}) {
@@ -45,8 +45,18 @@ export const MenuLink = styled.a`
   line-height: 150%;
   margin: 0;
   &:hover {
-    color: var(--text-primary, #18181b);
+    color: #f6c447;
   }
+`;
+
+const GetstartedAnimated = keyframes`
+  from{
+    background-color: #191a1f;
+  }
+  to
+  {
+    background-color: #f6c447
+    }
 `;
 
 export const GetStartedWrapper = styled.div`
@@ -58,6 +68,7 @@ export const GetStartedWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+
   p {
     color: #fff;
     text-align: center;
@@ -68,6 +79,20 @@ export const GetStartedWrapper = styled.div`
     line-height: 150%;
     margin: 0;
   }
+  &:hover {
+    animation: ${GetstartedAnimated} 0.5s;
+    -webkit-animation-fill-mode: forwards;
+    /* background-color: #f6c447; */
+    p {
+      color: #262626;
+    }
+    svg {
+      path {
+        stroke: #262626;
+      }
+    }
+  }
+
   @media screen and (max-width: ${breakpoints.md}) {
     p {
       font-size: 12px;

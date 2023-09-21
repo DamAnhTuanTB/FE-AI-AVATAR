@@ -1,5 +1,5 @@
 import { breakpoints } from '@/config/breakpoints';
-import { HomepageContainer, Title } from '@/pages/HomePage/styles';
+import { Description, HomepageContainer, Title } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
 
 export const Wrapper = styled(HomepageContainer)`
@@ -8,18 +8,19 @@ export const Wrapper = styled(HomepageContainer)`
   justify-content: center;
   border-radius: 23px;
   /* border: 1px solid #d4d4d4; */
-  background: linear-gradient(216.56deg, #ffffff 100%, #ffffff 100%) padding-box,
+  /* background: linear-gradient(216.56deg, #ffffff 100%, #ffffff 100%) padding-box,
     linear-gradient(76.41deg, #d4d4d4 1.52%, rgba(212, 212, 212, 0) 99.99%)
-      border-box;
+      border-box; */
   padding: 24px 80px;
   gap: 55px;
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
+  background: transparent;
+  border: 1px solid #d4d4d435;
   @media screen and (max-width: ${breakpoints.md}) {
     flex-direction: column;
     border: none;
     padding: 32px 20px;
     gap: 40px;
-    background: transparent;
   }
 `;
 
@@ -39,6 +40,10 @@ export const CustomTitle = styled(Title)`
   @media screen and (max-width: ${breakpoints.md}) {
     font-size: 30px;
   }
+`;
+
+export const CustomDescription = styled(Description)`
+  text-align: start;
 `;
 
 export const ContentWrapper = styled.div`

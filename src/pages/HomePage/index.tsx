@@ -5,6 +5,8 @@ import {
   BannerLinkWrapper,
   BannerWrapper,
   BodyWrapper,
+  ElipseDecor1,
+  ElipseDecor2,
   Wrapper,
 } from './styles';
 import ArrowRight from '@/components/Icons/ArrowRight';
@@ -49,6 +51,9 @@ export default function HomePage() {
       </BodyWrapper>
 
       <HomePageFooter />
+
+      <ElipseDecor1 />
+      <ElipseDecor2 />
     </Wrapper>
   );
 }

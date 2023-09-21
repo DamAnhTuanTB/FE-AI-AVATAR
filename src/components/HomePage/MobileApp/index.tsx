@@ -1,6 +1,14 @@
-import React from 'react';
+import AppStore from '@/assets/images/home-page/app-store.svg';
+import GooglePlay from '@/assets/images/home-page/gg-play.svg';
+import UnderlineDecor from '@/assets/images/home-page/mobile-app-decor.png';
+import DecorImg1 from '@/assets/images/home-page/mobile-app-item-1.svg';
+import DecorImg2 from '@/assets/images/home-page/mobile-app-item-2.svg';
+import MobileAppImgSrc from '@/assets/images/home-page/mobile-app.svg';
+import QrImg from '@/assets/images/home-page/qr.svg';
+import { SubTitle } from '@/pages/HomePage/styles';
 import {
   ContentWrapper,
+  CustomDescription,
   CustomTitle,
   Decor1,
   Decor2,
@@ -13,14 +21,6 @@ import {
   TitleWrapper,
   Wrapper,
 } from './styles';
-import { Description, SubTitle } from '@/pages/HomePage/styles';
-import UnderlineDecor from '@/assets/images/home-page/mobile-app-decor.png';
-import MobileAppImgSrc from '@/assets/images/home-page/mobile-app.svg';
-import GooglePlay from '@/assets/images/home-page/gg-play.svg';
-import AppStore from '@/assets/images/home-page/app-store.svg';
-import QrImg from '@/assets/images/home-page/qr.svg';
-import DecorImg1 from '@/assets/images/home-page/mobile-app-item-1.svg';
-import DecorImg2 from '@/assets/images/home-page/mobile-app-item-2.svg';
 
 export default function MobileApp() {
   return (
@@ -32,9 +32,9 @@ export default function MobileApp() {
             <CustomTitle>GENERATE AI AVATAR ANYTIME, ANYWHERE</CustomTitle>
             <TitleDecor src={UnderlineDecor} alt="title decor" />
           </TitleWrapper>
-          <Description>
+          <CustomDescription>
             {`Generate and share your avatars on-the-go, ensuring your digital identity is always at your fingertips. Download now and let your creativity roam free!`}
-          </Description>
+          </CustomDescription>
         </div>
         <DownloadWrapper>
           <DownloadButton>

@@ -1,6 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import { Description, HomepageContainer } from '@/pages/HomePage/styles';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: 24px 0;
@@ -73,6 +73,16 @@ export const ImageDecor = styled.img`
   }
 `;
 
+const CreateButtonAnimated = keyframes`
+  from{
+    background-color: #fff;
+  }
+  to
+  {
+    background-color: #fafafa
+    }
+`;
+
 export const CreateButtonWrapper = styled.div`
   width: max-content;
   cursor: pointer;
@@ -84,6 +94,13 @@ export const CreateButtonWrapper = styled.div`
   gap: 12px;
   border-radius: 100px;
   background: var(--secondary-white, #fff);
+  &:hover {
+    animation: ${CreateButtonAnimated} 0.5s;
+    -webkit-animation-fill-mode: forwards;
+  }
+  &:focus {
+    background: var(--neutral-200, #e5e5e5);
+  }
   p {
     color: var(--text-primary, #18181b);
     text-align: center;
