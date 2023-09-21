@@ -8,6 +8,7 @@ import ListAvatar from '@/pages/ListAvatar';
 import DetailAvatar from '@/pages/DetailAvatar';
 import DetailAvatarWithStyle from '@/pages/DetailAvatarWithStyle';
 import HomePage from '@/pages/HomePage';
+import SalePage from '@/pages/SalePage';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
     element: <HomePage />,
+  },
+  {
+    path: ROUTES.SALE_PAGE,
+    element: <SalePage />,
   },
   {
     path: ROUTES.LOGIN,

@@ -80,7 +80,7 @@ export const SubTitle = styled.p`
 
 export const Title = styled.p`
   margin: 0px;
-  color: var(--text-primary, #262626);
+  color: var(--text-primary, #333333);
   text-align: left;
   font-family: Outfit;
   font-size: 40px;
