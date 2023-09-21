@@ -61,7 +61,7 @@ export const NewPrice = styled.p`
 export const Label = styled.p`
   margin: 0;
   color: var(--secondary-black, #262626);
-  text-align: center;
+  text-align: left;
 
   /* Body/Body 1/Medium */
   font-family: Outfit;

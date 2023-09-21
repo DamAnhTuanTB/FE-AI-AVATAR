@@ -104,6 +104,13 @@ export default function SaleContent() {
       </SectionWrapper>
 
       <SectionWrapper>
+        <SectionTitle>🚀 Pre-Launch Offer – Limited Time!</SectionTitle>
+        <Description>
+          {`Here's the exciting part – we're kicking off with a pre-launch offer exclusively for you! Get the Avatarist  at an unbeatable price before we launch it to the world.`}
+        </Description>
+      </SectionWrapper>
+
+      <SectionWrapper>
         <SectionTitle>Deal Terms:</SectionTitle>
         <TermsWrapper>
           <TermItem>

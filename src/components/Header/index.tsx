@@ -3,7 +3,7 @@ import {
   HeaderWrapper,
   PopoverAvatarWrapper,
 } from './style';
-import LogoHeader from '@/assets/images/logo-ai.svg';
+import LogoHeader from '@/assets/images/logo.svg';
 import {
   createSearchParams,
   useNavigate,

@@ -27,7 +27,7 @@ export const HeaderFooterWrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: 1083px;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
   @media screen and (max-width: ${breakpoints.lg}) {
@@ -39,7 +39,7 @@ export const BodyWrapper = styled.div`
   position: relative;
   display: flex;
   gap: 20px;
-  max-width: 1083px;
+  max-width: 1100px;
   margin: 0 auto;
 `;
 

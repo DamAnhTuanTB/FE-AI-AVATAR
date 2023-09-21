@@ -74,7 +74,7 @@ export const BuyNowButton = styled.div`
 export const AvatarsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 24px;
+  row-gap: 10px;
   column-gap: 10px;
   img {
     width: 100%;

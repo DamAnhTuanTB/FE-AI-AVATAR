@@ -54,7 +54,6 @@ export const Title = styled.p`
 export const Description = styled.p`
   color: var(--text-secondary, #737373);
   text-align: center;
-
   /* Sub-headings/Sub-head 1/Medium */
   font-family: Outfit;
   font-size: 16px;
@@ -63,4 +62,7 @@ export const Description = styled.p`
   line-height: 150%; /* 24px */
   margin: 0px;
   text-align: center;
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0 20px;
+  }
 `;

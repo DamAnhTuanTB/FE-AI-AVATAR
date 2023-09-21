@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
 `;
 
 export const HomepageContainer = styled.div`
-  max-width: 1083px;
+  max-width: 1100px;
   margin: 0px auto;
   width: 100vw;
   @media screen and (max-width: ${breakpoints.lg}) {
