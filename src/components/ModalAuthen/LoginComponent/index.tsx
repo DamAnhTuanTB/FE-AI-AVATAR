@@ -36,10 +36,10 @@ const LoginComponent: React.FC = () => {
   const parseAuthUser = authUser ? JSON.parse(authUser) : '';
   const cookieToken = parseAuthUser.token;
 
-  const tokenFromLocalStorage = localStorage.getItem('check-auth-user');
-  const localStorageToken = tokenFromLocalStorage || '';
-  const emptyTextsArray = ['null', 'empty', 'Null', 'Empty'];
-  const [errorMessageApi, setErrorMessageApi] = useState('');
+    const tokenFromLocalStorage = localStorage.getItem(CONFIG.LOCAL_STORAGE_TOKEN);
+    const localStorageToken = tokenFromLocalStorage || '';
+    const emptyTextsArray = ['null', 'empty', 'Null', 'Empty'];
+    const [errorMessageApi, setErrorMessageApi] = useState('');
 
   const emailSuccessPaymentButNotAuth = useAppSelector(
     (state: RootState) => state.app.emailSuccessPaymentButNotAuth
@@ -59,26 +59,26 @@ const LoginComponent: React.FC = () => {
     }
   }, [errorCode, accessToken]);
 
-  useEffect(() => {
-    if (accessToken && refreshToken) {
-      // Chưa Login
-      if (accessToken !== localStorageToken) {
-        const payload = { accessToken, refreshToken };
-        dispatch(loginWithSocialAccount(payload));
-        localStorage.setItem('check-auth-user', accessToken);
-        setCookie('isRedirectRoute', 'true');
-        searchParams.delete('auth');
-        searchParams.delete('token');
-        searchParams.delete('refresh_token');
-        setSearchParams(searchParams);
-      }
-      // Đã Login
-      else {
-        searchParams.delete('auth');
-        setSearchParams(searchParams);
-      }
-    }
-  }, []);
+
+    useEffect(() => {
+        if (accessToken && refreshToken) {
+            // Chưa Login
+            if (accessToken !== localStorageToken) {
+                const payload = {accessToken, refreshToken};
+                dispatch(loginWithSocialAccount(payload));
+                localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, accessToken);
+                searchParams.delete('auth');
+                searchParams.delete('token');
+                searchParams.delete('refresh_token');
+                setSearchParams(searchParams);
+            }
+            // Đã Login
+            else {
+                searchParams.delete('auth');
+                setSearchParams(searchParams);
+            }
+        }
+    }, []);
 
   const handleLoginWithSocial = (platform: string) => {
     if (errorCode) {

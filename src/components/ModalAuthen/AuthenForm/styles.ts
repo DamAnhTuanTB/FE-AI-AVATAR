@@ -73,7 +73,7 @@ export const LoginInput = styled(Input)`
   }
 `;
 
-export const ErrorMessageWrapper = styled.p`
+export const ErrorMessageWrapper = styled.p<{isSignUpCheckbox?: boolean}>`
   color: var(--status-alert, #EF4444);
 
   /* Body/Body 2/Regular */
@@ -83,7 +83,7 @@ export const ErrorMessageWrapper = styled.p`
   font-weight: 400;
   line-height: 150%; /* 18px */
   margin-top: 8px;
-  margin-bottom: 12px;
+  margin-bottom: ${props => props.isSignUpCheckbox ? '0' : '12px'};
 `
 
 export const PasswordWrapper = styled.div`
@@ -108,9 +108,11 @@ export const RememberMeWrapper = styled.div<{isSignUpModal: boolean}>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  
+
+  height: ${props => props.isSignUpModal ? '48px' : 'auto'};
+
   @media screen and (max-width: ${breakpoints.md}) {
-    margin-top: ${props => props.isSignUpModal ? '20px': '12px'};
+    margin-top: ${props => props.isSignUpModal ? '20px' : '12px'};
   }
 
   .checkbox-container {
@@ -230,7 +232,7 @@ export const BottomTextWrapper = styled.div`
     font-family: Outfit;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 150%; /* 21px */
     cursor: pointer;
   }

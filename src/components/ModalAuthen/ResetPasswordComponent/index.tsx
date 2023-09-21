@@ -53,16 +53,19 @@ export default function ResetPasswordComponent() {
             }
         } catch (err: any) {
             console.log('err', err)
-            const errMsg = err?.response.data.message || AUTH_ERROR_MESSAGE.RESET_PASSWORD.RESET_PASSWORD_FAILED;
+            let errMsg = err?.response.data.message || AUTH_ERROR_MESSAGE.RESET_PASSWORD.RESET_PASSWORD_FAILED;
+            if (errMsg === AUTH_ERROR_MESSAGE.RESET_PASSWORD.INVALID_TOKEN_API) {
+                errMsg = AUTH_ERROR_MESSAGE.RESET_PASSWORD.INVALID_TOKEN_DISPLAY
+            }
             setErrorMessageApi(errMsg)
         }
     }
 
     return (
         <ForgetPasswordWrapper>
-            <div className="icon">
-                <img src={IcLogo} alt=""/>
-            </div>
+            {/* <div className="icon"> */}
+            {/*    <img src={IcLogo} alt=""/> */}
+            {/* </div> */}
 
             {!IsLinkInvalid
                 ? (

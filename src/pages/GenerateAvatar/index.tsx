@@ -88,22 +88,22 @@ export default function GenerateAvatar() {
     enabled: !!gender,
   });
 
-  useQuery(
-    ['get-list-price'],
-    () => generateService.getListPrice({ type: 'main' }),
-    {
-      onSuccess: (res: any) => {
-        const listPrice = res.data.map((item: any) => ({
-          id: item.id,
-          name: item.metadata.name,
-          price: item.unit_amount / 100,
-          maxStyle: Number(item.metadata.numberStyle),
-          bestOffer: item.metadata?.popular === 'true',
-        }));
-        setListPrice(listPrice);
-      },
-    }
-  );
+  // useQuery(
+  //   ['get-list-price'],
+  //   () => generateService.getListPrice({ type: 'main' }),
+  //   {
+  //     onSuccess: (res: any) => {
+  //       const listPrice = res.data.map((item: any) => ({
+  //         id: item.id,
+  //         name: item.metadata.name,
+  //         price: item.unit_amount / 100,
+  //         maxStyle: Number(item.metadata.numberStyle),
+  //         bestOffer: item.metadata?.popular === 'true',
+  //       }));
+  //       setListPrice(listPrice);
+  //     },
+  //   }
+  // );
 
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),

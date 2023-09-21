@@ -36,9 +36,9 @@ export default function ForgetPasswordComponent() {
 
     return (
         <ForgetPasswordWrapper>
-            <div className="icon">
-                <img src={IcLogo} alt=""/>
-            </div>
+            {/* <div className="icon"> */}
+            {/*    <img src={IcLogo} alt=""/> */}
+            {/* </div> */}
 
             {!isSendMailSuccess
                 ? (
