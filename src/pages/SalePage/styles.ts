@@ -1,18 +1,24 @@
 import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
+import DesktopBg from '@/assets/images/sale-page/bg.png';
+import MobileBg from '@/assets/images/sale-page/bg-mobile.png';
 
 export const Wrapper = styled.div`
   padding-top: 28px;
-  height: 100vh;
+  /* height: 100vh;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: hidden; */
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--neutral-50, #fafafa);
+  /* background: var(--neutral-50, #fafafa); */
+  background: url(${DesktopBg});
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
   @media screen and (max-width: ${breakpoints.md}) {
-    background: #ffffff;
+    background: url(${MobileBg});
   }
 `;
 
@@ -35,10 +41,6 @@ export const BodyWrapper = styled.div`
   gap: 20px;
   max-width: 1083px;
   margin: 0 auto;
-`;
-
-export const ContentRoot = styled.div`
-  position: relative;
 `;
 
 export const ContentWrapper = styled.div`
@@ -114,7 +116,8 @@ export const ElipseDecorLeft = styled.div<{ index: number }>`
   background: rgba(228, 224, 254, 0.5);
   filter: blur(200px);
   position: absolute;
-  bottom: -248px;
+  /* bottom: -248px; */
+  top: 1720px;
   left: -1350px;
   display: ${(props) => (props.index > 1 ? 'none' : 'block')};
   @media screen and (max-width: ${breakpoints.md}) {
@@ -151,7 +154,8 @@ export const ElipseDecorRight = styled.div<{ index: number }>`
   background: rgba(253, 236, 235, 0.8);
   filter: blur(200px);
   position: absolute;
-  bottom: -248px;
+  /* bottom: -248px; */
+  top: 1720px;
   right: -1850px;
   display: ${(props) => (props.index > 1 ? 'none' : 'block')};
   @media screen and (max-width: ${breakpoints.md}) {
