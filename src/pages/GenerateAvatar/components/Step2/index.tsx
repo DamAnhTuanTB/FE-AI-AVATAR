@@ -9,19 +9,21 @@ interface IProps {
   setGender: any;
   setStep: (step: number) => void;
   setStyles: any;
+  setShowModalPreviewStyle: any;
 }
 export default function Step2({
   gender,
   setGender,
   setStep,
   setStyles,
+  setShowModalPreviewStyle,
 }: IProps) {
   const handleClickGender = (item: string) => {
     setGender(item);
   };
 
   const handleClickNext = () => {
-    setStep(StepEnum.CHOOSE_STYLE);
+    setShowModalPreviewStyle(true);
   };
 
   return (

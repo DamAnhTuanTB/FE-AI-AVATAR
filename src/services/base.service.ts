@@ -191,6 +191,6 @@ export const baseRequest = new BaseRequest('', {
 
 export const generateRequest = new BaseRequest();
 
-export const sessionRequest = new BaseRequest(CONFIG.BASE_SERVER_URL);
+export const baseServerRequest = new BaseRequest(CONFIG.BASE_SERVER_URL);
 
 export const authRequest = new BaseRequest(CONFIG.AUTHEN_BASE_URL);

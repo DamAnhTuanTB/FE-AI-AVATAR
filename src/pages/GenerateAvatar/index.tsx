@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Helmet } from 'react-helmet';
 import { HomeWrapper } from './style';
 import Step1 from './components/Step1';
@@ -12,51 +12,65 @@ import PreviewStyle from './components/PreviewStyle';
 import ModalPayment from './components/Modals/ModalPayment';
 import { StepEnum } from './contants';
 import { CONFIG } from '@/config/service';
-import ModalPressEmail from './components/Modals/ModalPressEmail';
 import useScreenSize from '@/hooks/useScreenSize';
 import StepHeaderPC from './components/StepHeaderPC';
 import Step1PC from './components/Step1PC';
 import Step2PC from './components/Step2PC';
 import Step3PC from './components/Step3PC';
 import Step4PC from './components/Step4PC';
-
-const prices = [
-  {
-    id: 1,
-    name: '50 images (5 styles)',
-    price: 4.99,
-    maxStyle: 5,
-  },
-  {
-    id: 2,
-    name: '100 images (10 styles)',
-    price: 7.99,
-    maxStyle: 10,
-    bestOffer: true,
-  },
-  {
-    id: 3,
-    name: '200 images (20 styles)',
-    price: 12.99,
-    maxStyle: 20,
-  },
-];
+import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
+import { RootState } from '@/store/store';
+import { useAppSelector } from '@/store/hooks';
+import { useSearchParams } from 'react-router-dom';
+import { convertBase64toFile, convertFileToBase64 } from '@/utils/helpers';
 
 export default function GenerateAvatar() {
+  const queryClient = useQueryClient();
   const [step, setStep] = useState(StepEnum.GUIDE);
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
   const [gender, setGender] = useState('');
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
-  const [price, setPrice] = useState<any>(prices[1]);
-  const [email, setEmail] = useState('');
+  const [price, setPrice] = useState<any>();
+  const [listPrice, setListPrice] = useState<any>([]);
+  // const [email, setEmail] = useState('');
 
   const [showModalPayment, setShowModalPayment] = useState(false);
-  const [showModalPressEmail, setShowModalPressEmail] = useState(false);
-  const [successPurchase, setSuccessPurchase] = useState(false);
+  // const [showModalPressEmail, setShowModalPressEmail] = useState(false);
+  const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
 
   const { isDesktop } = useScreenSize();
+
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (localStorage.getItem('savedData')) {
+      const savedData = JSON.parse(localStorage.getItem('savedData') || '{}');
+      const resultConvert = savedData.map((item: any) => {
+        const file = convertBase64toFile(
+          item.file,
+          item?.name,
+          `image/${item?.name?.split('.')[1]}`
+        );
+        return {
+          ...item,
+          file,
+          src: URL.createObjectURL(file),
+        };
+      });
+      setImages(resultConvert);
+      console.log(resultConvert);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchParams.get('success-payment') === '1') {
+      setStep(StepEnum.CHOOSE_STYLE);
+    }
+  }, [searchParams]);
 
   useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
     onSuccess: (res: any) => {
@@ -74,17 +88,51 @@ export default function GenerateAvatar() {
     enabled: !!gender,
   });
 
+  useQuery(
+    ['get-list-price'],
+    () => generateService.getListPrice({ type: 'main' }),
+    {
+      onSuccess: (res: any) => {
+        const listPrice = res.data.map((item: any) => ({
+          id: item.id,
+          name: item.metadata.name,
+          price: item.unit_amount / 100,
+          maxStyle: Number(item.metadata.numberStyle),
+          bestOffer: item.metadata?.popular === 'true',
+        }));
+        setListPrice(listPrice);
+      },
+    }
+  );
+
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),
     {
-      onSuccess: (res: any) => {
+      onSuccess: async (res: any) => {
         setStep(StepEnum.GENERATE_SUCCESS);
-        setSuccessPurchase(false);
-        setShowModalPressEmail(false);
+
+        const firstImageValid = images.find((item: any) => !item.textError);
+
+        const presign = await generateService.getPreSignFile({
+          filename: firstImageValid?.file?.name || 'my-photo.jpg',
+        });
+
+        const formData = new FormData();
+        for (const property in presign.data.fields) {
+          formData.append(property, presign.data.fields[property]);
+        }
+
+        formData.append('file', firstImageValid?.file);
+
+        await generateService.uploadFileS3(presign?.data?.url, formData);
+
         mutationCreateSession.mutate({
-          email,
+          email: userInfor.userEmail,
           name: 'you',
           sessionId,
+          gender: gender.toLowerCase(),
+          styles,
+          originFirstImage: presign?.data?.fields?.key,
         });
       },
     }
@@ -94,7 +142,7 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.createSession(payload),
     {
       onSuccess: (res: any) => {
-        setEmail('');
+        queryClient.refetchQueries({ queryKey: ['get-info-user'] });
         setSessionId('');
       },
     }
@@ -164,7 +212,20 @@ export default function GenerateAvatar() {
     setStyles([]);
     setListStyles([]);
     setPrice('');
-    setEmail('');
+  };
+
+  const handleSaveData = async () => {
+    const results = [];
+    for (const item of images) {
+      try {
+        const file = await convertFileToBase64(item.file);
+        results.push({ ...item, file });
+      } catch (error) {
+        console.error('Lỗi khi xử lý promise:', error);
+      }
+    }
+    // Xử lý kết quả sau khi tất cả promise đã hoàn thành
+    localStorage.setItem('savedData', JSON.stringify(results));
   };
 
   return (
@@ -191,6 +252,7 @@ export default function GenerateAvatar() {
               gender={gender}
               setGender={setGender}
               setStyles={setStyles}
+              setShowModalPreviewStyle={setShowModalPreviewStyle}
             />
           )}
           {step === StepEnum.CHOOSE_STYLE && (
@@ -201,7 +263,6 @@ export default function GenerateAvatar() {
               gender={gender}
               price={price}
               handleGenerate={handleGenerate}
-              setShowModalPressEmail={setShowModalPressEmail}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
@@ -210,11 +271,7 @@ export default function GenerateAvatar() {
         </HomeWrapper>
       ) : (
         <HomeWrapper>
-          <StepHeader
-            step={step}
-            successPurchase={successPurchase}
-            onClick={handleClickBack}
-          />
+          <StepHeader step={step} onClick={handleClickBack} />
           {(step === StepEnum.GUIDE || step === StepEnum.UPLOAD_IMAGE) && (
             <Step1
               step={step}
@@ -230,13 +287,13 @@ export default function GenerateAvatar() {
               gender={gender}
               setGender={setGender}
               setStyles={setStyles}
+              setShowModalPreviewStyle={setShowModalPreviewStyle}
             />
           )}
           {step === StepEnum.PREVIEW_STYLE && (
             <PreviewStyle
               setStep={setStep}
               listStyles={listStyles}
-              successPurchase={successPurchase}
               setShowModalPayment={setShowModalPayment}
             />
           )}
@@ -248,7 +305,6 @@ export default function GenerateAvatar() {
               gender={gender}
               price={price}
               handleGenerate={handleGenerate}
-              setShowModalPressEmail={setShowModalPressEmail}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
@@ -256,24 +312,25 @@ export default function GenerateAvatar() {
           )}
         </HomeWrapper>
       )}
-      {showModalPayment && !successPurchase && (
+      {showModalPayment && (
         <ModalPayment
           setStep={setStep}
-          prices={prices}
+          prices={listPrice}
           open={showModalPayment}
           setOpen={setShowModalPayment}
           price={price}
           setPrice={setPrice}
-          setSuccessPurchase={setSuccessPurchase}
+          handleSaveData={handleSaveData}
         />
       )}
-      {showModalPressEmail && (
-        <ModalPressEmail
-          open={showModalPressEmail}
-          setOpen={setShowModalPressEmail}
-          email={email}
-          setEmail={setEmail}
-          handleGenerate={handleGenerate}
+
+      {showModalPreviewStyle && (
+        <ModalPreviewStyle
+          open={showModalPreviewStyle}
+          setOpen={setShowModalPreviewStyle}
+          setStep={setStep}
+          setShowModalPayment={setShowModalPayment}
+          listStyles={listStyles}
         />
       )}
     </>

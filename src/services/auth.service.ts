@@ -16,7 +16,7 @@ const authServices = {
   },
 
   getUserInforFromAuthenService() {
-    return authRequest.post(`${APIs.LOGIN}${APIs.ME}`)
+    return authRequest.post(`${APIs.LOGIN}${APIs.ME}`);
   },
 
   forgetPassword(payload: any) {

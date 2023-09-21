@@ -7,6 +7,16 @@ export const shuffleArray = (array: any) => {
   return shuffled;
 };
 
+export const capitalizeWords = (inputString: string) => {
+  const words = inputString.split('_');
+
+  const capitalizedWords = words.map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  const resultString = capitalizedWords.join(' ');
+  return resultString;
+};
+
 export const generateRandomString = (length = 10) => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -17,4 +27,53 @@ export const generateRandomString = (length = 10) => {
     counter += 1;
   }
   return result;
+};
+
+export const convertFileToBase64 = (file: any) => {
+  return new Promise((resolve, reject) => {
+    const reader: any = new FileReader();
+
+    reader.onload = () => {
+      const base64String = reader.result.split(',')[1];
+      resolve(base64String);
+    };
+
+    reader.onerror = (error: any) => {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+};
+
+// export const convertBase64toFile = (string64: string, fileName?: string) => {
+//   const arr: any = string64.split(',');
+//   const mime = arr[0].match(/:(.*?);/)[1];
+//   const bstr = atob(arr[arr.length - 1]);
+//   let n = bstr.length;
+//   const u8arr = new Uint8Array(n);
+//   while (n--) {
+//     u8arr[n] = bstr.charCodeAt(n);
+//   }
+//   return new File([u8arr], fileName || 'file.png', { type: mime });
+// };
+
+export const convertBase64toFile = (
+  base64: string,
+  filename: string,
+  type = ''
+) => {
+  const arr: any = base64.split(',');
+  let mime = '';
+  if (!type) {
+    mime = arr[0].match(/:(.*?);/)[1];
+  }
+  const bstr = atob(arr[arr.length - 1]);
+
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: type || mime });
 };

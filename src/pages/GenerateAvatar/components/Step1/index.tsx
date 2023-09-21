@@ -251,6 +251,7 @@ export default function Step1({
           onChange={handleChangeFile}
           accept=".png,.jpg,.jpeg,.jfif,.heic"
         />
+
         {step === StepEnum.GUIDE ? (
           <TabBottom />
         ) : (

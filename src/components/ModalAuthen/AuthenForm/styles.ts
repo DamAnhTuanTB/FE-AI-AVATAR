@@ -62,12 +62,16 @@ export const LoginInput = styled(Input)`
   height: 48px !important;
   padding: 0 16px !important;
   border-radius: 12px !important;
-  background: var(--neutral-100, #F5F5F5) !important;
+  background: var(--neutral-100, #f5f5f5) !important;
   border: 1px solid transparent;
   outline: 0 !important;
   box-shadow: none !important;
-  
-`
+  &:disabled {
+    border: none;
+    background: #e7e7e7 !important;
+    color: var(--secondary-disable, #a3a3a3) !important;
+  }
+`;
 
 export const ErrorMessageWrapper = styled.p`
   color: var(--status-alert, #EF4444);

@@ -4,6 +4,9 @@ import NotFound from '@/pages/NotFound/NotFound';
 import Login from '@/pages/Login/Login';
 import GenerateAvatar from '@/pages/GenerateAvatar';
 import GenerateAvatarLayout from '@/layouts/GenerateAvatarLayout';
+import ListAvatar from '@/pages/ListAvatar';
+import DetailAvatar from '@/pages/DetailAvatar';
+import DetailAvatarWithStyle from '@/pages/DetailAvatarWithStyle';
 import HomePage from '@/pages/HomePage';
 import SalePage from '@/pages/SalePage';
 
@@ -14,6 +17,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.APP_PAGE,
         element: <GenerateAvatar />,
+      },
+      {
+        path: ROUTES.LIST_AVATAR,
+        element: <ListAvatar />,
+      },
+      {
+        path: ROUTES.DETAIL_AVATAR,
+        element: <DetailAvatar />,
+      },
+      {
+        path: ROUTES.DETAIL_AVATAR_WITH_STYLE,
+        element: <DetailAvatarWithStyle />,
       },
     ],
   },
