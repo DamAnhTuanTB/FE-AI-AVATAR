@@ -95,7 +95,9 @@ const Header = () => {
         </div>
       ) : (
         <div className="avatar-wrapper">
-          <div className="button">View My Generated Avatar</div>
+          <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
+            View My Generated Avatar
+          </div>
           <div className="avatar-item">
             <PopoverAvatarWrapper
               placement="bottomRight"
