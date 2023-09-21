@@ -21,7 +21,7 @@ const defaultOptions = {
 };
 
 function CountDown() {
-  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE}`);
+  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
   const animationRef = useRef(null);
   return (
     <Wrapper>
