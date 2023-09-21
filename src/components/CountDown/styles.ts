@@ -1,6 +1,8 @@
+import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -42,4 +44,19 @@ export const Colon = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+`;
+
+export const ClockWrapper = styled.div`
+  position: absolute;
+  right: -30px;
+  top: -20px;
+  transform: rotate(15deg);
+  width: 35px;
+  height: 35px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 23px;
+    height: 23px;
+    right: 20px;
+    top: -33px;
+  }
 `;

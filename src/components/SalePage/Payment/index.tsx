@@ -25,6 +25,8 @@ import {
   Wrapper,
 } from './styles';
 import { Radio } from 'antd';
+import useCountDown from '@/hooks/useCountDown';
+import CountDown from './CountDown';
 
 const options = [
   {
@@ -112,10 +114,7 @@ export default function Payment() {
         <StatisticPrimaryText>VisionLab Inc.,</StatisticPrimaryText>
       </InfoBlock>
 
-      <StatisticPrimaryText>
-        End in <TimeNumber>1</TimeNumber> day <TimeNumber>1</TimeNumber> hrs{' '}
-        <TimeNumber>1</TimeNumber> mins <TimeNumber>1</TimeNumber> secs
-      </StatisticPrimaryText>
+      <CountDown />
 
       <SocialsWrapper>
         <a href="" target="_blank">

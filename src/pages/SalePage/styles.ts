@@ -2,12 +2,18 @@ import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  padding-top: 28px;
   height: 100vh;
   overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
+  background: var(--neutral-50, #fafafa);
+  @media screen and (max-width: ${breakpoints.md}) {
+    background: #ffffff;
+  }
 `;
 
 export const HeaderFooterWrapper = styled.div`
@@ -31,8 +37,14 @@ export const BodyWrapper = styled.div`
   margin: 0 auto;
 `;
 
+export const ContentRoot = styled.div`
+  position: relative;
+`;
+
 export const ContentWrapper = styled.div`
   /* width: calc(100% - 350px); */
+  position: relative;
+  z-index: 1;
   border-radius: 8px;
   border: 1px solid var(--neutral-100, #f5f5f5);
   background: var(--secondary-white, #fff);
@@ -49,6 +61,7 @@ export const ContentWrapper = styled.div`
   @media screen and (max-width: ${breakpoints.md}) {
     border: none;
     width: 100%;
+    background: transparent;
   }
 `;
 
@@ -65,6 +78,7 @@ export const PaymentWrapper = styled.div`
   position: sticky;
   top: 0;
   right: 0;
+  z-index: 1;
   @media screen and (max-width: ${breakpoints.lg}) {
     position: static;
     margin: auto;
@@ -90,4 +104,78 @@ export const Description = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
+`;
+
+export const ElipseDecorLeft = styled.div<{ index: number }>`
+  width: 2066px;
+  height: 2065px;
+  flex-shrink: 0;
+  border-radius: 2066px;
+  background: rgba(228, 224, 254, 0.5);
+  filter: blur(200px);
+  position: absolute;
+  bottom: -248px;
+  left: -1350px;
+  display: ${(props) => (props.index > 1 ? 'none' : 'block')};
+  @media screen and (max-width: ${breakpoints.md}) {
+    display: block;
+    width: 557px;
+    height: 556px;
+    left: -310px;
+    bottom: ${(props) => {
+      switch (props.index) {
+        case 1: {
+          return '75%';
+        }
+        case 2: {
+          return '50%';
+        }
+        case 3: {
+          return '25%';
+        }
+        case 4: {
+          return '0%';
+        }
+        default:
+          return '0%';
+      }
+    }};
+  }
+`;
+
+export const ElipseDecorRight = styled.div<{ index: number }>`
+  width: 2066px;
+  height: 2065px;
+  flex-shrink: 0;
+  border-radius: 2066px;
+  background: rgba(253, 236, 235, 0.8);
+  filter: blur(200px);
+  position: absolute;
+  bottom: -248px;
+  right: -1850px;
+  display: ${(props) => (props.index > 1 ? 'none' : 'block')};
+  @media screen and (max-width: ${breakpoints.md}) {
+    display: block;
+    width: 557px;
+    height: 556px;
+    right: -310px;
+    bottom: ${(props) => {
+      switch (props.index) {
+        case 1: {
+          return '75%';
+        }
+        case 2: {
+          return '50%';
+        }
+        case 3: {
+          return '25%';
+        }
+        case 4: {
+          return '0%';
+        }
+        default:
+          return '0%';
+      }
+    }};
+  }
 `;

@@ -7,7 +7,10 @@ import useScreenSize from '@/hooks/useScreenSize';
 import {
   BeforeAfterImage,
   Container,
+  ContentRoot,
   ContentWrapper,
+  ElipseDecorLeft,
+  ElipseDecorRight,
   HeaderFooterWrapper,
   PaymentWrapper,
   Wrapper,
@@ -23,15 +26,29 @@ export default function SalePage() {
         </Container>
       </HeaderFooterWrapper>
 
-      <ContentWrapper>
-        <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
-        {(isMobile || isTablet) && (
-          <PaymentWrapper>
-            <Payment />
-          </PaymentWrapper>
-        )}
-        <SaleContent />
-      </ContentWrapper>
+      <ContentRoot>
+        <ContentWrapper>
+          <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
+          {(isMobile || isTablet) && (
+            <PaymentWrapper>
+              <Payment />
+            </PaymentWrapper>
+          )}
+          <SaleContent />
+        </ContentWrapper>
+        <ElipseDecorLeft index={1} />
+        <ElipseDecorRight index={1} />
+
+        <ElipseDecorLeft index={2} />
+        <ElipseDecorRight index={2} />
+
+        <ElipseDecorLeft index={3} />
+        <ElipseDecorRight index={3} />
+
+        <ElipseDecorLeft index={4} />
+        <ElipseDecorRight index={4} />
+      </ContentRoot>
+
       {!(isMobile || isTablet) && (
         <PaymentWrapper>
           <Payment />

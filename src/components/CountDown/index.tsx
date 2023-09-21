@@ -1,29 +1,55 @@
+import React, { useRef } from 'react';
 import useCountDown from '@/hooks/useCountDown';
-import { Colon, TimeBlock, TimeNumber, TimeString, Wrapper } from './styles';
+import {
+  ClockWrapper,
+  Colon,
+  TimeBlock,
+  TimeNumber,
+  TimeString,
+  Wrapper,
+} from './styles';
+import Lottie from 'react-lottie';
+import WatchLottie from '@/assets/jsons/stop-watch.json';
 
-export default function CountDown() {
-  const abc = useCountDown('9/23/2023');
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: WatchLottie,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
+
+function CountDown() {
+  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE}`);
+  const animationRef = useRef(null);
   return (
     <Wrapper>
       <TimeBlock>
-        <TimeNumber>01</TimeNumber>
+        <TimeNumber>{cowndown.days}</TimeNumber>
         <TimeString>DAY</TimeString>
       </TimeBlock>
       <Colon>:</Colon>
       <TimeBlock>
-        <TimeNumber>01</TimeNumber>
+        <TimeNumber>{cowndown.hours}</TimeNumber>
         <TimeString>HOURS</TimeString>
       </TimeBlock>
       <Colon>:</Colon>
       <TimeBlock>
-        <TimeNumber>01</TimeNumber>
+        <TimeNumber>{cowndown.minutes}</TimeNumber>
         <TimeString>MINUTES</TimeString>
       </TimeBlock>
       <Colon>:</Colon>
       <TimeBlock>
-        <TimeNumber>01</TimeNumber>
+        <TimeNumber>{cowndown.seconds}</TimeNumber>
         <TimeString>SECONDS</TimeString>
       </TimeBlock>
+
+      <ClockWrapper>
+        <Lottie options={defaultOptions} ref={animationRef} />
+      </ClockWrapper>
     </Wrapper>
   );
 }
+
+export default React.memo(CountDown);
