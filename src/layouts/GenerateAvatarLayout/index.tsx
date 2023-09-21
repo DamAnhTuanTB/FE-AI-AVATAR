@@ -37,18 +37,26 @@ export default function GenerateAvatarLayout() {
     {
       onSuccess: (res: any) => {
         if (res.data) {
+          localStorage.setItem('isComeFirst', '1');
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
         } else {
           dispatch(setEmailSuccessPaymentButNotAuth(''));
         }
-
       },
     }
   );
 
   useEffect(() => {
-    if (localStorage.getItem('userIdFake')) {
+    if (
+      localStorage.getItem('userIdFake') &&
+      !localStorage.getItem('isComeFirst')
+    ) {
+      mutationCheckCaseSuccessPaymentButNotAuth.mutate(
+        localStorage.getItem('userIdFake') || ''
+      );
+    }
+    if (localStorage.getItem('userIdFake') && auth === AuthEnum.ResetPassword) {
       mutationCheckCaseSuccessPaymentButNotAuth.mutate(
         localStorage.getItem('userIdFake') || ''
       );

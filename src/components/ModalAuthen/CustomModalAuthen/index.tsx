@@ -51,9 +51,7 @@ const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
         <div className="background-wrapper">
           <div className="background">
             <img
-              src={
-                localStorage.getItem('userIdFake') ? BgSmallLogin : BgModalLogin
-              }
+              src={emailSuccessPaymentButNotAuth ? BgSmallLogin : BgModalLogin}
               alt=""
             />
           </div>

@@ -4,7 +4,11 @@ import {
   PopoverAvatarWrapper,
 } from './style';
 import LogoHeader from '@/assets/images/logo-ai.svg';
-import { createSearchParams, useSearchParams } from 'react-router-dom';
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
@@ -13,8 +17,10 @@ import { Avatar } from 'antd';
 import IcSignOut from '@/assets/icons/ic_signout.svg';
 import { logOut } from '@/store/slices/authSlice';
 import { initialUserInfo, setUserInfor } from '@/store/slices/appSlice';
+import { ROUTES } from '@/routes/routes';
 
 const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
@@ -30,6 +36,8 @@ const Header = () => {
     const handleLogout = () => {
       dispatch(setUserInfor({ ...initialUserInfo }));
       dispatch(logOut());
+      navigate(ROUTES.HOME);
+      localStorage.clear();
     };
 
     const numberGenerate = userInfor?.listGenerate?.filter(
@@ -74,7 +82,9 @@ const Header = () => {
         </div>
       ) : (
         <div className="avatar-wrapper">
-          <div className="button">View My Generated Avatar</div>
+          <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
+            View My Generated Avatar
+          </div>
           <div className="avatar-item">
             <PopoverAvatarWrapper
               placement="bottomRight"

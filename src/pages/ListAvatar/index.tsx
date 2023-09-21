@@ -9,6 +9,7 @@ import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { TypeSessionStatus } from '../GenerateAvatar/contants';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
+import LoadingImage from '@/assets/images/loading-image.gif';
 
 const getFirstImage = (results: any) => {
   const keys = Object.keys(results);
@@ -24,6 +25,16 @@ export default function ListAvatar() {
     },
   });
 
+  const handleClickDetail = (
+    status: TypeSessionStatus,
+    sessionId: string,
+    pack: number
+  ) => {
+    if (status !== TypeSessionStatus.ACTIVE) {
+      navigate(`/list-avatar/${sessionId}?pack=${pack}`);
+    }
+  };
+
   return (
     <Wrapper>
       <div className="title-my-generate">My Generated Avatars</div>
@@ -36,7 +47,7 @@ export default function ListAvatar() {
             </div>
             <Button
               className="btn-create-new"
-              onClick={() => navigate(ROUTES.HOME)}
+              onClick={() => navigate(ROUTES.APP_PAGE)}
             >
               <img src={IconAddOutline} alt="" />
               <span>Create New AI Avatar</span>
@@ -49,15 +60,17 @@ export default function ListAvatar() {
                 {listSession.map((item: any, index: number) => (
                   <div
                     key={item.id}
-                    className="item-avatar"
+                    className={`item-avatar ${
+                      item?.status === TypeSessionStatus.ACTIVE &&
+                      'not-allow-avatar'
+                    }`}
                     onClick={() =>
-                      navigate(
-                        `/list-avatar/${item.sessionId}?pack=${index + 1}`
-                      )
+                      handleClickDetail(item?.status, item.sessionId, index + 1)
                     }
                   >
                     <div className="image-item-avatar">
                       <img
+                        className="main-image"
                         src={
                           item?.status === TypeSessionStatus.ACTIVE
                             ? item.originFirstImage
@@ -65,6 +78,13 @@ export default function ListAvatar() {
                         }
                         alt=""
                       />
+                      {item?.status === TypeSessionStatus.ACTIVE && (
+                        <img
+                          className="second-image"
+                          src={LoadingImage}
+                          alt=""
+                        />
+                      )}
                     </div>
                     <div className="pack">Pack {index + 1}</div>
                   </div>
@@ -74,7 +94,7 @@ export default function ListAvatar() {
             <div className="create-new-desktop">
               <Button
                 className="btn-create-new-desktop"
-                onClick={() => navigate(ROUTES.HOME)}
+                onClick={() => navigate(ROUTES.APP_PAGE)}
               >
                 <img src={IconAddOutline} alt="" />
                 <span>Create New AI Avatar</span>
@@ -86,7 +106,7 @@ export default function ListAvatar() {
       <div className="bottom">
         <Button
           className="btn-create-new-mobile"
-          onClick={() => navigate(ROUTES.HOME)}
+          onClick={() => navigate(ROUTES.APP_PAGE)}
         >
           <img src={IconAddOutline} alt="" />
           <span>Create New AI Avatar</span>

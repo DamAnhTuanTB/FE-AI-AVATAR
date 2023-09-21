@@ -21,11 +21,16 @@ import Step4PC from './components/Step4PC';
 import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
 import { RootState } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
-import { useSearchParams } from 'react-router-dom';
 import { convertBase64toFile, convertFileToBase64 } from '@/utils/helpers';
+import { useNavigate } from 'react-router';
+import { ROUTES } from '@/routes/routes';
+import { useSearchParams } from 'react-router-dom';
+import { AuthEnum } from '@/components/ModalAuthen/constant';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [step, setStep] = useState(StepEnum.GUIDE);
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
@@ -44,11 +49,15 @@ export default function GenerateAvatar() {
 
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
 
-  const [searchParams] = useSearchParams();
+  const listGenerate = useAppSelector(
+    (state: RootState) => state.app.userInfor.listGenerate
+  );
+
+  const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
 
   useEffect(() => {
-    if (localStorage.getItem('savedData')) {
-      const savedData = JSON.parse(localStorage.getItem('savedData') || '{}');
+    if (localStorage.getItem('savedImages')) {
+      const savedData = JSON.parse(localStorage.getItem('savedImages') || '{}');
       const resultConvert = savedData.map((item: any) => {
         const file = convertBase64toFile(
           item.file,
@@ -62,15 +71,44 @@ export default function GenerateAvatar() {
         };
       });
       setImages(resultConvert);
-      console.log(resultConvert);
+      setGender(localStorage.getItem('savedGender') || '');
+      setSessionId(localStorage.getItem('savedSessionId') || '');
+      setStep(StepEnum.CHOOSE_STYLE);
+      localStorage.removeItem('savedImages');
+      localStorage.removeItem('savedGender');
+      localStorage.removeItem('savedSessionId');
     }
   }, []);
 
   useEffect(() => {
-    if (searchParams.get('success-payment') === '1') {
+    if (
+      searchParams.get('auth') === AuthEnum.ResetPassword &&
+      localStorage.getItem('savedImagesCopy')
+    ) {
+      const savedData = JSON.parse(
+        localStorage.getItem('savedImagesCopy') || '{}'
+      );
+      const resultConvert = savedData.map((item: any) => {
+        const file = convertBase64toFile(
+          item.file,
+          item?.name,
+          `image/${item?.name?.split('.')[1]}`
+        );
+        return {
+          ...item,
+          file,
+          src: URL.createObjectURL(file),
+        };
+      });
+      setImages(resultConvert);
+      setGender(localStorage.getItem('savedGenderCopy') || '');
+      setSessionId(localStorage.getItem('savedSessionIdCopy') || '');
       setStep(StepEnum.CHOOSE_STYLE);
+      localStorage.removeItem('savedImagesCopy');
+      localStorage.removeItem('savedGenderCopy');
+      localStorage.removeItem('savedSessionIdCopy');
     }
-  }, [searchParams]);
+  }, []);
 
   useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
     onSuccess: (res: any) => {
@@ -133,6 +171,7 @@ export default function GenerateAvatar() {
           gender: gender.toLowerCase(),
           styles,
           originFirstImage: presign?.data?.fields?.key,
+          timePayment: currentGenerate?.timePayment,
         });
       },
     }
@@ -154,7 +193,8 @@ export default function GenerateAvatar() {
       gender: gender.toLowerCase(),
       sessionId,
       numImagesEachStyle: 10,
-      notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      // notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      notifyTo: `https://9610-222-252-18-109.ngrok-free.app/api/v1/webhook`,
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };
@@ -224,8 +264,16 @@ export default function GenerateAvatar() {
         console.error('Lỗi khi xử lý promise:', error);
       }
     }
-    // Xử lý kết quả sau khi tất cả promise đã hoàn thành
-    localStorage.setItem('savedData', JSON.stringify(results));
+    localStorage.setItem('savedImages', JSON.stringify(results));
+    localStorage.setItem('savedGender', gender);
+    localStorage.setItem('savedSessionId', sessionId);
+    localStorage.setItem('savedImagesCopy', JSON.stringify(results));
+    localStorage.setItem('savedGenderCopy', gender);
+    localStorage.setItem('savedSessionIdCopy', sessionId);
+  };
+
+  const handleClickMyAvatar = () => {
+    navigate(ROUTES.LIST_AVATAR);
   };
 
   return (
@@ -266,7 +314,10 @@ export default function GenerateAvatar() {
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
-            <Step4PC handleClickBackToHome={handleClickBackToHome} />
+            <Step4PC
+              handleClickBackToHome={handleClickBackToHome}
+              handleClickMyAvatar={handleClickMyAvatar}
+            />
           )}
         </HomeWrapper>
       ) : (
@@ -308,7 +359,10 @@ export default function GenerateAvatar() {
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
-            <Step4 handleClickBackToHome={handleClickBackToHome} />
+            <Step4
+              handleClickBackToHome={handleClickBackToHome}
+              handleClickMyAvatar={handleClickMyAvatar}
+            />
           )}
         </HomeWrapper>
       )}
