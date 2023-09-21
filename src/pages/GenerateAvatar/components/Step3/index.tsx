@@ -35,7 +35,7 @@ export default function Step3({
     (state: RootState) => state.app.userInfor.listGenerate
   );
 
-  const currentGenerate = listGenerate.filter((item: any) => !item.used)[0];
+  const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
 
   const handleClickStyle = (alias: string) => {
     const index = styles.findIndex((style: string) => style === alias);
@@ -56,7 +56,7 @@ export default function Step3({
   };
 
   const handleClickNext = () => {
-    handleGenerate();
+    handleGenerate(currentGenerate?.timePayment);
   };
 
   return (
