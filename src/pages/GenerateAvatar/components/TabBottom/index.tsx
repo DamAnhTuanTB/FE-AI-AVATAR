@@ -10,7 +10,7 @@ import { RootState } from '@/store/store';
 
 export default function TabBottom() {
   const path = window.location.pathname;
-  const generateActive = path === '/';
+  const generateActive = path === ROUTES.APP_PAGE;
   const avatarActive = path.includes('/list-avatar');
   const naviage = useNavigate();
 
@@ -24,7 +24,7 @@ export default function TabBottom() {
 
   return (
     <Wrapper>
-      <div onClick={() => naviage(ROUTES.HOME)}>
+      <div onClick={() => naviage(ROUTES.APP_PAGE)}>
         <img
           src={generateActive ? IconGenerateActive : IconGenerateNotActive}
           alt=""

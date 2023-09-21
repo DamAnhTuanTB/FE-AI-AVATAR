@@ -10,7 +10,13 @@ import { useEffect } from 'react';
 import { getUserInfo } from '@/store/slices/app.thunk';
 import authServices from '@/services/auth.service';
 import { HTTP_STATUS } from '@/services/config/api';
-import { setUserInfor } from '@/store/slices/appSlice';
+import {
+  setEmailSuccessPaymentButNotAuth,
+  setUserExists,
+  setUserInfor,
+} from '@/store/slices/appSlice';
+import { useMutation, useQuery } from 'react-query';
+import generateService from '@/services/generate.service';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
@@ -21,6 +27,33 @@ export default function GenerateAvatarLayout() {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
+
+  const emailSuccessPaymentButNotAuth = useAppSelector(
+    (state: RootState) => state.app.emailSuccessPaymentButNotAuth
+  );
+
+  const mutationCheckCaseSuccessPaymentButNotAuth = useMutation(
+    (id: string) => generateService.checkUserExist(id),
+    {
+      onSuccess: (res: any) => {
+        if (res.data) {
+          dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
+          dispatch(setUserExists(res.data.exists ? 1 : 0));
+        } else {
+          dispatch(setEmailSuccessPaymentButNotAuth(''));
+        }
+
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem('userIdFake')) {
+      mutationCheckCaseSuccessPaymentButNotAuth.mutate(
+        localStorage.getItem('userIdFake') || ''
+      );
+    }
+  }, []);
 
   const getMeFromAuthenService = async () => {
     try {
@@ -34,10 +67,18 @@ export default function GenerateAvatarLayout() {
         };
         dispatch(setUserInfor(obj));
       }
-    } catch (err: any) {
-      console.log('err', err);
-    }
+    } catch (err: any) {}
   };
+
+  useQuery(['get-info-user', isLoggedIn], () => generateService.getInfoUser(), {
+    onSuccess: (res: any) => {
+      const obj = {
+        listGenerate: res.data.listGenerate,
+      };
+      dispatch(setUserInfor(obj));
+    },
+    enabled: isLoggedIn,
+  });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -46,9 +87,7 @@ export default function GenerateAvatarLayout() {
     }
   }, [pathname, isLoggedIn]);
 
-  const caseSuccessPaymentButNotAuth = !!localStorage.getItem('userIdFake');
-
-  const openModal = (auth && !isLoggedIn) || caseSuccessPaymentButNotAuth;
+  const openModal = (auth && !isLoggedIn) || !!emailSuccessPaymentButNotAuth;
 
   return (
     <DefaultLayoutWrapper>

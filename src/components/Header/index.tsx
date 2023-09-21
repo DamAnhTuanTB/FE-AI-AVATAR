@@ -32,6 +32,10 @@ const Header = () => {
       dispatch(logOut());
     };
 
+    const numberGenerate = userInfor?.listGenerate?.filter(
+      (item: any) => !item.used
+    )?.length;
+
     return (
       <ContentPopoverWrapper>
         <div className="title">
@@ -47,7 +51,7 @@ const Header = () => {
           </div>
         </div>
         <div className="remaining-generated-count">
-          Remaining generate count: 0
+          Remaining generate count: {numberGenerate}
         </div>
         <div className="dash" />
 

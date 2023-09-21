@@ -10,6 +10,8 @@ export interface AppSlice {
   showSidebar: any;
   hiddenSidebar: boolean;
   userInfor: any;
+  emailSuccessPaymentButNotAuth: string;
+  userExists: number;
 }
 
 export const initialUserInfo = {
@@ -25,6 +27,8 @@ const initialState: AppSlice = {
   showSidebar: null,
   hiddenSidebar: false,
   userInfor: initialUserInfo,
+  emailSuccessPaymentButNotAuth: '',
+  userExists: -1,
 };
 
 export const appSlice = createSlice({
@@ -45,6 +49,12 @@ export const appSlice = createSlice({
     setHiddenSidebar: (state, action: PayloadAction<boolean>) => {
       state.hiddenSidebar = action.payload;
     },
+    setEmailSuccessPaymentButNotAuth: (state, action: PayloadAction<string>) => {
+      state.emailSuccessPaymentButNotAuth = action.payload;
+    },
+    setUserExists: (state, action: PayloadAction<number>) => {
+      state.userExists = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
@@ -55,6 +65,12 @@ export const appSlice = createSlice({
 
 export const selectAppSlice = (state: RootState) => state.app;
 
-export const { setAppState, setShowSidebar, setUserInfor, setHiddenSidebar } =
-  appSlice.actions;
+export const {
+  setAppState,
+  setShowSidebar,
+  setUserInfor,
+  setHiddenSidebar,
+  setEmailSuccessPaymentButNotAuth,
+  setUserExists,
+} = appSlice.actions;
 export default appSlice.reducer;

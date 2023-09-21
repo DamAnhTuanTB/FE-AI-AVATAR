@@ -13,6 +13,8 @@ import generateService from '@/services/generate.service';
 import { StepEnum } from '../../contants';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { CONFIG } from '@/config/service';
+import { ROUTES } from '@/routes/routes';
 
 interface IProps {
   prices: any;
@@ -21,6 +23,7 @@ interface IProps {
   price: any;
   setPrice: any;
   setStep: any;
+  handleSaveData: any;
 }
 
 export default function ModalPayment({
@@ -30,6 +33,7 @@ export default function ModalPayment({
   price,
   setPrice,
   setStep,
+  handleSaveData,
 }: IProps) {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
@@ -50,7 +54,8 @@ export default function ModalPayment({
     {
       onSuccess: (res: any) => {
         if (res.data?.url) {
-          window.location.assign(res.data?.url);
+          handleSaveData();
+          // window.location.assign(res.data?.url);
         }
       },
     }
@@ -65,6 +70,7 @@ export default function ModalPayment({
   const handleClickPurchase = () => {
     const payload: any = {
       priceId: price.id,
+      // redirectUrl: CONFIG.REACT_APP_CLIENT_URL + ROUTES.APP_PAGE,
       redirectUrl: 'https://avatar.apero.vn/',
     };
     if (isLoggedIn) {

@@ -60,7 +60,7 @@ export const HeaderWrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: ${breakpoints.md}) {
+  @media screen and (max-width: ${breakpoints.lg}) {
     padding: 8px 16px;
     /* margin-bottom: 4px; */
     img {

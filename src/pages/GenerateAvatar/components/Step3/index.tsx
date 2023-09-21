@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Wrapper } from './style';
 import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 
 interface IProps {
   styles: any;
@@ -29,12 +31,21 @@ export default function Step3({
   //   // }
   // }, []);
 
+  const listGenerate = useAppSelector(
+    (state: RootState) => state.app.userInfor.listGenerate
+  );
+
+  const currentGenerate = listGenerate.filter((item: any) => !item.used)[0];
+
   const handleClickStyle = (alias: string) => {
     const index = styles.findIndex((style: string) => style === alias);
     if (index !== -1) {
       styles.splice(index, 1);
     } else {
-      if (styles.length > 19) {
+      if (
+        styles.length >
+        Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
+      ) {
         // price.maxStyle - 1
         ToastError('The maximum quantity has been selected.');
       } else {

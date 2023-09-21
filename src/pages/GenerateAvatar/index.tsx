@@ -22,6 +22,7 @@ import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
 import { RootState } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
 import { useSearchParams } from 'react-router-dom';
+import { convertBase64toFile, convertFileToBase64 } from '@/utils/helpers';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -44,6 +45,26 @@ export default function GenerateAvatar() {
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
 
   const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (localStorage.getItem('savedData')) {
+      const savedData = JSON.parse(localStorage.getItem('savedData') || '{}');
+      const resultConvert = savedData.map((item: any) => {
+        const file = convertBase64toFile(
+          item.file,
+          item?.name,
+          `image/${item?.name?.split('.')[1]}`
+        );
+        return {
+          ...item,
+          file,
+          src: URL.createObjectURL(file),
+        };
+      });
+      setImages(resultConvert);
+      console.log(resultConvert);
+    }
+  }, []);
 
   useEffect(() => {
     if (searchParams.get('success-payment') === '1') {
@@ -193,6 +214,20 @@ export default function GenerateAvatar() {
     setPrice('');
   };
 
+  const handleSaveData = async () => {
+    const results = [];
+    for (const item of images) {
+      try {
+        const file = await convertFileToBase64(item.file);
+        results.push({ ...item, file });
+      } catch (error) {
+        console.error('Lỗi khi xử lý promise:', error);
+      }
+    }
+    // Xử lý kết quả sau khi tất cả promise đã hoàn thành
+    localStorage.setItem('savedData', JSON.stringify(results));
+  };
+
   return (
     <>
       <Helmet>
@@ -285,6 +320,7 @@ export default function GenerateAvatar() {
           setOpen={setShowModalPayment}
           price={price}
           setPrice={setPrice}
+          handleSaveData={handleSaveData}
         />
       )}
 

@@ -1,15 +1,14 @@
-import {styled} from "styled-components";
-import {Modal} from "antd";
-import {breakpoints} from "@/config/breakpoints";
+import { styled } from 'styled-components';
+import { Modal } from 'antd';
+import { breakpoints } from '@/config/breakpoints';
 
 export const CustomModalWrapper = styled(Modal)`
-  .ant-modal{
+  .ant-modal {
     @media screen and (max-width: ${breakpoints.sm}) {
       margin: 16px auto;
     }
   }
 
- 
   .ant-modal-content {
     border-radius: 12px;
     height: 100%;
@@ -19,7 +18,7 @@ export const CustomModalWrapper = styled(Modal)`
       height: 100%;
       padding: 32px 24px;
       border-radius: 12px;
-      background: #FFF;
+      background: #fff;
 
       @media screen and (max-width: ${breakpoints.sm}) {
         padding: 48px 24px;
@@ -30,7 +29,7 @@ export const CustomModalWrapper = styled(Modal)`
         top: -10px;
         right: -12px;
         cursor: pointer;
-        
+
         @media screen and (max-width: ${breakpoints.sm}) {
           right: -7px;
         }
@@ -40,22 +39,22 @@ export const CustomModalWrapper = styled(Modal)`
         height: calc(100% - 32px - 32px);
         display: flex;
         gap: 24px;
-        
+
         @media screen and (max-width: ${breakpoints.lg}) {
           align-items: center;
           justify-content: center;
         }
 
-        .ant-checkbox-wrapper:hover .ant-checkbox:after, .ant-checkbox:hover:after {
-            border: none;
+        .ant-checkbox-wrapper:hover .ant-checkbox:after,
+        .ant-checkbox:hover:after {
+          border: none;
         }
-         .ant-checkbox-input:focus+.ant-checkbox-inner {
-           border-color: #E5E5E5;
-         }
+        .ant-checkbox-input:focus + .ant-checkbox-inner {
+          border-color: #e5e5e5;
+        }
         .ant-checkbox:hover .ant-checkbox-inner {
-          border-color: #F6C447;
+          border-color: #f6c447;
         }
-        
 
         .children-wrapper {
           max-width: 400px;
@@ -68,7 +67,7 @@ export const CustomModalWrapper = styled(Modal)`
           align-items: center;
           justify-content: center;
           padding: 10px 0;
-          
+
           @media screen and (max-width: ${breakpoints.lg}) {
             display: none;
           }
@@ -81,12 +80,16 @@ export const CustomModalWrapper = styled(Modal)`
             img {
               width: 100%;
               height: 100%;
+              object-fit: cover;
             }
           }
 
-
+          .small-background {
+            max-height: 300px !important;
+            /* overflow: hidden; */
+          }
         }
       }
     }
   }
-`
+`;
