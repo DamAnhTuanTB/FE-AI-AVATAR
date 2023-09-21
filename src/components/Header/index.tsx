@@ -1,5 +1,5 @@
 import {ContentPopoverWrapper, HeaderWrapper, PopoverAvatarWrapper} from './style';
-import LogoHeader from '@/assets/images/logo-ai.svg';
+import LogoHeader from '@/assets/images/logo.svg';
 import {createSearchParams, useSearchParams} from "react-router-dom";
 import {AuthEnum} from "@/components/ModalAuthen/constant";
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
