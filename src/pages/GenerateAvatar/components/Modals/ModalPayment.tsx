@@ -70,7 +70,7 @@ export default function ModalPayment({
   const handleClickPurchase = () => {
     const payload: any = {
       priceId: price.id,
-      redirectUrl: `${window.location.protocol}/${window.location.host}` + ROUTES.APP_PAGE,
+      redirectUrl: `${window.location.protocol}//${window.location.host}` + ROUTES.APP_PAGE,
       // redirectUrl: 'https://avatar.apero.vn/',
     };
     if (isLoggedIn) {
