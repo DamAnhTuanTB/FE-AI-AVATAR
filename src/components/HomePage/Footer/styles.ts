@@ -3,7 +3,7 @@ import { HomepageContainer } from '@/pages/HomePage/styles';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding-top: 40px;
+  // padding-top: 40px;
   @media screen and (max-width: ${breakpoints.md}) {
     padding-top: 0px;
   }

@@ -54,7 +54,7 @@ const features = [
       secondary: 'Boost Your',
       primary: 'Brand Identity',
     },
-    description: `Craft personalized avatars that express your unique online identity. Choose from mythical to professional styles and leave a lasting impression on your digital platforms.`,
+    description: `Elevate your brand's visual identity with tailor-made avatars. Whether playful, professional, or brand-focused, create avatars that embody your brand's essence.`,
   },
 ];
 

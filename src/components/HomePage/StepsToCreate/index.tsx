@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   CustomTitle,
+  MainStep,
   StepContent,
   StepDescription,
   StepIcon,
@@ -11,7 +12,7 @@ import {
   Wrapper,
 } from './styles';
 import { Description, SubTitle } from '@/pages/HomePage/styles';
-import StepImage1 from '@/assets/images/home-page/create-step-1.svg';
+import StepImage1 from '@/assets/images/home-page/create-step-1.png';
 import StepImage2 from '@/assets/images/home-page/create-step-2.png';
 import StepImage3 from '@/assets/images/home-page/create-step-3.png';
 
@@ -54,10 +55,10 @@ export default function StepsToCreate() {
               <StepIcon>
                 <p>{index + 1}</p>
               </StepIcon>
-              <div>
+              <MainStep>
                 <StepTitle>{step.title}</StepTitle>
                 <StepDescription>{step.description}</StepDescription>
-              </div>
+              </MainStep>
             </StepContent>
             <StepImage src={step.imageSrc} alt={step.key} third={index === 2} />
           </StepWrapper>

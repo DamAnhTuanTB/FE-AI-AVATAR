@@ -8,6 +8,7 @@ import {UserOutlined} from "@ant-design/icons";
 import {Avatar} from "antd";
 import IcSignOut from '@/assets/icons/ic_signout.svg'
 import {logOut} from "@/store/slices/authSlice";
+import {initialUserInfo, setUserInfor} from "@/store/slices/appSlice";
 
 const Header = () => {
     const dispatch = useAppDispatch()
@@ -21,7 +22,8 @@ const Header = () => {
 
     const contentPopover = () => {
         const handleLogout = () => {
-            dispatch(logOut())
+            dispatch(setUserInfor({...initialUserInfo}));
+            dispatch(logOut());
         }
 
         return (

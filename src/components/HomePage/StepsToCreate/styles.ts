@@ -49,7 +49,11 @@ export const StepContent = styled.div`
     gap: 16px;
   }
 `;
-
+export const MainStep = styled.div`
+display: flex;
+gap: 9px;
+flex-direction: column;
+`
 export const StepImage = styled.img<{ third?: boolean }>`
   max-width: ${(props) => (props.third ? '320px' : '269px')};
   width: 100%;

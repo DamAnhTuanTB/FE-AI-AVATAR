@@ -38,7 +38,7 @@ export default function ReadyStarted() {
           </div>
           <CreateButtonWrapper
             onClick={() => {
-              navigate(ROUTES.HOME);
+              navigate(ROUTES.APP_PAGE);
             }}
           >
             <WardIcon />

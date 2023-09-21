@@ -14,9 +14,9 @@ import {Form} from "antd";
 import IcShowPassword from "@/assets/icons/ic_show_password.svg";
 import IcHidePassword from '@/assets/icons/ic_hide_password.svg';
 import IcErrorLogin from "@/assets/icons/ic_login_error.svg";
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {AuthEnum} from "@/components/ModalAuthen/constant";
-import {useLocation, useSearchParams, createSearchParams} from "react-router-dom";
+import {useSearchParams, createSearchParams} from "react-router-dom";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {TxtLabel} from "@/components/ModalAuthen/ModalLogin/styles";
 import IcBackToSignIn from '@/assets/icons/ic_back_to_sign_in.svg';
@@ -38,6 +38,7 @@ const bottomTextArr = [
 
 interface IAuthForm {
     errorMessageApi: string,
+    setErrorMessageApi: Dispatch<SetStateAction<string>>,
     typeForm: string;
     handleSubmit: (params: any) => void;
     submitButtonLabel: string,
@@ -105,10 +106,10 @@ const PasswordContainer: React.FC<IPasswordContainer> = (props) => {
 
 const AuthenForm: React.FC<IAuthForm> = (props) => {
     const [searchParams, setSearchParams] = useSearchParams()
-    const location = useLocation();
-    const pathname = location.pathname;
+
     const {
         errorMessageApi,
+        setErrorMessageApi,
         typeForm,
         handleSubmit,
         submitButtonLabel,
@@ -222,8 +223,15 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
             ...values,
             isChecked
         }
+        setErrorMessageApi('')
         handleSubmit(payload)
     }
+
+    useEffect(() => {
+        if (!showForm) {
+            form.resetFields();
+        }
+    }, [showForm]);
 
     return (
         <>
@@ -241,20 +249,20 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                 {(typeForm === AuthEnum.ForgetPassword && showForm) && (
                     <TxtLabel>Email</TxtLabel>
                 )}
-                {showForm && (
+                {(showForm && typeForm !== AuthEnum.ResetPassword) && (
                     <Form.Item name={'email'} rules={[{validator: validateEmailField}]}>
                         <LoginInput
-                            placeholder={'Email address'}
+                            placeholder={typeForm === AuthEnum.ForgetPassword ? 'Enter email address' : 'Email address'}
                             maxLength={100}
                             className='login-input'
                         />
                     </Form.Item>
                 )}
 
-                {typeForm === AuthEnum.ResetPassword && (
+                {(typeForm === AuthEnum.ResetPassword && showForm) && (
                     <TxtLabel>New password</TxtLabel>
                 )}
-                {typeForm !== AuthEnum.ForgetPassword && (
+                {(typeForm !== AuthEnum.ForgetPassword && showForm) && (
                     <PasswordContainer
                         name={'password'}
                         placeholder={'Password'}
@@ -262,10 +270,10 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                     />
                 )}
 
-                {typeForm === AuthEnum.ResetPassword && (
+                {(typeForm === AuthEnum.ResetPassword && showForm) && (
                     <TxtLabel>Confirm new password</TxtLabel>
                 )}
-                {(typeForm === AuthEnum.SignUp || typeForm === AuthEnum.ResetPassword) && (
+                {((typeForm === AuthEnum.SignUp || typeForm === AuthEnum.ResetPassword) && showForm) && (
                     <PasswordContainer
                         name={'confirm-password'}
                         placeholder={'Confirm password'}
@@ -274,7 +282,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                 )}
 
                 {typeForm === AuthEnum.Login && (
-                    <RememberMeWrapper>
+                    <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
                         <div className="checkbox-container">
                             <CheckboxWrapper
                                 onChange={onChangeCheckbox}
@@ -292,7 +300,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
 
                 {typeForm === AuthEnum.SignUp && (
                     <>
-                        <RememberMeWrapper>
+                        <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
                             <div className="checkbox-container">
                                 <CheckboxWrapper
                                     onChange={onChangeCheckbox}
@@ -315,11 +323,23 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                     <Form.Item>
                         <ButtonLogin
                             type={'submit'}
+                            isRequestNewLinkButton={false}
                             primaryButton={typeForm === AuthEnum.ForgetPassword || typeForm === AuthEnum.ResetPassword}
                         >
                             {submitButtonLabel}
                         </ButtonLogin>
                     </Form.Item>
+                )}
+
+                {(!showForm && typeForm === AuthEnum.ResetPassword) && (
+                    <ButtonLogin
+                        type={'submit'}
+                        primaryButton={typeForm === AuthEnum.ForgetPassword || typeForm === AuthEnum.ResetPassword}
+                        isRequestNewLinkButton={true}
+                        onClick={() => handleMoveToForgetPasswordLayout()}
+                    >
+                        Request a new link
+                    </ButtonLogin>
                 )}
 
 

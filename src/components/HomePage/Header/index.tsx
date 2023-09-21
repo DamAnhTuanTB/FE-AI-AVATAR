@@ -37,7 +37,7 @@ export default function Header() {
 
         <GetStartedWrapper
           onClick={() => {
-            navigate(ROUTES.HOME);
+            navigate(ROUTES.APP_PAGE);
           }}
         >
           <p>Get Started</p>

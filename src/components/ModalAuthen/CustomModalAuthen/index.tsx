@@ -18,14 +18,14 @@ const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
 
     const handleCloseModal = () => {
         if (auth) {
-            searchParams.delete('auth');
-            setSearchParams(searchParams);
+            setSearchParams({});
         }
     }
 
     return (
         <CustomModalWrapper
             open={open}
+            centered
             width={940}
             footer={null}
             closable={false}

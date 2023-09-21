@@ -40,11 +40,19 @@ export const CustomModalWrapper = styled(Modal)`
         height: calc(100% - 32px - 32px);
         display: flex;
         gap: 24px;
+        
+        @media screen and (max-width: ${breakpoints.lg}) {
+          align-items: center;
+          justify-content: center;
+        }
 
         .ant-checkbox-wrapper:hover .ant-checkbox:after, .ant-checkbox:hover:after {
             border: none;
         }
-        .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus+.ant-checkbox-inner {
+         .ant-checkbox-input:focus+.ant-checkbox-inner {
+           border-color: #E5E5E5;
+         }
+        .ant-checkbox:hover .ant-checkbox-inner {
           border-color: #F6C447;
         }
         
@@ -60,9 +68,14 @@ export const CustomModalWrapper = styled(Modal)`
           align-items: center;
           justify-content: center;
           padding: 10px 0;
+          
+          @media screen and (max-width: ${breakpoints.lg}) {
+            display: none;
+          }
 
           .background {
             max-width: 469px;
+            min-width: 469px;
             max-height: 461px;
 
             img {
