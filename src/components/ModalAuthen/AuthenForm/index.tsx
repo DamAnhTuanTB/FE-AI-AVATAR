@@ -61,8 +61,12 @@ interface IIconWrapper {
 }
 
 const ErrorMessage = (props: any) => {
-  return <ErrorMessageWrapper>{props.message}</ErrorMessageWrapper>;
-};
+    return (
+        <ErrorMessageWrapper isSignUpCheckbox={props.isSignUpCheckbox}>
+            {props.message}
+        </ErrorMessageWrapper>
+    )
+}
 
 const IconWrapper: React.FC<IIconWrapper> = (props) => {
   const { showPassword, togglePassword } = props;
@@ -298,18 +302,16 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
           />
         )}
 
-        {typeForm === AuthEnum.ResetPassword && showForm && (
-          <TxtLabel>Confirm new password</TxtLabel>
-        )}
-        {(typeForm === AuthEnum.SignUp ||
-          typeForm === AuthEnum.ResetPassword) &&
-          showForm && (
-            <PasswordContainer
-              name={'confirm-password'}
-              placeholder={'Confirm password'}
-              rules={[{ validator: validateConfirmPasswordField }]}
-            />
-          )}
+                {(typeForm === AuthEnum.ResetPassword && showForm) && (
+                    <TxtLabel>Confirm new password</TxtLabel>
+                )}
+                {((typeForm === AuthEnum.SignUp || typeForm === AuthEnum.ResetPassword) && showForm) && (
+                    <PasswordContainer
+                        name={'confirm-password'}
+                        placeholder={typeForm === AuthEnum.ResetPassword ? 'Confirm new password' : 'Confirm password'}
+                        rules={[{validator: validateConfirmPasswordField}]}
+                    />
+                )}
 
         {typeForm === AuthEnum.Login && (
           <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
@@ -327,24 +329,28 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
           </RememberMeWrapper>
         )}
 
-        {typeForm === AuthEnum.SignUp && (
-          <>
-            <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
-              <div className="checkbox-container">
-                <CheckboxWrapper onChange={onChangeCheckbox} />
-                <div className="label">
-                  By clicking on Register, you agree to our{' '}
-                  <span>Terms of Use</span> and <span> Conditions of Use</span>
-                </div>
-              </div>
-            </RememberMeWrapper>
-            {showErrorMessageCheckbox && (
-              <ErrorMessage
-                message={'Please check this check box to continue'}
-              />
-            )}
-          </>
-        )}
+                {typeForm === AuthEnum.SignUp && (
+                    <>
+                        <RememberMeWrapper isSignUpModal={typeForm === AuthEnum.SignUp}>
+                            <div className="checkbox-container">
+                                <CheckboxWrapper
+                                    onChange={onChangeCheckbox}
+                                />
+                                <div className="label">
+                                    By clicking on Register, you agree to our {' '}
+                                    <span>Terms of Use</span> {' '} and {' '} <span> Conditions of Use</span>
+                                </div>
+                            </div>
+                        </RememberMeWrapper>
+                        {showErrorMessageCheckbox &&
+                            <ErrorMessage
+                                message={'Please check this check box to continue'}
+                                isSignUpCheckbox={true}
+                            />}
+                    </>
+
+                )}
+
 
         {/*    Button submit */}
         {showForm && (
