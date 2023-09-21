@@ -70,15 +70,15 @@ export default function GenerateAvatarLayout() {
     } catch (err: any) {}
   };
 
-  useQuery(['get-info-user', isLoggedIn], () => generateService.getInfoUser(), {
-    onSuccess: (res: any) => {
-      const obj = {
-        listGenerate: res.data.listGenerate,
-      };
-      dispatch(setUserInfor(obj));
-    },
-    enabled: isLoggedIn,
-  });
+  // useQuery(['get-info-user', isLoggedIn], () => generateService.getInfoUser(), {
+  //   onSuccess: (res: any) => {
+  //     const obj = {
+  //       listGenerate: res.data.listGenerate,
+  //     };
+  //     dispatch(setUserInfor(obj));
+  //   },
+  //   enabled: isLoggedIn,
+  // });
 
   useEffect(() => {
     if (isLoggedIn) {
