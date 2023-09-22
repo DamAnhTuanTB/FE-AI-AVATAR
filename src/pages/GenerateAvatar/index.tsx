@@ -38,7 +38,7 @@ export default function GenerateAvatar() {
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
-  const [listPrice, setListPrice] = useState<any>([]);
+  const listPrice = useAppSelector((state: RootState) => state.app.prices);
 
   const [showModalPayment, setShowModalPayment] = useState(false);
   const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
@@ -123,23 +123,6 @@ export default function GenerateAvatar() {
     },
     enabled: !!gender,
   });
-
-  useQuery(
-    ['get-list-price'],
-    () => generateService.getListPrice({ type: 'main' }),
-    {
-      onSuccess: (res: any) => {
-        const listPrice = res.data.map((item: any) => ({
-          id: item.id,
-          name: item.metadata.name,
-          price: item.unit_amount / 100,
-          maxStyle: Number(item.metadata.numberStyle),
-          bestOffer: item.metadata?.popular === 'true',
-        }));
-        setListPrice(listPrice);
-      },
-    }
-  );
 
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),
