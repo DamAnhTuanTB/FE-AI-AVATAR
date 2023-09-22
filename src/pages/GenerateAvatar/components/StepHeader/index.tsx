@@ -10,7 +10,7 @@ interface IProps {
 export default function StepHeader({ step, onClick }: IProps) {
   return (
     <Wrapper>
-      {step !== StepEnum.GUIDE && (
+      {step !== StepEnum.GUIDE && step !== StepEnum.GENERATE_SUCCESS && (
         <img src={IconPrev} alt="" onClick={onClick} />
       )}
       Step {Math.floor(step)}/4

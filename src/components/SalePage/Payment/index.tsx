@@ -32,25 +32,25 @@ const options = [
   {
     key: 1,
     label: '50 images (5 styles)',
-    originalPrice: '$4.99',
-    newPrice: '$4.99',
+    originalPrice: 10,
+    newPrice: 4.99,
   },
   {
     key: 2,
     label: '100 images (10 styles)',
-    originalPrice: '$7.99',
-    newPrice: '$7.99',
+    originalPrice: 16,
+    newPrice: 7.99,
   },
   {
     key: 3,
     label: '200 images (20 styles)',
-    originalPrice: '$12.99',
-    newPrice: '$12.99',
+    originalPrice: 26,
+    newPrice: 12.99,
   },
 ];
 
 export default function Payment() {
-  const [optionActive, setOptionActive] = useState(options[0].key);
+  const [optionActive, setOptionActive] = useState(options[0]);
   return (
     <Wrapper>
       <SelectPackageSection>
@@ -60,16 +60,18 @@ export default function Payment() {
             <OptionWrapper
               key={option.key}
               onClick={() => {
-                setOptionActive(option.key);
+                setOptionActive(option);
               }}
             >
               <LabelOptionWrapper>
-                <CustomRadio checked={optionActive === option.key} />
+                <CustomRadio checked={optionActive.key === option.key} />
                 <Label>{option.label}</Label>
               </LabelOptionWrapper>
               <PriceWrapper>
-                <OriginalPrice>{option.originalPrice}</OriginalPrice>
-                <NewPrice>{option.newPrice}</NewPrice>
+                <OriginalPrice>
+                  ${option.originalPrice.toFixed(2)}
+                </OriginalPrice>
+                <NewPrice>${option.newPrice.toFixed(2)}</NewPrice>
               </PriceWrapper>
             </OptionWrapper>
           ))}
@@ -86,11 +88,15 @@ export default function Payment() {
           <StatisticPrimaryText>savings</StatisticPrimaryText>
         </SaveItem>
         <SaveItem>
-          <StatisticPrimaryText>$4.99</StatisticPrimaryText>
+          <StatisticPrimaryText>
+            ${optionActive.newPrice.toFixed(2)}
+          </StatisticPrimaryText>
           <StatisticPrimaryText>value</StatisticPrimaryText>
         </SaveItem>
         <SaveItem>
-          <StatisticPrimaryText>$2.49</StatisticPrimaryText>
+          <StatisticPrimaryText>
+            ${(optionActive.originalPrice - optionActive.newPrice).toFixed(2)}
+          </StatisticPrimaryText>
           <StatisticPrimaryText>you save</StatisticPrimaryText>
         </SaveItem>
       </Saving>

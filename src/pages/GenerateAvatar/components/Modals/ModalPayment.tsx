@@ -55,7 +55,7 @@ export default function ModalPayment({
       onSuccess: (res: any) => {
         if (res.data?.url) {
           handleSaveData();
-          // window.location.assign(res.data?.url);
+          window.location.assign(res.data?.url);
         }
       },
     }
@@ -70,8 +70,8 @@ export default function ModalPayment({
   const handleClickPurchase = () => {
     const payload: any = {
       priceId: price.id,
-      // redirectUrl: CONFIG.REACT_APP_CLIENT_URL + ROUTES.APP_PAGE,
-      redirectUrl: 'https://avatar.apero.vn/',
+      redirectUrl: `${window.location.protocol}//${window.location.host}` + ROUTES.APP_PAGE,
+      // redirectUrl: 'https://avatar.apero.vn/',
     };
     if (isLoggedIn) {
       payload.userId = userInfor.id;
@@ -82,6 +82,7 @@ export default function ModalPayment({
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString();
       payload.userId = 'fake' + userIdFake;
       localStorage.setItem('userIdFake', 'fake' + userIdFake);
+      localStorage.removeItem('isComeFirst');
     }
     purchaseMutation.mutate(payload);
     // setStep(StepEnum.CHOOSE_STYLE);

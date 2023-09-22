@@ -47,6 +47,10 @@ export const HeaderWrapper = styled.div`
       @media screen and (max-width: ${breakpoints.md}) {
         display: none;
       }
+      transition: 0.3s;
+      &:hover {
+        filter: brightness(0.8);
+      }
     }
 
     .avatar-item {

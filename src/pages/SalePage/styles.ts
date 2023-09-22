@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
   background-position: center;
   @media screen and (max-width: ${breakpoints.md}) {
     background: url(${MobileBg});
+    padding-top: 32px;
   }
 `;
 
@@ -27,7 +28,7 @@ export const HeaderFooterWrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: 1083px;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
   @media screen and (max-width: ${breakpoints.lg}) {
@@ -39,7 +40,7 @@ export const BodyWrapper = styled.div`
   position: relative;
   display: flex;
   gap: 20px;
-  max-width: 1083px;
+  max-width: 1100px;
   margin: 0 auto;
 `;
 
@@ -51,7 +52,7 @@ export const ContentWrapper = styled.div`
   border: 1px solid var(--neutral-100, #f5f5f5);
   background: var(--secondary-white, #fff);
   width: 716px;
-  padding: 24px;
+  padding: 24px 24px 40px;
   margin-right: 20px;
   display: flex;
   flex-direction: column;
@@ -59,6 +60,7 @@ export const ContentWrapper = styled.div`
   /* flex: 1 0 auto; */
   @media screen and (max-width: ${breakpoints.lg}) {
     margin-right: 0px;
+    padding: 24px 0px 0px;
   }
   @media screen and (max-width: ${breakpoints.md}) {
     border: none;
@@ -68,12 +70,8 @@ export const ContentWrapper = styled.div`
 `;
 
 export const PaymentWrapper = styled.div`
-  padding: 24px 16px;
   width: 364px;
-  border-radius: 8px;
-  border: 1px solid var(--neutral-100, #f5f5f5);
-  background: var(--secondary-white, #fff);
-  box-shadow: 0px 4px 16px 0px rgba(255, 255, 255, 0.07);
+
   height: max-content;
   /* flex: 1 0 auto; */
   position: -webkit-sticky;
@@ -86,9 +84,8 @@ export const PaymentWrapper = styled.div`
     margin: auto;
   }
   @media screen and (max-width: ${breakpoints.md}) {
-    border: none;
     width: 100%;
-    padding: 24px 0px;
+    padding: 0 24px;
   }
 `;
 

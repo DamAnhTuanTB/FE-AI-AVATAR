@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { Radio } from 'antd';
 import styled from 'styled-components';
 
@@ -5,6 +6,11 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  border-radius: 8px;
+  border: 1px solid var(--neutral-100, #f5f5f5);
+  background: var(--secondary-white, #fff);
+  box-shadow: 0px 4px 16px 0px rgba(255, 255, 255, 0.07);
+  padding: 24px 16px;
 `;
 
 export const SelectPackageSection = styled.div`
@@ -43,6 +49,7 @@ export const OriginalPrice = styled.p`
   font-weight: 400;
   line-height: 150%; /* 18px */
   text-decoration-line: strikethrough;
+  text-decoration: line-through;
 `;
 
 export const NewPrice = styled.p`
@@ -61,7 +68,7 @@ export const NewPrice = styled.p`
 export const Label = styled.p`
   margin: 0;
   color: var(--secondary-black, #262626);
-  text-align: center;
+  text-align: left;
 
   /* Body/Body 1/Medium */
   font-family: Outfit;

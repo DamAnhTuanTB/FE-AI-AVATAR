@@ -4,10 +4,13 @@ import IconGenerateSuccess from '@/assets/images/icon-generate-success.svg';
 
 interface IProps {
   handleClickBackToHome: any;
+  handleClickMyAvatar: any;
 }
 
-export default function Step4PC({ handleClickBackToHome }: IProps) {
-  const handleClickMyAvatar = () => {};
+export default function Step4PC({
+  handleClickBackToHome,
+  handleClickMyAvatar,
+}: IProps) {
   return (
     <Wrapper>
       <div className="content-text">
@@ -28,14 +31,14 @@ export default function Step4PC({ handleClickBackToHome }: IProps) {
           height="45px"
           onClick={handleClickBackToHome}
         />
-        {/* <Button
+        <Button
           text="My Avatars"
           width="126px"
           height="45px"
           background={false}
           border={true}
           onClick={handleClickMyAvatar}
-        /> */}
+        />
       </div>
     </Wrapper>
   );

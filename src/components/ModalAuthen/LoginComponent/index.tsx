@@ -10,16 +10,19 @@ import {
   loginWithSocialArr,
 } from '@/components/ModalAuthen/constant';
 import AuthenForm from '@/components/ModalAuthen/AuthenForm';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import authServices from '@/services/auth.service';
 import { HTTP_STATUS } from '@/services/config/api';
 import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useSearchParams } from 'react-router-dom';
-import { getCookie, setCookie } from '@/utils/cookies';
+import { getCookie } from '@/utils/cookies';
 import { CONFIG } from '@/config/service';
 import { RootState } from '@/store/store';
-import { setEmailSuccessPaymentButNotAuth, setUserExists } from '@/store/slices/appSlice';
+import {
+  setEmailSuccessPaymentButNotAuth,
+  setUserExists,
+} from '@/store/slices/appSlice';
 
 const LoginComponent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,10 +39,12 @@ const LoginComponent: React.FC = () => {
   const parseAuthUser = authUser ? JSON.parse(authUser) : '';
   const cookieToken = parseAuthUser.token;
 
-    const tokenFromLocalStorage = localStorage.getItem(CONFIG.LOCAL_STORAGE_TOKEN);
-    const localStorageToken = tokenFromLocalStorage || '';
-    const emptyTextsArray = ['null', 'empty', 'Null', 'Empty'];
-    const [errorMessageApi, setErrorMessageApi] = useState('');
+  const tokenFromLocalStorage = localStorage.getItem(
+    CONFIG.LOCAL_STORAGE_TOKEN
+  );
+  const localStorageToken = tokenFromLocalStorage || '';
+  const emptyTextsArray = ['null', 'empty', 'Null', 'Empty'];
+  const [errorMessageApi, setErrorMessageApi] = useState('');
 
   const emailSuccessPaymentButNotAuth = useAppSelector(
     (state: RootState) => state.app.emailSuccessPaymentButNotAuth
@@ -59,26 +64,25 @@ const LoginComponent: React.FC = () => {
     }
   }, [errorCode, accessToken]);
 
-
-    useEffect(() => {
-        if (accessToken && refreshToken) {
-            // Chưa Login
-            if (accessToken !== localStorageToken) {
-                const payload = {accessToken, refreshToken};
-                dispatch(loginWithSocialAccount(payload));
-                localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, accessToken);
-                searchParams.delete('auth');
-                searchParams.delete('token');
-                searchParams.delete('refresh_token');
-                setSearchParams(searchParams);
-            }
-            // Đã Login
-            else {
-                searchParams.delete('auth');
-                setSearchParams(searchParams);
-            }
-        }
-    }, []);
+  useEffect(() => {
+    if (accessToken && refreshToken) {
+      // Chưa Login
+      if (accessToken !== localStorageToken) {
+        const payload = { accessToken, refreshToken };
+        dispatch(loginWithSocialAccount(payload));
+        localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, accessToken);
+        searchParams.delete('auth');
+        searchParams.delete('token');
+        searchParams.delete('refresh_token');
+        setSearchParams(searchParams);
+      }
+      // Đã Login
+      else {
+        searchParams.delete('auth');
+        setSearchParams(searchParams);
+      }
+    }
+  }, []);
 
   const handleLoginWithSocial = (platform: string) => {
     if (errorCode) {

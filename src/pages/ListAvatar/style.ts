@@ -129,7 +129,7 @@ export const Wrapper = styled.div`
                 content: '';
                 padding-bottom: 100%;
               }
-              img {
+              .main-image {
                 border-radius: 12px;
                 position: absolute;
                 top: 0;
@@ -138,8 +138,18 @@ export const Wrapper = styled.div`
                 height: 100%;
                 object-fit: cover;
               }
+              .second-image {
+                border-radius: 12px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.4;
+              }
             }
-            .pack { 
+            .pack {
               text-align: center;
               margin-top: 16px;
               color: var(--text-primary, #18181b);
@@ -152,6 +162,9 @@ export const Wrapper = styled.div`
                 font-size: 14px;
               }
             }
+          }
+          .not-allow-avatar {
+            cursor: not-allowed;
           }
         }
       }

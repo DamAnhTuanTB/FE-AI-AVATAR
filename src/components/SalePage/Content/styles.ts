@@ -1,9 +1,13 @@
+import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0 24px 40px;
+  }
 `;
 
 export const Description = styled.p`
@@ -74,7 +78,7 @@ export const BuyNowButton = styled.div`
 export const AvatarsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 24px;
+  row-gap: 10px;
   column-gap: 10px;
   img {
     width: 100%;
