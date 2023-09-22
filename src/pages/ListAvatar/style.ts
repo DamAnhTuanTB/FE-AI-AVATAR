@@ -228,6 +228,7 @@ export const Wrapper = styled.div`
     }
     @media screen and (max-width: ${breakpoints.lg}) {
       display: block;
+      padding-top: 16px
     }
   }
 `;
