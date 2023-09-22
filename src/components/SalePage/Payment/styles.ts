@@ -1,6 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import { Radio } from 'antd';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -78,6 +78,16 @@ export const Label = styled.p`
   line-height: 150%; /* 21px */
 `;
 
+const BuyButtonAnimated = keyframes`
+  from{
+    background: var(--secondary-bold, #ffa800);
+  }
+  to
+  {
+     background: rgba(246, 196, 71, 0.8);
+  }
+`;
+
 export const BuyButton = styled.div`
   cursor: pointer;
   display: flex;
@@ -98,6 +108,11 @@ export const BuyButton = styled.div`
     font-weight: 600;
     line-height: 150%; /* 24px */
     margin: 0;
+  }
+  &:hover {
+    background: rgba(246, 196, 71, 0.8);
+    animation: ${BuyButtonAnimated} 0.5s;
+    -webkit-animation-fill-mode: forwards;
   }
 `;
 
