@@ -154,6 +154,9 @@ export const ElipseDecor1 = styled.div`
     height: 433.644px;
     bottom: 1758px;
     left: -218px;
+    border-radius: 433.644px;
+    background: rgba(228, 224, 254, 0.3);
+    filter: blur(79.7872314453125px);
   }
 `;
 
@@ -171,6 +174,9 @@ export const ElipseDecor2 = styled.div`
     width: 433.644px;
     height: 433.644px;
     bottom: 1758px;
-    left: -235px;
+    right: -235px;
+    border-radius: 433.644px;
+    background: rgba(253, 236, 235, 0.3);
+    filter: blur(79.7872314453125px);
   }
 `;
