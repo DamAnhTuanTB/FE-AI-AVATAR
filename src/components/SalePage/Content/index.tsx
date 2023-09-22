@@ -27,6 +27,7 @@ import Avatar15 from '@/assets/images/sale-page/avt-15.svg';
 import Avatar16 from '@/assets/images/sale-page/avt-16.svg';
 import Avatar17 from '@/assets/images/sale-page/avt-17.svg';
 import Avatar18 from '@/assets/images/sale-page/avt-18.svg';
+import usePurchase from '@/hooks/usePurchase';
 
 const avatarsGroup1 = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6];
 const avatarsGroup2 = [Avatar7, Avatar8, Avatar9, Avatar10, Avatar11, Avatar12];
@@ -39,7 +40,13 @@ const avatarsGroup3 = [
   Avatar18,
 ];
 
-export default function SaleContent() {
+interface PropsType {
+  priceSelected: any;
+}
+
+export default function SaleContent({ priceSelected }: PropsType) {
+  const { handlePurchase } = usePurchase();
+
   return (
     <Wrapper>
       <Description>
@@ -135,7 +142,11 @@ export default function SaleContent() {
         </Description>
       </SectionWrapper>
 
-      <BuyNowButton>
+      <BuyNowButton
+        onClick={() => {
+          handlePurchase(priceSelected?.id);
+        }}
+      >
         <p>Buy now</p>
       </BuyNowButton>
     </Wrapper>

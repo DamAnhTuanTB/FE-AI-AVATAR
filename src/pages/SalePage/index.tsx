@@ -13,9 +13,16 @@ import {
   Wrapper,
 } from './styles';
 import SalePageFooter from '@/components/SalePage/Footer';
+import { useState } from 'react';
 
 export default function SalePage() {
   const { isMobile, isTablet } = useScreenSize();
+  const [priceSelected, setPriceSelected] = useState<any>(null);
+
+  const handleSelectPrice = (price: any) => {
+    setPriceSelected(price);
+  };
+
   return (
     <Wrapper>
       <HeaderFooterWrapper>
@@ -28,15 +35,21 @@ export default function SalePage() {
         <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
         {(isMobile || isTablet) && (
           <PaymentWrapper>
-            <Payment />
+            <Payment
+              handleSelectPrice={handleSelectPrice}
+              priceSelected={priceSelected}
+            />
           </PaymentWrapper>
         )}
-        <SaleContent />
+        <SaleContent priceSelected={priceSelected} />
       </ContentWrapper>
 
       {!(isMobile || isTablet) && (
         <PaymentWrapper>
-          <Payment />
+          <Payment
+            handleSelectPrice={handleSelectPrice}
+            priceSelected={priceSelected}
+          />
         </PaymentWrapper>
       )}
 
