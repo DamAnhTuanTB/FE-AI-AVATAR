@@ -12,17 +12,20 @@ export const Wrapper: any = styled(Button)<{ isMobile: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+
   &:hover {
     filter: ${(props: any) =>
-      props.isMobile ? `brightness(1)` : `brightness(0.8)`};
+            props.isMobile ? `brightness(1)` : `brightness(0.8)`};
   }
+
   &:disabled {
-    background: #a3a3a3 !important;
-    color: white !important;
+    background: rgba(163, 163, 163, 0.3) !important;
+    color: #A3A3A3 !important;
   }
+
   &:focus {
     background: ${(props: any) =>
-      props.background ? '#f6c447' : 'transparent'};
+            props.background ? '#f6c447' : 'transparent'};
     filter: brightness(1) !important;
   }
 `;
