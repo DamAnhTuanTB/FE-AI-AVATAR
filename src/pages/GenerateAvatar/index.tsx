@@ -245,12 +245,13 @@ export default function GenerateAvatar() {
         console.error('Lỗi khi xử lý promise:', error);
       }
     }
-    localStorage.setItem('savedImages', JSON.stringify(results));
-    localStorage.setItem('savedGender', gender);
-    localStorage.setItem('savedSessionId', sessionId);
-    localStorage.setItem('savedImagesCopy', JSON.stringify(results));
-    localStorage.setItem('savedGenderCopy', gender);
-    localStorage.setItem('savedSessionIdCopy', sessionId);
+    console.log('results', JSON.stringify(results));
+    // localStorage.setItem('savedImages', JSON.stringify(results));
+    // localStorage.setItem('savedGender', gender);
+    // localStorage.setItem('savedSessionId', sessionId);
+    // localStorage.setItem('savedImagesCopy', JSON.stringify(results));
+    // localStorage.setItem('savedGenderCopy', gender);
+    // localStorage.setItem('savedSessionIdCopy', sessionId);
   };
 
   const handleClickMyAvatar = () => {

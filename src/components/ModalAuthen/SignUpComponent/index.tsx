@@ -1,6 +1,7 @@
 import {
   LoginWithSocialWrapper,
   ModalTextTitle,
+  NoticeText,
   OrTextWrapper,
 } from '@/components/ModalAuthen/ModalLogin/styles';
 import {
@@ -145,6 +146,13 @@ const SignUpComponent = () => {
       <ModalTextTitle>
         {emailSuccessPaymentButNotAuth ? 'Welcome back' : ' Sign up'}
       </ModalTextTitle>
+
+      {emailSuccessPaymentButNotAuth && (
+        <NoticeText>
+          To access the generated results, please register for an account using
+          the email address previously used for payments:
+        </NoticeText>
+      )}
 
       {/*    Login via social buttons */}
       {!emailSuccessPaymentButNotAuth && (

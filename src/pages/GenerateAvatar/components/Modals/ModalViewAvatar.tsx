@@ -32,6 +32,13 @@ export default function ModalViewAvatar({
     setOpen(false);
   };
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.download = 'my-image.jpg';
+    link.href = avatar;
+    link.click();
+  };
+
   return (
     <Wrapper
       width={isDesktop ? 917 : 343}
@@ -62,14 +69,14 @@ export default function ModalViewAvatar({
             </div>
           )}
         </div>
-        <a href={avatar} download className="btn">
+        <div className="btn" onClick={handleDownload}>
           <Button
             onClick={handleSave}
             text="Save"
             // width={!isMobile ? '146px' : '100%'}
             height="45px"
           />
-        </a>
+        </div>
       </div>
     </Wrapper>
   );

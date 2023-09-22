@@ -21,7 +21,7 @@ import generateService from '@/services/generate.service';
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const pathname = location.pathname;
+  const pathname = location.pathname; 
   const [searchParams] = useSearchParams();
   const auth = searchParams.get('auth');
   const isLoggedIn = useAppSelector(
