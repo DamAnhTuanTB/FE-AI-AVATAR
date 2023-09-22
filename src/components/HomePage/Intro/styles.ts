@@ -185,7 +185,18 @@ const ScrollLeftAnimated = keyframes`
     top: 0%;
   }
   50% {
-    top: -270%;
+    top: -260%;
+  }
+  100% {
+    top: 0%;
+  }
+`;
+const ScrollLeftAnimatedMobile = keyframes`
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: -200%;
   }
   100% {
     top: 0%;
@@ -193,13 +204,24 @@ const ScrollLeftAnimated = keyframes`
 `;
 const ScrollRightAnimated = keyframes`
   0% {
-    top: -270%;
+    top: -260%;
   }
   50% {
     top: 00%;
   }
   100% {
-    top: -270%;
+    top: -260%;
+  }
+`;
+const ScrollRightAnimatedMobile = keyframes`
+  0% {
+    top: -200%;
+  }
+  50% {
+    top: 00%;
+  }
+  100% {
+    top: -200%;
   }
 `;
 
@@ -212,6 +234,11 @@ export const AvatarsColItem = styled.div<{ first: boolean }>`
   animation: ${(props) =>
       props.first ? ScrollLeftAnimated : ScrollRightAnimated}
     40s linear infinite;
+  @media screen and (max-width: ${breakpoints.md}) {
+    animation: ${(props) =>
+        props.first ? ScrollLeftAnimatedMobile : ScrollRightAnimatedMobile}
+      40s linear infinite;
+  }
 `;
 
 export const AvatarScroll = styled.img`

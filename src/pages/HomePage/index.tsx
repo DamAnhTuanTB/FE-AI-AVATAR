@@ -45,7 +45,7 @@ export default function HomePage() {
         <TransformPhoto />
         <StepsToCreate />
         <UsersSay />
-        <MobileApp />
+        {/* <MobileApp /> */}
         <Faq />
         <ReadyStarted />
       </BodyWrapper>
