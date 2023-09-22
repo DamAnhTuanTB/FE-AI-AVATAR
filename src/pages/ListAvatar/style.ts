@@ -2,7 +2,7 @@ import { breakpoints } from '@/config/breakpoints';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding-top: 33px;
+  padding-top: 16px;
   padding-bottom: 60px;
   height: 100%;
   flex: 1;
@@ -228,6 +228,7 @@ export const Wrapper = styled.div`
     }
     @media screen and (max-width: ${breakpoints.lg}) {
       display: block;
+      padding-top: 16px
     }
   }
 `;

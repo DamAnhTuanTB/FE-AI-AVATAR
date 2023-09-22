@@ -7,7 +7,7 @@ export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 33px;
+  margin-bottom: 16px;
   @media screen and (max-width: ${breakpoints.lg}) {
     margin-bottom: 0px;
   }
