@@ -9,6 +9,9 @@ export const Wrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   margin-top: 24px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0 20px;
+  }
 `;
 export const PriceWrapper = styled.div`
   margin-top: 40px;
@@ -62,7 +65,29 @@ export const Description = styled.p`
   line-height: 150%; /* 24px */
   margin: 0px;
   text-align: center;
+`;
+
+export const ClockWrapper = styled.div`
+  position: absolute;
+  right: -20px;
+  top: 10px;
+  transform: rotate(15deg);
+  width: 35px;
+  height: 35px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 23px;
+    height: 23px;
+    position: static;
+  }
+`;
+
+export const PriceTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   @media screen and (max-width: ${breakpoints.md}) {
     padding: 0 20px;
+    gap: 4px;
   }
 `;

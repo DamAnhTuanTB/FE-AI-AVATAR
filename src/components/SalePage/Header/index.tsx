@@ -1,17 +1,32 @@
 import LogoSrc from '@/assets/images/logo-secondary.svg';
 import {
+  ClockWrapper,
   ContentWrapper,
   CountDownWrapper,
   Description,
   Logo,
+  PriceTitleWrapper,
   PriceWrapper,
   SubTitle,
   Title,
   Wrapper,
 } from './styles';
 import CountDown from '@/components/CountDown';
+import { useRef } from 'react';
+import Lottie from 'react-lottie';
+import WatchLottie from '@/assets/jsons/stop-watch.json';
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: WatchLottie,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
 
 export default function SaleHeader() {
+  const animationClockRef = useRef(null);
   return (
     <Wrapper>
       <Logo src={LogoSrc} alt="logo" />
@@ -25,7 +40,13 @@ export default function SaleHeader() {
       </ContentWrapper>
 
       <PriceWrapper>
-        <Description>The price increased by 15% in</Description>
+        <PriceTitleWrapper>
+          <Description>The price increased by 15% in</Description>
+          <ClockWrapper>
+            <Lottie options={defaultOptions} ref={animationClockRef} />
+          </ClockWrapper>
+        </PriceTitleWrapper>
+
         <CountDownWrapper>
           <CountDown />
         </CountDownWrapper>
