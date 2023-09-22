@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BodyWrapper,
   CustomTitle,
+  GroupsWrapper,
   RatesWrapper,
   Shadow,
   UserCard,
@@ -24,84 +25,143 @@ import User9 from '@/assets/images/home-page/user-9.svg';
 import Star from '@/components/Icons/Star';
 import useScreenSize from '@/hooks/useScreenSize';
 
-const users = [
+const groups = [
   {
-    key: 'Sarah Johnson',
-    name: 'Sarah Johnson',
-    job: 'Social Media Influencer',
-    rate: 5,
-    said: `“Avatarist is a game-changer! It's taken my online presence to a whole new level. My followers love the creativity, and it's boosted my engagement.”`,
-    avt: User1,
+    key: 1,
+    users: [
+      {
+        key: 'Sarah Johnson',
+        name: 'Sarah Johnson',
+        job: 'Social Media Influencer',
+        rate: 5,
+        said: `“Avatarist is a game-changer! It's taken my online presence to a whole new level. My followers love the creativity, and it's boosted my engagement.”`,
+        avt: User1,
+      },
+      {
+        key: 'David Rodriguez',
+        name: 'David Rodriguez',
+        job: 'Student & Content Creator',
+        rate: 5,
+        said: `“Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
+        avt: User4,
+      },
+      {
+        key: 'Natalie Attired',
+        name: 'Natalie Attired',
+        job: 'Student & Content Creator',
+        rate: 5,
+        said: `““Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
+        avt: User7,
+      },
+    ],
   },
   {
-    key: 'Jaylen Smith',
-    name: 'Jaylen Smith',
-    job: 'Gamer & Streamer',
-    rate: 5,
-    said: `“As a streamer, my avatar is my brand. Avatarist gave me the freedom to design a character that represents my gaming style. It's been a hit on Twitch!”`,
-    avt: User2,
+    key: 2,
+    users: [
+      {
+        key: 'Jaylen Smith',
+        name: 'Jaylen Smith',
+        job: 'Gamer & Streamer',
+        rate: 5,
+        said: `“As a streamer, my avatar is my brand. Avatarist gave me the freedom to design a character that represents my gaming style. It's been a hit on Twitch!”`,
+        avt: User2,
+      },
+      {
+        key: 'Laura Chen',
+        name: 'Laura Chen',
+        job: 'Freelance Artist',
+        rate: 4,
+        said: `“As an artist, I appreciate good design. Avatarist's user-friendly interface made it easy for me to customize avatars for my clients.”`,
+        avt: User5,
+      },
+      {
+        key: 'Nicole Anne Dime',
+        name: 'Nicole Anne Dime',
+        job: 'Freelance Artist',
+        rate: 4,
+        said: `“As an artist, I appreciate good design. Avatarist's user-friendly interface made it easy for me to customize avatars for my clients.”`,
+        avt: User8,
+      },
+    ],
   },
   {
-    key: 'Emily Davis',
-    name: 'Emily Davis',
-    job: 'Marketing Manager',
-    rate: 5,
-    said: `“We integrated our AI avatar into our brand logo, and it's been a hit with our clients. It adds a personal touch to our brand that sets us apart.”`,
-    avt: User3,
+    key: 3,
+    users: [
+      {
+        key: 'Emily Davis',
+        name: 'Emily Davis',
+        job: 'Marketing Manager',
+        rate: 5,
+        said: `“We integrated our AI avatar into our brand logo, and it's been a hit with our clients. It adds a personal touch to our brand that sets us apart.”`,
+        avt: User3,
+      },
+
+      {
+        key: 'Michael Anderson',
+        name: 'Michael Anderson',
+        job: 'Small Business Owner',
+        rate: 4,
+        said: `“Our AI avatar has become the face of our brand. It's professional, engaging, and it's helped us connect with our customers on a personal level.”`,
+        avt: User6,
+      },
+
+      {
+        key: 'Susan Socks',
+        name: 'Susan Socks',
+        job: 'Small Business Owner',
+        rate: 4,
+        said: `“Our AI avatar has become the face of our brand. It's professional, engaging, and it's helped us connect with our customers on a personal level.”`,
+        avt: User9,
+      },
+    ],
+  },
+];
+
+const groupsMobile = [
+  {
+    key: 1,
+    users: [
+      {
+        key: 'Sarah Johnson',
+        name: 'Sarah Johnson',
+        job: 'Social Media Influencer',
+        rate: 5,
+        said: `“Avatarist is a game-changer! It's taken my online presence to a whole new level. My followers love the creativity, and it's boosted my engagement.”`,
+        avt: User1,
+      },
+    ],
   },
   {
-    key: 'David Rodriguez',
-    name: 'David Rodriguez',
-    job: 'Student & Content Creator',
-    rate: 5,
-    said: `“Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
-    avt: User4,
+    key: 2,
+    users: [
+      {
+        key: 'David Rodriguez',
+        name: 'David Rodriguez',
+        job: 'Student & Content Creator',
+        rate: 5,
+        said: `“Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
+        avt: User4,
+      },
+    ],
   },
   {
-    key: 'Laura Chen',
-    name: 'Laura Chen',
-    job: 'Freelance Artist',
-    rate: 4,
-    said: `“As an artist, I appreciate good design. Avatarist's user-friendly interface made it easy for me to customize avatars for my clients.”`,
-    avt: User5,
-  },
-  {
-    key: 'Michael Anderson',
-    name: 'Michael Anderson',
-    job: 'Small Business Owner',
-    rate: 4,
-    said: `“Our AI avatar has become the face of our brand. It's professional, engaging, and it's helped us connect with our customers on a personal level.”`,
-    avt: User6,
-  },
-  {
-    key: 'Natalie Attired',
-    name: 'Natalie Attired',
-    job: 'Student & Content Creator',
-    rate: 5,
-    said: `““Being a content creator on YouTube, I wanted a unique avatar that stands out. Avatarist had me covered with its wide range of styles.”`,
-    avt: User7,
-  },
-  {
-    key: 'Nicole Anne Dime',
-    name: 'Nicole Anne Dime',
-    job: 'Freelance Artist',
-    rate: 4,
-    said: `“As an artist, I appreciate good design. Avatarist's user-friendly interface made it easy for me to customize avatars for my clients.”`,
-    avt: User8,
-  },
-  {
-    key: 'Susan Socks',
-    name: 'Susan Socks',
-    job: 'Small Business Owner',
-    rate: 4,
-    said: `“Our AI avatar has become the face of our brand. It's professional, engaging, and it's helped us connect with our customers on a personal level.”`,
-    avt: User9,
+    key: 3,
+    users: [
+      {
+        key: 'Jaylen Smith',
+        name: 'Jaylen Smith',
+        job: 'Gamer & Streamer',
+        rate: 5,
+        said: `“As a streamer, my avatar is my brand. Avatarist gave me the freedom to design a character that represents my gaming style. It's been a hit on Twitch!”`,
+        avt: User2,
+      },
+    ],
   },
 ];
 
 export default function UsersSay() {
   const { isMobile } = useScreenSize();
-  const usersShowed = isMobile ? users.slice(0, 3) : users;
+  const groupsShowed = isMobile ? groupsMobile : groups;
   return (
     <Wrapper id="testimonials">
       <SubTitle>TESTIMONIALS</SubTitle>
@@ -112,24 +172,28 @@ export default function UsersSay() {
 
       <BodyWrapper>
         <Shadow />
-        {usersShowed.map((user, index) => (
-          <UserCard key={user.key} gradient={index + 1 >= 7}>
-            <div>
-              <UserInfoWrapper>
-                <img src={user.avt} alt={user.key} />
+        {groupsShowed.map((group) => (
+          <GroupsWrapper key={group.key}>
+            {group.users.map((user, index) => (
+              <UserCard key={user.key} gradient={index === 2}>
                 <div>
-                  <UserName>{user.name}</UserName>
-                  <UserJob>{user.job}</UserJob>
+                  <UserInfoWrapper>
+                    <img src={user.avt} alt={user.key} />
+                    <div>
+                      <UserName>{user.name}</UserName>
+                      <UserJob>{user.job}</UserJob>
+                    </div>
+                  </UserInfoWrapper>
+                  <RatesWrapper>
+                    {Array.from(Array(user.rate).keys()).map((star) => (
+                      <Star key={user.key + star} />
+                    ))}
+                  </RatesWrapper>
                 </div>
-              </UserInfoWrapper>
-              <RatesWrapper>
-                {Array.from(Array(user.rate).keys()).map((star) => (
-                  <Star key={user.key + star} />
-                ))}
-              </RatesWrapper>
-            </div>
-            <UserSaid>{user.said}</UserSaid>
-          </UserCard>
+                <UserSaid>{user.said}</UserSaid>
+              </UserCard>
+            ))}
+          </GroupsWrapper>
         ))}
       </BodyWrapper>
     </Wrapper>

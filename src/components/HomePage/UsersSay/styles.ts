@@ -26,6 +26,12 @@ export const BodyWrapper = styled.div`
   }
 `;
 
+export const GroupsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
 export const UserCard = styled.div<{ gradient?: boolean }>`
   border-radius: 10px;
   background: ${(props) =>
@@ -90,9 +96,9 @@ export const UserSaid = styled.p`
 
 export const Shadow = styled.div`
   position: absolute;
-  top: -60px;
+  top: -55px;
   width: 100%;
-  height: 167px;
+  height: 86px;
   background: linear-gradient(
     180deg,
     #fff 0%,

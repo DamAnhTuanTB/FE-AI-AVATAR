@@ -50,10 +50,10 @@ export const StepContent = styled.div`
   }
 `;
 export const MainStep = styled.div`
-display: flex;
-gap: 9px;
-flex-direction: column;
-`
+  display: flex;
+  gap: 9px;
+  flex-direction: column;
+`;
 export const StepImage = styled.img<{ third?: boolean }>`
   max-width: ${(props) => (props.third ? '320px' : '269px')};
   width: 100%;
@@ -86,8 +86,8 @@ export const StepIcon = styled.div`
 `;
 
 export const StepTitle = styled.p`
-  color: #000;
-  font-family: Montserrat;
+  color: var(--text-primary, #18181b);
+  font-family: Outfit;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
