@@ -13,12 +13,12 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   /* background: var(--neutral-50, #fafafa); */
-  background: url(${DesktopBg});
+  background-image: url(${DesktopBg});
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   @media screen and (max-width: ${breakpoints.md}) {
-    background: url(${MobileBg});
+    background-image: url(${MobileBg});
     padding-top: 32px;
   }
 `;

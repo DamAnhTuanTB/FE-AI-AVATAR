@@ -141,7 +141,7 @@ export const Description = styled.p`
 
 export const ElipseDecor1 = styled.div`
   position: absolute;
-  bottom: 900px;
+  bottom: 300px;
   left: -24px;
   width: 1087px;
   height: 1087px;
@@ -162,7 +162,7 @@ export const ElipseDecor1 = styled.div`
 
 export const ElipseDecor2 = styled.div`
   position: absolute;
-  bottom: 920px;
+  bottom: 320px;
   right: -131px;
   width: 1087px;
   height: 1087px;

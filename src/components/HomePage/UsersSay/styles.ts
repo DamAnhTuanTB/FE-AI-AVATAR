@@ -34,10 +34,11 @@ export const GroupsWrapper = styled.div`
 
 export const UserCard = styled.div<{ gradient?: boolean }>`
   border-radius: 10px;
-  background: ${(props) =>
+  /* background: ${(props) =>
     props.gradient
       ? 'linear-gradient(180deg, #F5F5F5 0%, rgba(245, 245, 245, 0.00) 100%)'
-      : '#f5f5f5'};
+      : '#f5f5f5'}; */
+  background: #f5f5f5;
   display: flex;
   width: 100%;
   padding: 16px;
