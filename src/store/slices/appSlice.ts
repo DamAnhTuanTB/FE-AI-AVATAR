@@ -12,6 +12,7 @@ export interface AppSlice {
   userInfor: any;
   emailSuccessPaymentButNotAuth: string;
   userExists: number;
+  prices: any[];
 }
 
 export const initialUserInfo = {
@@ -29,6 +30,7 @@ const initialState: AppSlice = {
   userInfor: initialUserInfo,
   emailSuccessPaymentButNotAuth: '',
   userExists: -1,
+  prices: [],
 };
 
 export const appSlice = createSlice({
@@ -49,11 +51,17 @@ export const appSlice = createSlice({
     setHiddenSidebar: (state, action: PayloadAction<boolean>) => {
       state.hiddenSidebar = action.payload;
     },
-    setEmailSuccessPaymentButNotAuth: (state, action: PayloadAction<string>) => {
+    setEmailSuccessPaymentButNotAuth: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.emailSuccessPaymentButNotAuth = action.payload;
     },
     setUserExists: (state, action: PayloadAction<number>) => {
       state.userExists = action.payload;
+    },
+    setListPrice: (state, action: PayloadAction<any[]>) => {
+      state.prices = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -72,5 +80,6 @@ export const {
   setHiddenSidebar,
   setEmailSuccessPaymentButNotAuth,
   setUserExists,
+  setListPrice,
 } = appSlice.actions;
 export default appSlice.reducer;
