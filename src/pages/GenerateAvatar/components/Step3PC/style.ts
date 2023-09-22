@@ -68,7 +68,7 @@ export const Wrapper = styled.div`
         text-align: center;
         font-size: 16px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 100%; /* 14px */
         padding-top: 13px;
         padding-bottom: 13px;

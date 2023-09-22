@@ -25,7 +25,7 @@ export const FormWrapper = styled(Form)`
   width: 100%;
 
   .ant-form-item {
-    margin-bottom: 12px !important;
+    margin-bottom: 3px !important;
   }
 
   .login-input, .ant-input {
