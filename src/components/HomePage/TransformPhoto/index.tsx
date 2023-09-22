@@ -61,7 +61,7 @@ const features = [
 export default function TransformPhoto() {
   return (
     <Wrapper id="why-choose-avatar">
-      <SubTitle>WHY CHOOSE AI AVATAR?</SubTitle>
+      <SubTitle>WHY CHOOSE AVATARIST?</SubTitle>
       <TransformTitle>
         Transform your photos into expressive avatars
       </TransformTitle>
