@@ -11,9 +11,9 @@ export const Wrapper = styled(HomepageContainer)`
 export const CustomTitle = styled(Title)`
   text-align: center;
   margin: 24px 0 16px;
-  @media screen and (max-width: ${breakpoints.md}) {
+  /* @media screen and (max-width: ${breakpoints.md}) {
     font-size: 40px;
-  }
+  } */
 `;
 
 export const StepsWrapper = styled.div`

@@ -37,9 +37,9 @@ export const TitleDecor = styled.img`
 export const CustomTitle = styled(Title)`
   margin: 24px 0 16px;
   text-align: start;
-  @media screen and (max-width: ${breakpoints.md}) {
+  /* @media screen and (max-width: ${breakpoints.md}) {
     font-size: 30px;
-  }
+  } */
 `;
 
 export const CustomDescription = styled(Description)`
