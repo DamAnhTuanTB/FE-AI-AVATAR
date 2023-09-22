@@ -1,6 +1,6 @@
 import React from 'react';
 import BgModalLogin from '@/assets/images/bg_modal_login.png';
-import BgSmallLogin from '@/assets/images/bg-small-login.png';
+import BgSmallLogin from '@/assets/images/bg-small-authen.png';
 import IcCloseModal from '@/assets/icons/ic_close_modal.svg';
 import { CustomModalWrapper } from '@/components/ModalAuthen/CustomModalAuthen/styles';
 import { useSearchParams } from 'react-router-dom';
