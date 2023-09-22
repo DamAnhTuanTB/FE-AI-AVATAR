@@ -2,7 +2,10 @@ import Facebook from '@/assets/images/socials/facebook.svg';
 import Linkedin from '@/assets/images/socials/linkedin.svg';
 import Twitter from '@/assets/images/socials/twitter.svg';
 import Star from '@/components/Icons/Star';
-import { useState } from 'react';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { useEffect, useState } from 'react';
+import CountDown from './CountDown';
 import {
   BuyButton,
   CustomRadio,
@@ -21,12 +24,13 @@ import {
   SelectPackageSection,
   SocialsWrapper,
   StatisticPrimaryText,
-  TimeNumber,
   Wrapper,
 } from './styles';
-import { Radio } from 'antd';
-import useCountDown from '@/hooks/useCountDown';
-import CountDown from './CountDown';
+import moment from 'moment';
+import { SALE_SCHEDULED, discountPrice } from '@/utils/constants';
+import { ROUTES } from '@/routes/routes';
+import { useMutation } from 'react-query';
+import generateService from '@/services/generate.service';
 
 const options = [
   {
@@ -49,53 +53,114 @@ const options = [
   },
 ];
 
+const tolerance = 0.01;
+
 export default function Payment() {
-  const [optionActive, setOptionActive] = useState(options[0]);
+  const prices = useAppSelector((state: RootState) => state.app.prices);
+  const [priceSelected, setPriceSelected] = useState<any>(null);
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+
+  const purchaseMutation = useMutation(
+    (payload: any) => generateService.purchaseNow(payload),
+    {
+      onSuccess: (res: any) => {
+        if (res.data?.url) {
+          window.location.assign(res.data?.url);
+        }
+      },
+    }
+  );
+
+  const handleClickPurchase = () => {
+    const payload: any = {
+      priceId: priceSelected?.id,
+      redirectUrl:
+        `${window.location.protocol}//${window.location.host}` +
+        ROUTES.APP_PAGE,
+      // redirectUrl: 'https://avatar.apero.vn/',
+    };
+    if (isLoggedIn) {
+      payload.userId = userInfor.id;
+      payload.email = userInfor.userEmail;
+    } else {
+      const userIdFake =
+        (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString() +
+        (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString();
+      payload.userId = 'fake' + userIdFake;
+      localStorage.setItem('userIdFake', 'fake' + userIdFake);
+      localStorage.removeItem('isComeFirst');
+    }
+    purchaseMutation.mutate(payload);
+    // setStep(StepEnum.CHOOSE_STYLE);
+    // setOpen(false);
+    // setSuccessPurchase(true);
+    // setOpen(false);
+  };
+
+  useEffect(() => {
+    if (prices.length > 0) {
+      setPriceSelected(prices[0]);
+    }
+  }, [prices.length]);
+
   return (
     <Wrapper>
       <SelectPackageSection>
         <Label>Select a package:</Label>
         <div>
-          {options.map((option) => (
-            <OptionWrapper
-              key={option.key}
-              onClick={() => {
-                setOptionActive(option);
-              }}
-            >
-              <LabelOptionWrapper>
-                <CustomRadio checked={optionActive.key === option.key} />
-                <Label>{option.label}</Label>
-              </LabelOptionWrapper>
-              <PriceWrapper>
-                <OriginalPrice>
-                  ${option.originalPrice.toFixed(2)}
-                </OriginalPrice>
-                <NewPrice>${option.newPrice.toFixed(2)}</NewPrice>
-              </PriceWrapper>
-            </OptionWrapper>
-          ))}
+          {prices.map((price) => {
+            const originalPrice = price?.price || 0;
+            const newPrice =
+              originalPrice - originalPrice * discountPrice - tolerance;
+            return (
+              <OptionWrapper
+                key={price?.id}
+                onClick={() => {
+                  setPriceSelected(price);
+                }}
+              >
+                <LabelOptionWrapper>
+                  <CustomRadio checked={priceSelected?.id === price?.id} />
+                  <Label>{price?.name}</Label>
+                </LabelOptionWrapper>
+                <PriceWrapper>
+                  <OriginalPrice>${originalPrice.toFixed(2)}</OriginalPrice>
+                  <NewPrice>${newPrice.toFixed(2)}</NewPrice>
+                </PriceWrapper>
+              </OptionWrapper>
+            );
+          })}
         </div>
       </SelectPackageSection>
 
-      <BuyButton>
+      <BuyButton onClick={handleClickPurchase}>
         <p>Buy now</p>
       </BuyButton>
 
       <Saving>
         <SaveItem first>
-          <StatisticPrimaryText>50%</StatisticPrimaryText>
+          <StatisticPrimaryText>{discountPrice * 100}%</StatisticPrimaryText>
           <StatisticPrimaryText>savings</StatisticPrimaryText>
         </SaveItem>
         <SaveItem>
           <StatisticPrimaryText>
-            ${optionActive.newPrice.toFixed(2)}
+            $
+            {(
+              (priceSelected?.price || 0) * (1 - discountPrice) -
+              tolerance
+            ).toFixed(2)}
           </StatisticPrimaryText>
           <StatisticPrimaryText>value</StatisticPrimaryText>
         </SaveItem>
         <SaveItem>
           <StatisticPrimaryText>
-            ${(optionActive.originalPrice - optionActive.newPrice).toFixed(2)}
+            $
+            {((priceSelected?.price || 0) * discountPrice + tolerance).toFixed(
+              2
+            )}
           </StatisticPrimaryText>
           <StatisticPrimaryText>you save</StatisticPrimaryText>
         </SaveItem>
