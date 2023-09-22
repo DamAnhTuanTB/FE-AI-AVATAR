@@ -9,37 +9,44 @@ import DetailAvatar from '@/pages/DetailAvatar';
 import DetailAvatarWithStyle from '@/pages/DetailAvatarWithStyle';
 import HomePage from '@/pages/HomePage';
 import SalePage from '@/pages/SalePage';
+import MainLayout from '@/layouts/MainLayout';
 
 export const router = createBrowserRouter([
   {
-    element: <GenerateAvatarLayout />,
+    element: <MainLayout />,
     children: [
       {
-        path: ROUTES.APP_PAGE,
-        element: <GenerateAvatar />,
+        element: <GenerateAvatarLayout />,
+        children: [
+          {
+            path: ROUTES.APP_PAGE,
+            element: <GenerateAvatar />,
+          },
+          {
+            path: ROUTES.LIST_AVATAR,
+            element: <ListAvatar />,
+          },
+          {
+            path: ROUTES.DETAIL_AVATAR,
+            element: <DetailAvatar />,
+          },
+          {
+            path: ROUTES.DETAIL_AVATAR_WITH_STYLE,
+            element: <DetailAvatarWithStyle />,
+          },
+        ],
       },
       {
-        path: ROUTES.LIST_AVATAR,
-        element: <ListAvatar />,
+        path: ROUTES.HOME,
+        element: <HomePage />,
       },
       {
-        path: ROUTES.DETAIL_AVATAR,
-        element: <DetailAvatar />,
-      },
-      {
-        path: ROUTES.DETAIL_AVATAR_WITH_STYLE,
-        element: <DetailAvatarWithStyle />,
+        path: ROUTES.SALE_PAGE,
+        element: <SalePage />,
       },
     ],
   },
-  {
-    path: ROUTES.HOME,
-    element: <HomePage />,
-  },
-  {
-    path: ROUTES.SALE_PAGE,
-    element: <SalePage />,
-  },
+
   {
     path: ROUTES.LOGIN,
     element: <Login />,
