@@ -1,9 +1,13 @@
+import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0 24px 40px;
+  }
 `;
 
 export const Description = styled.p`

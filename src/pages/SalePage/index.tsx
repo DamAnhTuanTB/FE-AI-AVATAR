@@ -12,6 +12,7 @@ import {
   PaymentWrapper,
   Wrapper,
 } from './styles';
+import SalePageFooter from '@/components/SalePage/Footer';
 
 export default function SalePage() {
   const { isMobile, isTablet } = useScreenSize();
@@ -41,7 +42,7 @@ export default function SalePage() {
 
       <HeaderFooterWrapper>
         <Container>
-          <HomePageFooter />
+          <SalePageFooter />
         </Container>
       </HeaderFooterWrapper>
     </Wrapper>

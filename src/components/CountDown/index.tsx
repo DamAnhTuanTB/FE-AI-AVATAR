@@ -1,28 +1,10 @@
-import React, { useRef } from 'react';
 import useCountDown from '@/hooks/useCountDown';
-import {
-  ClockWrapper,
-  Colon,
-  TimeBlock,
-  TimeNumber,
-  TimeString,
-  Wrapper,
-} from './styles';
-import Lottie from 'react-lottie';
-import WatchLottie from '@/assets/jsons/stop-watch.json';
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: WatchLottie,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice',
-  },
-};
+import React from 'react';
+import { Colon, TimeBlock, TimeNumber, TimeString, Wrapper } from './styles';
 
 function CountDown() {
   const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
-  const animationRef = useRef(null);
+
   return (
     <Wrapper>
       <TimeBlock>
@@ -44,10 +26,6 @@ function CountDown() {
         <TimeNumber>{cowndown.seconds}</TimeNumber>
         <TimeString>SECONDS</TimeString>
       </TimeBlock>
-
-      <ClockWrapper>
-        <Lottie options={defaultOptions} ref={animationRef} />
-      </ClockWrapper>
     </Wrapper>
   );
 }
