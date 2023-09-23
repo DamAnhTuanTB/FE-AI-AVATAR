@@ -47,7 +47,7 @@ export default function Step3({
         Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
       ) {
         // price.maxStyle - 1
-        ToastError('The maximum quantity has been selected.');
+        ToastError('The maximum quantity has been selected.', true);
       } else {
         styles.push(alias);
       }
@@ -63,7 +63,8 @@ export default function Step3({
     <Wrapper>
       <div className="title">Choose styles</div>
       <div className="description">
-        Select from a diverse range of up to 20 avatar styles.
+        Select from a diverse range of up to{' '}
+        {currentGenerate?.priceInfo?.metadata?.numberStyle} avatar styles.
       </div>
       <div className="list-styles">
         {listStyles.map((item: any) => (

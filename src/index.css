@@ -62,7 +62,7 @@ code {
   background: #d0302f !important; */
   border-radius: 8px !important;
   /*border: 1px solid #ffccc7 !important;*/
-  background: #282843 !important;
+  background: #F5F5F5 !important;
 }
 .Toastify__toast--error::after {
   /*content : url('../assets/images/svg/closeToast.svg');*/
@@ -88,12 +88,12 @@ code {
 .Toastify__toast--success {
   height: 48px;
   border-radius: 8px !important;
-  background: #282843 !important;
+  background: #F5F5F5 !important;
 }
 .Toastify__toast--success::after {
   /*content : url('../assets/images/svg/closeToast.svg');*/
   position: absolute;
-  color: #333333;
+  color: #262626;
   font-size: 15px;
   font-weight: 700;
   left: 265px;
@@ -112,7 +112,8 @@ code {
 
 @media only screen and (max-width: 480px) {
   .Toastify__toast-container {
-    top: 20px !important;
+    /*top: 20px !important;*/
+    bottom: 85px !important;
     width: 90vw !important;
     left: 5vw !important;
   }
@@ -120,6 +121,17 @@ code {
   .ant-select-item-empty {
     display: none !important;
   }
+}
+
+.header-popover > .ant-popover-content > .ant-popover-inner {
+  border-radius: 12px !important;
+}
+
+.header-popover > .ant-popover-content > .ant-popover-inner  .ant-popover-inner-content {
+  padding: 12px !important;
+}
+.header-popover > .ant-popover-content > .ant-popover-arrow {
+  display: none;
 }
 
 :root {

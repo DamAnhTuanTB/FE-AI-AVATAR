@@ -11,7 +11,6 @@ interface IProps {
   avatar: string;
   handlePrev: any;
   handleNext: any;
-  handleSave: any;
   imageIdx: number;
   imagesLength: number;
 }
@@ -22,7 +21,6 @@ export default function ModalViewAvatar({
   avatar,
   handlePrev,
   handleNext,
-  handleSave,
   imageIdx,
   imagesLength,
 }: IProps) {
@@ -69,9 +67,9 @@ export default function ModalViewAvatar({
             </div>
           )}
         </div>
-        <div className="btn" onClick={handleDownload}>
+        <div className="btn">
           <Button
-            onClick={handleSave}
+            onClick={handleDownload}
             text="Save"
             // width={!isMobile ? '146px' : '100%'}
             height="45px"

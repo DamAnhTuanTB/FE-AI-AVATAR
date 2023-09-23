@@ -13,6 +13,7 @@ import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import useScreenSize from '@/hooks/useScreenSize';
 
 export default function DetailAvatar() {
+  const {isMobile} = useScreenSize()
   const params: any = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -35,8 +36,9 @@ export default function DetailAvatar() {
     () => generateService.downloadAddPack(params.id),
     {
       onSuccess: (res: any) => {
+        console.log(res?.data);
         setOpenModalDownload(false);
-        ToastSuccess('Download successfully');
+        ToastSuccess('Download successfully', isMobile);
       },
     }
   );
@@ -73,7 +75,7 @@ export default function DetailAvatar() {
               <span className="name-style">{capitalizeWords(key)}</span>
               <span
                 className="view-all"
-                onClick={() => navigate(`/list-avatar/${params.id}/${key}`)}
+                onClick={() => navigate(`/my-avatar/${params.id}/${key}`)}
               >
                 View all
               </span>

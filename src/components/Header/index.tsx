@@ -59,6 +59,7 @@ const Header = () => {
         <div className="title">
           <div className="image">
             <Avatar
+              onClick={() => navigate(ROUTES.HOME)}
               src={avatarUrl}
               size={32}
               onError={() => {
@@ -88,7 +89,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <img src={LogoHeader} alt="" />
+      <img src={LogoHeader} alt="" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}/>
       {!isLoggedIn ? (
         <div className="sign-in" onClick={() => handleShowSignInModal()}>
           Sign In
@@ -103,6 +104,7 @@ const Header = () => {
               placement="bottomRight"
               content={contentPopover}
               trigger={'click'}
+              overlayClassName={'header-popover'}
             >
               <Avatar
                 src={avatarUrl}

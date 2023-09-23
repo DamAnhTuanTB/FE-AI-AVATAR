@@ -13,6 +13,8 @@ import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
+import {setShowModalUploadFilesExtendLimit} from "@/store/slices/appSlice";
+import {useAppDispatch} from "@/store/hooks";
 
 const defaultOptions = {
   loop: true,
@@ -58,6 +60,7 @@ export default function Step1({
   setImages,
   setSessionId,
 }: IProps) {
+  const dispatch = useAppDispatch();
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
@@ -79,7 +82,7 @@ export default function Step1({
         const errArr: any = err?.response?.data?.error?.data || [];
         errArr.forEach((item: any) => {
           images.forEach((image: any, index: number) => {
-            if (image.name === item.filename) {
+            if (index === item.index) {
               images[index].textError = mesageError[item.reason];
             }
           });
@@ -106,24 +109,25 @@ export default function Step1({
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
-      let originFile: any = file;
-      let name = file.name;
-      images.forEach((image: any) => {
-        if (image.name === file.name) {
-          name =
-            'avatar' +
-            (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
-            file.name;
-          const blob = originFile.slice(0, file.size, file.type);
-          const newFile = new File([blob], name, {
-            type: file.type,
-          });
-          originFile = newFile;
-        }
-      });
+      // let originFile: any = file;
+      // let name = file.name;
+      // images.forEach((image: any) => {
+      //   if (image.name === file.name) {
+      //     name =
+      //       'avatar' +
+      //       (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
+      //       file.name;
+      //     const blob = originFile.slice(0, file.size, file.type);
+      //     const newFile = new File([blob], name, {
+      //       type: file.type,
+      //     });
+      //     originFile = newFile;
+      //   }
+      // });
       listImages.push({
         src: URL.createObjectURL(file),
-        file: originFile,
+        file,
+        // file: originFile,
         textError: '',
         name,
       });
@@ -159,6 +163,16 @@ export default function Step1({
     if (countImageValid < 3) {
       uploadRef.current?.click();
     } else {
+        const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
+            return prev + curr.file.size
+        }, 0);
+
+
+        if (totalUploadFilesSize > 200 * 1024 * 1024) {
+            dispatch(setShowModalUploadFilesExtendLimit(true));
+            return
+        }
+
       const formData = new FormData();
       images.forEach((item: any) => {
         formData.append('files', item.file);
@@ -197,12 +211,18 @@ export default function Step1({
             <div className="title-top-upload">
               Upload your 3 - 15 best images
             </div>
-            <div className="des-top-upload">
+            {/* <div className="des-top-upload">
               Choose 3-15 images to teach the AI what you look like.
-            </div>
+            </div> */}
             <div className="btn-top-upload" onClick={handleClickUpload}>
               <img src={IconPlusUpload} alt="" />
-              <div>Drag and drop or click here to upload photos</div>
+              <div className='upload-title'>Click here to upload photos</div>
+              <div className="upload-support">
+                Supported formats: PNG, JPEG, JPG, JFIF, HEIC.
+              </div>
+              <div className="upload-support">
+                File size limit: 5MB. Image size limit: 768 px.
+              </div>
             </div>
           </div>
           <UploadGuide />
@@ -211,7 +231,7 @@ export default function Step1({
         <>
           <div className="title-list-image">
             <div>Uploaded {countImageValid}/15 photos</div>
-            <div>Choose 3-15 images to teach the AI what you look like.</div>
+            {/* <div>Choose 3-15 images to teach the AI what you look like.</div> */}
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (

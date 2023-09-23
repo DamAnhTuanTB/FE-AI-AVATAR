@@ -58,17 +58,41 @@ export const Wrapper = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 14px;
         cursor: pointer;
+        .desc-upload {
+          text-align: center;
+          color: var(--text-secondary, #737373);
+          text-align: center;
+          /* Body/Body 2/Regular */
+          font-family: Outfit;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%; /* 18px */
+        }
         img {
           width: 104px;
         }
-        div {
+        div.upload-title {
+          margin-top: 12px;
+          margin-bottom: 8px;
           color: var(--secondary-black, #262626);
           font-size: 14px;
           font-style: normal;
           font-weight: 500;
           line-height: 150%; /* 21px */
+        }
+        
+        .upload-support {
+          color: var(--text-secondary, #737373);
+          text-align: center;
+
+          /* Body/Body 2/Regular */
+          font-family: Outfit;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%; /* 18px */
         }
         .big-input-upload {
           cursor: pointer;

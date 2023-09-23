@@ -25,7 +25,7 @@ export const FormWrapper = styled(Form)`
   width: 100%;
 
   .ant-form-item {
-    margin-bottom: 3px !important;
+    margin-bottom: 12px !important;
   }
 
   .login-input, .ant-input {
@@ -212,10 +212,10 @@ export const BottomTextWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 12px;
 
   .first-text {
     color: var(--noble-black-400, #686B6E);
-
     /* Sub-headings/Sub-head 2/Regular */
     font-family: Outfit;
     font-size: 14px;

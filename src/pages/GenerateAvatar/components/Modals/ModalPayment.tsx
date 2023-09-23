@@ -55,8 +55,7 @@ export default function ModalPayment({
     {
       onSuccess: (res: any) => {
         if (res.data?.url) {
-          handleSaveData();
-          // window.location.assign(res.data?.url);
+          handleSaveData(res.data?.url);
         }
       },
     }
@@ -71,7 +70,9 @@ export default function ModalPayment({
   const handleClickPurchase = () => {
     const payload: any = {
       priceId: price.id,
-      redirectUrl: `${window.location.protocol}//${window.location.host}` + ROUTES.APP_PAGE,
+      redirectUrl:
+        `${window.location.protocol}//${window.location.host}` +
+        ROUTES.APP_PAGE,
       // redirectUrl: 'https://avatar.apero.vn/',
     };
     if (isLoggedIn) {
@@ -119,7 +120,7 @@ export default function ModalPayment({
               We&apos;ve got a plan that's perfect for you!
             </div>
             <div className="list-prices">
-              {prices.map((item: any) => (
+              {prices?.length > 0 && prices.map((item: any) => (
                 <div
                   className={`item-price ${
                     item?.id === price?.id && 'price-active'
