@@ -43,11 +43,14 @@ export default function ModalPayment({
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
   useEffect(() => {
-    prices.forEach((item: any) => {
-      if (item.bestOffer) {
-        setPrice(item);
-      }
-    });
+    if (prices?.length) {
+      prices.forEach((item: any) => {
+        if (item.bestOffer) {
+          setPrice(item);
+        }
+      });
+    }
+    
   }, [prices]);
 
   const purchaseMutation = useMutation(
@@ -62,7 +65,9 @@ export default function ModalPayment({
   );
   const handleCancel = () => {
     setOpen(false);
-    setPrice(prices[1]);
+    if (prices?.length) {
+      setPrice(prices[1]);
+    }
   };
   const handleClickPrice = (item: any) => {
     setPrice(item);
