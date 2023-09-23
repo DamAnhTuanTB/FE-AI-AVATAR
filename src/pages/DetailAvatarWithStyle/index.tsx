@@ -32,7 +32,7 @@ export default function DetailAvatarWithStyle() {
   const handleOpenView = (avatar: string, index: number) => {
     setAvatar(avatar);
     setOpenViewModal(true);
-    setImageIdx(index)
+    setImageIdx(index);
   };
 
   const handlePrev = () => {
@@ -45,12 +45,12 @@ export default function DetailAvatarWithStyle() {
     setAvatar(listAvatar[index + 1]);
     setImageIdx(index + 1);
   };
-  const handleSave = () => {};
 
   const mutationDownloadAllAvatarWithStyle = useMutation(
     (params: any) => generateService.downloadAllAvatarWithStyle(params),
     {
       onSuccess: (res: any) => {
+        console.log(res?.data);
         setOpenModalDownload(false);
         ToastSuccess('Download successfully');
       },
@@ -106,7 +106,6 @@ export default function DetailAvatarWithStyle() {
           imageIdx={imageIdx}
           handlePrev={handlePrev}
           handleNext={handleNext}
-          handleSave={handleSave}
           imagesLength={listAvatar?.length || 0}
         />
       )}

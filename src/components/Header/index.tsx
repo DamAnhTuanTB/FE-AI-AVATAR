@@ -59,6 +59,7 @@ const Header = () => {
         <div className="title">
           <div className="image">
             <Avatar
+              onClick={() => navigate(ROUTES.HOME)}
               src={avatarUrl}
               size={32}
               onError={() => {

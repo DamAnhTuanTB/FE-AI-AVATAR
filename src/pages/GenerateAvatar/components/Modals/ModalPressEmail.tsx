@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import Button from '../Button';
 import { Wrapper } from './style';
-import IconClose from '@/assets/images/icon-delete-image.svg';
+import IconClose from '@/assets/images/icon-delete-image.svg';   
 import useScreenSize from '@/hooks/useScreenSize';
 
 interface IProps {
