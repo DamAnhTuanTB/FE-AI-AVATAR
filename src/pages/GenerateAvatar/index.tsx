@@ -160,8 +160,6 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.generateImage(payload),
     {
       onSuccess: async (res: any) => {
-        setStep(StepEnum.GENERATE_SUCCESS);
-
         const firstImageValid = images.find((item: any) => !item.textError);
 
         const presign = await generateService.getPreSignFile({
@@ -194,6 +192,7 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.createSession(payload),
     {
       onSuccess: (res: any) => {
+        setStep(StepEnum.GENERATE_SUCCESS);
         queryClient.refetchQueries({ queryKey: ['get-info-user'] });
         setSessionId('');
       },
