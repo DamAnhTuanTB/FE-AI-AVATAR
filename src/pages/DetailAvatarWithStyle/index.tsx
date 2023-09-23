@@ -11,6 +11,32 @@ import ModalViewAvatar from '../GenerateAvatar/components/Modals/ModalViewAvatar
 import { CONFIG } from '@/config/service';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
+// import JSZip from 'jszip';
+// import axios from 'axios';
+
+// const downloadImagesAsZip = async (imageUrls: any) => {
+//   const zip = new JSZip();
+
+//   for (const imageUrl of imageUrls) {
+//     // Tải ảnh từ đường dẫn
+//     const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+
+//     // Lấy tên tệp từ URL hoặc tùy chỉnh nó tùy theo nhu cầu
+//     const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
+//     // Thêm ảnh vào tệp zip
+//     zip.file(fileName, response.data);
+//   }
+
+//   // Tạo tệp zip
+//   zip.generateAsync({ type: 'blob' }).then((content) => {
+//     const link = document.createElement('a');
+//     link.href = URL.createObjectURL(content);
+//     link.download = 'images.zip';
+//     console.log('download xong');
+//     link.click();
+//   });
+// };
 
 export default function DetailAvatarWithStyle() {
   const params: any = useParams();
@@ -59,6 +85,7 @@ export default function DetailAvatarWithStyle() {
 
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
+    // downloadImagesAsZip(listAvatar);
     mutationDownloadAllAvatarWithStyle.mutate({
       sessionId: params.id,
       style: params.style,

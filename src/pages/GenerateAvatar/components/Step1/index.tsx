@@ -79,7 +79,7 @@ export default function Step1({
         const errArr: any = err?.response?.data?.error?.data || [];
         errArr.forEach((item: any) => {
           images.forEach((image: any, index: number) => {
-            if (image.name === item.filename) {
+            if (index === item.index) {
               images[index].textError = mesageError[item.reason];
             }
           });
@@ -106,24 +106,25 @@ export default function Step1({
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
-      let originFile: any = file;
-      let name = file.name;
-      images.forEach((image: any) => {
-        if (image.name === file.name) {
-          name =
-            'avatar' +
-            (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
-            file.name;
-          const blob = originFile.slice(0, file.size, file.type);
-          const newFile = new File([blob], name, {
-            type: file.type,
-          });
-          originFile = newFile;
-        }
-      });
+      // let originFile: any = file;
+      // let name = file.name;
+      // images.forEach((image: any) => {
+      //   if (image.name === file.name) {
+      //     name =
+      //       'avatar' +
+      //       (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
+      //       file.name;
+      //     const blob = originFile.slice(0, file.size, file.type);
+      //     const newFile = new File([blob], name, {
+      //       type: file.type,
+      //     });
+      //     originFile = newFile;
+      //   }
+      // });
       listImages.push({
         src: URL.createObjectURL(file),
-        file: originFile,
+        file,
+        // file: originFile,
         textError: '',
         name,
       });
