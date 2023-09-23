@@ -13,6 +13,8 @@ import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
+import {setShowModalUploadFilesExtendLimit} from "@/store/slices/appSlice";
+import {useAppDispatch} from "@/store/hooks";
 
 const defaultOptions = {
   loop: true,
@@ -58,6 +60,7 @@ export default function Step1({
   setImages,
   setSessionId,
 }: IProps) {
+  const dispatch = useAppDispatch();
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
@@ -160,6 +163,16 @@ export default function Step1({
     if (countImageValid < 3) {
       uploadRef.current?.click();
     } else {
+        const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
+            return prev + curr.file.size
+        }, 0);
+
+
+        if (totalUploadFilesSize > 200 * 1024 * 1024) {
+            dispatch(setShowModalUploadFilesExtendLimit(true));
+            return
+        }
+
       const formData = new FormData();
       images.forEach((item: any) => {
         formData.append('files', item.file);
@@ -203,9 +216,11 @@ export default function Step1({
             </div> */}
             <div className="btn-top-upload" onClick={handleClickUpload}>
               <img src={IconPlusUpload} alt="" />
-              <div>Drag and drop or click here to upload photos</div>
-              <div className='desc-upload'>
-                Supported formats: PNG, JPEG, JPG, JFIF, HEIC. <br></br>
+              <div className='upload-title'>Click here to upload photos</div>
+              <div className="upload-support">
+                Supported formats: PNG, JPEG, JPG, JFIF, HEIC.
+              </div>
+              <div className="upload-support">
                 File size limit: 5MB. Image size limit: 768 px.
               </div>
             </div>

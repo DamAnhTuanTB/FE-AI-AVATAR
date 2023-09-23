@@ -47,7 +47,7 @@ export default function Step3({
         Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
       ) {
         // price.maxStyle - 1
-        ToastError('The maximum quantity has been selected.');
+        ToastError('The maximum quantity has been selected.', true);
       } else {
         styles.push(alias);
       }
