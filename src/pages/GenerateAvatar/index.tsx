@@ -27,7 +27,7 @@ import { useSearchParams } from 'react-router-dom';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { CONFIG } from '@/config/service';
 import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
-import ModalUploadFilesExtendLimit from "@/components/ModalUploadFilesExtendLimit";
+import ModalUploadFilesExtendLimit from '@/components/ModalUploadFilesExtendLimit';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -48,7 +48,9 @@ export default function GenerateAvatar() {
   const { isDesktop } = useScreenSize();
 
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
-  const showModalUploadFilesExtendLimit = useAppSelector((state: RootState) => state.app.showModalUploadFilesExtendLimit)
+  const showModalUploadFilesExtendLimit = useAppSelector(
+    (state: RootState) => state.app.showModalUploadFilesExtendLimit
+  );
 
   const listGenerate = useAppSelector(
     (state: RootState) => state.app.userInfor.listGenerate
@@ -416,7 +418,9 @@ export default function GenerateAvatar() {
         />
       )}
 
-      {showModalUploadFilesExtendLimit && (<ModalUploadFilesExtendLimit open={showModalUploadFilesExtendLimit}/>)}
+      {showModalUploadFilesExtendLimit && (
+        <ModalUploadFilesExtendLimit open={showModalUploadFilesExtendLimit} />
+      )}
     </>
   );
 }

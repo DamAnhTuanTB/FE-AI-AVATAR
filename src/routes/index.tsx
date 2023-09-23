@@ -39,11 +39,11 @@ export const router = createBrowserRouter([
         path: ROUTES.HOME,
         element: <HomePage />,
       },
-      {
-        path: ROUTES.SALE_PAGE,
-        element: <SalePage />,
-      },
     ],
+  },
+  {
+    path: ROUTES.SALE_PAGE,
+    element: <SalePage />,
   },
   { path: ROUTES.ERROR, element: <NotFound /> },
 ]);

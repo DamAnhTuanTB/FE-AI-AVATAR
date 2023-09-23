@@ -6,7 +6,7 @@ import usePurchase from '@/hooks/usePurchase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { discountPrice } from '@/utils/constants';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CountDown from './CountDown';
 import {
   BuyButton,
@@ -28,17 +28,22 @@ import {
   StatisticPrimaryText,
   Wrapper,
 } from './styles';
+import { useQuery } from 'react-query';
+import generateService from '@/services/generate.service';
 
 interface PropsType {
   handleSelectPrice: (price: any) => void;
   priceSelected: any;
+  prices: any[];
 }
 
 export default function Payment({
   priceSelected,
   handleSelectPrice,
+  prices,
 }: PropsType) {
-  const prices = useAppSelector((state: RootState) => state.app.prices);
+  // const prices = useAppSelector((state: RootState) => state.app.prices);
+
   const { handlePurchase } = usePurchase();
   const tolerance = discountPrice > 0 ? 0.01 : 0;
 
