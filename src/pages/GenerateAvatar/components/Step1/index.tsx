@@ -13,8 +13,8 @@ import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
-import {setShowModalUploadFilesExtendLimit} from "@/store/slices/appSlice";
-import {useAppDispatch} from "@/store/hooks";
+import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
+import { useAppDispatch } from '@/store/hooks';
 
 const defaultOptions = {
   loop: true,
@@ -79,23 +79,35 @@ export default function Step1({
         // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
         //   ToastError(err?.response?.data?.message);
         // }
-        const errArr: any = err?.response?.data?.error?.data || [];
-        errArr.forEach((item: any) => {
-          images.forEach((image: any, index: number) => {
-            if (index === item.index) {
-              images[index].textError = mesageError[item.reason];
-            }
+        if (err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE') {
+          ToastError(
+            err?.response?.data?.message ===
+              'Image limit exceeded. You cannot upload more than 20 images'
+              ? 'Please upload 3-15 images.'
+              : err?.response?.data?.message
+          );
+        } else {
+          const errArr: any = err?.response?.data?.error?.data || [];
+          errArr.forEach((item: any) => {
+            images.forEach((image: any, index: number) => {
+              if (index === item.index) {
+                images[index].textError = mesageError[item.reason];
+              }
+            });
           });
-        });
-        setCountImageValid(images.length - errArr.length);
-        setImages([...images]);
+          setCountImageValid(images.length - errArr.length);
+          setImages([...images]);
+        }
       },
     }
   );
 
-  const getFileExtension = (fileName:string) => {
-    return fileName.substring(fileName.lastIndexOf('.')+1, fileName.length) || fileName;
-  }
+  const getFileExtension = (fileName: string) => {
+    return (
+      fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) ||
+      fileName
+    );
+  };
 
   const handleChangeFile = (e: any) => {
     if (step === StepEnum.GUIDE) {
@@ -104,7 +116,7 @@ export default function Step1({
     const files = e.target.files;
 
     console.log('files', files);
-    
+
     const listImages: any = [];
     const allowedMimeTypes = [
       'image/png',
@@ -171,15 +183,14 @@ export default function Step1({
     if (countImageValid < 3) {
       uploadRef.current?.click();
     } else {
-        const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
-            return prev + curr.file.size
-        }, 0);
+      const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
+        return prev + curr.file.size;
+      }, 0);
 
-
-        if (totalUploadFilesSize > 200 * 1024 * 1024) {
-            dispatch(setShowModalUploadFilesExtendLimit(true));
-            return
-        }
+      if (totalUploadFilesSize > 200 * 1024 * 1024) {
+        dispatch(setShowModalUploadFilesExtendLimit(true));
+        return;
+      }
 
       const formData = new FormData();
       images.forEach((item: any) => {
@@ -224,7 +235,7 @@ export default function Step1({
             </div> */}
             <div className="btn-top-upload" onClick={handleClickUpload}>
               <img src={IconPlusUpload} alt="" />
-              <div className='upload-title'>Click here to upload photos</div>
+              <div className="upload-title">Click here to upload photos</div>
               <div className="upload-support">
                 Supported formats: PNG, JPEG, JPG, JFIF, HEIC.
               </div>
