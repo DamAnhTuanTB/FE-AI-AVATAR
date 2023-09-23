@@ -198,15 +198,19 @@ export default function Step1PC({
         <div className="child-1">
           <div className="title">
             <div>Upload your 3 - 15 best images</div>
-            <div>
+            {/* <div>
               Choose 3-15 images to teach the AI what you look like. The avatars
               will be based on the images you upload, so choose wisely!
-            </div>
+            </div> */}
           </div>
           {images.length === 0 ? (
             <div className="big-upload">
               <img src={IconPlusUpload} alt="" />
               <div>Drag and drop or click here to upload photos</div>
+              <div className='desc-upload'>
+                Supported formats: PNG, JPEG, JPG, JFIF, HEIC. <br></br>
+                File size limit: 5MB. Image size limit: 768 px.
+              </div>
               <input
                 className="big-input-upload"
                 type="file"

@@ -11,7 +11,7 @@ import { RootState } from '@/store/store';
 export default function TabBottom() {
   const path = window.location.pathname;
   const generateActive = path === ROUTES.APP_PAGE;
-  const avatarActive = path.includes('/list-avatar');
+  const avatarActive = path.includes('/my-avatar');
   const naviage = useNavigate();
 
   const isLoggedIn = useAppSelector(

@@ -1,3 +1,4 @@
+import { breakpoints } from '@/config/breakpoints';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -11,6 +12,10 @@ export const Wrapper = styled.div`
       font-style: normal;
       font-weight: 600;
       line-height: 150%;
+      @media screen and (max-width: ${breakpoints.md}) {
+        margin-bottom: 8px;
+      }
+      
     }
     .des-top-upload {
       color: var(--text-secondary, #737373);
@@ -23,16 +28,28 @@ export const Wrapper = styled.div`
     .btn-top-upload {
       margin-bottom: 24px;
       cursor: pointer;
-      height: 140px;
+      // height: 140px;
       border-radius: 12px;
       border: 1px dashed var(--secondary-disable, #a3a3a3);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 14px;
+      gap: 8px;
+        padding: 24px 0;
       img {
         width: 57px;
+      }
+
+      .desc-upload {
+        text-align: center;
+        color: var(--text-secondary, #737373);
+        text-align: center;
+        font-family: Outfit;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 18px */
       }
       div {
         color: var(--secondary-black, #262626);

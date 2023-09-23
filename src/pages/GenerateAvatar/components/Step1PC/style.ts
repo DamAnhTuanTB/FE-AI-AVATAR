@@ -60,6 +60,17 @@ export const Wrapper = styled.div`
         justify-content: center;
         gap: 14px;
         cursor: pointer;
+        .desc-upload {
+          text-align: center;
+          color: var(--text-secondary, #737373);
+          text-align: center;
+          /* Body/Body 2/Regular */
+          font-family: Outfit;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%; /* 18px */
+        }
         img {
           width: 104px;
         }

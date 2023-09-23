@@ -74,7 +74,7 @@ export default function DetailAvatar() {
               <span className="name-style">{capitalizeWords(key)}</span>
               <span
                 className="view-all"
-                onClick={() => navigate(`/list-avatar/${params.id}/${key}`)}
+                onClick={() => navigate(`/my-avatar/${params.id}/${key}`)}
               >
                 View all
               </span>

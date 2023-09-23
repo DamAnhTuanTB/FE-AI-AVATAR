@@ -197,12 +197,16 @@ export default function Step1({
             <div className="title-top-upload">
               Upload your 3 - 15 best images
             </div>
-            <div className="des-top-upload">
+            {/* <div className="des-top-upload">
               Choose 3-15 images to teach the AI what you look like.
-            </div>
+            </div> */}
             <div className="btn-top-upload" onClick={handleClickUpload}>
               <img src={IconPlusUpload} alt="" />
               <div>Drag and drop or click here to upload photos</div>
+              <div className='desc-upload'>
+                Supported formats: PNG, JPEG, JPG, JFIF, HEIC. <br></br>
+                File size limit: 5MB. Image size limit: 768 px.
+              </div>
             </div>
           </div>
           <UploadGuide />
@@ -211,7 +215,7 @@ export default function Step1({
         <>
           <div className="title-list-image">
             <div>Uploaded {countImageValid}/15 photos</div>
-            <div>Choose 3-15 images to teach the AI what you look like.</div>
+            {/* <div>Choose 3-15 images to teach the AI what you look like.</div> */}
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (

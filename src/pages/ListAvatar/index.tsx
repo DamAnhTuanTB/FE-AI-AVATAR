@@ -40,7 +40,7 @@ export default function ListAvatar() {
     pack: number
   ) => {
     if (status !== TypeSessionStatus.ACTIVE) {
-      navigate(`/list-avatar/${sessionId}?pack=${pack}`);
+      navigate(`/my-avatar/${sessionId}?pack=${pack}`);
     }
   };
 

@@ -354,7 +354,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
 
         {/*    Button submit */}
         {showForm && (
-          <Form.Item>
+          // <Form.Item style={{ marginBottom: emailSuccessPaymentButNotAuth ? '3px !improtant' : '12px'}}>
             <ButtonLogin
               type={'submit'}
               isRequestNewLinkButton={false}
@@ -365,7 +365,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
             >
               {submitButtonLabel}
             </ButtonLogin>
-          </Form.Item>
+          // </Form.Item>
         )}
 
         {!showForm && typeForm === AuthEnum.ResetPassword && (
