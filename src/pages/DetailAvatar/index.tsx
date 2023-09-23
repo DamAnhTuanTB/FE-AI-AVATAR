@@ -17,7 +17,7 @@ export default function DetailAvatar() {
   const params: any = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [listAvatar, setListAvatar] = useState<any>([]);
+  const [listAvatar, setListAvatar] = useState<any>({});
   const [openModalDownload, setOpenModalDownload] = useState(false);
 
   const { isDesktop, isTablet } = useScreenSize();
@@ -27,7 +27,7 @@ export default function DetailAvatar() {
     () => generateService.getDetailSession(params.id),
     {
       onSuccess: (res: any) => {
-        if (res.data?.results?.length > 0) {
+        if (res.data?.results) {
           setListAvatar(res.data.results);
         }
       },

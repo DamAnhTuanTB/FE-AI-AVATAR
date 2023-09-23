@@ -10,8 +10,8 @@ export const SALE_SCHEDULED = [
   { day: 3, discount: 0.25 },
   { day: 4, discount: 0.25 },
   { day: 5, discount: 0.25 },
-  { day: 6, discount: 0 },
-  { day: 7, discount: 0 },
+  { day: 6, discount: 0.5 },
+  { day: 7, discount: 0.5 },
 ];
 
 export const discountPrice =
@@ -31,4 +31,6 @@ export const nextTimeIncreasePrice =
   nextWeekdayIncreasePrice === 0 ||
   process.env.REACT_APP_PRICING_SALE_ENABLE !== 'true'
     ? moment().valueOf() - 1000
-    : moment().weekday(nextWeekdayIncreasePrice).valueOf();
+    : nextWeekdayIncreasePrice > weekday
+    ? moment().weekday(nextWeekdayIncreasePrice).valueOf()
+    : moment().weekday(nextWeekdayIncreasePrice).add(7, 'd').valueOf();
