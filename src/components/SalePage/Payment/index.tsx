@@ -29,8 +29,6 @@ import {
   Wrapper,
 } from './styles';
 
-const tolerance = 0.01;
-
 interface PropsType {
   handleSelectPrice: (price: any) => void;
   priceSelected: any;
@@ -42,6 +40,7 @@ export default function Payment({
 }: PropsType) {
   const prices = useAppSelector((state: RootState) => state.app.prices);
   const { handlePurchase } = usePurchase();
+  const tolerance = discountPrice > 0 ? 0.01 : 0;
 
   useEffect(() => {
     if (prices.length > 1) {
@@ -70,7 +69,9 @@ export default function Payment({
                   <Label>{price?.name}</Label>
                 </LabelOptionWrapper>
                 <PriceWrapper>
-                  <OriginalPrice>${originalPrice.toFixed(2)}</OriginalPrice>
+                  {discountPrice > 0 && (
+                    <OriginalPrice>${originalPrice.toFixed(2)}</OriginalPrice>
+                  )}
                   <NewPrice>${newPrice.toFixed(2)}</NewPrice>
                 </PriceWrapper>
               </OptionWrapper>
