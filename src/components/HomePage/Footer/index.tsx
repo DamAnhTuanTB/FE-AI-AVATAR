@@ -6,7 +6,7 @@ export default function HomePageFooter() {
     <Wrapper>
       <ContentWrapper>
         <p>© 2023 by VisionLab., Inc. All Rights Reserved.</p>
-        <Links>
+        {/* <Links>
           <a href="" target="_blank">
             Privacy Policy
           </a>
@@ -16,7 +16,7 @@ export default function HomePageFooter() {
           <a href="" target="_blank">
             Contact Us
           </a>
-        </Links>
+        </Links> */}
       </ContentWrapper>
     </Wrapper>
   );
