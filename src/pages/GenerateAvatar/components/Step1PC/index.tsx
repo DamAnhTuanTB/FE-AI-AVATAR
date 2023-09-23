@@ -15,6 +15,8 @@ import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
 import UploadGuidePC from '../UploadGuidePC';
 import IconTip from '@/assets/images/icon-tip.svg';
+import {setShowModalUploadFilesExtendLimit} from "@/store/slices/appSlice";
+import {useAppDispatch} from "@/store/hooks";
 
 const defaultOptions = {
   loop: true,
@@ -59,6 +61,7 @@ export default function Step1PC({
   setImages,
   setSessionId,
 }: IProps) {
+    const dispatch = useAppDispatch()
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
@@ -153,18 +156,28 @@ export default function Step1PC({
     }
   };
 
-  const handleClickUpload = () => {
-    if (countImageValid < 3) {
-      uploadRef.current?.click();
-    } else {
-      const formData = new FormData();
-      images.forEach((item: any) => {
-        formData.append('files', item.file);
-      });
-      setShowLoading(true);
-      mutationUpload.mutate(formData);
-    }
-  };
+    const handleClickUpload = () => {
+        if (countImageValid < 3) {
+            uploadRef.current?.click();
+        } else {
+            const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
+                return prev + curr.file.size
+            }, 0);
+
+
+            if (totalUploadFilesSize > 200 * 1024 * 1024) {
+                dispatch(setShowModalUploadFilesExtendLimit(true));
+                return
+            }
+
+            const formData = new FormData();
+            images.forEach((item: any) => {
+              formData.append('files', item.file);
+            });
+            setShowLoading(true);
+            mutationUpload.mutate(formData);
+        }
+    };
 
   const handleClickBigUpload = () => {
     uploadRef.current?.click();
@@ -206,9 +219,11 @@ export default function Step1PC({
           {images.length === 0 ? (
             <div className="big-upload">
               <img src={IconPlusUpload} alt="" />
-              <div>Drag and drop or click here to upload photos</div>
-              <div className='desc-upload'>
-                Supported formats: PNG, JPEG, JPG, JFIF, HEIC. <br></br>
+              <div className='upload-title'>Drag and drop or click here to upload photos</div>
+              <div className="upload-support">
+                Supported formats: PNG, JPEG, JPG, JFIF, HEIC.
+              </div>
+              <div className="upload-support">
                 File size limit: 5MB. Image size limit: 768 px.
               </div>
               <input

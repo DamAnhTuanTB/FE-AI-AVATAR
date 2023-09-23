@@ -104,6 +104,7 @@ const Header = () => {
               placement="bottomRight"
               content={contentPopover}
               trigger={'click'}
+              overlayClassName={'header-popover'}
             >
               <Avatar
                 src={avatarUrl}

@@ -26,37 +26,38 @@ export const Wrapper = styled.div`
       margin: 8px 0px;
     }
     .btn-top-upload {
+      padding: 24px 0;
       margin-bottom: 24px;
       cursor: pointer;
-      // height: 140px;
       border-radius: 12px;
       border: 1px dashed var(--secondary-disable, #a3a3a3);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-        padding: 24px 0;
       img {
         width: 57px;
       }
-
-      .desc-upload {
-        text-align: center;
-        color: var(--text-secondary, #737373);
-        text-align: center;
-        font-family: Outfit;
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 150%; /* 18px */
-      }
-      div {
+      div.upload-title {
+        margin-top: 12px;
+        margin-bottom: 8px;
         color: var(--secondary-black, #262626);
         font-size: 14px;
         font-style: normal;
         font-weight: 500;
         line-height: 150%; /* 21px */
+      }
+      
+      .upload-support {
+        color: var(--text-secondary, #737373);
+        text-align: center;
+
+        /* Body/Body 2/Regular */
+        font-family: Outfit;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 18px */
       }
     }
   }

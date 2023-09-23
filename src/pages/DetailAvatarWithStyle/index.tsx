@@ -11,6 +11,7 @@ import ModalViewAvatar from '../GenerateAvatar/components/Modals/ModalViewAvatar
 import { CONFIG } from '@/config/service';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
+import useScreenSize from "@/hooks/useScreenSize";
 // import JSZip from 'jszip';
 // import axios from 'axios';
 
@@ -45,6 +46,7 @@ export default function DetailAvatarWithStyle() {
   const [avatar, setAvatar] = useState<any>();
   const [imageIdx, setImageIdx] = useState(-1);
   const [openModalDownload, setOpenModalDownload] = useState(false);
+  const {isMobile} = useScreenSize()
   useQuery(
     ['get-detail-session'],
     () => generateService.getDetailSession(params.id),
@@ -76,9 +78,8 @@ export default function DetailAvatarWithStyle() {
     (params: any) => generateService.downloadAllAvatarWithStyle(params),
     {
       onSuccess: (res: any) => {
-        console.log(res?.data);
         setOpenModalDownload(false);
-        ToastSuccess('Download successfully');
+        ToastSuccess('Download successfully', isMobile);
       },
     }
   );
