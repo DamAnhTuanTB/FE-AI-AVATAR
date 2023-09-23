@@ -62,7 +62,9 @@ export default function Step3({
   return (
     <Wrapper>
       <div className="title">Choose styles</div>
-      <div className="description">Choose up to 20 avatar styles</div>
+      <div className="description">
+        Select from a diverse range of up to 20 avatar styles.
+      </div>
       <div className="list-styles">
         {listStyles.map((item: any) => (
           <div

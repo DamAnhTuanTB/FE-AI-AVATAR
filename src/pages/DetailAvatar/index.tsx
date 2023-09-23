@@ -10,6 +10,7 @@ import { capitalizeWords } from '@/utils/helpers';
 import { CONFIG } from '@/config/service';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
+import useScreenSize from '@/hooks/useScreenSize';
 
 export default function DetailAvatar() {
   const params: any = useParams();
@@ -17,6 +18,8 @@ export default function DetailAvatar() {
   const [searchParams] = useSearchParams();
   const [listAvatar, setListAvatar] = useState<any>([]);
   const [openModalDownload, setOpenModalDownload] = useState(false);
+
+  const { isDesktop } = useScreenSize();
 
   useQuery(
     ['get-detail-session'],
@@ -76,11 +79,13 @@ export default function DetailAvatar() {
               </span>
             </div>
             <div className="list">
-              {listAvatar[key].slice(0, 5).map((avatar: string) => (
-                <div key={avatar} className="item-avatar">
-                  <img src={avatar} alt="" />
-                </div>
-              ))}
+              {listAvatar[key]
+                .slice(0, isDesktop ? 5 : 3)
+                .map((avatar: string) => (
+                  <div key={avatar} className="item-avatar">
+                    <img src={avatar} alt="" />
+                  </div>
+                ))}
             </div>
           </div>
         ))}

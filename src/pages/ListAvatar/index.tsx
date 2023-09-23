@@ -18,10 +18,19 @@ const getFirstImage = (results: any) => {
 
 export default function ListAvatar() {
   const navigate = useNavigate();
+  const [hasList, setHasList] = useState(-1);
   const [listSession, setListSession] = useState<any>([]);
   useQuery(['get-list-session'], () => generateService.getListSession(), {
     onSuccess: (res: any) => {
-      setListSession(res.data.data);
+      if (res.data?.data?.length > 0) {
+        setListSession(res.data.data);
+        setHasList(1);
+      } else {
+        setHasList(0);
+      }
+    },
+    onError: () => {
+      setHasList(0);
     },
   });
 
@@ -39,7 +48,7 @@ export default function ListAvatar() {
     <Wrapper>
       <div className="title-my-generate">My Generated Avatars</div>
       <div className="content-my-generate">
-        {listSession.length === 0 ? (
+        {hasList === 0 && (
           <div className="no-avatar">
             <img className="image-no-image" src={NoImage} alt="" />
             <div className="des">
@@ -53,7 +62,8 @@ export default function ListAvatar() {
               <span>Create New AI Avatar</span>
             </Button>
           </div>
-        ) : (
+        )}
+        {hasList === 1 && (
           <div className="list-avatar">
             <div className="parent-content-list-avatar">
               <div className="content-list-avatar">

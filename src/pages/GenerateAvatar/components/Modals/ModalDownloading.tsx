@@ -5,7 +5,7 @@ import IconDownloading from '@/assets/images/icon-downloading.gif';
 interface IProps {
   open: boolean;
 }
-
+ 
 export default function ModalDownloading({ open }: IProps) {
   const { isDesktop } = useScreenSize();
 

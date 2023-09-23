@@ -2,13 +2,13 @@
 import Button from '../Button';
 import { Wrapper } from './style';
 import IconClose from '@/assets/images/icon-delete-image.svg';
-import IconCheck from '@/assets/images/icon-check.svg';
+import IconCheck from '@/assets/images/icon-check-v2.svg';
 import IconBestSale from '@/assets/images/best-sale.svg';
 import IconInfo from '@/assets/images/icon-info.svg';
 import { Tooltip } from 'antd';
 import { useEffect } from 'react';
 import useScreenSize from '@/hooks/useScreenSize';
-import ImagePayment from '@/assets/images/image-payment.svg';
+import ImagePayment from '@/assets/images/image-payment-v2.svg';
 import { useMutation } from 'react-query';
 import generateService from '@/services/generate.service';
 import { StepEnum } from '../../contants';
@@ -56,7 +56,7 @@ export default function ModalPayment({
       onSuccess: (res: any) => {
         if (res.data?.url) {
           handleSaveData();
-          window.location.assign(res.data?.url);
+          // window.location.assign(res.data?.url);
         }
       },
     }
