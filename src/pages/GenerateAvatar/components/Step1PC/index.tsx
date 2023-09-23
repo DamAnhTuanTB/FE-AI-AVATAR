@@ -28,22 +28,22 @@ const defaultOptions = {
 };
 
 const mesageError: any = {
-  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif, heic':
-    'Wrong format',
+  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif':
+    'Not supported image format',
   'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
-    'Size < 768px',
-  'File too large.': 'Size > 8MB',
+    'Image too small',
+  'File too large.': 'File too large',
   'Unable to detect any face in the provided image. Please provide another clear image.':
     'Unable to detect any face',
   'The detected face size is too small or too big. Please ensure the face size is appropriate.':
     'The face is too small',
   'The detected face is significantly different from the majority in the cluster. Please use images with face similarity.':
-    'Faces detected with differences',
+    'Different face detected',
   'The provided image is blurry. Please provide a clearer image.':
     'Blurred image',
   'The provided image contains multiple faces, please provide an image containing only one face.':
     'Multiple faces',
-  'The image is duplicated. Please provide different images.': 'Duplicated',
+  'The image is duplicated. Please provide different images.': 'Duplicated image',
 };
 
 interface IProps {
@@ -112,7 +112,7 @@ export default function Step1PC({
     Array.from(files).forEach((file: any, index: number) => {
       console.log('getFileExtension', getFileExtension(file.name));
       const fileType =getFileExtension(file?.name)
-      if (!allowedMimeTypes.includes(file.type) && fileType !== 'heic') {
+      if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
       console.log('pass');
@@ -302,7 +302,7 @@ export default function Step1PC({
         type="file"
         multiple={true}
         onChange={handleChangeFile}
-        accept=".png,.jpg,.jpeg,.jfif,.heic"
+        accept=".png,.jpg,.jpeg,.jfif"
       />
       {showLoading && (
         <LoadingWrapper onClick={handleClickLottie}>

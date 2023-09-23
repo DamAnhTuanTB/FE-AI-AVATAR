@@ -26,7 +26,7 @@ const defaultOptions = {
 };
 
 const mesageError: any = {
-  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif, heic':
+  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif':
     'Not supported image format',
   'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
     'Image too small',
@@ -125,8 +125,8 @@ export default function Step1({
       // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
-      const fileType = getFileExtension(file?.name);
-      if (!allowedMimeTypes.includes(file.type) && fileType !== 'heic') {
+      const fileType =getFileExtension(file?.name)
+      if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
       // let originFile: any = file;
