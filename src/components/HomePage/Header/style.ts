@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.img<any>`
   margin-bottom: -5px;
   @media screen and (max-width: ${breakpoints.md}) {
     width: 152px;

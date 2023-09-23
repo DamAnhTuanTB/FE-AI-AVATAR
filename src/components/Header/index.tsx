@@ -88,7 +88,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <img src={LogoHeader} alt="" />
+      <img src={LogoHeader} alt="" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}/>
       {!isLoggedIn ? (
         <div className="sign-in" onClick={() => handleShowSignInModal()}>
           Sign In

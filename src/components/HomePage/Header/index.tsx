@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <ContainerWrapper>
       <Wrapper>
-        <Logo src={LogoSrc} alt="logo" />
+        <Logo src={LogoSrc} alt="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}/>
 
         <MenusLink>
           {links.map((link) => (
