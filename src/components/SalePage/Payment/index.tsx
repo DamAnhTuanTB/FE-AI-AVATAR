@@ -6,7 +6,7 @@ import usePurchase from '@/hooks/usePurchase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { discountPrice } from '@/utils/constants';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CountDown from './CountDown';
 import {
   BuyButton,
@@ -28,6 +28,8 @@ import {
   StatisticPrimaryText,
   Wrapper,
 } from './styles';
+import { useQuery } from 'react-query';
+import generateService from '@/services/generate.service';
 
 interface PropsType {
   handleSelectPrice: (price: any) => void;
@@ -38,9 +40,34 @@ export default function Payment({
   priceSelected,
   handleSelectPrice,
 }: PropsType) {
-  const prices = useAppSelector((state: RootState) => state.app.prices);
+  // const prices = useAppSelector((state: RootState) => state.app.prices);
+  const [prices, setPrices] = useState<any[]>([]);
   const { handlePurchase } = usePurchase();
   const tolerance = discountPrice > 0 ? 0.01 : 0;
+
+  const priceType =
+    discountPrice === 0.5
+      ? 'sale50'
+      : discountPrice === 0.25
+      ? 'sale25'
+      : 'main';
+
+  useQuery(
+    ['get-list-price'],
+    () => generateService.getListPrice({ type: priceType }),
+    {
+      onSuccess: (res: any) => {
+        const listPrice = res.data?.map((item: any) => ({
+          id: item.id,
+          name: item.metadata.name,
+          price: item.unit_amount / 100,
+          maxStyle: Number(item.metadata.numberStyle),
+          bestOffer: item.metadata?.popular === 'true',
+        }));
+        setPrices(listPrice);
+      },
+    }
+  );
 
   useEffect(() => {
     if (prices.length > 1) {
