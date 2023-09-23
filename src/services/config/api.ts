@@ -25,6 +25,7 @@ export const APIs = {
   DOWNLOAD_ALL_AVATAR_WITH_STYLE: '/session/download-all-image-with-style',
   GET_USER: '/user',
   CHECK_USER_EXIST: '/user/check-user-exist',
+  SEND_MAIL: '/session/send-mail',
 };
 
 export const HTTP_STATUS = {

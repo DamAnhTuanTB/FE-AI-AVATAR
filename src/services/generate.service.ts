@@ -64,6 +64,9 @@ const generateService = {
       params
     );
   },
+  sendMail(payload: any) {
+    return baseServerRequest.post(VERSION.v1 + APIs.SEND_MAIL, payload);
+  },
 };
 
 export default generateService;

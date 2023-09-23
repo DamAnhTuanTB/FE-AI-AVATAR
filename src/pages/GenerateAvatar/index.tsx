@@ -188,11 +188,22 @@ export default function GenerateAvatar() {
     }
   );
 
+  const muatationSendMail = useMutation(
+    (payload: any) => generateService.sendMail(payload),
+    {
+      onSuccess: (res: any) => {},
+    }
+  );
+
   const mutationCreateSession = useMutation(
     (payload: any) => generateService.createSession(payload),
     {
       onSuccess: (res: any) => {
         setStep(StepEnum.GENERATE_SUCCESS);
+        muatationSendMail.mutate({
+          subject: 'Your AI Avatar is Underway!',
+          template: './await-result',
+        });
         queryClient.refetchQueries({ queryKey: ['get-info-user'] });
         setSessionId('');
       },
