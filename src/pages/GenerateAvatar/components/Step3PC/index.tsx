@@ -63,7 +63,8 @@ export default function Step3PC({
     <Wrapper>
       <div className="title">Choose styles</div>
       <div className="description">
-        Select from a diverse range of up to 20 avatar styles.
+        Select from a diverse range of up to{' '}
+        {currentGenerate?.priceInfo?.metadata?.numberStyle} avatar styles.
       </div>
       <div className="parent-list-styles">
         <div className="list-styles">
