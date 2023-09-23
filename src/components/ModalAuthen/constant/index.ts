@@ -28,11 +28,11 @@ export const loginWithSocialArr = [
         icon: IcGoogle,
         title: 'Continue with Google'
     },
-    {
-        platform: 'facebook',
-        icon: IcFacebook,
-        title: 'Continue with Facebook'
-    }
+    // {
+    //     platform: 'facebook',
+    //     icon: IcFacebook,
+    //     title: 'Continue with Facebook'
+    // }
 ]
 
 export const AuthEnum = {
