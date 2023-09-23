@@ -137,8 +137,8 @@ const LoginComponent: React.FC = () => {
 
       {emailSuccessPaymentButNotAuth && (
         <NoticeText>
-          To access the generated results, please register for an account using
-          the email address previously used for payments:
+          Your email has been registered in this site. Please log in to link
+          your payment with your account:
         </NoticeText>
       )}
 
