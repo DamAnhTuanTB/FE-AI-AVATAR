@@ -2,7 +2,7 @@ import LogoSrc from '@/assets/images/logo-secondary.svg';
 import WatchLottie from '@/assets/jsons/stop-watch.json';
 import CountDown from '@/components/CountDown';
 import useCountDown from '@/hooks/useCountDown';
-import { nextTimeIncreasePrice } from '@/utils/constants';
+import { INCREASE_PRICE, nextTimeIncreasePrice } from '@/utils/constants';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie';
 import {
@@ -56,7 +56,9 @@ export default function SaleHeader() {
 
       <PriceWrapper>
         <PriceTitleWrapper>
-          <Description>The price increased by 15% in</Description>
+          <Description>
+            The price increased by {INCREASE_PRICE * 100}% in
+          </Description>
           <ClockWrapper>
             <Lottie options={defaultOptions} isStopped={stopWatch} />
           </ClockWrapper>
