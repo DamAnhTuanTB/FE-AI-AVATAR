@@ -32,6 +32,8 @@ export const HeaderWrapper = styled.div`
     .button {
       padding: 8px 16px;
       height: 40px;
+      display: flex;
+      align-items: center;
       border-radius: 100px;
       background: var(--primary-1, #f6c447);
       cursor: pointer;
@@ -39,7 +41,7 @@ export const HeaderWrapper = styled.div`
       color: var(--text-primary, #18181b);
       /* Sub-headings/Sub-head 1/Medium */
       font-family: Outfit;
-      font-size: 16px;
+      font-size: 14px;
       font-style: normal;
       font-weight: 500;
       line-height: 150%; /* 24px */
