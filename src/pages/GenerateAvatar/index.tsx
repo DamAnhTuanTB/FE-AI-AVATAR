@@ -20,12 +20,13 @@ import Step4PC from './components/Step4PC';
 import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
 import { RootState } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
-import { convertBase64toFile, convertFileToBase64 } from '@/utils/helpers';
+import { convertLinkImageToFile } from '@/utils/helpers';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/routes/routes';
 import { useSearchParams } from 'react-router-dom';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { CONFIG } from '@/config/service';
+import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -54,57 +55,84 @@ export default function GenerateAvatar() {
   const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
 
   useEffect(() => {
-    if (localStorage.getItem('savedImages')) {
-      const savedData = JSON.parse(localStorage.getItem('savedImages') || '{}');
-      const resultConvert = savedData.map((item: any) => {
-        const file = convertBase64toFile(
-          item.file,
-          item?.name,
-          `image/${item?.name?.split('.')[1]}`
-        );
-        return {
-          ...item,
-          file,
-          src: URL.createObjectURL(file),
-        };
-      });
+    if (getCookie('savedImages')) {
+      const savedData = JSON.parse(getCookie('savedImages') || '{}');
+
+      const resultConvert: any = [];
+
+      const convertFn = async () => {
+        for (const item of savedData) {
+          try {
+            const file: any = await convertLinkImageToFile(item.file);
+            resultConvert.push({
+              ...item,
+              file,
+              src: URL.createObjectURL(file),
+            });
+          } catch (error) {
+            console.error('Lỗi khi xử lý promise:', error);
+          }
+        }
+      };
+
+      convertFn();
+
+      // const resultConvert = savedData.map((item: any) => {
+      //   const file = convertBase64toFile(
+      //     item.file,
+      //     item?.name,
+      //     `image/${item?.name?.split('.')[1]}`
+      //   );
+      //   return {
+      //     ...item,
+      //     file,
+      //     src: URL.createObjectURL(file),
+      //   };
+      // });
+
       setImages(resultConvert);
-      setGender(localStorage.getItem('savedGender') || '');
-      setSessionId(localStorage.getItem('savedSessionId') || '');
+      setGender(getCookie('savedGender') || '');
+      setSessionId(getCookie('savedSessionId') || '');
       setStep(StepEnum.CHOOSE_STYLE);
-      localStorage.removeItem('savedImages');
-      localStorage.removeItem('savedGender');
-      localStorage.removeItem('savedSessionId');
+      eraseCookie('savedImages');
+      eraseCookie('savedGender');
+      eraseCookie('savedSessionId');
     }
   }, []);
 
   useEffect(() => {
     if (
       searchParams.get('auth') === AuthEnum.ResetPassword &&
-      localStorage.getItem('savedImagesCopy')
+      getCookie('savedImagesCopy')
     ) {
-      const savedData = JSON.parse(
-        localStorage.getItem('savedImagesCopy') || '{}'
-      );
-      const resultConvert = savedData.map((item: any) => {
-        const file = convertBase64toFile(
-          item.file,
-          item?.name,
-          `image/${item?.name?.split('.')[1]}`
-        );
-        return {
-          ...item,
-          file,
-          src: URL.createObjectURL(file),
-        };
-      });
+      const savedData = JSON.parse(getCookie('savedImagesCopy') || '{}');
+
+      const resultConvert: any = [];
+
+      const convertFn = async () => {
+        for (const item of savedData) {
+          try {
+            const file: any = await convertLinkImageToFile(item.file);
+            resultConvert.push({
+              ...item,
+              file,
+              src: URL.createObjectURL(file),
+            });
+          } catch (error) {
+            console.error('Lỗi khi xử lý promise:', error);
+          }
+        }
+      };
+
+      convertFn();
+
       setImages(resultConvert);
-      setGender(localStorage.getItem('savedGenderCopy') || '');
-      setSessionId(localStorage.getItem('savedSessionIdCopy') || '');
+      setGender(getCookie('savedGenderCopy') || '');
+      setSessionId(getCookie('savedSessionIdCopy') || '');
       setStep(StepEnum.CHOOSE_STYLE);
-      localStorage.removeItem('savedImagesCopy');
-      localStorage.removeItem('savedGenderCopy');
-      localStorage.removeItem('savedSessionIdCopy');
+      eraseCookie('savedImagesCopy');
+      eraseCookie('savedGenderCopy');
+      eraseCookie('savedSessionIdCopy');
     }
   }, []);
 
@@ -218,10 +246,10 @@ export default function GenerateAvatar() {
     } else if (step === StepEnum.CHOOSE_STYLE) {
       setStep(StepEnum.PICK_GENDER);
       setStyles([]);
-      // localStorage.setItem('passGender', gender);
+      // setCookie('passGender', gender);
     } else if (step === StepEnum.GENERATE_SUCCESS) {
       setStep(StepEnum.CHOOSE_STYLE);
-      // localStorage.removeItem('passGender');
+      // eraseCookie('passGender');
     }
   };
 
@@ -235,23 +263,39 @@ export default function GenerateAvatar() {
     setPrice('');
   };
 
-  const handleSaveData = async () => {
+  const handleSaveData = async (url: string) => {
     const results = [];
     for (const item of images) {
       try {
-        const file = await convertFileToBase64(item.file);
-        results.push({ ...item, file });
+        const presign = await generateService.getPreSignFile({
+          filename: item?.file?.name || 'my-photo.jpg',
+        });
+
+        const formData = new FormData();
+        for (const property in presign.data.fields) {
+          formData.append(property, presign.data.fields[property]);
+        }
+
+        formData.append('file', item?.file);
+
+        await generateService.uploadFileS3(presign?.data?.url, formData);
+        // const file = await convertFileToBase64(item.file);
+        results.push({
+          ...item,
+          file: CONFIG.REACT_APP_AWS_CDN + '/' + presign?.data?.fields?.key,
+        });
       } catch (error) {
         console.error('Lỗi khi xử lý promise:', error);
       }
     }
-    console.log('results', JSON.stringify(results));
-    // localStorage.setItem('savedImages', JSON.stringify(results));
-    // localStorage.setItem('savedGender', gender);
-    // localStorage.setItem('savedSessionId', sessionId);
-    // localStorage.setItem('savedImagesCopy', JSON.stringify(results));
-    // localStorage.setItem('savedGenderCopy', gender);
-    // localStorage.setItem('savedSessionIdCopy', sessionId);
+
+    setCookie('savedImages', JSON.stringify(results));
+    setCookie('savedGender', gender);
+    setCookie('savedSessionId', sessionId);
+    setCookie('savedImagesCopy', JSON.stringify(results));
+    setCookie('savedGenderCopy', gender);
+    setCookie('savedSessionIdCopy', sessionId);
+    window.location.assign(url);
   };
 
   const handleClickMyAvatar = () => {
