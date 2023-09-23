@@ -77,3 +77,27 @@ export const convertBase64toFile = (
   }
   return new File([u8arr], filename, { type: type || mime });
 };
+
+export const convertLinkImageToFile = async (src: string) => {
+  // fetch(src)
+  // .then((response) => response.blob())
+  // .then((blob) => {
+  //   console.log('blob', blob);
+  //
+  //   const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+  //   console.log('file', file);
+  //   return file;
+  // })
+  // .catch(() => {
+  //   return null;
+  // });
+  try {
+    const res = await fetch(src);
+    const blob = await res.blob();
+    const file = await new File([blob], 'image.jpg', { type: 'image/jpeg' });
+    return file;
+  } catch (err: any) {
+    console.log('err', err);
+    return null;
+  }
+};
