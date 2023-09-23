@@ -123,6 +123,13 @@ code {
   }
 }
 
+.header-popover > .ant-popover-content > .ant-popover-inner {
+  border-radius: 12px !important;
+}
+
+.header-popover > .ant-popover-content > .ant-popover-inner  .ant-popover-inner-content {
+  padding: 12px !important;
+}
 .header-popover > .ant-popover-content > .ant-popover-arrow {
   display: none;
 }
