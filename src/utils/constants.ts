@@ -17,7 +17,7 @@ export const SALE_SCHEDULED = [
 export const discountPrice =
   SALE_SCHEDULED.find((schedule) => schedule.day === weekday)?.discount || 0;
 
-export const INCREASE_PRICE = discountPrice === 0 ? 0 : 0.5;
+export const INCREASE_PRICE = 0.5;
 
 export let nextWeekdayIncreasePrice = 0;
 for (let i = 0; i < SALE_SCHEDULED.length; i++) {
