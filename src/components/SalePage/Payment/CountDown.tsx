@@ -1,9 +1,10 @@
 import React from 'react';
 import { StatisticPrimaryText, TimeNumber } from './styles';
 import useCountDown from '@/hooks/useCountDown';
+import { nextTimeIncreasePrice } from '@/utils/constants';
 
 function CountDown() {
-  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
+  const cowndown = useCountDown(nextTimeIncreasePrice);
   return (
     <StatisticPrimaryText>
       End in <TimeNumber>{cowndown.days}</TimeNumber> day{' '}

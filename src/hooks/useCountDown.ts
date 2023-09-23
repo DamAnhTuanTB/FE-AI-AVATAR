@@ -12,7 +12,7 @@ const dayUnit = 60 * 60 * 24;
 const hourUnit = 60 * 60;
 const minuteUnit = 60;
 
-export default function useCountDown(targetTime: string | number) {
+export default function useCountDown(targetTime: number) {
   const [countdown, setCountDown] = useState<CountdownType>({
     days: '00',
     hours: '00',
@@ -22,7 +22,7 @@ export default function useCountDown(targetTime: string | number) {
 
   useEffect(() => {
     let interval: any;
-    if (targetTime) {
+    if (targetTime > 0) {
       const targetTimeUnix = moment(targetTime).unix();
       interval = setInterval(() => {
         const currentTimeUnix = moment().unix();

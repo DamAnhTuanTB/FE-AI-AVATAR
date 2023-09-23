@@ -1,4 +1,10 @@
 import LogoSrc from '@/assets/images/logo-secondary.svg';
+import WatchLottie from '@/assets/jsons/stop-watch.json';
+import CountDown from '@/components/CountDown';
+import useCountDown from '@/hooks/useCountDown';
+import { nextTimeIncreasePrice } from '@/utils/constants';
+import { useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
 import {
   ClockWrapper,
   ContentWrapper,
@@ -11,11 +17,6 @@ import {
   Title,
   Wrapper,
 } from './styles';
-import CountDown from '@/components/CountDown';
-import { useEffect, useRef, useState } from 'react';
-import Lottie from 'react-lottie';
-import WatchLottie from '@/assets/jsons/stop-watch.json';
-import useCountDown from '@/hooks/useCountDown';
 
 const defaultOptions = {
   loop: true,
@@ -27,7 +28,7 @@ const defaultOptions = {
 };
 
 export default function SaleHeader() {
-  const countdown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
+  const countdown = useCountDown(nextTimeIncreasePrice);
   const [stopWatch, setStopWatch] = useState(false);
 
   useEffect(() => {

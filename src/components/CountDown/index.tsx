@@ -1,9 +1,10 @@
 import useCountDown from '@/hooks/useCountDown';
 import React from 'react';
 import { Colon, TimeBlock, TimeNumber, TimeString, Wrapper } from './styles';
+import { nextTimeIncreasePrice } from '@/utils/constants';
 
 function CountDown() {
-  const cowndown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
+  const cowndown = useCountDown(nextTimeIncreasePrice);
 
   return (
     <Wrapper>
