@@ -56,7 +56,7 @@ export default function ModalPayment({
       onSuccess: (res: any) => {
         if (res.data?.url) {
           handleSaveData();
-          // window.location.assign(res.data?.url);
+          window.location.assign(res.data?.url);
         }
       },
     }
