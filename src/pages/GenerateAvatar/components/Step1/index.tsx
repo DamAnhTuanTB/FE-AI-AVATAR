@@ -93,20 +93,28 @@ export default function Step1({
     }
   );
 
+  const getFileExtension = (fileName:string) => {
+    return fileName.substring(fileName.lastIndexOf('.')+1, fileName.length) || fileName;
+  }
+
   const handleChangeFile = (e: any) => {
     if (step === StepEnum.GUIDE) {
       setStep(StepEnum.UPLOAD_IMAGE);
     }
     const files = e.target.files;
+
+    console.log('files', files);
+    
     const listImages: any = [];
     const allowedMimeTypes = [
       'image/png',
       'image/jpeg',
       'image/jfif',
-      'image/heic',
+      // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
-      if (!allowedMimeTypes.includes(file.type)) {
+      const fileType =getFileExtension(file?.name)
+      if (!allowedMimeTypes.includes(file.type) && fileType !== 'heic') {
         return;
       }
       // let originFile: any = file;

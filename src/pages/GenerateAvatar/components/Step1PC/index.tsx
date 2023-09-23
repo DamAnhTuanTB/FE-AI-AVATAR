@@ -94,19 +94,29 @@ export default function Step1PC({
     }
   );
 
+  const getFileExtension = (fileName:string) => {
+    return fileName.substring(fileName.lastIndexOf('.')+1, fileName.length) || fileName;
+  }
+
   const handleChangeFile = (e: any) => {
     const files = e.target.files;
     const listImages: any = [];
+    console.log('files', files);
     const allowedMimeTypes = [
       'image/png',
       'image/jpeg',
       'image/jfif',
-      'image/heic',
+      // 'image/heic',
     ];
+    
     Array.from(files).forEach((file: any, index: number) => {
-      if (!allowedMimeTypes.includes(file.type)) {
+      console.log('getFileExtension', getFileExtension(file.name));
+      const fileType =getFileExtension(file?.name)
+      if (!allowedMimeTypes.includes(file.type) && fileType !== 'heic') {
         return;
       }
+      console.log('pass');
+      
       let originFile: any = file;
       let name = file.name;
       images.forEach((image: any) => {
