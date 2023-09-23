@@ -289,7 +289,7 @@ export default function Step1({
           type="file"
           multiple={true}
           onChange={handleChangeFile}
-          accept=".png,.jpg,.jpeg,.jfif,.heic"
+          accept=".png,.jpg,.jpeg,.jfif"
         />
 
         {step === StepEnum.GUIDE ? (
