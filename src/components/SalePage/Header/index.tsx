@@ -12,9 +12,10 @@ import {
   Wrapper,
 } from './styles';
 import CountDown from '@/components/CountDown';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie';
 import WatchLottie from '@/assets/jsons/stop-watch.json';
+import useCountDown from '@/hooks/useCountDown';
 
 const defaultOptions = {
   loop: true,
@@ -26,7 +27,20 @@ const defaultOptions = {
 };
 
 export default function SaleHeader() {
-  const animationClockRef = useRef(null);
+  const countdown = useCountDown(`${process.env.REACT_APP_PRICING_SALE_DATE}`);
+  const [stopWatch, setStopWatch] = useState(false);
+
+  useEffect(() => {
+    if (
+      countdown.days === '00' &&
+      countdown.hours === '00' &&
+      countdown.minutes === '00' &&
+      countdown.seconds === '00'
+    ) {
+      setStopWatch(true);
+    }
+  }, [JSON.stringify(countdown)]);
+
   return (
     <Wrapper>
       <Logo src={LogoSrc} alt="logo" />
@@ -43,7 +57,7 @@ export default function SaleHeader() {
         <PriceTitleWrapper>
           <Description>The price increased by 15% in</Description>
           <ClockWrapper>
-            <Lottie options={defaultOptions} ref={animationClockRef} />
+            <Lottie options={defaultOptions} isStopped={stopWatch} />
           </ClockWrapper>
         </PriceTitleWrapper>
 
