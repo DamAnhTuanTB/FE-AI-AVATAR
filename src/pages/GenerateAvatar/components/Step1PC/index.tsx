@@ -28,7 +28,7 @@ const defaultOptions = {
 };
 
 const mesageError: any = {
-  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif, heic':
+  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif':
     'Not supported image format',
   'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
     'Image too small',
@@ -112,7 +112,7 @@ export default function Step1PC({
     Array.from(files).forEach((file: any, index: number) => {
       console.log('getFileExtension', getFileExtension(file.name));
       const fileType =getFileExtension(file?.name)
-      if (!allowedMimeTypes.includes(file.type) && fileType !== 'heic') {
+      if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
       console.log('pass');
@@ -302,7 +302,7 @@ export default function Step1PC({
         type="file"
         multiple={true}
         onChange={handleChangeFile}
-        accept=".png,.jpg,.jpeg,.jfif,.heic"
+        accept=".png,.jpg,.jpeg,.jfif"
       />
       {showLoading && (
         <LoadingWrapper onClick={handleClickLottie}>
