@@ -16,3 +16,19 @@ export const SALE_SCHEDULED = [
 
 export const discountPrice =
   SALE_SCHEDULED.find((schedule) => schedule.day === weekday)?.discount || 0;
+
+export const INCREASE_PRICE = discountPrice === 0 ? 0 : 0.5;
+
+export let nextWeekdayIncreasePrice = 0;
+for (let i = 0; i < SALE_SCHEDULED.length; i++) {
+  if (discountPrice > SALE_SCHEDULED[i].discount) {
+    nextWeekdayIncreasePrice = SALE_SCHEDULED[i].day;
+    break;
+  }
+}
+
+export const nextTimeIncreasePrice =
+  nextWeekdayIncreasePrice === 0 ||
+  process.env.REACT_APP_PRICING_SALE_ENABLE !== 'true'
+    ? moment().valueOf() - 1000
+    : moment().weekday(nextWeekdayIncreasePrice).valueOf();
