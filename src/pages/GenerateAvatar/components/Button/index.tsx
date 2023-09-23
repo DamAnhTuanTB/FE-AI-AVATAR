@@ -2,7 +2,7 @@ import useScreenSize from '@/hooks/useScreenSize';
 import { Wrapper } from './style';
 interface IProps {
   text: string;
-  width: string;
+  width?: string;
   height: string;
   border?: boolean;
   background?: boolean;

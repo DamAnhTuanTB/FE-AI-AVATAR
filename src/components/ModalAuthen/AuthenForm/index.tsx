@@ -308,7 +308,7 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
                 {((typeForm === AuthEnum.SignUp || typeForm === AuthEnum.ResetPassword) && showForm) && (
                     <PasswordContainer
                         name={'confirm-password'}
-                        placeholder={typeForm === AuthEnum.ResetPassword ? 'Confirm new password' : 'Confirm password'}
+                        placeholder={typeForm === AuthEnum.ResetPassword ? 'Confirm new password' : 'Confirm Password'}
                         rules={[{validator: validateConfirmPasswordField}]}
                     />
                 )}

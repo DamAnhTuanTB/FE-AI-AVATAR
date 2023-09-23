@@ -37,10 +37,12 @@ export default function useCountDown(targetTime: string | number) {
         const seconds =
           duration - days * dayUnit - hours * hourUnit - minutes * minuteUnit;
         setCountDown({
-          days: days < 10 ? `0${days}` : `${days}`,
-          hours: hours < 10 ? `0${hours}` : `${hours}`,
-          minutes: minutes < 10 ? `0${minutes}` : `${minutes}`,
-          seconds: seconds < 10 ? `0${seconds}` : `${seconds}`,
+          days: days <= 0 ? '00' : days < 10 ? `0${days}` : `${days}`,
+          hours: hours <= 0 ? '00' : hours < 10 ? `0${hours}` : `${hours}`,
+          minutes:
+            minutes <= 0 ? '00' : minutes < 10 ? `0${minutes}` : `${minutes}`,
+          seconds:
+            seconds <= 0 ? '00' : seconds < 10 ? `0${seconds}` : `${seconds}`,
         });
         if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
           clearInterval(interval);

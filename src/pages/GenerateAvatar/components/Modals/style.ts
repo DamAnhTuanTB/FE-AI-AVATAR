@@ -236,7 +236,7 @@ export const Wrapper = styled(Modal)`
               text-align: center;
               font-size: 16px;
               font-style: normal;
-              font-weight: 500;
+              font-weight: 400;
               line-height: 100%; /* 14px */
               border-radius: 0px 0px 4px 4px;
               background: linear-gradient(
@@ -335,6 +335,13 @@ export const Wrapper = styled(Modal)`
           justify-content: center;
           @media screen and (max-width: ${breakpoints.lg}) {
             padding: 0px 16px;
+          }
+
+          .ant-btn {
+            width: 146px;
+            @media screen and (max-width: ${breakpoints.md}) {
+              width: 100%;
+            }
           }
         }
       }

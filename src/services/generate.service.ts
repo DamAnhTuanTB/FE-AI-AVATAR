@@ -6,6 +6,10 @@ import {
 import axios from 'axios';
 import { APIs, VERSION } from './config/api';
 
+interface ListPriceType {
+  type: 'main' | 'sale50' | 'sale25';
+}
+
 const generateService = {
   getInfoUser() {
     return baseServerRequest.get(VERSION.v1 + APIs.GET_USER);
@@ -25,7 +29,7 @@ const generateService = {
   createSession(payload: any) {
     return baseServerRequest.post(VERSION.v1 + APIs.CREATE_SESSION, payload);
   },
-  getListPrice(payload: any) {
+  getListPrice(payload: ListPriceType) {
     return baseServerRequest.get(VERSION.v1 + APIs.GET_LIST_PRICE, payload);
   },
   purchaseNow(payload: any) {

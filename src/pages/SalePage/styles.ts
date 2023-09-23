@@ -13,12 +13,12 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   /* background: var(--neutral-50, #fafafa); */
-  background: url(${DesktopBg});
+  background-image: url(${DesktopBg});
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   @media screen and (max-width: ${breakpoints.md}) {
-    background: url(${MobileBg});
+    background-image: url(${MobileBg});
     padding-top: 32px;
   }
 `;
@@ -91,6 +91,9 @@ export const PaymentWrapper = styled.div`
 
 export const BeforeAfterImage = styled.img`
   width: 100%;
+    @media screen and (max-width: ${breakpoints.md}) {
+        padding: 0 24px;
+      }
 `;
 
 export const Description = styled.p`

@@ -1,5 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
+import { BuyButton } from '../Payment/styles';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -51,28 +52,10 @@ export const TermItem = styled.li`
   line-height: 150%; /* 24px */
 `;
 
-export const BuyNowButton = styled.div`
-  cursor: pointer;
-  background: var(--secondary-bold, #ffa800);
-  display: flex;
+export const BuyNowButton = styled(BuyButton)`
   width: 227px;
   padding: 10px 32px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
   margin: 8px auto 0;
-  p {
-    color: #fff;
-    text-align: center;
-
-    /* Sub-headings/Sub-head 1/Semibold */
-    font-family: Outfit;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 150%; /* 24px */
-    margin: 0;
-  }
 `;
 
 export const AvatarsWrapper = styled.div`
@@ -82,5 +65,6 @@ export const AvatarsWrapper = styled.div`
   column-gap: 10px;
   img {
     width: 100%;
+    border-radius: 4px;
   }
 `;

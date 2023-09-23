@@ -11,8 +11,8 @@ interface IProps {
   avatar: string;
   handlePrev: any;
   handleNext: any;
-  handleSave: any;
-  position: string;
+  imageIdx: number;
+  imagesLength: number;
 }
 
 export default function ModalViewAvatar({
@@ -21,10 +21,10 @@ export default function ModalViewAvatar({
   avatar,
   handlePrev,
   handleNext,
-  handleSave,
-  position,
+  imageIdx,
+  imagesLength,
 }: IProps) {
-  const { isDesktop } = useScreenSize();
+  const { isDesktop, isMobile } = useScreenSize();
 
   const handleCancel = () => {
     setOpen(false);
@@ -56,22 +56,22 @@ export default function ModalViewAvatar({
         <div className="preview">Preview</div>
         <div className="content-avatar">
           <img className="image-avatar" src={avatar} alt="" />
-          {position !== 'start' && (
+          {imageIdx > 0 && (
             <div className="icon-prev" onClick={handlePrev}>
               <img src={IconPrev} alt="" />
             </div>
           )}
-          {position !== 'end' && (
+          {imageIdx < imagesLength - 1 && (
             <div className="icon-next" onClick={handleNext}>
               <img src={IconNext} alt="" />
             </div>
           )}
         </div>
-        <div className="btn" onClick={handleDownload}>
+        <div className="btn">
           <Button
-            onClick={handleSave}
+            onClick={handleDownload}
             text="Save"
-            width={isDesktop ? '146px' : '100%'}
+            // width={!isMobile ? '146px' : '100%'}
             height="45px"
           />
         </div>

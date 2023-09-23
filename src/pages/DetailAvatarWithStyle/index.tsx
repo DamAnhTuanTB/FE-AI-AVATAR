@@ -17,7 +17,7 @@ export default function DetailAvatarWithStyle() {
   const [listAvatar, setListAvatar] = useState<any>([]);
   const [openViewModal, setOpenViewModal] = useState(false);
   const [avatar, setAvatar] = useState<any>();
-  const [position, setPosition] = useState('');
+  const [imageIdx, setImageIdx] = useState(-1);
   const [openModalDownload, setOpenModalDownload] = useState(false);
   useQuery(
     ['get-detail-session'],
@@ -29,37 +29,28 @@ export default function DetailAvatarWithStyle() {
     }
   );
 
-  const handleOpenView = (avatar: string) => {
+  const handleOpenView = (avatar: string, index: number) => {
     setAvatar(avatar);
     setOpenViewModal(true);
+    setImageIdx(index);
   };
 
   const handlePrev = () => {
     const index = listAvatar.findIndex((item: string) => avatar === item);
     setAvatar(listAvatar[index - 1]);
+    setImageIdx(index - 1);
   };
   const handleNext = () => {
     const index = listAvatar.findIndex((item: string) => avatar === item);
     setAvatar(listAvatar[index + 1]);
+    setImageIdx(index + 1);
   };
-  const handleSave = () => {};
-
-  useEffect(() => {
-    if (avatar) {
-      const index = listAvatar.findIndex((item: string) => avatar === item);
-      if (index === 0) {
-        setPosition('start');
-      }
-      if (index === listAvatar.length - 1) {
-        setPosition('end');
-      }
-    }
-  }, [avatar]);
 
   const mutationDownloadAllAvatarWithStyle = useMutation(
     (params: any) => generateService.downloadAllAvatarWithStyle(params),
     {
       onSuccess: (res: any) => {
+        console.log(res?.data);
         setOpenModalDownload(false);
         ToastSuccess('Download successfully');
       },
@@ -93,11 +84,11 @@ export default function DetailAvatarWithStyle() {
       </div>
       <div className="content-detail">
         <div className="list">
-          {listAvatar.map((avatar: string) => (
+          {listAvatar.map((avatar: string, index: number) => (
             <div
               key={avatar}
               className="item-avatar"
-              onClick={() => handleOpenView(avatar)}
+              onClick={() => handleOpenView(avatar, index)}
             >
               <img src={avatar} alt="" />
             </div>
@@ -112,10 +103,10 @@ export default function DetailAvatarWithStyle() {
           open={openViewModal}
           setOpen={setOpenViewModal}
           avatar={avatar}
-          position={position}
+          imageIdx={imageIdx}
           handlePrev={handlePrev}
           handleNext={handleNext}
-          handleSave={handleSave}
+          imagesLength={listAvatar?.length || 0}
         />
       )}
       {openModalDownload && <ModalDownloading open={openModalDownload} />}

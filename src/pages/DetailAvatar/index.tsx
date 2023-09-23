@@ -35,6 +35,7 @@ export default function DetailAvatar() {
     () => generateService.downloadAddPack(params.id),
     {
       onSuccess: (res: any) => {
+        console.log(res?.data);
         setOpenModalDownload(false);
         ToastSuccess('Download successfully');
       },

@@ -52,7 +52,7 @@ export default function ListAvatar() {
           <div className="no-avatar">
             <img className="image-no-image" src={NoImage} alt="" />
             <div className="des">
-              No photos have been created yet. Make a great photo of yourse lf
+              No photos have been created yet. Make a great photo of yourself
             </div>
             <Button
               className="btn-create-new"
