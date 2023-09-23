@@ -20,7 +20,7 @@ export default function DetailAvatar() {
   const [listAvatar, setListAvatar] = useState<any>([]);
   const [openModalDownload, setOpenModalDownload] = useState(false);
 
-  const { isDesktop } = useScreenSize();
+  const { isDesktop, isTablet } = useScreenSize();
 
   useQuery(
     ['get-detail-session'],
@@ -38,9 +38,10 @@ export default function DetailAvatar() {
     () => generateService.downloadAddPack(params.id),
     {
       onSuccess: (res: any) => {
-        console.log(res?.data);
         setOpenModalDownload(false);
-        ToastSuccess('Download successfully', isMobile);
+        if (!isMobile && !isTablet) {
+          ToastSuccess('Download successfully', isMobile);
+        }
       },
     }
   );
