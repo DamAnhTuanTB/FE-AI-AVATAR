@@ -13,7 +13,7 @@ import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import useScreenSize from '@/hooks/useScreenSize';
 
 export default function DetailAvatar() {
-  const {isMobile} = useScreenSize()
+  const { isMobile } = useScreenSize();
   const params: any = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -27,7 +27,9 @@ export default function DetailAvatar() {
     () => generateService.getDetailSession(params.id),
     {
       onSuccess: (res: any) => {
-        setListAvatar(res.data.results);
+        if (res.data?.results?.length > 0) {
+          setListAvatar(res.data.results);
+        }
       },
     }
   );
