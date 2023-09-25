@@ -252,7 +252,7 @@ export default function Step1({
               <img src={IconPlusUpload} alt="" />
               <div className="upload-title">Click here to upload photos</div>
               <div className="upload-support">
-                Supported formats: PNG, JPEG, JPG, JFIF, HEIC.
+                Supported formats: PNG, JPEG, JPG, JFIF.
               </div>
               <div className="upload-support">
                 File size limit: 5MB. Image size limit: 768 px.

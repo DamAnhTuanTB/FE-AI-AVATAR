@@ -146,4 +146,45 @@ export const eventTracking = {
       session_id: 'session_id',
     },
   },
+  clickStart: {
+    name: 'landing_page_click_start',
+    params: {
+      from: 'from',
+      userId: 'user_id',
+    },
+  },
+};
+
+export const landingPageTracking = {
+  view: {
+    name: 'view_landing_page',
+    params: {
+      userId: 'user_id',
+    },
+  },
+  clickStart: {
+    name: 'landing_page_click_start',
+    params: {
+      from: 'from',
+      userId: 'user_id',
+    },
+  },
+};
+
+export const salePageTracking = {
+  view: {
+    name: 'sales_page_view',
+    params: {
+      userId: 'user_id',
+      source: 'source',
+      day: 'day',
+    },
+  },
+  clickBuyNow: {
+    name: 'sales_page_click_buy_now',
+    params: {
+      package: 'package',
+      userId: 'user_id',
+    },
+  },
 };

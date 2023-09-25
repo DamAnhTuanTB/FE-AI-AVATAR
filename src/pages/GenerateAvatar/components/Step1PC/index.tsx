@@ -83,16 +83,25 @@ export default function Step1PC({
         // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
         //   ToastError(err?.response?.data?.message);
         // }
-        const errArr: any = err?.response?.data?.error?.data || [];
-        errArr.forEach((item: any) => {
-          images.forEach((image: any, index: number) => {
-            if (image.name === item.filename) {
-              images[index].textError = mesageError[item.reason];
-            }
+        if (err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE') {
+          ToastError(
+            err?.response?.data?.message ===
+              'Image limit exceeded. You cannot upload more than 20 images'
+              ? 'Please upload 3-15 images.'
+              : err?.response?.data?.message
+          );
+        } else {
+          const errArr: any = err?.response?.data?.error?.data || [];
+          errArr.forEach((item: any) => {
+            images.forEach((image: any, index: number) => {
+              if (index === item.index) {
+                images[index].textError = mesageError[item.reason];
+              }
+            });
           });
-        });
-        setCountImageValid(images.length - errArr.length);
-        setImages([...images]);
+          setCountImageValid(images.length - errArr.length);
+          setImages([...images]);
+        }
       },
     }
   );

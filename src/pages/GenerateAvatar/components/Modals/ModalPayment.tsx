@@ -18,6 +18,7 @@ import { CONFIG } from '@/config/service';
 import { ROUTES } from '@/routes/routes';
 import { analyticsLogEvent } from '@/firebase';
 import { eventTracking } from '@/firebase/firebase';
+import { eraseCookie, setCookie } from '@/utils/cookies';
 
 interface IProps {
   prices: any;
@@ -28,6 +29,8 @@ interface IProps {
   setStep: any;
   handleSaveData: any;
   gender: string;
+  savingData: boolean;
+  setSavingData: any;
 }
 
 export default function ModalPayment({
@@ -39,6 +42,8 @@ export default function ModalPayment({
   setStep,
   handleSaveData,
   gender,
+  savingData,
+  setSavingData,
 }: IProps) {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
@@ -62,6 +67,7 @@ export default function ModalPayment({
     {
       onSuccess: (res: any) => {
         if (res.data?.url) {
+          setSavingData(true);
           handleSaveData(res.data?.url);
         }
       },
@@ -92,8 +98,8 @@ export default function ModalPayment({
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString() +
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString();
       payload.userId = 'fake' + userIdFake;
-      localStorage.setItem('userIdFake', 'fake' + userIdFake);
-      localStorage.removeItem('isComeFirst');
+      setCookie('userIdFake', 'fake' + userIdFake);
+      eraseCookie('isComeFirst');
     }
 
     analyticsLogEvent(eventTracking.purchase_click_button.name, {
@@ -109,6 +115,8 @@ export default function ModalPayment({
     // setSuccessPurchase(true);
     // setOpen(false);
   };
+
+  console.log('isSaving', savingData);
   return (
     <Wrapper
       width={isMobile ? 328 : 984}
@@ -168,6 +176,7 @@ export default function ModalPayment({
         </div>
         <div className="button">
           <Button
+            loading={savingData}
             text="Purchase now"
             width={isMobile ? '100%' : '290px'}
             height="45px"
