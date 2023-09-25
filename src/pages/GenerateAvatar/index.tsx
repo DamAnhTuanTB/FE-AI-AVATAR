@@ -28,6 +28,8 @@ import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { CONFIG } from '@/config/service';
 import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import ModalUploadFilesExtendLimit from '@/components/ModalUploadFilesExtendLimit';
+import { eventTracking } from '@/firebase/firebase';
+import { analyticsLogEvent } from '@/firebase';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -42,6 +44,7 @@ export default function GenerateAvatar() {
   const [price, setPrice] = useState<any>();
   const [savingData, setSavingData] = useState(false);
   const listPrice = useAppSelector((state: RootState) => state.app.prices);
+  const fromQuery = searchParams.get('from');
 
   const [showModalPayment, setShowModalPayment] = useState(false);
   const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
@@ -58,6 +61,17 @@ export default function GenerateAvatar() {
   );
 
   const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
+
+  useEffect(() => {
+    const eventParams: any = {};
+    if (fromQuery) {
+      eventParams[eventTracking.uploadPhotoView.params.source] = fromQuery;
+    }
+    if (userInfor?.id) {
+      eventParams[eventTracking.uploadPhotoView.params.userId] = userInfor?.id;
+    }
+    analyticsLogEvent(eventTracking.uploadPhotoView.name, eventParams);
+  }, [fromQuery]);
 
   useEffect(() => {
     if (getCookie('savedImages')) {
