@@ -40,6 +40,7 @@ export default function GenerateAvatar() {
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
+  const [savingData, setSavingData] = useState(false);
   const listPrice = useAppSelector((state: RootState) => state.app.prices);
 
   const [showModalPayment, setShowModalPayment] = useState(false);
@@ -309,6 +310,7 @@ export default function GenerateAvatar() {
     setCookie('savedImagesCopy', JSON.stringify(results));
     setCookie('savedGenderCopy', gender);
     setCookie('savedSessionIdCopy', sessionId);
+    setSavingData(false);
     window.location.assign(url);
   };
 
@@ -415,6 +417,8 @@ export default function GenerateAvatar() {
           price={price}
           setPrice={setPrice}
           handleSaveData={handleSaveData}
+          savingData={savingData}
+          setSavingData={setSavingData}
         />
       )}
 

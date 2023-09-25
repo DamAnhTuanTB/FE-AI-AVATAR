@@ -15,8 +15,8 @@ import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
 import UploadGuidePC from '../UploadGuidePC';
 import IconTip from '@/assets/images/icon-tip.svg';
-import {setShowModalUploadFilesExtendLimit} from "@/store/slices/appSlice";
-import {useAppDispatch} from "@/store/hooks";
+import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
+import { useAppDispatch } from '@/store/hooks';
 
 const defaultOptions = {
   loop: true,
@@ -43,7 +43,8 @@ const mesageError: any = {
     'Blurred image',
   'The provided image contains multiple faces, please provide an image containing only one face.':
     'Multiple faces',
-  'The image is duplicated. Please provide different images.': 'Duplicated image',
+  'The image is duplicated. Please provide different images.':
+    'Duplicated image',
 };
 
 interface IProps {
@@ -61,7 +62,7 @@ export default function Step1PC({
   setImages,
   setSessionId,
 }: IProps) {
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
@@ -80,23 +81,35 @@ export default function Step1PC({
         // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
         //   ToastError(err?.response?.data?.message);
         // }
-        const errArr: any = err?.response?.data?.error?.data || [];
-        errArr.forEach((item: any) => {
-          images.forEach((image: any, index: number) => {
-            if (image.name === item.filename) {
-              images[index].textError = mesageError[item.reason];
-            }
+        if (err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE') {
+          ToastError(
+            err?.response?.data?.message ===
+              'Image limit exceeded. You cannot upload more than 20 images'
+              ? 'Please upload 3-15 images.'
+              : err?.response?.data?.message
+          );
+        } else {
+          const errArr: any = err?.response?.data?.error?.data || [];
+          errArr.forEach((item: any) => {
+            images.forEach((image: any, index: number) => {
+              if (index === item.index) {
+                images[index].textError = mesageError[item.reason];
+              }
+            });
           });
-        });
-        setCountImageValid(images.length - errArr.length);
-        setImages([...images]);
+          setCountImageValid(images.length - errArr.length);
+          setImages([...images]);
+        }
       },
     }
   );
 
-  const getFileExtension = (fileName:string) => {
-    return fileName.substring(fileName.lastIndexOf('.')+1, fileName.length) || fileName;
-  }
+  const getFileExtension = (fileName: string) => {
+    return (
+      fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) ||
+      fileName
+    );
+  };
 
   const handleChangeFile = (e: any) => {
     const files = e.target.files;
@@ -108,15 +121,15 @@ export default function Step1PC({
       'image/jfif',
       // 'image/heic',
     ];
-    
+
     Array.from(files).forEach((file: any, index: number) => {
       console.log('getFileExtension', getFileExtension(file.name));
-      const fileType =getFileExtension(file?.name)
+      const fileType = getFileExtension(file?.name);
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
       console.log('pass');
-      
+
       let originFile: any = file;
       let name = file.name;
       images.forEach((image: any) => {
@@ -166,28 +179,27 @@ export default function Step1PC({
     }
   };
 
-    const handleClickUpload = () => {
-        if (countImageValid < 3) {
-            uploadRef.current?.click();
-        } else {
-            const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
-                return prev + curr.file.size
-            }, 0);
+  const handleClickUpload = () => {
+    if (countImageValid < 3) {
+      uploadRef.current?.click();
+    } else {
+      const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
+        return prev + curr.file.size;
+      }, 0);
 
+      if (totalUploadFilesSize > 200 * 1024 * 1024) {
+        dispatch(setShowModalUploadFilesExtendLimit(true));
+        return;
+      }
 
-            if (totalUploadFilesSize > 200 * 1024 * 1024) {
-                dispatch(setShowModalUploadFilesExtendLimit(true));
-                return
-            }
-
-            const formData = new FormData();
-            images.forEach((item: any) => {
-              formData.append('files', item.file);
-            });
-            setShowLoading(true);
-            mutationUpload.mutate(formData);
-        }
-    };
+      const formData = new FormData();
+      images.forEach((item: any) => {
+        formData.append('files', item.file);
+      });
+      setShowLoading(true);
+      mutationUpload.mutate(formData);
+    }
+  };
 
   const handleClickBigUpload = () => {
     uploadRef.current?.click();
@@ -229,7 +241,9 @@ export default function Step1PC({
           {images.length === 0 ? (
             <div className="big-upload">
               <img src={IconPlusUpload} alt="" />
-              <div className='upload-title'>Drag and drop or click here to upload photos</div>
+              <div className="upload-title">
+                Drag and drop or click here to upload photos
+              </div>
               <div className="upload-support">
                 Supported formats: PNG, JPEG, JPG, JFIF.
               </div>
