@@ -26,6 +26,8 @@ import { landingPageTracking } from '@/firebase/firebase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 
+const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
+
 export default function HomePage() {
   const navigate = useNavigate();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
@@ -42,7 +44,7 @@ export default function HomePage() {
     <Wrapper>
       <BannerWrapper
         onClick={() => {
-          navigate(ROUTES.SALE_PAGE);
+          navigate(salePageLinkFromLandingPage);
         }}
       >
         <BannerContent>Limited Time Deal! Get Up to 50% off</BannerContent>
