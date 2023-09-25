@@ -15,6 +15,12 @@ export const eventTracking = {
   //     userId: 'user_id',
   //   },
   // },
+  uploadPhotoView: {
+    name: 'upload_photo_view',
+    params: {
+      source: 'source',
+    },
+  },
 };
 
 export const landingPageTracking = {

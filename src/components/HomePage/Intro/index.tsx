@@ -52,6 +52,7 @@ import { landingPageTracking } from '@/firebase/firebase';
 import { analyticsLogEvent } from '@/firebase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { uploadPhotoLinkFromLandingPage } from '@/pages/HomePage';
 
 const reviewers = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
 
@@ -114,7 +115,7 @@ export default function Intro() {
                 landingPageTracking.clickStart.name,
                 eventParams
               );
-              navigate(ROUTES.APP_PAGE);
+              navigate(uploadPhotoLinkFromLandingPage);
             }}
           >
             <p>Get started</p>

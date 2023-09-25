@@ -16,6 +16,7 @@ import { analyticsLogEvent } from '@/firebase';
 import { landingPageTracking } from '@/firebase/firebase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { uploadPhotoLinkFromLandingPage } from '@/pages/HomePage';
 
 const links = [
   { title: 'Why AI Avatar', href: '#why-choose-avatar' },
@@ -55,7 +56,7 @@ export default function Header() {
                 userInfor?.id;
             }
             analyticsLogEvent(landingPageTracking.clickStart.name, eventParams);
-            navigate(ROUTES.APP_PAGE);
+            navigate(uploadPhotoLinkFromLandingPage);
           }}
         >
           <p>Get Started</p>

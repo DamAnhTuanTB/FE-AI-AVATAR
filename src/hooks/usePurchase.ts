@@ -25,9 +25,7 @@ export default function usePurchase() {
   const handlePurchase = (priceId?: string) => {
     const payload: any = {
       priceId,
-      redirectUrl:
-        `${window.location.protocol}//${window.location.host}` +
-        ROUTES.APP_PAGE,
+      redirectUrl: `${window.location.protocol}//${window.location.host}${ROUTES.APP_PAGE}?from=email_pre_launch`,
       // redirectUrl: 'https://avatar.apero.vn/',
     };
     if (isLoggedIn) {

@@ -27,6 +27,7 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 
 const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
+export const uploadPhotoLinkFromLandingPage = `${ROUTES.APP_PAGE}?from=landing_page`;
 
 export default function HomePage() {
   const navigate = useNavigate();
