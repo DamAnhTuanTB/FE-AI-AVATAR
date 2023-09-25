@@ -13,15 +13,15 @@ import {
   Wrapper,
 } from './styles';
 import { Description, SubTitle } from '@/pages/HomePage/styles';
-import User1 from '@/assets/images/home-page/user-1.svg';
-import User2 from '@/assets/images/home-page/user-2.svg';
-import User3 from '@/assets/images/home-page/user-3.svg';
-import User4 from '@/assets/images/home-page/user-4.svg';
-import User5 from '@/assets/images/home-page/user-5.svg';
-import User6 from '@/assets/images/home-page/user-6.svg';
-import User7 from '@/assets/images/home-page/user-7.svg';
-import User8 from '@/assets/images/home-page/user-8.svg';
-import User9 from '@/assets/images/home-page/user-9.svg';
+import User1 from '@/assets/images/home-page/user-1.png';
+import User2 from '@/assets/images/home-page/user-2.png';
+import User3 from '@/assets/images/home-page/user-3.png';
+import User4 from '@/assets/images/home-page/user-4.png';
+import User5 from '@/assets/images/home-page/user-5.png';
+import User6 from '@/assets/images/home-page/user-6.png';
+import User7 from '@/assets/images/home-page/user-7.png';
+import User8 from '@/assets/images/home-page/user-8.png';
+import User9 from '@/assets/images/home-page/user-9.png';
 import Star from '@/components/Icons/Star';
 import useScreenSize from '@/hooks/useScreenSize';
 

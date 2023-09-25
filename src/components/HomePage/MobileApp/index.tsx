@@ -3,7 +3,7 @@ import GooglePlay from '@/assets/images/home-page/gg-play.svg';
 import UnderlineDecor from '@/assets/images/home-page/mobile-app-decor.png';
 import DecorImg1 from '@/assets/images/home-page/mobile-app-item-1.svg';
 import DecorImg2 from '@/assets/images/home-page/mobile-app-item-2.svg';
-import MobileAppImgSrc from '@/assets/images/home-page/mobile-app.svg';
+import MobileAppImgSrc from '@/assets/images/home-page/mobile-app.png';
 import QrImg from '@/assets/images/home-page/qr.svg';
 import { SubTitle } from '@/pages/HomePage/styles';
 import {
