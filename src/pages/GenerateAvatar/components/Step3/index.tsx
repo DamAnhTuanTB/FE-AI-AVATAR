@@ -4,6 +4,9 @@ import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
+import { setCookie } from '@/utils/cookies';
 
 interface IProps {
   styles: any;
@@ -12,6 +15,7 @@ interface IProps {
   listStyles: any;
   price: any;
   handleGenerate: any;
+  sessionId: string;
 }
 
 export default function Step3({
@@ -21,6 +25,7 @@ export default function Step3({
   listStyles,
   price,
   handleGenerate,
+  sessionId,
 }: IProps) {
   // useEffect(() => {
   //   // if (
@@ -56,8 +61,27 @@ export default function Step3({
   };
 
   const handleClickNext = () => {
+    analyticsLogEvent(eventTracking.choose_style_click_generate.name, {
+      [eventTracking.choose_style_click_generate.params.package]:
+        currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
+      [eventTracking.choose_style_click_generate.params.gender]:
+        gender.toLowerCase(),
+      [eventTracking.choose_style_click_generate.params.style]:
+        styles.join(','),
+      [eventTracking.choose_style_click_generate.params.session_id]:
+        styles.join(','),
+    });
+    setCookie('numberStyle', currentGenerate?.priceInfo?.metadata?.numberStyle);
     handleGenerate(currentGenerate?.timePayment);
   };
+
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.choose_style_view.name, {
+      [eventTracking.choose_style_view.params.package]:
+        currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
+      [eventTracking.choose_style_view.params.gender]: gender.toLowerCase(),
+    });
+  }, []);
 
   return (
     <Wrapper>

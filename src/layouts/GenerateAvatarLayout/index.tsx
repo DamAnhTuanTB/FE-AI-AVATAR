@@ -17,11 +17,13 @@ import {
 } from '@/store/slices/appSlice';
 import { useMutation, useQuery } from 'react-query';
 import generateService from '@/services/generate.service';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const pathname = location.pathname; 
+  const pathname = location.pathname;
   const [searchParams] = useSearchParams();
   const auth = searchParams.get('auth');
   const isLoggedIn = useAppSelector(
@@ -40,6 +42,11 @@ export default function GenerateAvatarLayout() {
           localStorage.setItem('isComeFirst', '1');
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
+          if (res.data.exists) {
+            analyticsLogEvent(eventTracking.login_purchase_view.name);
+          } else {
+            analyticsLogEvent(eventTracking.register_purchase_view.name);
+          }
         } else {
           dispatch(setEmailSuccessPaymentButNotAuth(''));
         }

@@ -4,6 +4,8 @@ import { Wrapper } from './style';
 import { StepEnum } from '../../contants';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { eventTracking } from '@/firebase/firebase';
+import { analyticsLogEvent } from '@/firebase';
 
 interface IProps {
   open: boolean;
@@ -37,6 +39,7 @@ export default function ModalPreviewStyle({
   };
   const handleClickNext = () => {
     handleCancel();
+    analyticsLogEvent(eventTracking.preview_style_click_next.name);
     if (!isLoggedIn || !numberGen) {
       setShowModalPayment(true);
     } else {

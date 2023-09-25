@@ -28,6 +28,8 @@ import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { CONFIG } from '@/config/service';
 import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import ModalUploadFilesExtendLimit from '@/components/ModalUploadFilesExtendLimit';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -160,6 +162,10 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.generateImage(payload),
     {
       onSuccess: async (res: any) => {
+        analyticsLogEvent(eventTracking.call_api_generate.name, {
+          [eventTracking.call_api_generate.params.status]: 'success',
+          [eventTracking.call_api_generate.params.session_id]: sessionId,
+        });
         const firstImageValid = images.find((item: any) => !item.textError);
 
         const presign = await generateService.getPreSignFile({
@@ -183,6 +189,12 @@ export default function GenerateAvatar() {
           styles,
           originFirstImage: presign?.data?.fields?.key,
           timePayment: currentGenerate?.timePayment,
+        });
+      },
+      onError: () => {
+        analyticsLogEvent(eventTracking.call_api_generate.name, {
+          [eventTracking.call_api_generate.params.status]: 'failed',
+          [eventTracking.call_api_generate.params.session_id]: sessionId,
         });
       },
     }
@@ -268,6 +280,7 @@ export default function GenerateAvatar() {
   };
 
   const handleClickBackToHome = () => {
+    analyticsLogEvent(eventTracking.generating_click_back.name);
     setStep(StepEnum.GUIDE);
     setImages([]);
     setGender('');
@@ -313,6 +326,7 @@ export default function GenerateAvatar() {
   };
 
   const handleClickMyAvatar = () => {
+    analyticsLogEvent(eventTracking.generating_click_my_avatar.name);
     navigate(ROUTES.LIST_AVATAR);
   };
 
@@ -351,10 +365,13 @@ export default function GenerateAvatar() {
               gender={gender}
               price={price}
               handleGenerate={handleGenerate}
+              sessionId={sessionId}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
             <Step4PC
+              gender={gender}
+              styles={styles}
               handleClickBackToHome={handleClickBackToHome}
               handleClickMyAvatar={handleClickMyAvatar}
             />
@@ -396,10 +413,13 @@ export default function GenerateAvatar() {
               gender={gender}
               price={price}
               handleGenerate={handleGenerate}
+              sessionId={sessionId}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
             <Step4
+              gender={gender}
+              styles={styles}
               handleClickBackToHome={handleClickBackToHome}
               handleClickMyAvatar={handleClickMyAvatar}
             />
@@ -415,6 +435,7 @@ export default function GenerateAvatar() {
           price={price}
           setPrice={setPrice}
           handleSaveData={handleSaveData}
+          gender={gender}
         />
       )}
 

@@ -16,6 +16,8 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { CONFIG } from '@/config/service';
 import { ROUTES } from '@/routes/routes';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 interface IProps {
   prices: any;
@@ -25,6 +27,7 @@ interface IProps {
   setPrice: any;
   setStep: any;
   handleSaveData: any;
+  gender: string;
 }
 
 export default function ModalPayment({
@@ -35,6 +38,7 @@ export default function ModalPayment({
   setPrice,
   setStep,
   handleSaveData,
+  gender,
 }: IProps) {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
@@ -43,6 +47,7 @@ export default function ModalPayment({
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
   useEffect(() => {
+    analyticsLogEvent(eventTracking.purchase_view.name);
     if (prices?.length) {
       prices.forEach((item: any) => {
         if (item.bestOffer) {
@@ -50,7 +55,6 @@ export default function ModalPayment({
         }
       });
     }
-    
   }, [prices]);
 
   const purchaseMutation = useMutation(
@@ -91,7 +95,15 @@ export default function ModalPayment({
       localStorage.setItem('userIdFake', 'fake' + userIdFake);
       localStorage.removeItem('isComeFirst');
     }
-    purchaseMutation.mutate(payload);
+
+    analyticsLogEvent(eventTracking.purchase_click_button.name, {
+      [eventTracking.purchase_click_button.params.gender]:
+        gender?.toLowerCase(),
+      [eventTracking.purchase_click_button.params.sales]: 'none',
+      [eventTracking.purchase_click_button.params.package]:
+        price?.maxStyle + 'style',
+    });
+    // purchaseMutation.mutate(payload);
     // setStep(StepEnum.CHOOSE_STYLE);
     // setOpen(false);
     // setSuccessPurchase(true);
@@ -125,28 +137,29 @@ export default function ModalPayment({
               We&apos;ve got a plan that's perfect for you!
             </div>
             <div className="list-prices">
-              {prices?.length > 0 && prices.map((item: any) => (
-                <div
-                  className={`item-price ${
-                    item?.id === price?.id && 'price-active'
-                  }`}
-                  key={item.id}
-                  onClick={() => handleClickPrice(item)}
-                >
-                  {item.bestOffer && (
-                    <img src={IconBestSale} className="best-offer" />
-                  )}
-                  {item?.id === price?.id ? (
-                    <img className="icon-check" src={IconCheck} alt="" />
-                  ) : (
-                    <div className="not-check" />
-                  )}
-                  <div className="text-price">
-                    <div>{item.name}</div>
-                    <div>${item.price} one time</div>
+              {prices?.length > 0 &&
+                prices.map((item: any) => (
+                  <div
+                    className={`item-price ${
+                      item?.id === price?.id && 'price-active'
+                    }`}
+                    key={item.id}
+                    onClick={() => handleClickPrice(item)}
+                  >
+                    {item.bestOffer && (
+                      <img src={IconBestSale} className="best-offer" />
+                    )}
+                    {item?.id === price?.id ? (
+                      <img className="icon-check" src={IconCheck} alt="" />
+                    ) : (
+                      <div className="not-check" />
+                    )}
+                    <div className="text-price">
+                      <div>{item.name}</div>
+                      <div>${item.price} one time</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
           {!isMobile && (

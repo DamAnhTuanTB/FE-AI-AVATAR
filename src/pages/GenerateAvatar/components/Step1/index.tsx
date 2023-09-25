@@ -15,6 +15,8 @@ import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
 import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useAppDispatch } from '@/store/hooks';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 const defaultOptions = {
   loop: true,
@@ -73,8 +75,14 @@ export default function Step1({
         setSessionId(res?.data?.data?.sessionId);
         setStep(StepEnum.PICK_GENDER);
         setShowLoading(false);
+        analyticsLogEvent(eventTracking.call_api_checking_photo.name, {
+          [eventTracking.call_api_checking_photo.params.status]: 'success',
+        });
       },
       onError: (err: any) => {
+        analyticsLogEvent(eventTracking.call_api_checking_photo.name, {
+          [eventTracking.call_api_checking_photo.params.status]: 'failed',
+        });
         setShowLoading(false);
         // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
         //   ToastError(err?.response?.data?.message);
@@ -125,7 +133,7 @@ export default function Step1({
       // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
-      const fileType =getFileExtension(file?.name)
+      const fileType = getFileExtension(file?.name);
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
@@ -181,6 +189,11 @@ export default function Step1({
 
   const handleClickUpload = () => {
     if (countImageValid < 3) {
+      if (images?.length === 0) {
+        analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+      } else {
+        analyticsLogEvent(eventTracking.upload_photo_click_upload_more.name);
+      }
       uploadRef.current?.click();
     } else {
       const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
@@ -197,6 +210,8 @@ export default function Step1({
         formData.append('files', item.file);
       });
       setShowLoading(true);
+      analyticsLogEvent(eventTracking.upload_photo_click_next.name);
+      analyticsLogEvent(eventTracking.upload_photo_checking.name);
       mutationUpload.mutate(formData);
     }
   };
