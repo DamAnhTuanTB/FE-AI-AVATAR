@@ -48,6 +48,10 @@ import ShadowTop from '@/assets/images/home-page/shadow-avt-scroll-top.png';
 import ShadowBottom from '@/assets/images/home-page/shadow-avt-scroll-bottom.png';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
+import { landingPageTracking } from '@/firebase/firebase';
+import { analyticsLogEvent } from '@/firebase';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 
 const reviewers = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
 
@@ -83,6 +87,7 @@ const avatars = [
 
 export default function Intro() {
   const navigate = useNavigate();
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   return (
     <ContainerWrapper id={'intro'}>
       <Wrapper>
@@ -98,6 +103,17 @@ export default function Intro() {
 
           <GetStartedWrapper
             onClick={() => {
+              const eventParams: any = {
+                [landingPageTracking.clickStart.params.from]: 'hero',
+              };
+              if (userInfor?.id) {
+                eventParams[landingPageTracking.clickStart.params.userId] =
+                  userInfor?.id;
+              }
+              analyticsLogEvent(
+                landingPageTracking.clickStart.name,
+                eventParams
+              );
               navigate(ROUTES.APP_PAGE);
             }}
           >
