@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Wrapper } from './style';
 import generateService from '@/services/generate.service';
 import { useQuery } from 'react-query';
@@ -10,6 +10,8 @@ import { TypeSessionStatus } from '../GenerateAvatar/contants';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
 import LoadingImage from '@/assets/images/loading-image.gif';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 const getFirstImage = (results: any) => {
   const keys = Object.keys(results);
@@ -40,9 +42,14 @@ export default function ListAvatar() {
     pack: number
   ) => {
     if (status !== TypeSessionStatus.ACTIVE) {
+      analyticsLogEvent(eventTracking.my_avatar_click_pack.name);
       navigate(`/my-avatar/${sessionId}?pack=${pack}`);
     }
   };
+
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.my_avatar_view.name);
+  }, []);
 
   return (
     <Wrapper>

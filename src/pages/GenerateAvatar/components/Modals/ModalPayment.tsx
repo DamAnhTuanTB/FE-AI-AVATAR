@@ -16,6 +16,8 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { CONFIG } from '@/config/service';
 import { ROUTES } from '@/routes/routes';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 import { eraseCookie, setCookie } from '@/utils/cookies';
 
 interface IProps {
@@ -26,6 +28,7 @@ interface IProps {
   setPrice: any;
   setStep: any;
   handleSaveData: any;
+  gender: string;
   savingData: boolean;
   setSavingData: any;
 }
@@ -38,6 +41,7 @@ export default function ModalPayment({
   setPrice,
   setStep,
   handleSaveData,
+  gender,
   savingData,
   setSavingData,
 }: IProps) {
@@ -48,6 +52,7 @@ export default function ModalPayment({
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
   useEffect(() => {
+    analyticsLogEvent(eventTracking.purchase_view.name);
     if (prices?.length) {
       prices.forEach((item: any) => {
         if (item.bestOffer) {
@@ -96,7 +101,15 @@ export default function ModalPayment({
       setCookie('userIdFake', 'fake' + userIdFake);
       eraseCookie('isComeFirst');
     }
-    purchaseMutation.mutate(payload);
+
+    analyticsLogEvent(eventTracking.purchase_click_button.name, {
+      [eventTracking.purchase_click_button.params.gender]:
+        gender?.toLowerCase(),
+      [eventTracking.purchase_click_button.params.sales]: 'none',
+      [eventTracking.purchase_click_button.params.package]:
+        price?.maxStyle + 'style',
+    });
+    // purchaseMutation.mutate(payload);
     // setStep(StepEnum.CHOOSE_STYLE);
     // setOpen(false);
     // setSuccessPurchase(true);

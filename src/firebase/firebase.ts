@@ -9,12 +9,150 @@ export const firebaseConfig = {
 };
 
 export const eventTracking = {
-  // landingPageView: {
-  //   name: 'view_landing_page',
-  //   params: {
-  //     userId: 'user_id',
-  //   },
-  // },
+  upload_photo_click_upload: {
+    name: 'upload_photo_click_upload',
+  },
+  upload_photo_click_next: {
+    name: 'upload_photo_click_next',
+  },
+  upload_photo_click_upload_more: {
+    name: 'upload_photo_click_upload_more',
+  },
+  upload_photo_checking: {
+    name: 'upload_photo_checking',
+  },
+  select_gender_view: {
+    name: 'select_gender_view',
+  },
+  select_gender_click_next: {
+    name: 'select_gender_click_next',
+    params: {
+      gender: 'gender',
+    },
+  },
+  preview_style_view: {
+    name: 'preview_style_view',
+  },
+  preview_style_click_next: {
+    name: 'preview_style_click_next',
+  },
+  purchase_view: {
+    name: 'purchase_view',
+  },
+  purchase_click_button: {
+    name: 'purchase_click_button',
+    params: {
+      package: 'package',
+      gender: 'gender',
+      sales: 'sales',
+    },
+  },
+  login_purchase_view: {
+    name: 'login _purchase_view',
+  },
+  login_purchase_click_button: {
+    name: 'login _purchase_click_button',
+    params: {
+      status: 'status',
+    },
+  },
+  register_purchase_view: {
+    name: 'register_purchase_view',
+  },
+  register_purchase_click_button: {
+    name: 'login register_purchase_click_button',
+    params: {
+      status: 'status',
+    },
+  },
+  choose_style_view: {
+    name: 'choose_style_view',
+    params: {
+      package: 'package',
+      gender: 'gender',
+    },
+  },
+  choose_style_click_generate: {
+    name: 'choose_style_click_generate',
+    params: {
+      package: 'package',
+      gender: 'gender',
+      style: 'style',
+      session_id: 'session_id',
+    },
+  },
+  generating_view: {
+    name: 'generating_view',
+    params: {
+      package: 'package',
+      gender: 'gender',
+      style: 'style',
+    },
+  },
+  generating_click_back: {
+    name: 'generating_click_back',
+  },
+  generating_click_my_avatar: {
+    name: 'generating_click_my_avatar',
+  },
+  my_avatar_view: {
+    name: 'my_avatar_view',
+  },
+  my_avatar_click_pack: {
+    name: 'my_avatar_click_pack',
+  },
+  pack_detail_view: {
+    name: 'pack_detail_view',
+  },
+  pack_detail_click_save_all: {
+    name: 'pack_detail_click_save_all',
+  },
+  pack_detail_click_view_all: {
+    name: 'pack_detail_click_view_all',
+  },
+  photo_detail_view: {
+    name: 'photo_detail_view',
+  },
+  photo_detail_click_save: {
+    name: 'photo_detail_click_save',
+    params: {
+      style: 'style',
+    },
+  },
+  photo_detail_click_delete: {
+    name: 'photo_detail_click_delete',
+    params: {
+      style: 'style',
+    },
+  },
+  generate_avatar: {
+    name: 'generate_avatar',
+    params: {
+      status: 'status',
+      form: 'form',
+      time: 'time',
+    },
+  },
+  call_api_checking_photo: {
+    name: 'call_api_checking_photo',
+    params: {
+      status: 'status',
+    },
+  },
+  call_api_generate: {
+    name: 'call_api_generate',
+    params: {
+      status: 'status',
+      session_id: 'session_id',
+    },
+  },
+  clickStart: {
+    name: 'landing_page_click_start',
+    params: {
+      from: 'from',
+      userId: 'user_id',
+    },
+  },
 };
 
 export const landingPageTracking = {

@@ -17,6 +17,8 @@ import {
 } from '@/store/slices/appSlice';
 import { useMutation, useQuery } from 'react-query';
 import generateService from '@/services/generate.service';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 import { getCookie, setCookie } from '@/utils/cookies';
 
 export default function GenerateAvatarLayout() {
@@ -41,6 +43,11 @@ export default function GenerateAvatarLayout() {
           setCookie('isComeFirst', '1');
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
+          if (res.data.exists) {
+            analyticsLogEvent(eventTracking.login_purchase_view.name);
+          } else {
+            analyticsLogEvent(eventTracking.register_purchase_view.name);
+          }
         } else {
           dispatch(setEmailSuccessPaymentButNotAuth(''));
         }
