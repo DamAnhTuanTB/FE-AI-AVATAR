@@ -2,6 +2,7 @@ import { ROUTES } from '@/routes/routes';
 import generateService from '@/services/generate.service';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { getCookie, setCookie } from '@/utils/cookies';
 import { useMutation } from 'react-query';
 
 export default function usePurchase() {
@@ -37,8 +38,8 @@ export default function usePurchase() {
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString() +
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString();
       payload.userId = 'fake' + userIdFake;
-      localStorage.setItem('userIdFake', 'fake' + userIdFake);
-      localStorage.removeItem('isComeFirst');
+      setCookie('userIdFake', 'fake' + userIdFake);
+      getCookie('isComeFirst');
     }
     purchaseMutation.mutate(payload);
   };

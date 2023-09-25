@@ -17,11 +17,12 @@ import {
 } from '@/store/slices/appSlice';
 import { useMutation, useQuery } from 'react-query';
 import generateService from '@/services/generate.service';
+import { getCookie, setCookie } from '@/utils/cookies';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const pathname = location.pathname; 
+  const pathname = location.pathname;
   const [searchParams] = useSearchParams();
   const auth = searchParams.get('auth');
   const isLoggedIn = useAppSelector(
@@ -37,7 +38,7 @@ export default function GenerateAvatarLayout() {
     {
       onSuccess: (res: any) => {
         if (res.data) {
-          localStorage.setItem('isComeFirst', '1');
+          setCookie('isComeFirst', '1');
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
         } else {
@@ -48,17 +49,14 @@ export default function GenerateAvatarLayout() {
   );
 
   useEffect(() => {
-    if (
-      localStorage.getItem('userIdFake') &&
-      !localStorage.getItem('isComeFirst')
-    ) {
+    if (getCookie('userIdFake') && !getCookie('isComeFirst')) {
       mutationCheckCaseSuccessPaymentButNotAuth.mutate(
-        localStorage.getItem('userIdFake') || ''
+        getCookie('userIdFake') || ''
       );
     }
-    if (localStorage.getItem('userIdFake') && auth === AuthEnum.ResetPassword) {
+    if (getCookie('userIdFake') && auth === AuthEnum.ResetPassword) {
       mutationCheckCaseSuccessPaymentButNotAuth.mutate(
-        localStorage.getItem('userIdFake') || ''
+        getCookie('userIdFake') || ''
       );
     }
   }, []);

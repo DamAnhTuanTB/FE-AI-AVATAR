@@ -16,6 +16,7 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { CONFIG } from '@/config/service';
 import { ROUTES } from '@/routes/routes';
+import { eraseCookie, setCookie } from '@/utils/cookies';
 
 interface IProps {
   prices: any;
@@ -25,6 +26,8 @@ interface IProps {
   setPrice: any;
   setStep: any;
   handleSaveData: any;
+  savingData: boolean;
+  setSavingData: any;
 }
 
 export default function ModalPayment({
@@ -35,6 +38,8 @@ export default function ModalPayment({
   setPrice,
   setStep,
   handleSaveData,
+  savingData,
+  setSavingData,
 }: IProps) {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
@@ -50,7 +55,6 @@ export default function ModalPayment({
         }
       });
     }
-    
   }, [prices]);
 
   const purchaseMutation = useMutation(
@@ -58,6 +62,7 @@ export default function ModalPayment({
     {
       onSuccess: (res: any) => {
         if (res.data?.url) {
+          setSavingData(true);
           handleSaveData(res.data?.url);
         }
       },
@@ -88,8 +93,8 @@ export default function ModalPayment({
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString() +
         (Math.floor(Math.random() * (999999999999999 - 1 + 1)) + 1).toString();
       payload.userId = 'fake' + userIdFake;
-      localStorage.setItem('userIdFake', 'fake' + userIdFake);
-      localStorage.removeItem('isComeFirst');
+      setCookie('userIdFake', 'fake' + userIdFake);
+      eraseCookie('isComeFirst');
     }
     purchaseMutation.mutate(payload);
     // setStep(StepEnum.CHOOSE_STYLE);
@@ -97,6 +102,8 @@ export default function ModalPayment({
     // setSuccessPurchase(true);
     // setOpen(false);
   };
+
+  console.log('isSaving', savingData);
   return (
     <Wrapper
       width={isMobile ? 328 : 984}
@@ -125,28 +132,29 @@ export default function ModalPayment({
               We&apos;ve got a plan that's perfect for you!
             </div>
             <div className="list-prices">
-              {prices?.length > 0 && prices.map((item: any) => (
-                <div
-                  className={`item-price ${
-                    item?.id === price?.id && 'price-active'
-                  }`}
-                  key={item.id}
-                  onClick={() => handleClickPrice(item)}
-                >
-                  {item.bestOffer && (
-                    <img src={IconBestSale} className="best-offer" />
-                  )}
-                  {item?.id === price?.id ? (
-                    <img className="icon-check" src={IconCheck} alt="" />
-                  ) : (
-                    <div className="not-check" />
-                  )}
-                  <div className="text-price">
-                    <div>{item.name}</div>
-                    <div>${item.price} one time</div>
+              {prices?.length > 0 &&
+                prices.map((item: any) => (
+                  <div
+                    className={`item-price ${
+                      item?.id === price?.id && 'price-active'
+                    }`}
+                    key={item.id}
+                    onClick={() => handleClickPrice(item)}
+                  >
+                    {item.bestOffer && (
+                      <img src={IconBestSale} className="best-offer" />
+                    )}
+                    {item?.id === price?.id ? (
+                      <img className="icon-check" src={IconCheck} alt="" />
+                    ) : (
+                      <div className="not-check" />
+                    )}
+                    <div className="text-price">
+                      <div>{item.name}</div>
+                      <div>${item.price} one time</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
           {!isMobile && (
@@ -155,6 +163,7 @@ export default function ModalPayment({
         </div>
         <div className="button">
           <Button
+            loading={savingData}
             text="Purchase now"
             width={isMobile ? '100%' : '290px'}
             height="45px"
