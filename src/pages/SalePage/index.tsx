@@ -1,9 +1,13 @@
 import BeforeAfterImageSrc from '@/assets/images/sale-page/before-after-img.svg';
-import HomePageFooter from '@/components/HomePage/Footer';
 import SaleContent from '@/components/SalePage/Content';
+import SalePageFooter from '@/components/SalePage/Footer';
 import SaleHeader from '@/components/SalePage/Header';
 import Payment from '@/components/SalePage/Payment';
 import useScreenSize from '@/hooks/useScreenSize';
+import generateService from '@/services/generate.service';
+import { discountPrice } from '@/utils/constants';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import {
   BeforeAfterImage,
   Container,
@@ -12,16 +16,21 @@ import {
   PaymentWrapper,
   Wrapper,
 } from './styles';
-import SalePageFooter from '@/components/SalePage/Footer';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { discountPrice } from '@/utils/constants';
-import generateService from '@/services/generate.service';
+import { useLocation } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import { salePageTracking } from '@/firebase/firebase';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { analyticsLogEvent } from '@/firebase';
+import moment from 'moment';
 
 export default function SalePage() {
   const { isMobile, isTablet } = useScreenSize();
   const [priceSelected, setPriceSelected] = useState<any>(null);
   const [prices, setPrices] = useState<any[]>([]);
+  const [searchParams] = useSearchParams();
+  const fromQuery = searchParams.get('from');
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
 
   const priceType =
     discountPrice === 0.5
@@ -42,7 +51,7 @@ export default function SalePage() {
           maxStyle: Number(item.metadata.numberStyle),
           bestOffer: item.metadata?.popular === 'true',
         }));
-        setPrices(listPrice);
+        setPrices(listPrice || []);
       },
     }
   );
@@ -50,6 +59,17 @@ export default function SalePage() {
   const handleSelectPrice = (price: any) => {
     setPriceSelected(price);
   };
+
+  useEffect(() => {
+    const eventParams: any = {
+      [salePageTracking.view.params.source]:
+        fromQuery === 'mail' ? 'email_pre_launch' : 'landing_page',
+    };
+    if (userInfor?.id) {
+      eventParams[salePageTracking.view.params.userId] = userInfor?.id;
+    }
+    analyticsLogEvent(salePageTracking.view.name, eventParams);
+  }, [fromQuery]);
 
   return (
     <Wrapper>

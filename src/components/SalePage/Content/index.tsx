@@ -28,6 +28,10 @@ import Avatar16 from '@/assets/images/sale-page/avt-16.svg';
 import Avatar17 from '@/assets/images/sale-page/avt-17.svg';
 import Avatar18 from '@/assets/images/sale-page/avt-18.svg';
 import usePurchase from '@/hooks/usePurchase';
+import { RootState } from '@/store/store';
+import { useAppSelector } from '@/store/hooks';
+import { salePageTracking } from '@/firebase/firebase';
+import { analyticsLogEvent } from '@/firebase';
 
 const avatarsGroup1 = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6];
 const avatarsGroup2 = [Avatar7, Avatar8, Avatar9, Avatar10, Avatar11, Avatar12];
@@ -45,6 +49,7 @@ interface PropsType {
 }
 
 export default function SaleContent({ priceSelected }: PropsType) {
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { handlePurchase } = usePurchase();
 
   return (
@@ -144,6 +149,17 @@ export default function SaleContent({ priceSelected }: PropsType) {
 
       <BuyNowButton
         onClick={() => {
+          const eventParams: any = {};
+          if (priceSelected?.maxStyle) {
+            eventParams[
+              salePageTracking.clickBuyNow.params.package
+            ] = `${priceSelected?.maxStyle}style`;
+          }
+          if (userInfor?.id) {
+            eventParams[salePageTracking.clickBuyNow.params.userId] =
+              userInfor?.id;
+          }
+          analyticsLogEvent(salePageTracking.clickBuyNow.name, eventParams);
           handlePurchase(priceSelected?.id);
         }}
       >

@@ -18,9 +18,14 @@ import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
 import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { landingPageTracking } from '@/firebase/firebase';
+import { analyticsLogEvent } from '@/firebase';
 
 export default function ReadyStarted() {
   const navigate = useNavigate();
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   return (
     <Wrapper>
       <BodyWrapper>
@@ -38,6 +43,17 @@ export default function ReadyStarted() {
           </div>
           <CreateButtonWrapper
             onClick={() => {
+              const eventParams: any = {
+                [landingPageTracking.clickStart.params.from]: 'cta_banner',
+              };
+              if (userInfor?.id) {
+                eventParams[landingPageTracking.clickStart.params.userId] =
+                  userInfor?.id;
+              }
+              analyticsLogEvent(
+                landingPageTracking.clickStart.name,
+                eventParams
+              );
               navigate(ROUTES.APP_PAGE);
             }}
           >

@@ -2,10 +2,10 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 
 interface CountdownType {
-  days: string | null;
-  hours: string | null;
-  minutes: string | null;
-  seconds: string | null;
+  days: string;
+  hours: string;
+  minutes: string;
+  seconds: string;
 }
 
 const dayUnit = 60 * 60 * 24;
