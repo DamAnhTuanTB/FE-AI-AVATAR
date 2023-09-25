@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BannerContent,
   BannerLink,
@@ -21,9 +21,23 @@ import Faq from '@/components/HomePage/Faq';
 import ReadyStarted from '@/components/HomePage/ReadyStarted';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
+import { analyticsLogEvent } from '@/firebase';
+import { landingPageTracking } from '@/firebase/firebase';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+
+  useEffect(() => {
+    const eventParams: any = {};
+    if (userInfor?.id) {
+      eventParams[landingPageTracking.view.params.userId] = userInfor?.id;
+    }
+    analyticsLogEvent(landingPageTracking.view.name, { ...eventParams });
+  }, []);
+
   return (
     <Wrapper>
       <BannerWrapper
