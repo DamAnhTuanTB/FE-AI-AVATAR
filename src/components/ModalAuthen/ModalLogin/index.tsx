@@ -10,6 +10,8 @@ import { useQuery } from 'react-query';
 import generateService from '@/services/generate.service';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
+import {eventTracking} from "@/firebase/firebase";
 
 interface IModalLogin {
   open: boolean;
@@ -46,9 +48,13 @@ export default function ModalLogin(props: IModalLogin) {
         auth !== AuthEnum.ForgetPassword &&
         auth !== AuthEnum.ResetPassword)
     ) {
+      analyticsLogEvent(eventTracking.signInView.name);
+      userPropertiesLogEvent()
       return <LoginComponent />;
     }
     if (auth === AuthEnum.SignUp || userExists === 0) {
+      analyticsLogEvent(eventTracking.signUpView.name);
+      userPropertiesLogEvent();
       return <SignUpComponent />;
     }
     if (

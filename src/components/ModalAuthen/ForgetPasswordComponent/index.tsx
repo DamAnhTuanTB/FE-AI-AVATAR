@@ -5,6 +5,8 @@ import {AUTH_ERROR_MESSAGE, AuthEnum} from "@/components/ModalAuthen/constant";
 import React, {useEffect, useState} from "react";
 import authServices from "@/services/auth.service";
 import {HTTP_STATUS} from "@/services/config/api";
+import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
+import {eventTracking} from "@/firebase/firebase";
 
 export default function ForgetPasswordComponent() {
     const [errorMessageApi, setErrorMessageApi] = useState('')
@@ -21,10 +23,19 @@ export default function ForgetPasswordComponent() {
         try {
             const res = await authServices.forgetPassword(payload);
             if (res && res.status === HTTP_STATUS.SUCCESS) {
+                analyticsLogEvent(eventTracking.forgetPasswordClickRequest.name, {
+                    [eventTracking.forgetPasswordClickRequest.params.status]: 'success'
+                });
+                userPropertiesLogEvent()
                 setIsSendMailSuccess(true)
             }
         } catch (err: any) {
             console.log('err', err)
+            analyticsLogEvent(eventTracking.forgetPasswordClickRequest.name, {
+                [eventTracking.forgetPasswordClickRequest.params.status]: 'failed'
+            });
+            userPropertiesLogEvent();
+
             let errMsg = err?.response.data.message || AUTH_ERROR_MESSAGE.FORGET_PASSWORD.FORGET_PASSWORD_FAILED;
             if (errMsg === AUTH_ERROR_MESSAGE.FORGET_PASSWORD.NO_USER_FOUND) {
                 errMsg = AUTH_ERROR_MESSAGE.FORGET_PASSWORD.NO_EMAIL_FOUND
