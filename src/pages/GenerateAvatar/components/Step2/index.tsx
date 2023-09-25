@@ -1,32 +1,46 @@
+import { useEffect } from 'react';
 import { StepEnum } from '../../contants';
 import Button from '../Button';
 import { Wrapper } from './style';
 import IconFemale from '@/assets/images/icon-female.svg';
 import IconMale from '@/assets/images/icon-male.svg';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 interface IProps {
   gender: string;
   setGender: any;
   setStep: (step: number) => void;
   setStyles: any;
+  setShowModalPreviewStyle: any;
 }
 export default function Step2({
   gender,
   setGender,
   setStep,
   setStyles,
+  setShowModalPreviewStyle,
 }: IProps) {
   const handleClickGender = (item: string) => {
     setGender(item);
   };
 
   const handleClickNext = () => {
-    setStep(StepEnum.PREVIEW_STYLE);
+    analyticsLogEvent(eventTracking.select_gender_click_next.name, {
+      [eventTracking.select_gender_click_next.params.gender]:
+        gender.toLowerCase(),
+    });
+    analyticsLogEvent(eventTracking.preview_style_view.name);
+    setShowModalPreviewStyle(true);
   };
+
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.select_gender_view.name);
+  }, []);
 
   return (
     <Wrapper>
-      <div className="title">Pick your gender</div>
+      <div className="title">Select your gender</div>
       <div className="description">
         This information will improve our selection of model images for the
         generation of your photos.

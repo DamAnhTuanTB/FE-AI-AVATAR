@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store/store';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
-import { getCookie } from '@/utils/cookies';
-import authService from '@/services/authService';
+import {getCookie, setCookie} from '@/utils/cookies';
+import authService from '@/services/auth.service';
 import tokenAuthService from '@/services/tokenAuth.service';
+import {CONFIG} from "@/config/service";
 
-// const authUser = LStorage.getItem('auth-user');
-const authUser = getCookie('auth-user');
+// const authUser = LStorage.getItem(CONFIG.COOKIE_AUTH_TOKEN);
+const authUser = getCookie(CONFIG.COOKIE_AUTH_TOKEN);
 export interface AuthUser {
   isAdmin: boolean;
   username: string;
@@ -63,6 +64,7 @@ export const authSlice = createSlice({
       localStorage.removeItem('user-infor');
       localStorage.removeItem('userEmail');
       localStorage.removeItem('dayLogin');
+      setCookie(CONFIG.COOKIE_AUTH_TOKEN, '')
     },
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;

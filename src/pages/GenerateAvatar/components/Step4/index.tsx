@@ -1,13 +1,32 @@
 import { Wrapper } from './style';
 import Button from '../Button';
 import IconGenerateSuccess from '@/assets/images/icon-generate-success.svg';
+import { useEffect } from 'react';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
+import { getCookie } from '@/utils/cookies';
 
 interface IProps {
   handleClickBackToHome: any;
+  handleClickMyAvatar: any;
+  gender: string;
+  styles: string[];
 }
 
-export default function Step4({ handleClickBackToHome }: IProps) {
-  const handleClickMyAvatar = () => {};
+export default function Step4({
+  handleClickBackToHome,
+  handleClickMyAvatar,
+  gender,
+  styles,
+}: IProps) {
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.generating_view.name, {
+      [eventTracking.generating_view.params.package]:
+        getCookie('numberStyle') + 'style',
+      [eventTracking.generating_view.params.gender]: gender.toLowerCase(),
+      [eventTracking.generating_view.params.style]: styles.join(','),
+    });
+  }, []);
   return (
     <Wrapper>
       <div className="content-text">

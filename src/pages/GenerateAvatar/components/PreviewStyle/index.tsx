@@ -1,25 +1,20 @@
 import { Wrapper } from './style';
 import Button from '../Button';
+import { StepEnum } from '../../contants';
 
 interface IProps {
   setStep: any;
   listStyles: any;
   setShowModalPayment: any;
-  successPurchase: boolean;
 }
 
 export default function PreviewStyle({
   setStep,
   listStyles,
   setShowModalPayment,
-  successPurchase,
 }: IProps) {
   const handleClickNext = () => {
-    if (successPurchase) {
-      setStep(3);
-    } else {
-      setShowModalPayment(true);
-    }
+    setStep(StepEnum.CHOOSE_STYLE);
   };
 
   return (

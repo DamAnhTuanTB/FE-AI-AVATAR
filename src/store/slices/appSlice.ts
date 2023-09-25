@@ -10,22 +10,16 @@ export interface AppSlice {
   showSidebar: any;
   hiddenSidebar: boolean;
   userInfor: any;
-  creditsConfig: any;
-  plans: any[];
-  currentSubscriptionPlan: any;
-  isFreeSubscription: boolean;
+  emailSuccessPaymentButNotAuth: string;
+  userExists: number;
+  prices: any[];
+  showModalUploadFilesExtendLimit: boolean
 }
 
 export const initialUserInfo = {
   userName: '',
   userAvatar: '',
   userEmail: '',
-  userCredits: '0',
-  stripeCustomerId: '',
-  stripePriceId: '',
-  stripeSubscriptionId: '',
-  creditExpiredAt: 0,
-  subscriptionExpiredAt: 0,
 };
 
 const initialState: AppSlice = {
@@ -35,10 +29,10 @@ const initialState: AppSlice = {
   showSidebar: null,
   hiddenSidebar: false,
   userInfor: initialUserInfo,
-  creditsConfig: {},
-  plans: [],
-  currentSubscriptionPlan: null,
-  isFreeSubscription: true,
+  emailSuccessPaymentButNotAuth: '',
+  userExists: -1,
+  prices: [],
+  showModalUploadFilesExtendLimit: false
 };
 
 export const appSlice = createSlice({
@@ -54,24 +48,26 @@ export const appSlice = createSlice({
       state.showSidebar = action.payload;
     },
     setUserInfor: (state, action: PayloadAction<any>) => {
-      state.userInfor = action.payload;
+      state.userInfor = { ...state.userInfor, ...action.payload };
     },
     setHiddenSidebar: (state, action: PayloadAction<boolean>) => {
       state.hiddenSidebar = action.payload;
     },
-    setCreditsConfig: (state, action: PayloadAction<any>) => {
-      state.creditsConfig = { ...state.creditsConfig, ...action.payload };
+    setEmailSuccessPaymentButNotAuth: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.emailSuccessPaymentButNotAuth = action.payload;
     },
-    setPlans: (state, action: PayloadAction<any[]>) => {
-      state.plans = action.payload;
+    setUserExists: (state, action: PayloadAction<number>) => {
+      state.userExists = action.payload;
     },
-
-    setCurrentSubscriptionPlan: (state, action: PayloadAction<any>) => {
-      state.currentSubscriptionPlan = action.payload;
+    setListPrice: (state, action: PayloadAction<any[]>) => {
+      state.prices = action.payload;
     },
-    setIsFreeSubscriptionPlan: (state, action: PayloadAction<boolean>) => {
-      state.isFreeSubscription = action.payload;
-    },
+    setShowModalUploadFilesExtendLimit: (state, action: PayloadAction<boolean>) => {
+      state.showModalUploadFilesExtendLimit = action.payload
+}
   },
   extraReducers: (builder) => {
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
@@ -87,9 +83,9 @@ export const {
   setShowSidebar,
   setUserInfor,
   setHiddenSidebar,
-  setCreditsConfig,
-  setPlans,
-  setCurrentSubscriptionPlan,
-  setIsFreeSubscriptionPlan,
+  setEmailSuccessPaymentButNotAuth,
+  setUserExists,
+  setListPrice,
+  setShowModalUploadFilesExtendLimit
 } = appSlice.actions;
 export default appSlice.reducer;

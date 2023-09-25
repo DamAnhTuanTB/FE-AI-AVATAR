@@ -2,10 +2,10 @@ import { toast } from 'react-toastify';
 import Content from './Content';
 import { MESSAGE_API } from '@/common/messageApi';
 
-export const ToastError = (message: string) => {
+export const ToastError = (message: string, isMobile = false) => {
   // toast.dismiss();
   toast.error(Content(message, false), {
-    position: 'top-right',
+    position: isMobile ? 'bottom-right' : 'top-right',
     autoClose: 3000,
     hideProgressBar: true,
     progressStyle: { color: 'white' },
@@ -17,11 +17,11 @@ export const ToastError = (message: string) => {
   });
 };
 
-export const ToastSuccess = (message: string) => {
+export const ToastSuccess = (message: string, isMobile = false) => {
   // toast.dismiss();
   toast.success(Content(message, true), {
-    position: 'top-right',
-    autoClose: 3000,
+    position: isMobile ? 'bottom-center' : "top-right",
+    autoClose: 13000,
     hideProgressBar: true,
     progressStyle: { color: 'white' },
     closeOnClick: true,

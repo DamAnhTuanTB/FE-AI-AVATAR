@@ -12,6 +12,11 @@ import IconPlus from '@/assets/images/icon-plus.svg';
 import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { StepEnum } from '../../contants';
+import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
+import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
+import { useAppDispatch } from '@/store/hooks';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 const defaultOptions = {
   loop: true,
@@ -23,22 +28,23 @@ const defaultOptions = {
 };
 
 const mesageError: any = {
-  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif, heic':
-    'Wrong format',
+  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif':
+    'Not supported image format',
   'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
-    'Size < 768px',
-  'File too large.': 'Size > 8MB',
+    'Image too small',
+  'File too large.': 'File too large',
   'Unable to detect any face in the provided image. Please provide another clear image.':
     'Unable to detect any face',
   'The detected face size is too small or too big. Please ensure the face size is appropriate.':
     'The face is too small',
   'The detected face is significantly different from the majority in the cluster. Please use images with face similarity.':
-    'Faces detected with differences',
+    'Different face detected',
   'The provided image is blurry. Please provide a clearer image.':
     'Blurred image',
   'The provided image contains multiple faces, please provide an image containing only one face.':
     'Multiple faces',
-  'The image is duplicated. Please provide different images.': 'Duplicated',
+  'The image is duplicated. Please provide different images.':
+    'Duplicated image',
 };
 
 interface IProps {
@@ -56,6 +62,7 @@ export default function Step1({
   setImages,
   setSessionId,
 }: IProps) {
+  const dispatch = useAppDispatch();
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
@@ -68,60 +75,87 @@ export default function Step1({
         setSessionId(res?.data?.data?.sessionId);
         setStep(StepEnum.PICK_GENDER);
         setShowLoading(false);
+        analyticsLogEvent(eventTracking.call_api_checking_photo.name, {
+          [eventTracking.call_api_checking_photo.params.status]: 'success',
+        });
       },
       onError: (err: any) => {
+        analyticsLogEvent(eventTracking.call_api_checking_photo.name, {
+          [eventTracking.call_api_checking_photo.params.status]: 'failed',
+        });
         setShowLoading(false);
         // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
         //   ToastError(err?.response?.data?.message);
         // }
-        const errArr: any = err?.response?.data?.error?.data || [];
-        errArr.forEach((item: any) => {
-          images.forEach((image: any, index: number) => {
-            if (image.name === item.filename) {
-              images[index].textError = mesageError[item.reason];
-            }
+        if (err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE') {
+          ToastError(
+            err?.response?.data?.message ===
+              'Image limit exceeded. You cannot upload more than 20 images'
+              ? 'Please upload 3-15 images.'
+              : err?.response?.data?.message
+          );
+        } else {
+          const errArr: any = err?.response?.data?.error?.data || [];
+          errArr.forEach((item: any) => {
+            images.forEach((image: any, index: number) => {
+              if (index === item.index) {
+                images[index].textError = mesageError[item.reason];
+              }
+            });
           });
-        });
-        setCountImageValid(images.length - errArr.length);
-        setImages([...images]);
+          setCountImageValid(images.length - errArr.length);
+          setImages([...images]);
+        }
       },
     }
   );
+
+  const getFileExtension = (fileName: string) => {
+    return (
+      fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) ||
+      fileName
+    );
+  };
 
   const handleChangeFile = (e: any) => {
     if (step === StepEnum.GUIDE) {
       setStep(StepEnum.UPLOAD_IMAGE);
     }
     const files = e.target.files;
+
+    console.log('files', files);
+
     const listImages: any = [];
     const allowedMimeTypes = [
       'image/png',
       'image/jpeg',
       'image/jfif',
-      'image/heic',
+      // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
+      const fileType = getFileExtension(file?.name);
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
-      let originFile: any = file;
-      let name = file.name;
-      images.forEach((image: any) => {
-        if (image.name === file.name) {
-          name =
-            'avatar' +
-            (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
-            file.name;
-          const blob = originFile.slice(0, file.size, file.type);
-          const newFile = new File([blob], name, {
-            type: file.type,
-          });
-          originFile = newFile;
-        }
-      });
+      // let originFile: any = file;
+      // let name = file.name;
+      // images.forEach((image: any) => {
+      //   if (image.name === file.name) {
+      //     name =
+      //       'avatar' +
+      //       (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
+      //       file.name;
+      //     const blob = originFile.slice(0, file.size, file.type);
+      //     const newFile = new File([blob], name, {
+      //       type: file.type,
+      //     });
+      //     originFile = newFile;
+      //   }
+      // });
       listImages.push({
         src: URL.createObjectURL(file),
-        file: originFile,
+        file,
+        // file: originFile,
         textError: '',
         name,
       });
@@ -133,27 +167,51 @@ export default function Step1({
     //     : listImages.length > countAddtionsAbleToAdd
     //     ? countAddtionsAbleToAdd
     //     : listImages.length;
-    const arrImage = [...images, ...listImages].slice(0, 15);
-    setImages(arrImage);
+    let validNumber = countImageValid;
+
+    const arrImage = [...images];
+
+    while (validNumber < 15 && listImages.length > 0) {
+      arrImage.push(listImages.shift());
+      validNumber += 1;
+    }
+    // const arrImage = [...images, ...listImages].slice(0, 15);
+    setImages([...arrImage]);
     // setCountImageValid(countImageValid + countAddtionsValid);
     uploadRef.current.value = '';
   };
 
   const handleClickIconPlus = () => {
-    if (images.length < 15) {
+    if (countImageValid < 15) {
       uploadRef.current?.click();
     }
   };
 
   const handleClickUpload = () => {
     if (countImageValid < 3) {
+      if (images?.length === 0) {
+        analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+      } else {
+        analyticsLogEvent(eventTracking.upload_photo_click_upload_more.name);
+      }
       uploadRef.current?.click();
     } else {
+      const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
+        return prev + curr.file.size;
+      }, 0);
+
+      if (totalUploadFilesSize > 200 * 1024 * 1024) {
+        dispatch(setShowModalUploadFilesExtendLimit(true));
+        return;
+      }
+
       const formData = new FormData();
       images.forEach((item: any) => {
         formData.append('files', item.file);
       });
       setShowLoading(true);
+      analyticsLogEvent(eventTracking.upload_photo_click_next.name);
+      analyticsLogEvent(eventTracking.upload_photo_checking.name);
       mutationUpload.mutate(formData);
     }
   };
@@ -172,7 +230,7 @@ export default function Step1({
   useEffect(() => {
     let countValid = 0;
     images.forEach((image: any) => {
-      if (!image.textError) {
+      if (!image?.textError) {
         countValid += 1;
       }
     });
@@ -182,15 +240,32 @@ export default function Step1({
   return (
     <Wrapper>
       {step === StepEnum.GUIDE ? (
-        <UploadGuide />
+        <>
+          <div className="top-upload">
+            <div className="title-top-upload">
+              Upload your 3 - 15 best images
+            </div>
+            {/* <div className="des-top-upload">
+              Choose 3-15 images to teach the AI what you look like.
+            </div> */}
+            <div className="btn-top-upload" onClick={handleClickUpload}>
+              <img src={IconPlusUpload} alt="" />
+              <div className="upload-title">Click here to upload photos</div>
+              <div className="upload-support">
+                Supported formats: PNG, JPEG, JPG, JFIF.
+              </div>
+              <div className="upload-support">
+                File size limit: 5MB. Image size limit: 768 px.
+              </div>
+            </div>
+          </div>
+          <UploadGuide />
+        </>
       ) : (
         <>
           <div className="title-list-image">
             <div>Uploaded {countImageValid}/15 photos</div>
-            <div>
-              Choose 3-15 images to teach the AI what you look like. The avatars
-              will be based on the images you upload, so choose wisely!
-            </div>
+            {/* <div>Choose 3-15 images to teach the AI what you look like.</div> */}
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (
@@ -221,32 +296,27 @@ export default function Step1({
           </div>
         </>
       )}
-      <div
-        className="bottom"
-        style={{ paddingBottom: step !== StepEnum.GUIDE ? '10px' : '0px' }}
-      >
-        <div className="upload">
-          <input
-            ref={uploadRef}
-            type="file"
-            multiple={true}
-            onChange={handleChangeFile}
-            accept=".png,.jpg,.jpeg,.jfif,.heic"
-          />
+
+      <div className="bottom">
+        <input
+          className="input-upload"
+          ref={uploadRef}
+          type="file"
+          multiple={true}
+          onChange={handleChangeFile}
+          accept=".png,.jpg,.jpeg,.jfif"
+        />
+
+        {step === StepEnum.GUIDE ? (
+          <TabBottom />
+        ) : (
           <Button
             onClick={handleClickUpload}
-            text={
-              step === StepEnum.GUIDE
-                ? 'Upload 3-15 photos'
-                : countImageValid < 3
-                ? 'Upload more photos'
-                : 'Next'
-            }
+            text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
             width="100%"
             height="45px"
           />
-        </div>
-        {step === StepEnum.GUIDE && <TabBottom />}
+        )}
       </div>
 
       {showLoading && (

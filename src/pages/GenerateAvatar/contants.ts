@@ -11,3 +11,9 @@ export enum StepEnum {
   CHOOSE_STYLE = 3,
   GENERATE_SUCCESS = 4,
 }
+
+export enum TypeSessionStatus {
+  ACTIVE = 'active',
+  ERROR = 'error',
+  COMPLETE = 'complete',
+}

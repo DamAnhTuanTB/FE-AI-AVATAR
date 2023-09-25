@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
     gap: 12px;
     .item-style {
       position: relative;
-      border-radius: 4px;
+      border-radius: 14px;
       cursor: pointer;
       overflow: hidden;
       &::after {
@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 4px;
+        border-radius: 14px;
       }
       .name-style {
         white-space: nowrap;
@@ -52,10 +52,10 @@ export const Wrapper = styled.div`
         text-align: center;
         font-size: 14px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 100%; /* 14px */
         padding-top: 13px;
-        padding-bottom: 6px;
+        padding-bottom: 13px;
         border-radius: 0px 0px 4px 4px;
         background: linear-gradient(
           180deg,

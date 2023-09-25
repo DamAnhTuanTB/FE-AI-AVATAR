@@ -9,17 +9,16 @@
 }
 
 .txtContentError {
-  color: var(--text-primary, #FFF);
+  color: #262626;
 
   /* Body/Body 1/Medium */
-  font-family: Inter;
+  font-family: Outfit;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%;
+  line-height: 150%; /* 21px */
 
-  letter-spacing: 0.15px;
-  margin: 15px 16px 25px;
+  margin: 15px 8px 25px;
 
   @media screen and (max-width: 450px) {
     margin: 0;

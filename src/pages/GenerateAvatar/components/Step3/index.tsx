@@ -2,6 +2,11 @@ import { useEffect } from 'react';
 import { Wrapper } from './style';
 import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
+import { setCookie } from '@/utils/cookies';
 
 interface IProps {
   styles: any;
@@ -10,6 +15,7 @@ interface IProps {
   listStyles: any;
   price: any;
   handleGenerate: any;
+  sessionId: string;
 }
 
 export default function Step3({
@@ -19,23 +25,34 @@ export default function Step3({
   listStyles,
   price,
   handleGenerate,
+  sessionId,
 }: IProps) {
-  useEffect(() => {
-    if (
-      localStorage.getItem('passGender') &&
-      localStorage.getItem('passGender') !== gender
-    ) {
-      setStyles([]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // if (
+  //   //   localStorage.getItem('passGender') &&
+  //   //   localStorage.getItem('passGender') !== gender
+  //   // ) {
+  //   setStyles([]);
+  //   // }
+  // }, []);
+
+  const listGenerate = useAppSelector(
+    (state: RootState) => state.app.userInfor.listGenerate
+  );
+
+  const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
 
   const handleClickStyle = (alias: string) => {
     const index = styles.findIndex((style: string) => style === alias);
     if (index !== -1) {
       styles.splice(index, 1);
     } else {
-      if (styles.length > price.maxStyle - 1) {
-        ToastError('The maximum quantity has been selected.');
+      if (
+        styles.length >
+        Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
+      ) {
+        // price.maxStyle - 1
+        ToastError('The maximum quantity has been selected.', true);
       } else {
         styles.push(alias);
       }
@@ -44,13 +61,35 @@ export default function Step3({
   };
 
   const handleClickNext = () => {
-    handleGenerate();
+    analyticsLogEvent(eventTracking.choose_style_click_generate.name, {
+      [eventTracking.choose_style_click_generate.params.package]:
+        currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
+      [eventTracking.choose_style_click_generate.params.gender]:
+        gender.toLowerCase(),
+      [eventTracking.choose_style_click_generate.params.style]:
+        styles.join(','),
+      [eventTracking.choose_style_click_generate.params.session_id]:
+        styles.join(','),
+    });
+    setCookie('numberStyle', currentGenerate?.priceInfo?.metadata?.numberStyle);
+    handleGenerate(currentGenerate?.timePayment);
   };
+
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.choose_style_view.name, {
+      [eventTracking.choose_style_view.params.package]:
+        currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
+      [eventTracking.choose_style_view.params.gender]: gender.toLowerCase(),
+    });
+  }, []);
 
   return (
     <Wrapper>
       <div className="title">Choose styles</div>
-      <div className="description">Choose up to 20 avatar styles</div>
+      <div className="description">
+        Select from a diverse range of up to{' '}
+        {currentGenerate?.priceInfo?.metadata?.numberStyle} avatar styles.
+      </div>
       <div className="list-styles">
         {listStyles.map((item: any) => (
           <div

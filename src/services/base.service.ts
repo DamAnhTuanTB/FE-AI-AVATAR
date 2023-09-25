@@ -89,7 +89,7 @@ class BaseRequest {
 
         if (statusCode === HTTP_STATUS.UNAUTHORIZED) {
           await store.dispatch(logOut());
-          eraseCookie('auth-user');
+          eraseCookie(CONFIG.COOKIE_AUTH_TOKEN);
         }
 
         const originalConfig = err.config;
@@ -119,7 +119,7 @@ class BaseRequest {
                       refreshToken: data.refreshToken,
                     })
                   );
-                  localStorage.setItem('check-auth-user', data.accessToken);
+                  localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, data.accessToken);
                 }
               } catch (_error) {
                 // Logging out the user by removing all the tokens from local
@@ -190,5 +190,7 @@ export const baseRequest = new BaseRequest('', {
 });
 
 export const generateRequest = new BaseRequest();
+
+export const baseServerRequest = new BaseRequest(CONFIG.BASE_SERVER_URL);
 
 export const authRequest = new BaseRequest(CONFIG.AUTHEN_BASE_URL);

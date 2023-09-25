@@ -7,13 +7,25 @@ export const VERSION = {
 };
 
 export const APIs = {
+  ME: '/me',
   LOGIN: '/auth',
   USERS: '/users',
   GET_ME: '/profile',
   GENERATE_TOKEN: '/auth/generate/token',
   CHECKING_UPLOAD: '/upload/avatar',
   GET_LIST_STYLES: '/resources/avatar-styles',
-  GENERATE_IMAGE: '/generate/avatar-session',
+  GENERATE_IMAGE: '/generate/avatar-session-no-signature',
+  CREATE_SESSION: '/session',
+  GET_LIST_PRICE: '/stripe/prices',
+  PURCHASE_NOW: '/stripe/order',
+  GET_PRESIGN_FILE: '/presign-link',
+  GET_LIST_SESSION: '/session',
+  GET_DETAIL_SESSION: '/session',
+  DOWNLOAD_ALL_PACK: '/session/download',
+  DOWNLOAD_ALL_AVATAR_WITH_STYLE: '/session/download-all-image-with-style',
+  GET_USER: '/user',
+  CHECK_USER_EXIST: '/user/check-user-exist',
+  SEND_MAIL: '/session/send-mail',
 };
 
 export const HTTP_STATUS = {

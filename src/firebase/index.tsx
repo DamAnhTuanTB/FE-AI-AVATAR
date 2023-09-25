@@ -15,6 +15,7 @@ remoteConfig.settings.minimumFetchIntervalMillis = 0;
 
 const analytics = getAnalytics(app);
 export const analyticsLogEvent = (event: string, params?: any) => {
+  console.log(event, params);
   if (process.env.REACT_APP_ENABLE_TRACKING) {
     // console.log('params', event, params);
     return logEvent(analytics, event, params);
