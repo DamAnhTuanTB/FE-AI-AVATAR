@@ -61,10 +61,10 @@ export default function SalePage() {
   };
 
   useEffect(() => {
-    const eventParams: any = {
-      [salePageTracking.view.params.source]:
-        fromQuery === 'mail' ? 'email_pre_launch' : 'landing_page',
-    };
+    const eventParams: any = {};
+    if (fromQuery) {
+      eventParams[salePageTracking.view.params.source] = fromQuery;
+    }
     if (userInfor?.id) {
       eventParams[salePageTracking.view.params.userId] = userInfor?.id;
     }

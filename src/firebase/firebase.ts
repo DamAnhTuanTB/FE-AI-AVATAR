@@ -9,6 +9,19 @@ export const firebaseConfig = {
 };
 
 export const eventTracking = {
+  // landingPageView: {
+  //   name: 'view_landing_page',
+  //   params: {
+  //     userId: 'user_id',
+  //   },
+  // },
+  uploadPhotoView: {
+    name: 'upload_photo_view',
+    params: {
+      source: 'source',
+      userId: 'user_id',
+    },
+  },
   upload_photo_click_upload: {
     name: 'upload_photo_click_upload',
   },

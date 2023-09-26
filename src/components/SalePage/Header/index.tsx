@@ -17,6 +17,8 @@ import {
   Title,
   Wrapper,
 } from './styles';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/routes/routes';
 
 const defaultOptions = {
   loop: true,
@@ -44,7 +46,9 @@ export default function SaleHeader() {
 
   return (
     <Wrapper>
-      <Logo src={LogoSrc} alt="logo" />
+      <Link to={ROUTES.HOME}>
+        <Logo src={LogoSrc} alt="logo" />
+      </Link>
 
       <ContentWrapper>
         <SubTitle>Pre-launch Offer</SubTitle>

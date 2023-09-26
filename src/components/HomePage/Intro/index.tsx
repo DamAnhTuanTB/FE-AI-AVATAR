@@ -27,23 +27,23 @@ import Avatar3 from '@/assets/images/home-page/avt-3.svg';
 import Avatar4 from '@/assets/images/home-page/avt-4.svg';
 import Avatar5 from '@/assets/images/home-page/avt-5.svg';
 import Star from '@/components/Icons/Star';
-import AvatarScroll1 from '@/assets/images/home-page/avt-scroll-1.svg';
-import AvatarScroll2 from '@/assets/images/home-page/avt-scroll-2.svg';
-import AvatarScroll3 from '@/assets/images/home-page/avt-scroll-3.svg';
-import AvatarScroll4 from '@/assets/images/home-page/avt-scroll-4.svg';
-import AvatarScroll5 from '@/assets/images/home-page/avt-scroll-5.svg';
-import AvatarScroll6 from '@/assets/images/home-page/avt-scroll-6.svg';
-import AvatarScroll7 from '@/assets/images/home-page/avt-scroll-7.svg';
-import AvatarScroll8 from '@/assets/images/home-page/avt-scroll-8.svg';
-import AvatarScroll9 from '@/assets/images/home-page/avt-scroll-9.svg';
-import AvatarScroll10 from '@/assets/images/home-page/avt-scroll-10.svg';
-import AvatarScroll11 from '@/assets/images/home-page/avt-scroll-11.svg';
-import AvatarScroll12 from '@/assets/images/home-page/avt-scroll-12.svg';
-import AvatarScroll13 from '@/assets/images/home-page/avt-scroll-13.svg';
-import AvatarScroll14 from '@/assets/images/home-page/avt-scroll-14.svg';
-import AvatarScroll15 from '@/assets/images/home-page/avt-scroll-15.svg';
-import AvatarScroll16 from '@/assets/images/home-page/avt-scroll-16.svg';
-import AvatarScroll17 from '@/assets/images/home-page/avt-scroll-17.svg';
+import AvatarScroll1 from '@/assets/images/home-page/avt-scroll-1.png';
+import AvatarScroll2 from '@/assets/images/home-page/avt-scroll-2.png';
+import AvatarScroll3 from '@/assets/images/home-page/avt-scroll-3.png';
+import AvatarScroll4 from '@/assets/images/home-page/avt-scroll-4.png';
+import AvatarScroll5 from '@/assets/images/home-page/avt-scroll-5.png';
+import AvatarScroll6 from '@/assets/images/home-page/avt-scroll-6.png';
+import AvatarScroll7 from '@/assets/images/home-page/avt-scroll-7.png';
+import AvatarScroll8 from '@/assets/images/home-page/avt-scroll-8.png';
+import AvatarScroll9 from '@/assets/images/home-page/avt-scroll-9.png';
+import AvatarScroll10 from '@/assets/images/home-page/avt-scroll-10.png';
+import AvatarScroll11 from '@/assets/images/home-page/avt-scroll-11.png';
+import AvatarScroll12 from '@/assets/images/home-page/avt-scroll-12.png';
+import AvatarScroll13 from '@/assets/images/home-page/avt-scroll-13.png';
+import AvatarScroll14 from '@/assets/images/home-page/avt-scroll-14.png';
+import AvatarScroll15 from '@/assets/images/home-page/avt-scroll-15.png';
+import AvatarScroll16 from '@/assets/images/home-page/avt-scroll-16.png';
+import AvatarScroll17 from '@/assets/images/home-page/avt-scroll-17.png';
 import ShadowTop from '@/assets/images/home-page/shadow-avt-scroll-top.png';
 import ShadowBottom from '@/assets/images/home-page/shadow-avt-scroll-bottom.png';
 import { useNavigate } from 'react-router-dom';
@@ -52,6 +52,7 @@ import { landingPageTracking } from '@/firebase/firebase';
 import { analyticsLogEvent } from '@/firebase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import { uploadPhotoLinkFromLandingPage } from '@/pages/HomePage';
 
 const reviewers = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
 
@@ -114,7 +115,7 @@ export default function Intro() {
                 landingPageTracking.clickStart.name,
                 eventParams
               );
-              navigate(ROUTES.APP_PAGE);
+              navigate(uploadPhotoLinkFromLandingPage);
             }}
           >
             <p>Get started</p>

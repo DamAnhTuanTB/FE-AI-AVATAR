@@ -22,6 +22,7 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { landingPageTracking } from '@/firebase/firebase';
 import { analyticsLogEvent } from '@/firebase';
+import { uploadPhotoLinkFromLandingPage } from '@/pages/HomePage';
 
 export default function ReadyStarted() {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export default function ReadyStarted() {
                 landingPageTracking.clickStart.name,
                 eventParams
               );
-              navigate(ROUTES.APP_PAGE);
+              navigate(uploadPhotoLinkFromLandingPage);
             }}
           >
             <WardIcon />
