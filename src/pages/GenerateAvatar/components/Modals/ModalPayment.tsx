@@ -109,11 +109,11 @@ export default function ModalPayment({
       [eventTracking.purchase_click_button.params.package]:
         price?.maxStyle + 'style',
     });
-    purchaseMutation.mutate(payload);
-    setStep(StepEnum.CHOOSE_STYLE);
-    setOpen(false);
-    setSuccessPurchase(true);
-    setOpen(false);
+    // purchaseMutation.mutate(payload);
+    // setStep(StepEnum.CHOOSE_STYLE);
+    // setOpen(false);
+    // setSuccessPurchase(true);
+    // setOpen(false);
   };
 
   console.log('isSaving', savingData);
@@ -187,3 +187,7 @@ export default function ModalPayment({
     </Wrapper>
   );
 }
+function setSuccessPurchase(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
