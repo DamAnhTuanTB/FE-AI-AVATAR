@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { ContentWrapper, DefaultLayoutWrapper } from './style';
+import { eventTracking } from '@/firebase/firebase';
+import { analyticsLogEvent } from '@/firebase';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
@@ -34,6 +36,11 @@ export default function GenerateAvatarLayout() {
           setCookie('isComeFirst', '1');
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
+          if (res.data.exists) {
+            analyticsLogEvent(eventTracking.login_purchase_view.name);
+          } else {
+            analyticsLogEvent(eventTracking.register_purchase_view.name);
+          }
         } else {
           dispatch(setEmailSuccessPaymentButNotAuth(''));
         }

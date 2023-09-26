@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
 import { StepEnum } from '../../contants';
 import Button from '../Button';
 import { Wrapper } from './style';
 import IconFemale from '@/assets/images/icon-female.svg';
 import IconMale from '@/assets/images/icon-male.svg';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 interface IProps {
   gender: string;
@@ -23,8 +26,17 @@ export default function Step2({
   };
 
   const handleClickNext = () => {
+    analyticsLogEvent(eventTracking.select_gender_click_next.name, {
+      [eventTracking.select_gender_click_next.params.gender]:
+        gender.toLowerCase(),
+    });
+    analyticsLogEvent(eventTracking.preview_style_view.name);
     setShowModalPreviewStyle(true);
   };
+
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.select_gender_view.name);
+  }, []);
 
   return (
     <Wrapper>

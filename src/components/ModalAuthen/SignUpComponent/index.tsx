@@ -24,6 +24,8 @@ import {
   setEmailSuccessPaymentButNotAuth,
   setUserExists,
 } from '@/store/slices/appSlice';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 const SignUpComponent = () => {
   const dispatch = useAppDispatch();
@@ -125,6 +127,9 @@ const SignUpComponent = () => {
           dispatch(setEmailSuccessPaymentButNotAuth(''));
           dispatch(setUserExists(-1));
           setSearchParams(searchParams);
+          if (emailSuccessPaymentButNotAuth) {
+            analyticsLogEvent(eventTracking.login_purchase_click_button.name);
+          }
         }
       }
     } catch (err: any) {

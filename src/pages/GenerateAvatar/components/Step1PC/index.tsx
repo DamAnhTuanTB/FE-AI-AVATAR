@@ -17,6 +17,8 @@ import UploadGuidePC from '../UploadGuidePC';
 import IconTip from '@/assets/images/icon-tip.svg';
 import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useAppDispatch } from '@/store/hooks';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 const defaultOptions = {
   loop: true,
@@ -112,6 +114,9 @@ export default function Step1PC({
   };
 
   const handleChangeFile = (e: any) => {
+    if (images?.length === 0) {
+      analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+    }
     const files = e.target.files;
     const listImages: any = [];
     console.log('files', files);
@@ -181,6 +186,11 @@ export default function Step1PC({
 
   const handleClickUpload = () => {
     if (countImageValid < 3) {
+      if (images?.length === 0) {
+        analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+      } else {
+        analyticsLogEvent(eventTracking.upload_photo_click_upload_more.name);
+      }
       uploadRef.current?.click();
     } else {
       const totalUploadFilesSize = images.reduce((prev: any, curr: any) => {
@@ -197,6 +207,8 @@ export default function Step1PC({
         formData.append('files', item.file);
       });
       setShowLoading(true);
+      analyticsLogEvent(eventTracking.upload_photo_click_next.name);
+      analyticsLogEvent(eventTracking.upload_photo_checking.name);
       mutationUpload.mutate(formData);
     }
   };

@@ -4,13 +4,15 @@ import IconDownload from '@/assets/images/icon-download-image.svg';
 import IconPrev from '@/assets/images/icon-prev.svg';
 import { useMutation, useQuery } from 'react-query';
 import generateService from '@/services/generate.service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { capitalizeWords } from '@/utils/helpers';
 import { CONFIG } from '@/config/service';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import useScreenSize from '@/hooks/useScreenSize';
+import { analyticsLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 export default function DetailAvatar() {
   const { isMobile } = useScreenSize();
@@ -48,11 +50,21 @@ export default function DetailAvatar() {
 
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
+    analyticsLogEvent(eventTracking.pack_detail_click_save_all.name);
     mutationDownloadAll.mutate();
     // window.open(
     //   `https://stg.creatorhub.ai/home-page/nextapi/v1/session/download/${params.id}`
     // );
   };
+
+  const handleClickViewAll = (url: string) => {
+    analyticsLogEvent(eventTracking.pack_detail_click_view_all.name);
+    navigate(url);
+  };
+
+  useEffect(() => {
+    analyticsLogEvent(eventTracking.pack_detail_view.name);
+  }, []);
 
   return (
     <Wrapper>
@@ -78,7 +90,9 @@ export default function DetailAvatar() {
               <span className="name-style">{capitalizeWords(key)}</span>
               <span
                 className="view-all"
-                onClick={() => navigate(`/my-avatar/${params.id}/${key}`)}
+                onClick={() =>
+                  handleClickViewAll(`/my-avatar/${params.id}/${key}`)
+                }
               >
                 View all
               </span>
