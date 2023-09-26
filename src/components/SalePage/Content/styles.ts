@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  @media screen and (max-width: ${breakpoints.md}) {
+  @media screen and (max-width: ${breakpoints.lg}) {
     padding: 0 24px 40px;
   }
 `;
