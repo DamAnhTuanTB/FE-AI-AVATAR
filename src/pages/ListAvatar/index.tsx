@@ -48,7 +48,7 @@ export default function ListAvatar() {
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.my_avatar_view.name);
+    analyticsLogEvent(eventTracking.my_avatar_view.name); 
   }, []);
 
   return (
@@ -74,7 +74,7 @@ export default function ListAvatar() {
           <div className="list-avatar">
             <div className="parent-content-list-avatar">
               <div className="content-list-avatar">
-                {listSession.map((item: any, index: number) => (
+                {/* {listSession.map((item: any, index: number) => (
                   <div
                     key={item.id}
                     className={`item-avatar ${
@@ -105,7 +105,7 @@ export default function ListAvatar() {
                     </div>
                     <div className="pack">Pack {index + 1}</div>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
             <div className="create-new-desktop">

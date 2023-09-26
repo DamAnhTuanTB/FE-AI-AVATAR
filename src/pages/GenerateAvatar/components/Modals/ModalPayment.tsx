@@ -110,13 +110,8 @@ export default function ModalPayment({
     });
     setSavingData(true);
     purchaseMutation.mutate(payload);
-    // setStep(StepEnum.CHOOSE_STYLE);
-    // setOpen(false);
-    // setSuccessPurchase(true);
-    // setOpen(false);
   };
 
-  console.log('isSaving', savingData);
   return (
     <Wrapper
       width={isMobile ? 328 : 984}

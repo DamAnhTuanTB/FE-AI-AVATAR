@@ -116,7 +116,11 @@ export const Wrapper = styled.div`
             grid-template-columns: repeat(2, 1fr);
             gap: 11px;
           }
-          .item-avatar {
+          @media screen and (max-width: ${breakpoints.md}) {
+            grid-template-columns: repeat(1, 1fr);
+            gap: 11px;
+          }
+          /* .item-avatar {
             cursor: pointer;
             position: relative;
             border-radius: 12px;
@@ -156,13 +160,13 @@ export const Wrapper = styled.div`
               font-size: 16px;
               font-style: normal;
               font-weight: 500;
-              line-height: 150%; /* 24px */
+              line-height: 150%; 
               @media screen and (max-width: ${breakpoints.lg}) {
                 margin-top: 8px;
                 font-size: 14px;
               }
             }
-          }
+          } */
           .not-allow-avatar {
             cursor: not-allowed;
           }
@@ -228,7 +232,7 @@ export const Wrapper = styled.div`
     }
     @media screen and (max-width: ${breakpoints.lg}) {
       display: block;
-      padding-top: 16px
+      padding-top: 16px;
     }
   }
 `;

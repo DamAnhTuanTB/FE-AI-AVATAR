@@ -84,19 +84,6 @@ export default function GenerateAvatar() {
 
       convertFn();
 
-      // const resultConvert = savedData.map((item: any) => {
-      //   const file = convertBase64toFile(
-      //     item.file,
-      //     item?.name,
-      //     `image/${item?.name?.split('.')[1]}`
-      //   );
-      //   return {
-      //     ...item,
-      //     file,
-      //     src: URL.createObjectURL(file),
-      //   };
-      // });
-
       setImages(resultConvert);
       setGender(getCookie('savedGender') || '');
       setSessionId(getCookie('savedSessionId') || '');
@@ -194,29 +181,13 @@ export default function GenerateAvatar() {
 
             await generateService.uploadFileS3(presign?.data?.url, formData);
 
-            listOriginImages.push({
-              ...item,
-              file: CONFIG.REACT_APP_AWS_CDN + '/' + presign?.data?.fields?.key,
-            });
+            listOriginImages.push(
+              CONFIG.REACT_APP_AWS_CDN + '/' + presign?.data?.fields?.key
+            );
           } catch (error) {
             console.error('Lỗi khi xử lý promise:', error);
           }
         }
-
-        // const firstImageValid = images.find((item: any) => !item.textError);
-
-        // const presign = await generateService.getPreSignFile({
-        //   filename: firstImageValid?.file?.name || 'my-photo.jpg',
-        // });
-
-        // const formData = new FormData();
-        // for (const property in presign.data.fields) {
-        //   formData.append(property, presign.data.fields[property]);
-        // }
-
-        // formData.append('file', firstImageValid?.file);
-
-        // await generateService.uploadFileS3(presign?.data?.url, formData);
 
         mutationCreateSession.mutate({
           email: userInfor.userEmail,
@@ -270,21 +241,6 @@ export default function GenerateAvatar() {
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };
-    // if (styles.length < price.maxStyle) {
-    //   const additionalStyles: any = [];
-    //   let restListStyles: any = listStyles.filter(
-    //     (item: any) => !styles.includes(item.alias)
-    //   );
-    //   const countRandom = price.maxStyle - styles.length;
-
-    //   for (let i = 0; i < countRandom; i++) {
-    //     const shuffArray = shuffleArray(restListStyles);
-    //     additionalStyles.push(shuffArray[0].alias);
-    //     restListStyles = shuffArray;
-    //     restListStyles.shift();
-    //   }
-    //   payload.styles = [...styles, ...additionalStyles];
-    // }
     mutationGenerate.mutate(payload);
   };
 
@@ -363,7 +319,7 @@ export default function GenerateAvatar() {
     setCookie('savedSessionIdCopy', sessionId);
     setCookie('savedMainImages', imagesJSON);
     setSavingData(false);
-    window.location.assign(url);
+    window.location.replace(url);
   };
 
   const handleClickMyAvatar = () => {
