@@ -61,6 +61,7 @@ export default function Step3PC({
   };
 
   const handleClickNext = () => {
+    if (!styles.length) return;
     analyticsLogEvent(eventTracking.choose_style_click_generate.name, {
       [eventTracking.choose_style_click_generate.params.package]:
         currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
