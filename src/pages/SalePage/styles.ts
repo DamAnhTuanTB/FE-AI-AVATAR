@@ -23,7 +23,12 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const HeaderFooterWrapper = styled.div`
+export const HeaderWrapper = styled.div`
+  margin-bottom: 16px;
+  width: 100%;
+`;
+
+export const FooterWrapper = styled.div`
   width: 100%;
 `;
 
@@ -57,6 +62,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
+
   /* flex: 1 0 auto; */
   @media screen and (max-width: ${breakpoints.lg}) {
     margin-right: 0px;
@@ -91,9 +97,9 @@ export const PaymentWrapper = styled.div`
 
 export const BeforeAfterImage = styled.img`
   width: 100%;
-    @media screen and (max-width: ${breakpoints.md}) {
-        padding: 0 24px;
-      }
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0 24px;
+  }
 `;
 
 export const Description = styled.p`
