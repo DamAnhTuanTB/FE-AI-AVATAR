@@ -49,6 +49,6 @@ export const Wrapper = styled.div`
   }
   .last-section {
     margin-top: 24px;
-    margin-bottom: 74px;
+    /* margin-bottom: 74px; */
   }
 `;

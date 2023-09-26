@@ -7,6 +7,7 @@ import { RootState } from '@/store/store';
 import { analyticsLogEvent } from '@/firebase';
 import { eventTracking } from '@/firebase/firebase';
 import { setCookie } from '@/utils/cookies';
+import { Skeleton } from 'antd';
 
 interface IProps {
   styles: any;
@@ -91,18 +92,28 @@ export default function Step3({
         {currentGenerate?.priceInfo?.metadata?.numberStyle} avatar styles.
       </div>
       <div className="list-styles">
-        {listStyles.map((item: any) => (
-          <div
-            onClick={() => handleClickStyle(item.alias)}
-            key={item.id}
-            className={`${
-              styles.includes(item.alias) && 'style-active'
-            } item-style`}
-          >
-            <img className="image-style" src={item.thumbnail} alt="" />
-            <div className="name-style">{item.displayName}</div>
-          </div>
-        ))}
+        {listStyles?.length === 0
+          ? Array(20)
+              .fill(1)
+              .map((item: any, index: number) => (
+                <div className="item-style" key={index}>
+                  <Skeleton.Button className="skeleton-image" active />
+                  <Skeleton.Button className="skeleton-text" active />
+                </div>
+              ))
+          : listStyles.map((item: any) => (
+              <div
+                onClick={() => handleClickStyle(item.alias)}
+                key={item.id}
+                className={`${
+                  styles.includes(item.alias) && 'style-active'
+                } item-style`}
+              >
+                <img className="image-style" src={item.thumbnail} alt="" />
+                <div className="name-style">{item.displayName}</div>
+              </div>
+            ))}
+        {}
       </div>
       <div className="bottom">
         <Button

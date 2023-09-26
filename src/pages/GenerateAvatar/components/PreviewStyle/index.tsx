@@ -1,6 +1,7 @@
 import { Wrapper } from './style';
 import Button from '../Button';
 import { StepEnum } from '../../contants';
+import { Skeleton } from 'antd';
 
 interface IProps {
   setStep: any;
@@ -25,12 +26,21 @@ export default function PreviewStyle({
         want.
       </div>
       <div className="list-styles">
-        {listStyles.map((item: any) => (
-          <div key={item.id} className="item-style">
-            <img className="image-style" src={item.thumbnail} alt="" />
-            <div className="name-style">{item.displayName}</div>
-          </div>
-        ))}
+        {listStyles?.length === 0
+          ? Array(20)
+              .fill(1)
+              .map((item: any, index: number) => (
+                <div className="item-style" key={index}>
+                  <Skeleton.Button className="skeleton-image" active />
+                  <Skeleton.Button className="skeleton-text" active />
+                </div>
+              ))
+          : listStyles.map((item: any) => (
+              <div key={item.id} className="item-style">
+                <img className="image-style" src={item.thumbnail} alt="" />
+                <div className="name-style">{item.displayName}</div>
+              </div>
+            ))}
       </div>
       <div className="bottom">
         <Button

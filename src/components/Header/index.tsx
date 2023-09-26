@@ -19,6 +19,7 @@ import { initialUserInfo, setUserInfor } from '@/store/slices/appSlice';
 import DefaultAvatar from '@/assets/images/default_avatar.png';
 import { useEffect, useState } from 'react';
 import { ROUTES } from '@/routes/routes';
+import IconMyAvatar from '@/assets/images/icon-my-avatar.svg';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -89,7 +90,12 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <img src={LogoHeader} alt="" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}/>
+      <img
+        src={LogoHeader}
+        alt=""
+        onClick={() => navigate('/')}
+        style={{ cursor: 'pointer' }}
+      />
       {!isLoggedIn ? (
         <div className="sign-in" onClick={() => handleShowSignInModal()}>
           Sign In
@@ -97,7 +103,8 @@ const Header = () => {
       ) : (
         <div className="avatar-wrapper">
           <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
-            View My Generated Avatar
+            <img src={IconMyAvatar} alt="" />
+            My Avatar
           </div>
           <div className="avatar-item">
             <PopoverAvatarWrapper

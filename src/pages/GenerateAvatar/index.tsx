@@ -143,21 +143,28 @@ export default function GenerateAvatar() {
     }
   }, []);
 
-  useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
-    onSuccess: (res: any) => {
-      const stylesFilter = res?.data?.data?.values[gender.toLowerCase()] || [];
-
-      const listStyles = stylesFilter.map((style: any) => ({
-        id: style._id,
-        thumbnail: style.thumbnail,
-        alias: style.alias,
-        displayName: style.displayName,
-      }));
-
-      setListStyles(listStyles);
+  useQuery(
+    ['get-list-style', gender],
+    () => {
+      return generateService.getListStyles();
     },
-    enabled: !!gender,
-  });
+    {
+      onSuccess: (res: any) => {
+        const stylesFilter =
+          res?.data?.data?.values[gender.toLowerCase()] || [];
+
+        const listStyles = stylesFilter.map((style: any) => ({
+          id: style._id,
+          thumbnail: style.thumbnail,
+          alias: style.alias,
+          displayName: style.displayName,
+        }));
+
+        setListStyles(listStyles);
+      },
+      enabled: !!gender,
+    }
+  );
 
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),
@@ -167,20 +174,49 @@ export default function GenerateAvatar() {
           [eventTracking.call_api_generate.params.status]: 'success',
           [eventTracking.call_api_generate.params.session_id]: sessionId,
         });
-        const firstImageValid = images.find((item: any) => !item.textError);
 
-        const presign = await generateService.getPreSignFile({
-          filename: firstImageValid?.file?.name || 'my-photo.jpg',
-        });
+        const listOriginImages = [];
 
-        const formData = new FormData();
-        for (const property in presign.data.fields) {
-          formData.append(property, presign.data.fields[property]);
+        const imagesValid = images.filter((item: any) => !item.textError);
+
+        for (const item of imagesValid) {
+          try {
+            const presign = await generateService.getPreSignFile({
+              filename: item?.file?.name || 'my-photo.jpg',
+            });
+
+            const formData = new FormData();
+            for (const property in presign.data.fields) {
+              formData.append(property, presign.data.fields[property]);
+            }
+
+            formData.append('file', item?.file);
+
+            await generateService.uploadFileS3(presign?.data?.url, formData);
+
+            listOriginImages.push({
+              ...item,
+              file: CONFIG.REACT_APP_AWS_CDN + '/' + presign?.data?.fields?.key,
+            });
+          } catch (error) {
+            console.error('Lỗi khi xử lý promise:', error);
+          }
         }
 
-        formData.append('file', firstImageValid?.file);
+        // const firstImageValid = images.find((item: any) => !item.textError);
 
-        await generateService.uploadFileS3(presign?.data?.url, formData);
+        // const presign = await generateService.getPreSignFile({
+        //   filename: firstImageValid?.file?.name || 'my-photo.jpg',
+        // });
+
+        // const formData = new FormData();
+        // for (const property in presign.data.fields) {
+        //   formData.append(property, presign.data.fields[property]);
+        // }
+
+        // formData.append('file', firstImageValid?.file);
+
+        // await generateService.uploadFileS3(presign?.data?.url, formData);
 
         mutationCreateSession.mutate({
           email: userInfor.userEmail,
@@ -188,7 +224,7 @@ export default function GenerateAvatar() {
           sessionId,
           gender: gender.toLowerCase(),
           styles,
-          originFirstImage: presign?.data?.fields?.key,
+          originImages: listOriginImages,
           timePayment: currentGenerate?.timePayment,
         });
       },
@@ -317,12 +353,15 @@ export default function GenerateAvatar() {
       }
     }
 
-    setCookie('savedImages', JSON.stringify(results));
+    const imagesJSON = JSON.stringify(results);
+
+    setCookie('savedImages', imagesJSON);
     setCookie('savedGender', gender);
     setCookie('savedSessionId', sessionId);
-    setCookie('savedImagesCopy', JSON.stringify(results));
+    setCookie('savedImagesCopy', imagesJSON);
     setCookie('savedGenderCopy', gender);
     setCookie('savedSessionIdCopy', sessionId);
+    setCookie('savedMainImages', imagesJSON);
     setSavingData(false);
     window.location.assign(url);
   };

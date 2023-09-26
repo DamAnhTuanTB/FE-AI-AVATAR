@@ -67,7 +67,6 @@ export default function ModalPayment({
     {
       onSuccess: (res: any) => {
         if (res.data?.url) {
-          setSavingData(true);
           handleSaveData(res.data?.url);
         }
       },
@@ -109,7 +108,8 @@ export default function ModalPayment({
       [eventTracking.purchase_click_button.params.package]:
         price?.maxStyle + 'style',
     });
-    // purchaseMutation.mutate(payload);
+    setSavingData(true);
+    purchaseMutation.mutate(payload);
     // setStep(StepEnum.CHOOSE_STYLE);
     // setOpen(false);
     // setSuccessPurchase(true);

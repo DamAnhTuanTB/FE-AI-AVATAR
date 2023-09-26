@@ -219,6 +219,26 @@ export const Wrapper = styled(Modal)`
               display: inline-block;
               padding-bottom: 100%;
             }
+            .skeleton-image {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              border-radius: 12px;
+              span {
+                background: #ebebeb;
+              }
+            }
+            .skeleton-text {
+              display: block;
+              position: absolute;
+              bottom: 15px;
+              left: 9px;
+              width: calc(100% - 18px);
+              border-radius: 6px;
+              span {
+                background: #d9d9d9;
+              }
+            }
             .image-style {
               position: absolute;
               width: 100%;
