@@ -336,7 +336,7 @@ export default function GenerateAvatar() {
     setCookie('savedGenderCopy', gender);
     setCookie('savedSessionIdCopy', sessionId);
     setSavingData(false);
-    window.location.assign(url);
+    window.location.replace(url);
   };
 
   const handleClickMyAvatar = () => {
