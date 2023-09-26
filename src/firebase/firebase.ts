@@ -19,6 +19,7 @@ export const eventTracking = {
     name: 'upload_photo_view',
     params: {
       source: 'source',
+      userId: 'user_id',
     },
   },
   upload_photo_click_upload: {
