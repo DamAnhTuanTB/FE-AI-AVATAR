@@ -33,7 +33,7 @@ import { analyticsLogEvent } from '@/firebase';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [step, setStep] = useState(StepEnum.GUIDE);
   const [sessionId, setSessionId] = useState('');
@@ -74,7 +74,11 @@ export default function GenerateAvatar() {
   }, [fromQuery]);
 
   useEffect(() => {
-    if (getCookie('savedImages')) {
+    if (
+      getCookie('savedImages') &&
+      searchParams.get('payment-success') === '1'
+    ) {
+      setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImages') || '{}');
 
       const resultConvert: any = [];
@@ -122,8 +126,10 @@ export default function GenerateAvatar() {
   useEffect(() => {
     if (
       searchParams.get('auth') === AuthEnum.ResetPassword &&
-      getCookie('savedImagesCopy')
+      getCookie('savedImagesCopy') &&
+      searchParams.get('payment-success') === '1'
     ) {
+      setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImagesCopy') || '{}');
 
       const resultConvert: any = [];
