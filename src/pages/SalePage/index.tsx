@@ -1,13 +1,18 @@
-import BeforeAfterImageSrc from '@/assets/images/sale-page/before-after-img.svg';
+import BeforeAfterImageSrc from '@/assets/images/sale-page/before-after-img.png';
 import SaleContent from '@/components/SalePage/Content';
 import SalePageFooter from '@/components/SalePage/Footer';
 import SaleHeader from '@/components/SalePage/Header';
 import Payment from '@/components/SalePage/Payment';
+import { analyticsLogEvent } from '@/firebase';
+import { salePageTracking } from '@/firebase/firebase';
 import useScreenSize from '@/hooks/useScreenSize';
 import generateService from '@/services/generate.service';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 import { discountPrice } from '@/utils/constants';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import {
   BeforeAfterImage,
   Container,
@@ -16,13 +21,6 @@ import {
   PaymentWrapper,
   Wrapper,
 } from './styles';
-import { useLocation } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
-import { salePageTracking } from '@/firebase/firebase';
-import { useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/store';
-import { analyticsLogEvent } from '@/firebase';
-import moment from 'moment';
 
 export default function SalePage() {
   const { isMobile, isTablet } = useScreenSize();
