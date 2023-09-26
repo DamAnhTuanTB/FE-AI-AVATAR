@@ -187,3 +187,7 @@ export default function ModalPayment({
     </Wrapper>
   );
 }
+function setSuccessPurchase(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
