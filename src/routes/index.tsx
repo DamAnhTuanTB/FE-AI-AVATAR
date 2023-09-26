@@ -9,6 +9,7 @@ import DetailAvatarWithStyle from '@/pages/DetailAvatarWithStyle';
 import HomePage from '@/pages/HomePage';
 import SalePage from '@/pages/SalePage';
 import MainLayout from '@/layouts/MainLayout';
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyAndTermService/PrivacyPolicyPage';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.HOME,
         element: <HomePage />,
+      },
+      {
+        path: ROUTES.PARIVACY_POLICY,
+        element: <PrivacyPolicyPage />,
       },
     ],
   },
