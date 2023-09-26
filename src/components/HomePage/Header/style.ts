@@ -97,6 +97,9 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 24px 0 66px;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    margin: 24px 0 0;
+  }
   @media screen and (max-width: ${breakpoints.md}) {
     margin: 6px 0;
   }
@@ -115,7 +118,7 @@ export const MenusLink = styled.div`
   justify-content: center;
   gap: 60px;
 
-  @media screen and (max-width: ${breakpoints.md}) {
+  @media screen and (max-width: ${breakpoints.lg}) {
     display: none;
   }
 `;

@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   display: flex;
   /* align-items: center; */
   gap: 120px;
-  @media screen and (max-width: ${breakpoints.md}) {
+  @media screen and (max-width: ${breakpoints.lg}) {
     flex-direction: column;
     gap: 13px;
   }
@@ -145,8 +145,13 @@ export const ReviewsCount = styled.p`
 
 export const ScrollWrapper = styled.div`
   position: relative;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    width: 450px;
+    margin: auto;
+  }
   @media screen and (max-width: ${breakpoints.md}) {
     width: 100%;
+    margin: 0px;
   }
 `;
 
@@ -250,5 +255,5 @@ export const AvatarScroll = styled.img`
 
 export const Shadow = styled.img`
   position: absolute;
-  width: 100%;
+  width: calc(100% + 2px);
 `;

@@ -164,11 +164,15 @@ export default function Intro() {
               </AvatarsColItemWrapper>
             ))}
           </ScrollAvatarWrapper>
-          <Shadow src={ShadowTop} alt={'shadow-top'} style={{ top: 0 }} />
+          <Shadow
+            src={ShadowTop}
+            alt={'shadow-top'}
+            style={{ top: '-1px', left: '-1px' }}
+          />
           <Shadow
             src={ShadowBottom}
             alt={'shadow-bottom'}
-            style={{ bottom: 0 }}
+            style={{ bottom: '-1px', left: '-1px' }}
           />
         </ScrollWrapper>
       </Wrapper>
