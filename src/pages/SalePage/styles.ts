@@ -91,9 +91,12 @@ export const PaymentWrapper = styled.div`
 
 export const BeforeAfterImage = styled.img`
   width: 100%;
-    @media screen and (max-width: ${breakpoints.md}) {
-        padding: 0 24px;
-      }
+  @media screen and (max-width: ${breakpoints.lg}) {
+    padding: 0 24px;
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0;
+  }
 `;
 
 export const Description = styled.p`
