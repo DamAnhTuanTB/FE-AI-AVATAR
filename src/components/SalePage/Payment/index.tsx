@@ -2,8 +2,11 @@ import Facebook from '@/assets/images/socials/facebook.svg';
 import Linkedin from '@/assets/images/socials/linkedin.svg';
 import Twitter from '@/assets/images/socials/twitter.svg';
 import Star from '@/components/Icons/Star';
+import { salePageTracking } from '@/firebase/firebase';
 import usePurchase from '@/hooks/usePurchase';
-import { discountPrice } from '@/utils/constants';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 import { useEffect } from 'react';
 import CountDown from './CountDown';
 import {
@@ -26,10 +29,7 @@ import {
   StatisticPrimaryText,
   Wrapper,
 } from './styles';
-import { RootState } from '@/store/store';
-import { useAppSelector } from '@/store/hooks';
-import { salePageTracking } from '@/firebase/firebase';
-import { analyticsLogEvent } from '@/firebase';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 
 interface PropsType {
   handleSelectPrice: (price: any) => void;
@@ -44,6 +44,8 @@ export default function Payment({
 }: PropsType) {
   // const prices = useAppSelector((state: RootState) => state.app.prices);
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
+  const { discountPrice } = useFetchSaleConfig();
 
   const { handlePurchase } = usePurchase();
   const tolerance = discountPrice > 0 ? 0.01 : 0;
@@ -94,11 +96,8 @@ export default function Payment({
               salePageTracking.clickBuyNow.params.package
             ] = `${priceSelected?.maxStyle}style`;
           }
-          if (userInfor?.id) {
-            eventParams[salePageTracking.clickBuyNow.params.userId] =
-              userInfor?.id;
-          }
-          analyticsLogEvent(salePageTracking.clickBuyNow.name, eventParams);
+
+          logEvent(salePageTracking.clickBuyNow.name, eventParams);
           handlePurchase(priceSelected?.id);
         }}
       >

@@ -52,6 +52,10 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
+  img {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 export const UserAvatar = styled.img``;

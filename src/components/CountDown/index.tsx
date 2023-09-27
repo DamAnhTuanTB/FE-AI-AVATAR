@@ -1,9 +1,10 @@
 import useCountDown from '@/hooks/useCountDown';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 import React from 'react';
 import { Colon, TimeBlock, TimeNumber, TimeString, Wrapper } from './styles';
-import { nextTimeIncreasePrice } from '@/utils/constants';
 
 function CountDown() {
+  const { nextTimeIncreasePrice } = useFetchSaleConfig();
   const cowndown = useCountDown(nextTimeIncreasePrice);
 
   return (

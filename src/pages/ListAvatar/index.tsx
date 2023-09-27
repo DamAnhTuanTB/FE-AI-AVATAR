@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { Wrapper } from './style';
-import generateService from '@/services/generate.service';
-import { useQuery } from 'react-query';
-import NoImage from '@/assets/images/no-image.svg';
-import { Button } from 'antd';
 import IconAddOutline from '@/assets/images/icon-add-outline.svg';
+import LoadingImage from '@/assets/images/loading-image.gif';
+import NoImage from '@/assets/images/no-image.svg';
+import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { ROUTES } from '@/routes/routes';
+import generateService from '@/services/generate.service';
+import { Button } from 'antd';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { TypeSessionStatus } from '../GenerateAvatar/contants';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/routes/routes';
-import LoadingImage from '@/assets/images/loading-image.gif';
-import { analyticsLogEvent } from '@/firebase';
-import { eventTracking } from '@/firebase/firebase';
+import { Wrapper } from './style';
 
 const getImage = (results: any, index: number) => {
   const keys = Object.keys(results);
@@ -26,6 +26,7 @@ export default function ListAvatar() {
   const navigate = useNavigate();
   const [hasList, setHasList] = useState(-1);
   const [listSession, setListSession] = useState<any>([]);
+  const { logEvent } = useTrackingEvent();
   useQuery(['get-list-session'], () => generateService.getListSession(), {
     onSuccess: (res: any) => {
       if (res.data?.data?.length > 0) {
@@ -46,13 +47,13 @@ export default function ListAvatar() {
     pack: number
   ) => {
     if (status !== TypeSessionStatus.ACTIVE) {
-      analyticsLogEvent(eventTracking.my_avatar_click_pack.name);
+      logEvent(eventTracking.my_avatar_click_pack.name);
       navigate(`/my-avatar/${sessionId}?pack=${pack}`);
     }
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.my_avatar_view.name);
+    logEvent(eventTracking.my_avatar_view.name);
   }, []);
 
   return (

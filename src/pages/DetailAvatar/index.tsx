@@ -1,20 +1,20 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Wrapper } from './style';
 import IconDownload from '@/assets/images/icon-download-image.svg';
 import IconPrev from '@/assets/images/icon-prev.svg';
-import { useMutation, useQuery } from 'react-query';
-import generateService from '@/services/generate.service';
-import { useEffect, useState } from 'react';
-import TabBottom from '../GenerateAvatar/components/TabBottom';
-import { capitalizeWords } from '@/utils/helpers';
-import { CONFIG } from '@/config/service';
-import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
-import useScreenSize from '@/hooks/useScreenSize';
-import { analyticsLogEvent } from '@/firebase';
+import { CONFIG } from '@/config/service';
 import { eventTracking } from '@/firebase/firebase';
 import { Carousel } from 'antd';
 import { ROUTES } from '@/routes/routes';
+import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import generateService from '@/services/generate.service';
+import { capitalizeWords } from '@/utils/helpers';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
+import TabBottom from '../GenerateAvatar/components/TabBottom';
+import { Wrapper } from './style';
 
 export default function DetailAvatar() {
   const { isMobile } = useScreenSize();
@@ -24,6 +24,7 @@ export default function DetailAvatar() {
   const [listAvatar, setListAvatar] = useState<any>({});
   const [detailAvatar, setDetailAvatar] = useState<any>({});
   const [openModalDownload, setOpenModalDownload] = useState(false);
+  const { logEvent } = useTrackingEvent();
 
   const { isDesktop, isTablet } = useScreenSize();
 
@@ -54,7 +55,7 @@ export default function DetailAvatar() {
 
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
-    analyticsLogEvent(eventTracking.pack_detail_click_save_all.name);
+    logEvent(eventTracking.pack_detail_click_save_all.name);
     mutationDownloadAll.mutate();
     // window.open(
     //   `https://stg.creatorhub.ai/home-page/nextapi/v1/session/download/${params.id}`
@@ -62,12 +63,12 @@ export default function DetailAvatar() {
   };
 
   const handleClickViewAll = (url: string) => {
-    analyticsLogEvent(eventTracking.pack_detail_click_view_all.name);
+    logEvent(eventTracking.pack_detail_click_view_all.name);
     navigate(url);
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.pack_detail_view.name);
+    logEvent(eventTracking.pack_detail_view.name);
   }, []);
 
   return (

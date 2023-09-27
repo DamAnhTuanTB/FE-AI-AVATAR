@@ -1,12 +1,13 @@
+import { eventTracking } from '@/firebase/firebase';
 import useScreenSize from '@/hooks/useScreenSize';
-import Button from '../Button';
-import { Wrapper } from './style';
-import { StepEnum } from '../../contants';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { eventTracking } from '@/firebase/firebase';
 import { analyticsLogEvent } from '@/firebase';
 import { Skeleton } from 'antd';
+import { StepEnum } from '../../contants';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   open: boolean;
@@ -23,6 +24,7 @@ export default function ModalPreviewStyle({
   setShowModalPayment,
   setStep,
 }: IProps) {
+  const { logEvent } = useTrackingEvent();
   const { isMobile, isDesktop } = useScreenSize();
 
   const isLoggedIn = useAppSelector(
@@ -40,7 +42,7 @@ export default function ModalPreviewStyle({
   };
   const handleClickNext = () => {
     handleCancel();
-    analyticsLogEvent(eventTracking.preview_style_click_next.name);
+    logEvent(eventTracking.preview_style_click_next.name);
     if (!isLoggedIn || !numberGen) {
       setShowModalPayment(true);
     } else {

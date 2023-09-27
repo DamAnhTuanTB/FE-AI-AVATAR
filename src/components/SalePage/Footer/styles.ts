@@ -13,7 +13,7 @@ export const ContentWrapper = styled(HomepageContainer)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 32px 0 40px;
+  padding: 40px 0 40px;
   p,
   a {
     margin: 0px;

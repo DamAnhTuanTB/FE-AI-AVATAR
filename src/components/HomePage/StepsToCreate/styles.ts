@@ -34,10 +34,13 @@ export const StepWrapper = styled.div`
   border: 1px solid #e5e5e5;
   background: #fff;
   width: 100%;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    padding: 32px 16px;
+    gap: 24px;
+  }
   @media screen and (max-width: ${breakpoints.md}) {
     padding: 32px 16px;
     flex-direction: column;
-    gap: 24px;
   }
 `;
 

@@ -13,7 +13,7 @@ export interface AppSlice {
   emailSuccessPaymentButNotAuth: string;
   userExists: number;
   prices: any[];
-  showModalUploadFilesExtendLimit: boolean
+  showModalUploadFilesExtendLimit: boolean;
 }
 
 export const initialUserInfo = {
@@ -32,7 +32,7 @@ const initialState: AppSlice = {
   emailSuccessPaymentButNotAuth: '',
   userExists: -1,
   prices: [],
-  showModalUploadFilesExtendLimit: false
+  showModalUploadFilesExtendLimit: false,
 };
 
 export const appSlice = createSlice({
@@ -65,9 +65,12 @@ export const appSlice = createSlice({
     setListPrice: (state, action: PayloadAction<any[]>) => {
       state.prices = action.payload;
     },
-    setShowModalUploadFilesExtendLimit: (state, action: PayloadAction<boolean>) => {
-      state.showModalUploadFilesExtendLimit = action.payload
-}
+    setShowModalUploadFilesExtendLimit: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.showModalUploadFilesExtendLimit = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
@@ -86,6 +89,6 @@ export const {
   setEmailSuccessPaymentButNotAuth,
   setUserExists,
   setListPrice,
-  setShowModalUploadFilesExtendLimit
+  setShowModalUploadFilesExtendLimit,
 } = appSlice.actions;
 export default appSlice.reducer;

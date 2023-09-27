@@ -1,57 +1,29 @@
-import React, { useEffect } from 'react';
-import {
-  BannerContent,
-  BannerLink,
-  BannerLinkWrapper,
-  BannerWrapper,
-  BodyWrapper,
-  ElipseDecor1,
-  ElipseDecor2,
-  Wrapper,
-} from './styles';
-import ArrowRight from '@/components/Icons/ArrowRight';
+import Faq from '@/components/HomePage/Faq';
+import HomePageFooter from '@/components/HomePage/Footer';
 import Header from '@/components/HomePage/Header';
 import Intro from '@/components/HomePage/Intro';
-import TransformPhoto from '@/components/HomePage/TransformPhoto';
-import StepsToCreate from '@/components/HomePage/StepsToCreate';
-import UsersSay from '@/components/HomePage/UsersSay';
-import MobileApp from '@/components/HomePage/MobileApp';
-import HomePageFooter from '@/components/HomePage/Footer';
-import Faq from '@/components/HomePage/Faq';
 import ReadyStarted from '@/components/HomePage/ReadyStarted';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/routes/routes';
-import { analyticsLogEvent } from '@/firebase';
+import StepsToCreate from '@/components/HomePage/StepsToCreate';
+import TransformPhoto from '@/components/HomePage/TransformPhoto';
+import UsersSay from '@/components/HomePage/UsersSay';
 import { landingPageTracking } from '@/firebase/firebase';
-import { useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/store';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { ROUTES } from '@/routes/routes';
+import { useEffect } from 'react';
+import { BodyWrapper, Wrapper } from './styles';
+
+export const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
+export const uploadPhotoLinkFromLandingPage = `${ROUTES.APP_PAGE}?from=landing_page`;
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
 
   useEffect(() => {
-    const eventParams: any = {};
-    if (userInfor?.id) {
-      eventParams[landingPageTracking.view.params.userId] = userInfor?.id;
-    }
-    analyticsLogEvent(landingPageTracking.view.name, { ...eventParams });
+    logEvent(landingPageTracking.view.name);
   }, []);
 
   return (
     <Wrapper>
-      <BannerWrapper
-        onClick={() => {
-          navigate(ROUTES.SALE_PAGE);
-        }}
-      >
-        <BannerContent>Limited Time Deal! Get Up to 50% off</BannerContent>
-        <BannerLinkWrapper>
-          <BannerLink>Grab deal</BannerLink>
-          <ArrowRight />
-        </BannerLinkWrapper>
-      </BannerWrapper>
-
       <Header />
 
       <BodyWrapper>
@@ -66,8 +38,8 @@ export default function HomePage() {
 
       <HomePageFooter />
 
-      <ElipseDecor1 />
-      <ElipseDecor2 />
+      {/* <ElipseDecor1 />
+      <ElipseDecor2 /> */}
     </Wrapper>
   );
 }

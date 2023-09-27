@@ -68,6 +68,14 @@ export const FeatureTitle = styled.div`
     line-height: 150%; /* 27px */
     margin-bottom: 0;
   }
+  @media screen and (max-width: ${breakpoints.lg}) {
+    flex-direction: column;
+    align-items: center;
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 `;
 
 export const KeyTitle = styled.div`

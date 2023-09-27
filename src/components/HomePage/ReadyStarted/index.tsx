@@ -1,4 +1,14 @@
-import React from 'react';
+import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
+import ReadyStartedImg from '@/assets/images/home-page/ready-started-img.png';
+import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
+import WardIcon from '@/components/Icons/WardIcon';
+import { landingPageTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { uploadPhotoLinkFromLandingPage } from '@/pages/HomePage';
+import { Title } from '@/pages/HomePage/styles';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { useNavigate } from 'react-router-dom';
 import {
   BodyWrapper,
   ContentWrapper,
@@ -11,21 +21,12 @@ import {
   UnderLine,
   Wrapper,
 } from './styles';
-import { Description, Title } from '@/pages/HomePage/styles';
-import ReadyStartedImg from '@/assets/images/home-page/ready-started-img.png';
-import WardIcon from '@/components/Icons/WardIcon';
-import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
-import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/routes/routes';
-import { useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/store';
-import { landingPageTracking } from '@/firebase/firebase';
-import { analyticsLogEvent } from '@/firebase';
 
 export default function ReadyStarted() {
   const navigate = useNavigate();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
+
   return (
     <Wrapper>
       <BodyWrapper>
@@ -46,15 +47,9 @@ export default function ReadyStarted() {
               const eventParams: any = {
                 [landingPageTracking.clickStart.params.from]: 'cta_banner',
               };
-              if (userInfor?.id) {
-                eventParams[landingPageTracking.clickStart.params.userId] =
-                  userInfor?.id;
-              }
-              analyticsLogEvent(
-                landingPageTracking.clickStart.name,
-                eventParams
-              );
-              navigate(ROUTES.APP_PAGE);
+
+              logEvent(landingPageTracking.clickStart.name, eventParams);
+              navigate(uploadPhotoLinkFromLandingPage);
             }}
           >
             <WardIcon />

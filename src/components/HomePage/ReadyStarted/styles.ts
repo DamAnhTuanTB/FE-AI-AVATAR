@@ -11,7 +11,7 @@ export const BodyWrapper = styled(HomepageContainer)`
   display: flex;
   align-items: center;
   gap: 32px;
-  @media screen and (max-width: ${breakpoints.md}) {
+  @media screen and (max-width: ${breakpoints.lg}) {
     flex-direction: column;
   }
 `;
@@ -21,12 +21,27 @@ export const ContentWrapper = styled.div`
   gap: 32px;
   flex-direction: column;
   justify-content: space-between;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    max-width: 575px;
+    align-items: center;
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    max-width: auto;
+    align-items: flex-start;
+  }
 `;
 
 export const TitleWrapper = styled.div`
   position: relative;
   width: max-content;
   margin-bottom: 16px;
+  @media screen and (max-width: ${breakpoints.lg}) {
+    margin: 0 auto 16px;
+  }
+  @media screen and (max-width: ${breakpoints.md}) {
+    margin: 0 0 16px;
+    align-items: flex-start;
+  }
 `;
 
 export const UnderLine = styled.img`

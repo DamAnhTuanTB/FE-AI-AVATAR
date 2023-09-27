@@ -1,28 +1,27 @@
-import BeforeAfterImageSrc from '@/assets/images/sale-page/before-after-img.svg';
+import BeforeAfterImageSrc from '@/assets/images/sale-page/before-after-img.png';
 import SaleContent from '@/components/SalePage/Content';
 import SalePageFooter from '@/components/SalePage/Footer';
 import SaleHeader from '@/components/SalePage/Header';
 import Payment from '@/components/SalePage/Payment';
+import { salePageTracking } from '@/firebase/firebase';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import generateService from '@/services/generate.service';
-import { discountPrice } from '@/utils/constants';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import {
   BeforeAfterImage,
   Container,
   ContentWrapper,
-  HeaderFooterWrapper,
+  FooterWrapper,
+  HeaderWrapper,
   PaymentWrapper,
   Wrapper,
 } from './styles';
-import { useLocation } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
-import { salePageTracking } from '@/firebase/firebase';
-import { useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/store';
-import { analyticsLogEvent } from '@/firebase';
-import moment from 'moment';
 
 export default function SalePage() {
   const { isMobile, isTablet } = useScreenSize();
@@ -31,17 +30,11 @@ export default function SalePage() {
   const [searchParams] = useSearchParams();
   const fromQuery = searchParams.get('from');
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
+  const { discountPrice, startDate } = useFetchSaleConfig();
 
-  const priceType =
-    discountPrice === 0.5
-      ? 'sale50'
-      : discountPrice === 0.25
-      ? 'sale25'
-      : 'main';
-
-  useQuery(
-    ['get-list-price'],
-    () => generateService.getListPrice({ type: priceType }),
+  const getListPrice = useMutation(
+    (type: any) => generateService.getListPrice({ type }),
     {
       onSuccess: (res: any) => {
         const listPrice = res.data?.map((item: any) => ({
@@ -61,23 +54,33 @@ export default function SalePage() {
   };
 
   useEffect(() => {
-    const eventParams: any = {
-      [salePageTracking.view.params.source]:
-        fromQuery === 'mail' ? 'email_pre_launch' : 'landing_page',
-    };
-    if (userInfor?.id) {
-      eventParams[salePageTracking.view.params.userId] = userInfor?.id;
+    if (startDate) {
+      const priceType =
+        discountPrice === 0.5
+          ? 'sale50'
+          : discountPrice === 0.25
+          ? 'sale25'
+          : 'main';
+      getListPrice.mutate(priceType);
     }
-    analyticsLogEvent(salePageTracking.view.name, eventParams);
+  }, [discountPrice, startDate]);
+
+  useEffect(() => {
+    const eventParams: any = {};
+    if (fromQuery) {
+      eventParams[salePageTracking.view.params.source] = fromQuery;
+    }
+
+    logEvent(salePageTracking.view.name, eventParams);
   }, [fromQuery]);
 
   return (
     <Wrapper>
-      <HeaderFooterWrapper>
+      <HeaderWrapper>
         <Container>
           <SaleHeader />
         </Container>
-      </HeaderFooterWrapper>
+      </HeaderWrapper>
 
       <ContentWrapper>
         <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
@@ -103,11 +106,11 @@ export default function SalePage() {
         </PaymentWrapper>
       )}
 
-      <HeaderFooterWrapper>
+      <FooterWrapper>
         <Container>
           <SalePageFooter />
         </Container>
-      </HeaderFooterWrapper>
+      </FooterWrapper>
     </Wrapper>
   );
 }
