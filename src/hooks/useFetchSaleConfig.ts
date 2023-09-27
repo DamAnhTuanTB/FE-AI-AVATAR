@@ -14,8 +14,8 @@ const SALE_SCHEDULED = [
 ];
 
 export default function useFetchSaleConfig() {
-  const increasePrice = 0.5;
-  const [discountPrice, setDiscountPrice] = useState(0);
+  const [discountValue, setDiscountValue] = useState(0);
+  const [nextDiscountValue, setNextDiscountValue] = useState<any>(0);
   const [nextDayIncreasePrice, setNextDayIncreasePrice] = useState(0);
   const [nextTimeIncreasePrice, setNextTimeIncreasePrice] = useState(0);
   const [startDate, setStartDate] = useState('');
@@ -26,29 +26,36 @@ export default function useFetchSaleConfig() {
     const saleStartAt = moment(startDate).format('YYYY/MM/DD');
 
     const diffDays = currentDate.diff(moment(saleStartAt), 'days');
-
-    const discountPrice =
+    // console.log('diffDays', diffDays);
+    
+    const discountValue =
       SALE_SCHEDULED.find((schedule) => schedule.day === diffDays)?.discount ||
       0;
+    const nextDiscountValue = SALE_SCHEDULED.find((schedule) => schedule.discount < discountValue)?.discount;
 
+    // console.log('discountValue', discountValue, nextDiscountValue);
     let nextDayIncreasePrice = 0;
     for (let i = 0; i < SALE_SCHEDULED.length; i++) {
-      if (discountPrice > SALE_SCHEDULED[i].discount) {
+      if (discountValue > SALE_SCHEDULED[i].discount) {
         nextDayIncreasePrice = SALE_SCHEDULED[i].day;
         break;
       }
     }
 
+    // console.log('nextDayIncreasePrice', nextDayIncreasePrice);
+    
     const nextTimeIncreasePrice =
       nextDayIncreasePrice === 0 ||
       process.env.REACT_APP_PRICING_SALE_ENABLE !== 'true'
         ? moment().valueOf() - 1000
         : moment(saleStartAt).add(nextDayIncreasePrice, 'd').valueOf();
+        // const day = nextTimeIncreasePrice.format('DD');
     // : nextDayIncreasePrice > weekday
     // ? moment().weekday(nextDayIncreasePrice).valueOf()
     // : moment().weekday(nextDayIncreasePrice).add(7, 'd').valueOf();
-
-    setDiscountPrice(discountPrice);
+    // console.log('nextTimeIncreasePrice', nextTimeIncreasePrice);
+    setNextDiscountValue(nextDiscountValue);
+    setDiscountValue(discountValue);
     setNextDayIncreasePrice(nextDayIncreasePrice);
     setNextTimeIncreasePrice(nextTimeIncreasePrice);
   }, []);
@@ -72,8 +79,8 @@ export default function useFetchSaleConfig() {
   }, []);
 
   return {
-    increasePrice,
-    discountPrice,
+    nextDiscountValue,
+    discountValue,
     nextDayIncreasePrice,
     nextTimeIncreasePrice,
     startDate,

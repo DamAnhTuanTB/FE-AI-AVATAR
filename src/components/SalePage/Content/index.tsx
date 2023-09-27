@@ -31,6 +31,9 @@ import {
   TermsWrapper,
   Wrapper,
 } from './styles';
+import { getValue } from 'firebase/remote-config';
+import { remoteConfig } from '@/firebase';
+import moment from 'moment';
 
 const avatarsGroup1 = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6];
 const avatarsGroup2 = [Avatar7, Avatar8, Avatar9, Avatar10, Avatar11, Avatar12];
@@ -48,10 +51,17 @@ interface PropsType {
 }
 
 export default function SaleContent({ priceSelected }: PropsType) {
+  // const { nextTimeIncreasePrice, increasePrice } = useFetchSaleConfig();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { handlePurchase } = usePurchase();
   const { logEvent } = useTrackingEvent();
+  const startDate: any = getValue(
+    remoteConfig,
+    'start_date_campaign_config'
+  );
 
+  console.log('startDate', startDate._value, moment(startDate, "YYYY/MM/DD").add(5, 'days'));
+  
   return (
     <Wrapper>
       <Description>
@@ -126,7 +136,7 @@ export default function SaleContent({ priceSelected }: PropsType) {
         <SectionTitle>Deal Terms:</SectionTitle>
         <TermsWrapper>
           <TermItem>
-            This pre-launch offer is valid until [Date] at [Time] [Time Zone].
+            This pre-launch offer is valid until {startDate._value} at [Time] [Time Zone].
           </TermItem>
           <TermItem>
             Prices will increase by [Percentage]% after the pre-launch period

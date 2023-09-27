@@ -29,10 +29,29 @@ const defaultOptions = {
   },
 };
 
-export default function SaleHeader() {
-  const { nextTimeIncreasePrice, increasePrice } = useFetchSaleConfig();
+export default function SaleHeader({ prices, priceSelected }: { prices: any[], priceSelected: any}) {
+  const { nextTimeIncreasePrice, nextDiscountValue, discountValue } = useFetchSaleConfig();
   const countdown = useCountDown(nextTimeIncreasePrice);
   const [stopWatch, setStopWatch] = useState(false);
+  const [increasePrice, setIncreasePrice] = useState(0.5);
+  const tolerance = discountValue > 0 ? 0.01 : 0;
+  // console.log('pricesssss', prices);
+  
+  useEffect(() => {
+    if (prices.length || priceSelected) {
+      console.log('discountValue', discountValue);
+      const discountPrice = priceSelected?.price || prices[1]?.price;
+      const originalPrice = discountPrice / (1 - discountValue) + tolerance; 
+      
+      console.log('discountPrice', originalPrice, discountPrice);
+      
+      const nextDiscountPrice = originalPrice * (1 - nextDiscountValue);
+      console.log('priceeeee', nextDiscountValue, originalPrice, discountPrice, nextDiscountPrice);
+      const newIncreasePrice = (nextDiscountPrice - discountPrice) / discountPrice;
+      console.log('newIncreasePrice', newIncreasePrice);
+      setIncreasePrice(newIncreasePrice)
+    }
+  }, [nextDiscountValue, prices, priceSelected])
 
   useEffect(() => {
     if (
@@ -64,14 +83,16 @@ export default function SaleHeader() {
       <PriceWrapper>
         <PriceTitleWrapper>
           <Description>
-            The price increased by {increasePrice * 100}% in
+            {discountValue > 0 ? `The price increased by ${(increasePrice * 100).toFixed(0
+              
+              )}% in` : 'This deal is expired'}
           </Description>
           <ClockWrapper>
             <Lottie options={defaultOptions} isStopped={stopWatch} />
           </ClockWrapper>
         </PriceTitleWrapper>
 
-        <CountDownWrapper>
+         <CountDownWrapper>
           <CountDown />
         </CountDownWrapper>
       </PriceWrapper>

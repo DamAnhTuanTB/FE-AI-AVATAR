@@ -45,10 +45,10 @@ export default function Payment({
   // const prices = useAppSelector((state: RootState) => state.app.prices);
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
-  const { discountPrice } = useFetchSaleConfig();
+  const { discountValue } = useFetchSaleConfig();
 
   const { handlePurchase } = usePurchase();
-  const tolerance = discountPrice > 0 ? 0.01 : 0;
+  const tolerance = discountValue > 0 ? 0.01 : 0;
 
   useEffect(() => {
     if (prices.length > 1) {
@@ -63,7 +63,7 @@ export default function Payment({
         <div>
           {prices.map((price) => {
             const newPrice = price?.price || 0;
-            const originalPrice = newPrice / (1 - discountPrice) + tolerance;
+            const originalPrice = newPrice / (1 - discountValue) + tolerance;
 
             return (
               <OptionWrapper
@@ -77,7 +77,7 @@ export default function Payment({
                   <Label>{price?.name}</Label>
                 </LabelOptionWrapper>
                 <PriceWrapper>
-                  {discountPrice > 0 && (
+                  {discountValue > 0 && (
                     <OriginalPrice>${originalPrice.toFixed(2)}</OriginalPrice>
                   )}
                   <NewPrice>${newPrice.toFixed(2)}</NewPrice>
@@ -106,7 +106,7 @@ export default function Payment({
 
       <Saving>
         <SaveItem first>
-          <StatisticPrimaryText>{discountPrice * 100}%</StatisticPrimaryText>
+          <StatisticPrimaryText>{discountValue * 100}%</StatisticPrimaryText>
           <StatisticPrimaryText>savings</StatisticPrimaryText>
         </SaveItem>
         <SaveItem>
@@ -119,7 +119,7 @@ export default function Payment({
           <StatisticPrimaryText>
             $
             {(
-              (priceSelected?.price || 0) / (1 - discountPrice) -
+              (priceSelected?.price || 0) / (1 - discountValue) -
               (priceSelected?.price || 0) +
               tolerance
             ).toFixed(2)}

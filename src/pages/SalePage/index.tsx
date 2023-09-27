@@ -31,7 +31,7 @@ export default function SalePage() {
   const fromQuery = searchParams.get('from');
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
-  const { discountPrice, startDate } = useFetchSaleConfig();
+  const { discountValue, startDate } = useFetchSaleConfig();
 
   const getListPrice = useMutation(
     (type: any) => generateService.getListPrice({ type }),
@@ -56,14 +56,14 @@ export default function SalePage() {
   useEffect(() => {
     if (startDate) {
       const priceType =
-        discountPrice === 0.5
+        discountValue === 0.5
           ? 'sale50'
-          : discountPrice === 0.25
+          : discountValue === 0.25
           ? 'sale25'
           : 'main';
       getListPrice.mutate(priceType);
     }
-  }, [discountPrice, startDate]);
+  }, [discountValue, startDate]);
 
   useEffect(() => {
     const eventParams: any = {};
@@ -78,7 +78,10 @@ export default function SalePage() {
     <Wrapper>
       <HeaderWrapper>
         <Container>
-          <SaleHeader />
+          <SaleHeader
+            prices={prices}
+            priceSelected={priceSelected}
+          />
         </Container>
       </HeaderWrapper>
 
