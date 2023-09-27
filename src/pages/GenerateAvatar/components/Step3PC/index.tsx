@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
-import { Wrapper } from './style';
-import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { analyticsLogEvent } from '@/firebase';
-import { eventTracking } from '@/firebase/firebase';
 import { setCookie } from '@/utils/cookies';
+import { Checkbox, Skeleton } from 'antd';
+import { useEffect } from 'react';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   styles: any;
@@ -35,7 +36,7 @@ export default function Step3PC({
   //   setStyles([]);
   //   // }
   // }, []);
-
+  const { logEvent } = useTrackingEvent();
   const listGenerate = useAppSelector(
     (state: RootState) => state.app.userInfor.listGenerate
   );
@@ -61,7 +62,8 @@ export default function Step3PC({
   };
 
   const handleClickNext = () => {
-    analyticsLogEvent(eventTracking.choose_style_click_generate.name, {
+    if (!styles.length) return;
+    logEvent(eventTracking.choose_style_click_generate.name, {
       [eventTracking.choose_style_click_generate.params.package]:
         currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
       [eventTracking.choose_style_click_generate.params.gender]:
@@ -75,7 +77,7 @@ export default function Step3PC({
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.choose_style_view.name, {
+    logEvent(eventTracking.choose_style_view.name, {
       [eventTracking.choose_style_view.params.package]:
         currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
       [eventTracking.choose_style_view.params.gender]: gender.toLowerCase(),
@@ -91,18 +93,31 @@ export default function Step3PC({
       </div>
       <div className="parent-list-styles">
         <div className="list-styles">
-          {listStyles.map((item: any) => (
-            <div
-              onClick={() => handleClickStyle(item.alias)}
-              key={item.id}
-              className={`${
-                styles.includes(item.alias) && 'style-active'
-              } item-style`}
-            >
-              <img className="image-style" src={item.thumbnail} alt="" />
-              <div className="name-style">{item.displayName}</div>
-            </div>
-          ))}
+          {listStyles?.length === 0
+            ? Array(20)
+                .fill(1)
+                .map((item: any, index: number) => (
+                  <div className="item-style" key={index}>
+                    <Skeleton.Button className="skeleton-image" active />
+                    <Skeleton.Button className="skeleton-text" active />
+                  </div>
+                ))
+            : listStyles.map((item: any) => (
+                <div
+                  onClick={() => handleClickStyle(item.alias)}
+                  key={item.id}
+                  className={`${
+                    styles.includes(item.alias) && 'style-active'
+                  } item-style`}
+                >
+                  <img className="image-style" src={item.thumbnail} alt="" />
+                  <div className="name-style">{item.displayName}</div>
+                  <Checkbox
+                    checked={styles.includes(item?.alias)}
+                    className="checkbox"
+                  />
+                </div>
+              ))}
         </div>
       </div>
       <div className="btn-generate">

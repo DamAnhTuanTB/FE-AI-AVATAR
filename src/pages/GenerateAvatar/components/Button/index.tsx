@@ -26,7 +26,7 @@ export default function Button({
       isMobile={isMobile}
       background={background}
       onClick={onClick}
-      // disabled={disable}
+      disabled={disable}
       style={{
         width,
         height,

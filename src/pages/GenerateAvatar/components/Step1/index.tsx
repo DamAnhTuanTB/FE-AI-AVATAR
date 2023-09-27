@@ -15,8 +15,8 @@ import { StepEnum } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
 import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useAppDispatch } from '@/store/hooks';
-import { analyticsLogEvent } from '@/firebase';
 import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 
 const defaultOptions = {
   loop: true,
@@ -67,6 +67,7 @@ export default function Step1({
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
+  const { logEvent } = useTrackingEvent();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -75,12 +76,12 @@ export default function Step1({
         setSessionId(res?.data?.data?.sessionId);
         setStep(StepEnum.PICK_GENDER);
         setShowLoading(false);
-        analyticsLogEvent(eventTracking.call_api_checking_photo.name, {
+        logEvent(eventTracking.call_api_checking_photo.name, {
           [eventTracking.call_api_checking_photo.params.status]: 'success',
         });
       },
       onError: (err: any) => {
-        analyticsLogEvent(eventTracking.call_api_checking_photo.name, {
+        logEvent(eventTracking.call_api_checking_photo.name, {
           [eventTracking.call_api_checking_photo.params.status]: 'failed',
         });
         setShowLoading(false);
@@ -133,7 +134,7 @@ export default function Step1({
       // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
-      const fileType = getFileExtension(file?.name);
+
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
@@ -157,7 +158,7 @@ export default function Step1({
         file,
         // file: originFile,
         textError: '',
-        name,
+        name: file.name,
       });
     });
     // const countAddtionsAbleToAdd = 15 - images.length;
@@ -190,9 +191,9 @@ export default function Step1({
   const handleClickUpload = () => {
     if (countImageValid < 3) {
       if (images?.length === 0) {
-        analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+        logEvent(eventTracking.upload_photo_click_upload.name);
       } else {
-        analyticsLogEvent(eventTracking.upload_photo_click_upload_more.name);
+        logEvent(eventTracking.upload_photo_click_upload_more.name);
       }
       uploadRef.current?.click();
     } else {
@@ -210,8 +211,8 @@ export default function Step1({
         formData.append('files', item.file);
       });
       setShowLoading(true);
-      analyticsLogEvent(eventTracking.upload_photo_click_next.name);
-      analyticsLogEvent(eventTracking.upload_photo_checking.name);
+      logEvent(eventTracking.upload_photo_click_next.name);
+      logEvent(eventTracking.upload_photo_checking.name);
       mutationUpload.mutate(formData);
     }
   };

@@ -1,4 +1,26 @@
-import React from 'react';
+import Avatar1 from '@/assets/images/sale-page/avt-1.png';
+import Avatar10 from '@/assets/images/sale-page/avt-10.png';
+import Avatar11 from '@/assets/images/sale-page/avt-11.png';
+import Avatar12 from '@/assets/images/sale-page/avt-12.png';
+import Avatar13 from '@/assets/images/sale-page/avt-13.png';
+import Avatar14 from '@/assets/images/sale-page/avt-14.png';
+import Avatar15 from '@/assets/images/sale-page/avt-15.png';
+import Avatar16 from '@/assets/images/sale-page/avt-16.png';
+import Avatar17 from '@/assets/images/sale-page/avt-17.png';
+import Avatar18 from '@/assets/images/sale-page/avt-18.png';
+import Avatar2 from '@/assets/images/sale-page/avt-2.png';
+import Avatar3 from '@/assets/images/sale-page/avt-3.png';
+import Avatar4 from '@/assets/images/sale-page/avt-4.png';
+import Avatar5 from '@/assets/images/sale-page/avt-5.png';
+import Avatar6 from '@/assets/images/sale-page/avt-6.png';
+import Avatar7 from '@/assets/images/sale-page/avt-7.png';
+import Avatar8 from '@/assets/images/sale-page/avt-8.png';
+import Avatar9 from '@/assets/images/sale-page/avt-9.png';
+import { salePageTracking } from '@/firebase/firebase';
+import usePurchase from '@/hooks/usePurchase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 import {
   AvatarsWrapper,
   BuyNowButton,
@@ -9,29 +31,10 @@ import {
   TermsWrapper,
   Wrapper,
 } from './styles';
-import Avatar1 from '@/assets/images/sale-page/avt-1.png';
-import Avatar2 from '@/assets/images/sale-page/avt-2.png';
-import Avatar3 from '@/assets/images/sale-page/avt-3.png';
-import Avatar4 from '@/assets/images/sale-page/avt-4.png';
-import Avatar5 from '@/assets/images/sale-page/avt-5.png';
-import Avatar6 from '@/assets/images/sale-page/avt-6.png';
-import Avatar7 from '@/assets/images/sale-page/avt-7.png';
-import Avatar8 from '@/assets/images/sale-page/avt-8.png';
-import Avatar9 from '@/assets/images/sale-page/avt-9.png';
-import Avatar10 from '@/assets/images/sale-page/avt-10.png';
-import Avatar11 from '@/assets/images/sale-page/avt-11.png';
-import Avatar12 from '@/assets/images/sale-page/avt-12.png';
-import Avatar13 from '@/assets/images/sale-page/avt-13.png';
-import Avatar14 from '@/assets/images/sale-page/avt-14.png';
-import Avatar15 from '@/assets/images/sale-page/avt-15.png';
-import Avatar16 from '@/assets/images/sale-page/avt-16.png';
-import Avatar17 from '@/assets/images/sale-page/avt-17.png';
-import Avatar18 from '@/assets/images/sale-page/avt-18.png';
-import usePurchase from '@/hooks/usePurchase';
-import { RootState } from '@/store/store';
-import { useAppSelector } from '@/store/hooks';
-import { salePageTracking } from '@/firebase/firebase';
-import { analyticsLogEvent } from '@/firebase';
+import { getValue } from 'firebase/remote-config';
+import { remoteConfig } from '@/firebase';
+import moment from 'moment';
+import useFetchSaleConfig, { SALE_SCHEDULED } from '@/hooks/useFetchSaleConfig';
 
 const avatarsGroup1 = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6];
 const avatarsGroup2 = [Avatar7, Avatar8, Avatar9, Avatar10, Avatar11, Avatar12];
@@ -46,11 +49,25 @@ const avatarsGroup3 = [
 
 interface PropsType {
   priceSelected: any;
+  increasePrice: number;
 }
 
-export default function SaleContent({ priceSelected }: PropsType) {
+export default function SaleContent({
+  priceSelected,
+  increasePrice,
+}: PropsType) {
+  // const { nextTimeIncreasePrice, increasePrice } = useFetchSaleConfig();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { handlePurchase } = usePurchase();
+  const { logEvent } = useTrackingEvent();
+  // const startDate: any = getValue(remoteConfig, 'start_date_campaign_config');
+  const { startDate, format } = useFetchSaleConfig();
+  const discountDays = SALE_SCHEDULED.filter(
+    (saleDate) => saleDate.discount > 0
+  ).length;
+  const endDiscountDate = moment(startDate)
+    .add(discountDays, 'd')
+    .format(format);
 
   return (
     <Wrapper>
@@ -126,18 +143,18 @@ export default function SaleContent({ priceSelected }: PropsType) {
         <SectionTitle>Deal Terms:</SectionTitle>
         <TermsWrapper>
           <TermItem>
-            This pre-launch offer is valid until [Date] at [Time] [Time Zone].
+            This pre-launch offer is valid until {endDiscountDate}.
           </TermItem>
           <TermItem>
-            Prices will increase by [Percentage]% after the pre-launch period
-            ends.
+            Prices will increase by {(increasePrice * 100).toFixed(0)}% after
+            the pre-launch period ends.
           </TermItem>
           <TermItem>
             Your purchase includes access to all features and updates for a
             one-time payment.
           </TermItem>
           <TermItem>
-            {`We offer a [Number]-day money-back guarantee. If you're not
+            {`We offer a ${SALE_SCHEDULED.length}-day money-back guarantee. If you're not
             satisfied, we've got you covered.`}
           </TermItem>
         </TermsWrapper>
@@ -155,11 +172,8 @@ export default function SaleContent({ priceSelected }: PropsType) {
               salePageTracking.clickBuyNow.params.package
             ] = `${priceSelected?.maxStyle}style`;
           }
-          if (userInfor?.id) {
-            eventParams[salePageTracking.clickBuyNow.params.userId] =
-              userInfor?.id;
-          }
-          analyticsLogEvent(salePageTracking.clickBuyNow.name, eventParams);
+
+          logEvent(salePageTracking.clickBuyNow.name, eventParams);
           handlePurchase(priceSelected?.id);
         }}
       >

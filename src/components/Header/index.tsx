@@ -1,5 +1,5 @@
 import DefaultAvatar from '@/assets/images/default_avatar.png';
-import LogoHeader from '@/assets/images/logo.svg';
+import LogoHeader from '@/assets/images/logo.png';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { ROUTES } from '@/routes/routes';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -12,6 +12,7 @@ import {
 } from 'react-router-dom';
 import { HeaderWrapper } from './style';
 import UserAvatar from '../UserAvatar';
+import IconMyAvatar from '@/assets/images/icon-my-avatar.svg';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -50,7 +51,8 @@ const Header = () => {
       ) : (
         <div className="avatar-wrapper">
           <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
-            View My Generated Avatar
+            <img src={IconMyAvatar} alt="" />
+            My Avatar
           </div>
           <UserAvatar />
         </div>

@@ -1,18 +1,20 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Wrapper } from './style';
 import IconDownload from '@/assets/images/icon-download-image.svg';
 import IconPrev from '@/assets/images/icon-prev.svg';
-import { useMutation, useQuery } from 'react-query';
-import generateService from '@/services/generate.service';
-import { useEffect, useState } from 'react';
-import TabBottom from '../GenerateAvatar/components/TabBottom';
-import { capitalizeWords } from '@/utils/helpers';
-import { CONFIG } from '@/config/service';
-import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
-import useScreenSize from '@/hooks/useScreenSize';
-import { analyticsLogEvent } from '@/firebase';
+import { CONFIG } from '@/config/service';
 import { eventTracking } from '@/firebase/firebase';
+import { Carousel } from 'antd';
+import { ROUTES } from '@/routes/routes';
+import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import generateService from '@/services/generate.service';
+import { capitalizeWords } from '@/utils/helpers';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
+import TabBottom from '../GenerateAvatar/components/TabBottom';
+import { Wrapper } from './style';
 
 export default function DetailAvatar() {
   const { isMobile } = useScreenSize();
@@ -20,7 +22,9 @@ export default function DetailAvatar() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [listAvatar, setListAvatar] = useState<any>({});
+  const [detailAvatar, setDetailAvatar] = useState<any>({});
   const [openModalDownload, setOpenModalDownload] = useState(false);
+  const { logEvent } = useTrackingEvent();
 
   const { isDesktop, isTablet } = useScreenSize();
 
@@ -30,6 +34,7 @@ export default function DetailAvatar() {
     {
       onSuccess: (res: any) => {
         if (res.data?.results) {
+          setDetailAvatar(res?.data);
           setListAvatar(res.data.results);
         }
       },
@@ -50,7 +55,7 @@ export default function DetailAvatar() {
 
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
-    analyticsLogEvent(eventTracking.pack_detail_click_save_all.name);
+    logEvent(eventTracking.pack_detail_click_save_all.name);
     mutationDownloadAll.mutate();
     // window.open(
     //   `https://stg.creatorhub.ai/home-page/nextapi/v1/session/download/${params.id}`
@@ -58,12 +63,12 @@ export default function DetailAvatar() {
   };
 
   const handleClickViewAll = (url: string) => {
-    analyticsLogEvent(eventTracking.pack_detail_click_view_all.name);
+    logEvent(eventTracking.pack_detail_click_view_all.name);
     navigate(url);
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.pack_detail_view.name);
+    logEvent(eventTracking.pack_detail_view.name);
   }, []);
 
   return (
@@ -73,41 +78,86 @@ export default function DetailAvatar() {
           <img src={IconPrev} alt="" />
           <span>Back</span>
         </div>
-        <div className="pack">Pack {searchParams.get('pack')}</div>
+        <div className="pack">Avatar Package {searchParams.get('pack')}</div>
         <a
           className="save"
           onClick={handleSaveAll}
-          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download/${params.id}`}
+          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download/${params?.id}`}
         >
           <img src={IconDownload} alt="" />
           <span>Save all</span>
         </a>
       </div>
       <div className="content-detail">
-        {Object.keys(listAvatar).map((key: string) => (
-          <div key={key} className="row">
-            <div className="title">
-              <span className="name-style">{capitalizeWords(key)}</span>
-              <span
-                className="view-all"
-                onClick={() =>
-                  handleClickViewAll(`/my-avatar/${params.id}/${key}`)
-                }
-              >
-                View all
-              </span>
-            </div>
-            <div className="list">
-              {listAvatar[key]
-                .slice(0, isDesktop ? 5 : 3)
-                .map((avatar: string) => (
-                  <div key={avatar} className="item-avatar">
-                    <img src={avatar} alt="" />
-                  </div>
-                ))}
-            </div>
+        <div className="origin-photo">
+          <div className="title-origin-photo">
+            <span>Original photos</span>
+            <span
+              onClick={() => navigate(`/my-avatar/origin-photos/${params?.id}`)}
+            >
+              View all
+            </span>
           </div>
-        ))}
+          <Carousel
+            dots={false}
+            infinite={false}
+            slidesToScroll={1}
+            draggable={true}
+            variableWidth={true}
+            className="list-origin-photo"
+          >
+            {detailAvatar?.originImages?.length > 0 ? (
+              detailAvatar?.originImages?.map((item: any) => (
+                <img key={item} src={item} alt="" />
+              ))
+            ) : (
+              <img src={detailAvatar?.originFirstImage} alt="" />
+            )}
+          </Carousel>
+        </div>
+        <div className="generated-avatars">
+          <div className="title-origin-photo">
+            <span>Generated Avatars</span>
+            <span
+              onClick={() =>
+                navigate(`/my-avatar/generated-avatars/${params?.id}`)
+              }
+            >
+              View all
+            </span>
+          </div>
+          <Carousel
+            dots={false}
+            infinite={false}
+            // slidesToScroll={1}
+            // slidesToShow={5}
+            draggable={true}
+            variableWidth={true}
+            className="list-generated"
+          >
+            {Object.keys(listAvatar)?.map((style: string) => (
+              <div
+                className="item-child"
+                key={style}
+                onClick={() => navigate(`/my-avatar/${params.id}/${style}`)}
+              >
+                <div className="item-generated">
+                  <div className="col-1">
+                    <img src={detailAvatar?.results[style][1]} alt="" />
+                  </div>
+                  <div className="col-2">
+                    <img src={detailAvatar?.results[style][1]} alt="" />
+                    <img src={detailAvatar?.results[style][2]} alt="" />
+                  </div>
+                </div>
+                <div className="name-style">
+                  Style: {capitalizeWords(style)}
+                </div>
+                <div className="number-image">10 images</div>
+              </div>
+            ))}
+          </Carousel>
+        </div>
       </div>
       <div className="bottom">
         <TabBottom />

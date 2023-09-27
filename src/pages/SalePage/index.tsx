@@ -3,21 +3,22 @@ import SaleContent from '@/components/SalePage/Content';
 import SalePageFooter from '@/components/SalePage/Footer';
 import SaleHeader from '@/components/SalePage/Header';
 import Payment from '@/components/SalePage/Payment';
-import { analyticsLogEvent } from '@/firebase';
 import { salePageTracking } from '@/firebase/firebase';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import generateService from '@/services/generate.service';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { discountPrice } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import {
   BeforeAfterImage,
   Container,
   ContentWrapper,
-  HeaderFooterWrapper,
+  FooterWrapper,
+  HeaderWrapper,
   PaymentWrapper,
   Wrapper,
 } from './styles';
@@ -28,18 +29,21 @@ export default function SalePage() {
   const [prices, setPrices] = useState<any[]>([]);
   const [searchParams] = useSearchParams();
   const fromQuery = searchParams.get('from');
-  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
+  const { startDate, nextDiscountValue, discountValue, getIncreasePrice } =
+    useFetchSaleConfig();
+  const [increasePrice, setIncreasePrice] = useState(0.5);
+  // console.log('pricesssss', prices);
 
-  const priceType =
-    discountPrice === 0.5
-      ? 'sale50'
-      : discountPrice === 0.25
-      ? 'sale25'
-      : 'main';
+  useEffect(() => {
+    if (prices.length && priceSelected) {
+      const increasePrice = getIncreasePrice(prices, priceSelected);
+      setIncreasePrice(increasePrice);
+    }
+  }, [nextDiscountValue, prices, priceSelected]);
 
-  useQuery(
-    ['get-list-price'],
-    () => generateService.getListPrice({ type: priceType }),
+  const getListPrice = useMutation(
+    (type: any) => generateService.getListPrice({ type }),
     {
       onSuccess: (res: any) => {
         const listPrice = res.data?.map((item: any) => ({
@@ -59,23 +63,33 @@ export default function SalePage() {
   };
 
   useEffect(() => {
+    if (startDate) {
+      const priceType =
+        discountValue === 0.5
+          ? 'sale50'
+          : discountValue === 0.25
+          ? 'sale25'
+          : 'main';
+      getListPrice.mutate(priceType);
+    }
+  }, [discountValue, startDate]);
+
+  useEffect(() => {
     const eventParams: any = {};
     if (fromQuery) {
       eventParams[salePageTracking.view.params.source] = fromQuery;
     }
-    if (userInfor?.id) {
-      eventParams[salePageTracking.view.params.userId] = userInfor?.id;
-    }
-    analyticsLogEvent(salePageTracking.view.name, eventParams);
+
+    logEvent(salePageTracking.view.name, eventParams);
   }, [fromQuery]);
 
   return (
     <Wrapper>
-      <HeaderFooterWrapper>
+      <HeaderWrapper>
         <Container>
-          <SaleHeader />
+          <SaleHeader increasePrice={increasePrice} />
         </Container>
-      </HeaderFooterWrapper>
+      </HeaderWrapper>
 
       <ContentWrapper>
         <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
@@ -88,7 +102,10 @@ export default function SalePage() {
             />
           </PaymentWrapper>
         )}
-        <SaleContent priceSelected={priceSelected} />
+        <SaleContent
+          priceSelected={priceSelected}
+          increasePrice={increasePrice}
+        />
       </ContentWrapper>
 
       {!(isMobile || isTablet) && (
@@ -101,11 +118,11 @@ export default function SalePage() {
         </PaymentWrapper>
       )}
 
-      <HeaderFooterWrapper>
+      <FooterWrapper>
         <Container>
           <SalePageFooter />
         </Container>
-      </HeaderFooterWrapper>
+      </FooterWrapper>
     </Wrapper>
   );
 }

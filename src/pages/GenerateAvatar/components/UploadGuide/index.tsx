@@ -1,8 +1,8 @@
 import { Wrapper } from './style';
 import IconHeart from '@/assets/images/icon-heart-circle.svg';
 import IconBad from '@/assets/images/icon-bad.svg';
-import Good1 from '@/assets/images/good1.svg';
-import Good2 from '@/assets/images/good2.svg';
+import Good1 from '@/assets/images/g1.png';
+import Good2 from '@/assets/images/g2.png';
 import Good3 from '@/assets/images/good3.svg';
 import Good4 from '@/assets/images/good4.svg';
 import Bad1 from '@/assets/images/bad1.svg';

@@ -1,11 +1,13 @@
+import { eventTracking } from '@/firebase/firebase';
 import useScreenSize from '@/hooks/useScreenSize';
-import Button from '../Button';
-import { Wrapper } from './style';
-import { StepEnum } from '../../contants';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { eventTracking } from '@/firebase/firebase';
 import { analyticsLogEvent } from '@/firebase';
+import { Skeleton } from 'antd';
+import { StepEnum } from '../../contants';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   open: boolean;
@@ -22,6 +24,7 @@ export default function ModalPreviewStyle({
   setShowModalPayment,
   setStep,
 }: IProps) {
+  const { logEvent } = useTrackingEvent();
   const { isMobile, isDesktop } = useScreenSize();
 
   const isLoggedIn = useAppSelector(
@@ -39,7 +42,7 @@ export default function ModalPreviewStyle({
   };
   const handleClickNext = () => {
     handleCancel();
-    analyticsLogEvent(eventTracking.preview_style_click_next.name);
+    logEvent(eventTracking.preview_style_click_next.name);
     if (!isLoggedIn || !numberGen) {
       setShowModalPayment(true);
     } else {
@@ -63,12 +66,21 @@ export default function ModalPreviewStyle({
         </div>
         <div className="parent-list-styles">
           <div className="list-styles">
-            {listStyles.map((item: any) => (
-              <div key={item.id} className="item-style">
-                <img className="image-style" src={item.thumbnail} alt="" />
-                <div className="name-style">{item.displayName}</div>
-              </div>
-            ))}
+            {listStyles?.length === 0
+              ? Array(20)
+                  .fill(1)
+                  .map((item: any, index: number) => (
+                    <div className="item-style" key={index}>
+                      <Skeleton.Button className="skeleton-image" active />
+                      <Skeleton.Button className="skeleton-text" active />
+                    </div>
+                  ))
+              : listStyles.map((item: any) => (
+                  <div key={item.id} className="item-style">
+                    <img className="image-style" src={item.thumbnail} alt="" />
+                    <div className="name-style">{item.displayName}</div>
+                  </div>
+                ))}
           </div>
         </div>
 

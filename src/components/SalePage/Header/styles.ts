@@ -14,7 +14,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 export const PriceWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 32px;
 `;
 export const CountDownWrapper = styled.div`
   padding: 8px 16px;

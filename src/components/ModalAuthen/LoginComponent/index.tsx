@@ -1,3 +1,4 @@
+import AuthenForm from '@/components/ModalAuthen/AuthenForm';
 import {
   LoginWithSocialWrapper,
   ModalTextTitle,
@@ -9,27 +10,27 @@ import {
   AuthEnum,
   loginWithSocialArr,
 } from '@/components/ModalAuthen/constant';
-import AuthenForm from '@/components/ModalAuthen/AuthenForm';
-import React, { useEffect, useState } from 'react';
+import { CONFIG } from '@/config/service';
+import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import authServices from '@/services/auth.service';
 import { HTTP_STATUS } from '@/services/config/api';
-import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { useSearchParams } from 'react-router-dom';
-import { getCookie } from '@/utils/cookies';
-import { CONFIG } from '@/config/service';
-import { RootState } from '@/store/store';
 import {
   setEmailSuccessPaymentButNotAuth,
   setUserExists,
 } from '@/store/slices/appSlice';
-import { analyticsLogEvent } from '@/firebase';
-import { eventTracking } from '@/firebase/firebase';
+import { loginWithSocialAccount } from '@/store/slices/authSlice';
+import { RootState } from '@/store/store';
+import { getCookie } from '@/utils/cookies';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const LoginComponent: React.FC = () => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const auth = searchParams.get('auth');
+  const { logEvent } = useTrackingEvent();
 
   const errorCode = searchParams.get('errorCode');
   const accessToken = searchParams.get('token');
@@ -117,7 +118,7 @@ const LoginComponent: React.FC = () => {
         dispatch(setUserExists(-1));
         setSearchParams(searchParams);
         if (emailSuccessPaymentButNotAuth) {
-          analyticsLogEvent(eventTracking.login_purchase_click_button.name);
+          logEvent(eventTracking.login_purchase_click_button.name);
         }
       }
     } catch (err: any) {

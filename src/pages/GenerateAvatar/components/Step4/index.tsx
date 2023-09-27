@@ -1,10 +1,10 @@
-import { Wrapper } from './style';
-import Button from '../Button';
 import IconGenerateSuccess from '@/assets/images/icon-generate-success.svg';
-import { useEffect } from 'react';
-import { analyticsLogEvent } from '@/firebase';
 import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { getCookie } from '@/utils/cookies';
+import { useEffect } from 'react';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   handleClickBackToHome: any;
@@ -19,8 +19,9 @@ export default function Step4({
   gender,
   styles,
 }: IProps) {
+  const { logEvent } = useTrackingEvent();
   useEffect(() => {
-    analyticsLogEvent(eventTracking.generating_view.name, {
+    logEvent(eventTracking.generating_view.name, {
       [eventTracking.generating_view.params.package]:
         getCookie('numberStyle') + 'style',
       [eventTracking.generating_view.params.gender]: gender.toLowerCase(),

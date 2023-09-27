@@ -6,28 +6,20 @@ import ReadyStarted from '@/components/HomePage/ReadyStarted';
 import StepsToCreate from '@/components/HomePage/StepsToCreate';
 import TransformPhoto from '@/components/HomePage/TransformPhoto';
 import UsersSay from '@/components/HomePage/UsersSay';
-import { analyticsLogEvent } from '@/firebase';
 import { landingPageTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { ROUTES } from '@/routes/routes';
-import { useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/store';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BodyWrapper, ElipseDecor1, ElipseDecor2, Wrapper } from './styles';
+import { BodyWrapper, Wrapper } from './styles';
 
 export const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
 export const uploadPhotoLinkFromLandingPage = `${ROUTES.APP_PAGE}?from=landing_page`;
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
 
   useEffect(() => {
-    const eventParams: any = {};
-    if (userInfor?.id) {
-      eventParams[landingPageTracking.view.params.userId] = userInfor?.id;
-    }
-    analyticsLogEvent(landingPageTracking.view.name, { ...eventParams });
+    logEvent(landingPageTracking.view.name);
   }, []);
 
   return (

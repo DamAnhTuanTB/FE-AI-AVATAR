@@ -1,12 +1,12 @@
-import { Wrapper } from './style';
 import IconClose from '@/assets/images/icon-delete-image.svg';
-import useScreenSize from '@/hooks/useScreenSize';
-import Button from '../Button';
-import IconPrev from '@/assets/images/icon-prev-avatar.svg';
 import IconNext from '@/assets/images/icon-next-avatar.svg';
-import { useEffect } from 'react';
-import { analyticsLogEvent } from '@/firebase';
+import IconPrev from '@/assets/images/icon-prev-avatar.svg';
 import { eventTracking } from '@/firebase/firebase';
+import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { useEffect } from 'react';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   open: boolean;
@@ -28,10 +28,31 @@ export default function ModalViewAvatar({
   imagesLength,
 }: IProps) {
   const { isDesktop, isMobile } = useScreenSize();
+  const { logEvent } = useTrackingEvent();
 
   const handleCancel = () => {
     setOpen(false);
   };
+
+  // const downloadImage = () => {
+  //   fetch(avatar, {
+  //     method: 'GET',
+  //     headers: {},
+  //   })
+  //     .then((response) => {
+  //       response.blob().then((blob) => {
+  //         const url = window.URL.createObjectURL(new Blob([blob]));
+  //         const link = document.createElement('a');
+  //         link.href = url;
+  //         link.setAttribute('download', 'image.jpg');
+  //         document.body.appendChild(link);
+  //         link.click();
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleDownload = () => {
     const link = document.createElement('a');
@@ -41,7 +62,7 @@ export default function ModalViewAvatar({
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.photo_detail_view.name);
+    logEvent(eventTracking.photo_detail_view.name);
   }, []);
 
   return (
