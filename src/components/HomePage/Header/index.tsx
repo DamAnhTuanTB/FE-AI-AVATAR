@@ -1,8 +1,8 @@
 import LogoSrc from '@/assets/images/logo.png';
 import ArrowRight from '@/components/Icons/ArrowRight';
 import UserAvatar from '@/components/UserAvatar';
-import { analyticsLogEvent } from '@/firebase';
 import { landingPageTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import {
   salePageLinkFromLandingPage,
   uploadPhotoLinkFromLandingPage,
@@ -36,6 +36,7 @@ const links = [
 export default function Header() {
   const navigate = useNavigate();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
   return (
     <Root>
       <BannerWrapper
@@ -77,14 +78,7 @@ export default function Header() {
                 const eventParams: any = {
                   [landingPageTracking.clickStart.params.from]: 'header',
                 };
-                if (userInfor?.id) {
-                  eventParams[landingPageTracking.clickStart.params.userId] =
-                    userInfor?.id;
-                }
-                analyticsLogEvent(
-                  landingPageTracking.clickStart.name,
-                  eventParams
-                );
+                logEvent(landingPageTracking.clickStart.name, eventParams);
                 navigate(uploadPhotoLinkFromLandingPage);
               }}
             >

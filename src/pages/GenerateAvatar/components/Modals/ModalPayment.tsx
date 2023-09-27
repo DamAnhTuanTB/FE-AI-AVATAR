@@ -1,24 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
-import Button from '../Button';
-import { Wrapper } from './style';
-import IconClose from '@/assets/images/icon-delete-image.svg';
-import IconCheck from '@/assets/images/icon-check-v2.svg';
 import IconBestSale from '@/assets/images/best-sale.svg';
-import IconInfo from '@/assets/images/icon-info.svg';
-import { Tooltip } from 'antd';
-import { useEffect } from 'react';
-import useScreenSize from '@/hooks/useScreenSize';
+import IconCheck from '@/assets/images/icon-check-v2.svg';
+import IconClose from '@/assets/images/icon-delete-image.svg';
 import ImagePayment from '@/assets/images/image-payment-v2.svg';
-import { useMutation } from 'react-query';
+import { eventTracking } from '@/firebase/firebase';
+import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { ROUTES } from '@/routes/routes';
 import generateService from '@/services/generate.service';
-import { StepEnum } from '../../contants';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { CONFIG } from '@/config/service';
-import { ROUTES } from '@/routes/routes';
-import { analyticsLogEvent } from '@/firebase';
-import { eventTracking } from '@/firebase/firebase';
 import { eraseCookie, setCookie } from '@/utils/cookies';
+import { useEffect } from 'react';
+import { useMutation } from 'react-query';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   prices: any;
@@ -48,11 +44,12 @@ export default function ModalPayment({
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
+  const { logEvent } = useTrackingEvent();
 
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
   useEffect(() => {
-    analyticsLogEvent(eventTracking.purchase_view.name);
+    logEvent(eventTracking.purchase_view.name);
     if (prices?.length) {
       prices.forEach((item: any) => {
         if (item.bestOffer) {
@@ -103,7 +100,7 @@ export default function ModalPayment({
       eraseCookie('isComeFirst');
     }
 
-    analyticsLogEvent(eventTracking.purchase_click_button.name, {
+    logEvent(eventTracking.purchase_click_button.name, {
       [eventTracking.purchase_click_button.params.gender]:
         gender?.toLowerCase(),
       [eventTracking.purchase_click_button.params.sales]: 'none',
@@ -187,4 +184,3 @@ export default function ModalPayment({
 function setSuccessPurchase(arg0: boolean) {
   throw new Error('Function not implemented.');
 }
-

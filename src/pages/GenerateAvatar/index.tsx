@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { Helmet } from 'react-helmet';
-import { HomeWrapper } from './style';
-import Step1 from './components/Step1';
-import StepHeader from './components/StepHeader';
-import Step2 from './components/Step2';
-import Step3 from './components/Step3';
-import Step4 from './components/Step4';
-import generateService from '@/services/generate.service';
-import PreviewStyle from './components/PreviewStyle';
-import ModalPayment from './components/Modals/ModalPayment';
-import { StepEnum } from './contants';
-import useScreenSize from '@/hooks/useScreenSize';
-import StepHeaderPC from './components/StepHeaderPC';
-import Step1PC from './components/Step1PC';
-import Step2PC from './components/Step2PC';
-import Step3PC from './components/Step3PC';
-import Step4PC from './components/Step4PC';
-import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
-import { RootState } from '@/store/store';
-import { useAppSelector } from '@/store/hooks';
-import { convertLinkImageToFile } from '@/utils/helpers';
-import { useNavigate } from 'react-router';
-import { ROUTES } from '@/routes/routes';
-import { useSearchParams } from 'react-router-dom';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
-import { CONFIG } from '@/config/service';
-import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import ModalUploadFilesExtendLimit from '@/components/ModalUploadFilesExtendLimit';
+import { CONFIG } from '@/config/service';
 import { eventTracking } from '@/firebase/firebase';
-import { analyticsLogEvent } from '@/firebase';
+import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { ROUTES } from '@/routes/routes';
+import generateService from '@/services/generate.service';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
+import { convertLinkImageToFile } from '@/utils/helpers';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import ModalPayment from './components/Modals/ModalPayment';
+import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
+import PreviewStyle from './components/PreviewStyle';
+import Step1 from './components/Step1';
+import Step1PC from './components/Step1PC';
+import Step2 from './components/Step2';
+import Step2PC from './components/Step2PC';
+import Step3 from './components/Step3';
+import Step3PC from './components/Step3PC';
+import Step4 from './components/Step4';
+import Step4PC from './components/Step4PC';
+import StepHeader from './components/StepHeader';
+import StepHeaderPC from './components/StepHeaderPC';
+import { StepEnum } from './contants';
+import { HomeWrapper } from './style';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -45,6 +45,7 @@ export default function GenerateAvatar() {
   const [savingData, setSavingData] = useState(false);
   const listPrice = useAppSelector((state: RootState) => state.app.prices);
   const fromQuery = searchParams.get('from');
+  const { logEvent } = useTrackingEvent();
 
   const [showModalPayment, setShowModalPayment] = useState(false);
   const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
@@ -70,7 +71,7 @@ export default function GenerateAvatar() {
     if (userInfor?.id) {
       eventParams[eventTracking.uploadPhotoView.params.userId] = userInfor?.id;
     }
-    analyticsLogEvent(eventTracking.uploadPhotoView.name, eventParams);
+    logEvent(eventTracking.uploadPhotoView.name, eventParams);
   }, [fromQuery]);
 
   useEffect(() => {
@@ -181,7 +182,7 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.generateImage(payload),
     {
       onSuccess: async (res: any) => {
-        analyticsLogEvent(eventTracking.call_api_generate.name, {
+        logEvent(eventTracking.call_api_generate.name, {
           [eventTracking.call_api_generate.params.status]: 'success',
           [eventTracking.call_api_generate.params.session_id]: sessionId,
         });
@@ -211,7 +212,7 @@ export default function GenerateAvatar() {
         });
       },
       onError: () => {
-        analyticsLogEvent(eventTracking.call_api_generate.name, {
+        logEvent(eventTracking.call_api_generate.name, {
           [eventTracking.call_api_generate.params.status]: 'failed',
           [eventTracking.call_api_generate.params.session_id]: sessionId,
         });
@@ -299,7 +300,7 @@ export default function GenerateAvatar() {
   };
 
   const handleClickBackToHome = () => {
-    analyticsLogEvent(eventTracking.generating_click_back.name);
+    logEvent(eventTracking.generating_click_back.name);
     setStep(StepEnum.GUIDE);
     setImages([]);
     setGender('');
@@ -346,7 +347,7 @@ export default function GenerateAvatar() {
   };
 
   const handleClickMyAvatar = () => {
-    analyticsLogEvent(eventTracking.generating_click_my_avatar.name);
+    logEvent(eventTracking.generating_click_my_avatar.name);
     navigate(ROUTES.LIST_AVATAR);
   };
 

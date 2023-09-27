@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
-import { StepEnum } from '../../contants';
-import Button from '../Button';
-import { Wrapper } from './style';
 import IconFemale from '@/assets/images/icon-female.svg';
 import IconMale from '@/assets/images/icon-male.svg';
-import { analyticsLogEvent } from '@/firebase';
 import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { useEffect } from 'react';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   gender: string;
@@ -21,21 +20,22 @@ export default function Step2PC({
   setStyles,
   setShowModalPreviewStyle,
 }: IProps) {
+  const { logEvent } = useTrackingEvent();
   const handleClickGender = (item: string) => {
     setGender(item);
   };
 
   const handleClickNext = () => {
-    analyticsLogEvent(eventTracking.select_gender_click_next.name, {
+    logEvent(eventTracking.select_gender_click_next.name, {
       [eventTracking.select_gender_click_next.params.gender]:
         gender.toLowerCase(),
     });
-    analyticsLogEvent(eventTracking.preview_style_view.name);
+    logEvent(eventTracking.preview_style_view.name);
     setShowModalPreviewStyle(true);
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.select_gender_view.name);
+    logEvent(eventTracking.select_gender_view.name);
   }, []);
 
   return (

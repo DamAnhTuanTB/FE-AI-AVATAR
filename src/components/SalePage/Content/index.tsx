@@ -1,4 +1,26 @@
-import React from 'react';
+import Avatar1 from '@/assets/images/sale-page/avt-1.png';
+import Avatar10 from '@/assets/images/sale-page/avt-10.png';
+import Avatar11 from '@/assets/images/sale-page/avt-11.png';
+import Avatar12 from '@/assets/images/sale-page/avt-12.png';
+import Avatar13 from '@/assets/images/sale-page/avt-13.png';
+import Avatar14 from '@/assets/images/sale-page/avt-14.png';
+import Avatar15 from '@/assets/images/sale-page/avt-15.png';
+import Avatar16 from '@/assets/images/sale-page/avt-16.png';
+import Avatar17 from '@/assets/images/sale-page/avt-17.png';
+import Avatar18 from '@/assets/images/sale-page/avt-18.png';
+import Avatar2 from '@/assets/images/sale-page/avt-2.png';
+import Avatar3 from '@/assets/images/sale-page/avt-3.png';
+import Avatar4 from '@/assets/images/sale-page/avt-4.png';
+import Avatar5 from '@/assets/images/sale-page/avt-5.png';
+import Avatar6 from '@/assets/images/sale-page/avt-6.png';
+import Avatar7 from '@/assets/images/sale-page/avt-7.png';
+import Avatar8 from '@/assets/images/sale-page/avt-8.png';
+import Avatar9 from '@/assets/images/sale-page/avt-9.png';
+import { salePageTracking } from '@/firebase/firebase';
+import usePurchase from '@/hooks/usePurchase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 import {
   AvatarsWrapper,
   BuyNowButton,
@@ -9,29 +31,6 @@ import {
   TermsWrapper,
   Wrapper,
 } from './styles';
-import Avatar1 from '@/assets/images/sale-page/avt-1.png';
-import Avatar2 from '@/assets/images/sale-page/avt-2.png';
-import Avatar3 from '@/assets/images/sale-page/avt-3.png';
-import Avatar4 from '@/assets/images/sale-page/avt-4.png';
-import Avatar5 from '@/assets/images/sale-page/avt-5.png';
-import Avatar6 from '@/assets/images/sale-page/avt-6.png';
-import Avatar7 from '@/assets/images/sale-page/avt-7.png';
-import Avatar8 from '@/assets/images/sale-page/avt-8.png';
-import Avatar9 from '@/assets/images/sale-page/avt-9.png';
-import Avatar10 from '@/assets/images/sale-page/avt-10.png';
-import Avatar11 from '@/assets/images/sale-page/avt-11.png';
-import Avatar12 from '@/assets/images/sale-page/avt-12.png';
-import Avatar13 from '@/assets/images/sale-page/avt-13.png';
-import Avatar14 from '@/assets/images/sale-page/avt-14.png';
-import Avatar15 from '@/assets/images/sale-page/avt-15.png';
-import Avatar16 from '@/assets/images/sale-page/avt-16.png';
-import Avatar17 from '@/assets/images/sale-page/avt-17.png';
-import Avatar18 from '@/assets/images/sale-page/avt-18.png';
-import usePurchase from '@/hooks/usePurchase';
-import { RootState } from '@/store/store';
-import { useAppSelector } from '@/store/hooks';
-import { salePageTracking } from '@/firebase/firebase';
-import { analyticsLogEvent } from '@/firebase';
 
 const avatarsGroup1 = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6];
 const avatarsGroup2 = [Avatar7, Avatar8, Avatar9, Avatar10, Avatar11, Avatar12];
@@ -51,6 +50,7 @@ interface PropsType {
 export default function SaleContent({ priceSelected }: PropsType) {
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { handlePurchase } = usePurchase();
+  const { logEvent } = useTrackingEvent();
 
   return (
     <Wrapper>
@@ -155,11 +155,8 @@ export default function SaleContent({ priceSelected }: PropsType) {
               salePageTracking.clickBuyNow.params.package
             ] = `${priceSelected?.maxStyle}style`;
           }
-          if (userInfor?.id) {
-            eventParams[salePageTracking.clickBuyNow.params.userId] =
-              userInfor?.id;
-          }
-          analyticsLogEvent(salePageTracking.clickBuyNow.name, eventParams);
+
+          logEvent(salePageTracking.clickBuyNow.name, eventParams);
           handlePurchase(priceSelected?.id);
         }}
       >

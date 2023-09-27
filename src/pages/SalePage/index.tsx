@@ -3,9 +3,9 @@ import SaleContent from '@/components/SalePage/Content';
 import SalePageFooter from '@/components/SalePage/Footer';
 import SaleHeader from '@/components/SalePage/Header';
 import Payment from '@/components/SalePage/Payment';
-import { analyticsLogEvent } from '@/firebase';
 import { salePageTracking } from '@/firebase/firebase';
 import useScreenSize from '@/hooks/useScreenSize';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import generateService from '@/services/generate.service';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
@@ -30,6 +30,7 @@ export default function SalePage() {
   const [searchParams] = useSearchParams();
   const fromQuery = searchParams.get('from');
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const { logEvent } = useTrackingEvent();
 
   const priceType =
     discountPrice === 0.5
@@ -64,10 +65,8 @@ export default function SalePage() {
     if (fromQuery) {
       eventParams[salePageTracking.view.params.source] = fromQuery;
     }
-    if (userInfor?.id) {
-      eventParams[salePageTracking.view.params.userId] = userInfor?.id;
-    }
-    analyticsLogEvent(salePageTracking.view.name, eventParams);
+
+    logEvent(salePageTracking.view.name, eventParams);
   }, [fromQuery]);
 
   return (
