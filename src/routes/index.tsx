@@ -12,6 +12,7 @@ import MainLayout from '@/layouts/MainLayout';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyAndTermService/PrivacyPolicyPage';
 import DetailOriginPhotos from '@/pages/DetailOriginPhotos';
 import DetailGenerateAvatar from '@/pages/DetailGenerateAvatar';
+import TermOfUsePage from '@/pages/PrivacyPolicyAndTermService/TermOfUsePage';
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.PARIVACY_POLICY,
         element: <PrivacyPolicyPage />,
+      },
+      {
+        path: ROUTES.TERM_SERVICE,
+        element: <TermOfUsePage />,
       },
     ],
   },
