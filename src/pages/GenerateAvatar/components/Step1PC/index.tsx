@@ -1,24 +1,22 @@
+import IconDeleteImage from '@/assets/images/icon-delete-image.svg';
+import IconError from '@/assets/images/icon-error.svg';
+import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
+import IconPlus from '@/assets/images/icon-plus.svg';
+import IconTip from '@/assets/images/icon-tip.svg';
+import LoadingLottie from '@/assets/jsons/loading-upload.json';
+import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
+import generateService from '@/services/generate.service';
+import { useAppDispatch } from '@/store/hooks';
+import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie';
 import { useMutation } from 'react-query';
-import { LoadingWrapper, Wrapper } from './style';
-import IconDeleteImage from '@/assets/images/icon-delete-image.svg';
-import Button from '../Button';
-import UploadGuide from '../UploadGuide';
-import LoadingLottie from '@/assets/jsons/loading-upload.json';
-import generateService from '@/services/generate.service';
-import TabBottom from '../TabBottom';
-import IconPlus from '@/assets/images/icon-plus.svg';
-import IconError from '@/assets/images/icon-error.svg';
-import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { StepEnum } from '../../contants';
-import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
+import Button from '../Button';
 import UploadGuidePC from '../UploadGuidePC';
-import IconTip from '@/assets/images/icon-tip.svg';
-import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
-import { useAppDispatch } from '@/store/hooks';
-import { analyticsLogEvent } from '@/firebase';
-import { eventTracking } from '@/firebase/firebase';
+import { LoadingWrapper, Wrapper } from './style';
 
 const defaultOptions = {
   loop: true,
@@ -69,6 +67,7 @@ export default function Step1PC({
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
+  const { logEvent } = useTrackingEvent();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -115,7 +114,7 @@ export default function Step1PC({
 
   const handleChangeFile = (e: any) => {
     if (images?.length === 0) {
-      analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+      logEvent(eventTracking.upload_photo_click_upload.name);
     }
     const files = e.target.files;
     const listImages: any = [];
@@ -187,9 +186,9 @@ export default function Step1PC({
   const handleClickUpload = () => {
     if (countImageValid < 3) {
       if (images?.length === 0) {
-        analyticsLogEvent(eventTracking.upload_photo_click_upload.name);
+        logEvent(eventTracking.upload_photo_click_upload.name);
       } else {
-        analyticsLogEvent(eventTracking.upload_photo_click_upload_more.name);
+        logEvent(eventTracking.upload_photo_click_upload_more.name);
       }
       uploadRef.current?.click();
     } else {
@@ -207,8 +206,8 @@ export default function Step1PC({
         formData.append('files', item.file);
       });
       setShowLoading(true);
-      analyticsLogEvent(eventTracking.upload_photo_click_next.name);
-      analyticsLogEvent(eventTracking.upload_photo_checking.name);
+      logEvent(eventTracking.upload_photo_click_next.name);
+      logEvent(eventTracking.upload_photo_checking.name);
       mutationUpload.mutate(formData);
     }
   };

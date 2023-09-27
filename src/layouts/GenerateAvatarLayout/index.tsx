@@ -1,6 +1,8 @@
 import Header from '@/components/Header';
 import ModalLogin from '@/components/ModalAuthen/ModalLogin';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
+import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import generateService from '@/services/generate.service';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
@@ -13,8 +15,6 @@ import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { ContentWrapper, DefaultLayoutWrapper } from './style';
-import { eventTracking } from '@/firebase/firebase';
-import { analyticsLogEvent } from '@/firebase';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
@@ -23,10 +23,10 @@ export default function GenerateAvatarLayout() {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
-
   const emailSuccessPaymentButNotAuth = useAppSelector(
     (state: RootState) => state.app.emailSuccessPaymentButNotAuth
   );
+  const { logEvent } = useTrackingEvent();
 
   const mutationCheckCaseSuccessPaymentButNotAuth = useMutation(
     (id: string) => generateService.checkUserExist(id),
@@ -37,9 +37,9 @@ export default function GenerateAvatarLayout() {
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
           if (res.data.exists) {
-            analyticsLogEvent(eventTracking.login_purchase_view.name);
+            logEvent(eventTracking.login_purchase_view.name);
           } else {
-            analyticsLogEvent(eventTracking.register_purchase_view.name);
+            logEvent(eventTracking.register_purchase_view.name);
           }
         } else {
           dispatch(setEmailSuccessPaymentButNotAuth(''));

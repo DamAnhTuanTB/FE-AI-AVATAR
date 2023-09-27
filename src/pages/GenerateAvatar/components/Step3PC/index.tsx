@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { Wrapper } from './style';
-import Button from '../Button';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
+import { eventTracking } from '@/firebase/firebase';
+import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { analyticsLogEvent } from '@/firebase';
-import { eventTracking } from '@/firebase/firebase';
 import { setCookie } from '@/utils/cookies';
+import { useEffect } from 'react';
+import Button from '../Button';
+import { Wrapper } from './style';
 
 interface IProps {
   styles: any;
@@ -35,7 +35,7 @@ export default function Step3PC({
   //   setStyles([]);
   //   // }
   // }, []);
-
+  const { logEvent } = useTrackingEvent();
   const listGenerate = useAppSelector(
     (state: RootState) => state.app.userInfor.listGenerate
   );
@@ -62,7 +62,7 @@ export default function Step3PC({
 
   const handleClickNext = () => {
     if (!styles.length) return;
-    analyticsLogEvent(eventTracking.choose_style_click_generate.name, {
+    logEvent(eventTracking.choose_style_click_generate.name, {
       [eventTracking.choose_style_click_generate.params.package]:
         currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
       [eventTracking.choose_style_click_generate.params.gender]:
@@ -76,7 +76,7 @@ export default function Step3PC({
   };
 
   useEffect(() => {
-    analyticsLogEvent(eventTracking.choose_style_view.name, {
+    logEvent(eventTracking.choose_style_view.name, {
       [eventTracking.choose_style_view.params.package]:
         currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
       [eventTracking.choose_style_view.params.gender]: gender.toLowerCase(),
