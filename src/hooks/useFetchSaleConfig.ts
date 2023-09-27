@@ -88,23 +88,22 @@ export default function useFetchSaleConfig() {
   };
 
   useEffect(() => {
-    // if (remoteConfig) {
-    //   fetchAndActivate(remoteConfig)
-    //     .then(() => {
-    //       const startDate: any = getValue(
-    //         remoteConfig,
-    //         'start_date_campaign_config'
-    //       );
-    //       const saleStartDateRemote = startDate._value;
-
-    //       getConfigSaleSchedule(saleStartDateRemote);
-    //     })
-    //     .catch((err) => {
-    //       console.log('Failed to fetch remote config', err);
-    //     });
-    // }
     if (startDateQuery) {
       getConfigSaleSchedule(Number(startDateQuery || 0));
+    } else if (remoteConfig) {
+      fetchAndActivate(remoteConfig)
+        .then(() => {
+          const startDate: any = getValue(
+            remoteConfig,
+            'start_date_campaign_config'
+          );
+          const saleStartDateRemote = startDate._value;
+
+          getConfigSaleSchedule(saleStartDateRemote);
+        })
+        .catch((err) => {
+          console.log('Failed to fetch remote config', err);
+        });
     }
   }, []);
 
