@@ -30,7 +30,7 @@ export const Title = styled.p`
   line-height: 100%; /* 16px */
 `;
 
-export const Content = styled.p`
+export const Content = styled.p<{ 'pre-line'?: boolean }>`
   margin: 20px 0px;
   color: var(--text-primary, #18181b);
   font-family: Outfit;
@@ -38,6 +38,7 @@ export const Content = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 21px */
+  white-space: ${(props) => (props['pre-line'] ? 'pre-line' : 'normal')};
 `;
 
 export const UpdatedAt = styled(Title)`
