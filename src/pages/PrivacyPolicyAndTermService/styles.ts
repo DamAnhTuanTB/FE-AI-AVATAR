@@ -1,4 +1,14 @@
+import { breakpoints } from '@/config/breakpoints';
 import styled from 'styled-components';
+
+export const Root = styled.div`
+  /* overflow-x: hidden; */
+  position: relative;
+  background: '#ffffff';
+  @media screen and (max-width: ${breakpoints.md}) {
+    background: '#ffffff';
+  }
+`;
 
 export const Wrapper = styled.div`
   display: flex;

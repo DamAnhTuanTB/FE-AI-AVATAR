@@ -33,7 +33,7 @@ const links = [
   { title: 'Testimonials', href: '#testimonials' },
 ];
 
-export default function Header() {
+export default function HomePageHeader() {
   const navigate = useNavigate();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
@@ -61,7 +61,10 @@ export default function Header() {
 
           <MenusLink>
             {links.map((link) => (
-              <MenuLink key={link.title} href={link.href}>
+              <MenuLink
+                key={link.title}
+                href={`http://localhost:3030/${link.href}`}
+              >
                 {link.title}
               </MenuLink>
             ))}
