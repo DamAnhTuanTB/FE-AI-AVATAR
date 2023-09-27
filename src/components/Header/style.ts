@@ -43,6 +43,9 @@ export const HeaderWrapper = styled.div`
       line-height: 150%; /* 21px */
       border-radius: 100px;
       background: var(--secondary-black, #262626);
+      img {
+        width: 20px;
+      }
       cursor: pointer;
       @media screen and (max-width: ${breakpoints.md}) {
         display: none;

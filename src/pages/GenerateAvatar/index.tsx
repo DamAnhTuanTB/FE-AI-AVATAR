@@ -33,7 +33,7 @@ import { eventTracking } from '@/firebase/firebase';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [step, setStep] = useState(StepEnum.GUIDE);
   const [sessionId, setSessionId] = useState('');
@@ -62,7 +62,11 @@ export default function GenerateAvatar() {
   const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
 
   useEffect(() => {
-    if (getCookie('savedImages')) {
+    if (
+      getCookie('savedImages') &&
+      searchParams.get('payment-success') === '1'
+    ) {
+      setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImages') || '{}');
 
       const resultConvert: any = [];
@@ -97,8 +101,10 @@ export default function GenerateAvatar() {
   useEffect(() => {
     if (
       searchParams.get('auth') === AuthEnum.ResetPassword &&
-      getCookie('savedImagesCopy')
+      getCookie('savedImagesCopy') &&
+      searchParams.get('payment-success') === '1'
     ) {
+      setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImagesCopy') || '{}');
 
       const resultConvert: any = [];
@@ -197,6 +203,33 @@ export default function GenerateAvatar() {
           styles,
           originImages: listOriginImages,
           timePayment: currentGenerate?.timePayment,
+          results: {
+            ink_stain: [
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f37de994-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f64f79b2-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f4e69fa6-4440-11ee-b652-0242c0a84004.png',
+            ],
+            aborigine: [
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_fa883154-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f7b35350-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f9199574-4440-11ee-b652-0242c0a84004.png',
+            ],
+            // wizard: [
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fbefccaa-4440-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fecc048e-4440-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fd5d42c0-4440-11ee-b652-0242c0a84004.png',
+            // ],
+            // angel: [
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_01af340a-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0038d89c-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0325f026-4441-11ee-b652-0242c0a84004.png',
+            // ],
+            // harry_potter: [
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_077ad394-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_049b9640-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_060a1484-4441-11ee-b652-0242c0a84004.png',
+            // ],
+          },
         });
       },
       onError: () => {

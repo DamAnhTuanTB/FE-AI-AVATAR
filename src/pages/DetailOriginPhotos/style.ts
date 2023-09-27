@@ -7,6 +7,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 60px;
+  @media screen and (max-width: ${breakpoints.lg}) {
+  }
   .header-detail {
     display: flex;
     justify-content: space-between;
@@ -99,6 +101,7 @@ export const Wrapper = styled.div`
           padding-bottom: 100%;
         }
         img {
+          object-fit: cover;
           border-radius: 12px;
           position: absolute;
           top: 0;

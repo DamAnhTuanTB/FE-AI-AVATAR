@@ -86,7 +86,8 @@ export default function ModalPayment({
       priceId: price.id,
       redirectUrl:
         `${window.location.protocol}//${window.location.host}` +
-        ROUTES.APP_PAGE,
+        ROUTES.APP_PAGE +
+        '?payment-success=1',
       // redirectUrl: 'https://avatar.apero.vn/',
     };
     if (isLoggedIn) {

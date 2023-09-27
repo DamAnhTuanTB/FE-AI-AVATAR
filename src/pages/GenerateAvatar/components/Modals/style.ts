@@ -310,6 +310,8 @@ export const Wrapper = styled(Modal)`
             display: block;
             max-width: 512px;
             margin: auto;
+            object-fit: cover;
+            max-height: 60vh;
             @media screen and (max-width: ${breakpoints.lg}) {
               width: 100%;
             }
