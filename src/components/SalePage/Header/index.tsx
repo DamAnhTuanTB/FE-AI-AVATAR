@@ -2,7 +2,6 @@ import LogoSrc from '@/assets/images/logo-secondary.svg';
 import WatchLottie from '@/assets/jsons/stop-watch.json';
 import CountDown from '@/components/CountDown';
 import useCountDown from '@/hooks/useCountDown';
-import { INCREASE_PRICE, nextTimeIncreasePrice } from '@/utils/constants';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie';
 import {
@@ -19,6 +18,7 @@ import {
 } from './styles';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 
 const defaultOptions = {
   loop: true,
@@ -30,6 +30,7 @@ const defaultOptions = {
 };
 
 export default function SaleHeader() {
+  const { nextTimeIncreasePrice, increasePrice } = useFetchSaleConfig();
   const countdown = useCountDown(nextTimeIncreasePrice);
   const [stopWatch, setStopWatch] = useState(false);
 
@@ -41,6 +42,8 @@ export default function SaleHeader() {
       countdown.seconds === '00'
     ) {
       setStopWatch(true);
+    } else {
+      setStopWatch(false);
     }
   }, [JSON.stringify(countdown)]);
 
@@ -61,7 +64,7 @@ export default function SaleHeader() {
       <PriceWrapper>
         <PriceTitleWrapper>
           <Description>
-            The price increased by {INCREASE_PRICE * 100}% in
+            The price increased by {increasePrice * 100}% in
           </Description>
           <ClockWrapper>
             <Lottie options={defaultOptions} isStopped={stopWatch} />

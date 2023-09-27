@@ -7,7 +7,6 @@ import usePurchase from '@/hooks/usePurchase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { discountPrice } from '@/utils/constants';
 import { useEffect } from 'react';
 import CountDown from './CountDown';
 import {
@@ -30,6 +29,7 @@ import {
   StatisticPrimaryText,
   Wrapper,
 } from './styles';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 
 interface PropsType {
   handleSelectPrice: (price: any) => void;
@@ -45,6 +45,7 @@ export default function Payment({
   // const prices = useAppSelector((state: RootState) => state.app.prices);
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
+  const { discountPrice } = useFetchSaleConfig();
 
   const { handlePurchase } = usePurchase();
   const tolerance = discountPrice > 0 ? 0.01 : 0;
