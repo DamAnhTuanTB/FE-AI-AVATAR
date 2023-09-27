@@ -23,7 +23,7 @@ export default function useFetchSaleConfig() {
   const getConfigSaleSchedule = useCallback((startDate: string) => {
     const currentDate = moment();
 
-    const saleStartAt = moment('2023/09/25').format('YYYY/MM/DD');
+    const saleStartAt = moment(startDate).format('YYYY/MM/DD');
 
     const diffDays = currentDate.diff(moment(saleStartAt), 'days');
 
