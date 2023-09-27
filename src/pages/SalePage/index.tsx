@@ -29,9 +29,18 @@ export default function SalePage() {
   const [prices, setPrices] = useState<any[]>([]);
   const [searchParams] = useSearchParams();
   const fromQuery = searchParams.get('from');
-  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
-  const { discountValue, startDate } = useFetchSaleConfig();
+  const { startDate, nextDiscountValue, discountValue, getIncreasePrice } =
+    useFetchSaleConfig();
+  const [increasePrice, setIncreasePrice] = useState(0.5);
+  // console.log('pricesssss', prices);
+
+  useEffect(() => {
+    if (prices.length || priceSelected) {
+      const increasePrice = getIncreasePrice(prices, priceSelected);
+      setIncreasePrice(increasePrice);
+    }
+  }, [nextDiscountValue, prices, priceSelected]);
 
   const getListPrice = useMutation(
     (type: any) => generateService.getListPrice({ type }),
@@ -78,10 +87,7 @@ export default function SalePage() {
     <Wrapper>
       <HeaderWrapper>
         <Container>
-          <SaleHeader
-            prices={prices}
-            priceSelected={priceSelected}
-          />
+          <SaleHeader increasePrice={increasePrice} />
         </Container>
       </HeaderWrapper>
 
@@ -96,7 +102,10 @@ export default function SalePage() {
             />
           </PaymentWrapper>
         )}
-        <SaleContent priceSelected={priceSelected} />
+        <SaleContent
+          priceSelected={priceSelected}
+          increasePrice={increasePrice}
+        />
       </ContentWrapper>
 
       {!(isMobile || isTablet) && (

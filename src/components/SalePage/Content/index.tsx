@@ -34,6 +34,7 @@ import {
 import { getValue } from 'firebase/remote-config';
 import { remoteConfig } from '@/firebase';
 import moment from 'moment';
+import useFetchSaleConfig, { SALE_SCHEDULED } from '@/hooks/useFetchSaleConfig';
 
 const avatarsGroup1 = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6];
 const avatarsGroup2 = [Avatar7, Avatar8, Avatar9, Avatar10, Avatar11, Avatar12];
@@ -48,17 +49,25 @@ const avatarsGroup3 = [
 
 interface PropsType {
   priceSelected: any;
+  increasePrice: number;
 }
 
-export default function SaleContent({ priceSelected }: PropsType) {
+export default function SaleContent({
+  priceSelected,
+  increasePrice,
+}: PropsType) {
   // const { nextTimeIncreasePrice, increasePrice } = useFetchSaleConfig();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { handlePurchase } = usePurchase();
   const { logEvent } = useTrackingEvent();
-  const startDate: any = getValue(
-    remoteConfig,
-    'start_date_campaign_config'
-  );
+  // const startDate: any = getValue(remoteConfig, 'start_date_campaign_config');
+  const { startDate, format } = useFetchSaleConfig();
+  const discountDays = SALE_SCHEDULED.filter(
+    (saleDate) => saleDate.discount > 0
+  ).length;
+  const endDiscountDate = moment(startDate)
+    .add(discountDays, 'd')
+    .format(format);
 
   return (
     <Wrapper>
@@ -134,18 +143,18 @@ export default function SaleContent({ priceSelected }: PropsType) {
         <SectionTitle>Deal Terms:</SectionTitle>
         <TermsWrapper>
           <TermItem>
-            This pre-launch offer is valid until {startDate._value} at [Time] [Time Zone].
+            This pre-launch offer is valid until {endDiscountDate}.
           </TermItem>
           <TermItem>
-            Prices will increase by [Percentage]% after the pre-launch period
-            ends.
+            Prices will increase by {(increasePrice * 100).toFixed(0)}% after
+            the pre-launch period ends.
           </TermItem>
           <TermItem>
             Your purchase includes access to all features and updates for a
             one-time payment.
           </TermItem>
           <TermItem>
-            {`We offer a [Number]-day money-back guarantee. If you're not
+            {`We offer a ${SALE_SCHEDULED.length}-day money-back guarantee. If you're not
             satisfied, we've got you covered.`}
           </TermItem>
         </TermsWrapper>
