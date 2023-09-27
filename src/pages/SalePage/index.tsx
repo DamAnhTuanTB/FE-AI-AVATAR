@@ -4,14 +4,14 @@ import SalePageFooter from '@/components/SalePage/Footer';
 import SaleHeader from '@/components/SalePage/Header';
 import Payment from '@/components/SalePage/Payment';
 import { salePageTracking } from '@/firebase/firebase';
+import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
 import useScreenSize from '@/hooks/useScreenSize';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import generateService from '@/services/generate.service';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { discountPrice } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import {
   BeforeAfterImage,
@@ -31,17 +31,10 @@ export default function SalePage() {
   const fromQuery = searchParams.get('from');
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
+  const { discountPrice, startDate } = useFetchSaleConfig();
 
-  const priceType =
-    discountPrice === 0.5
-      ? 'sale50'
-      : discountPrice === 0.25
-      ? 'sale25'
-      : 'main';
-
-  useQuery(
-    ['get-list-price'],
-    () => generateService.getListPrice({ type: priceType }),
+  const getListPrice = useMutation(
+    (type: any) => generateService.getListPrice({ type }),
     {
       onSuccess: (res: any) => {
         const listPrice = res.data?.map((item: any) => ({
@@ -59,6 +52,18 @@ export default function SalePage() {
   const handleSelectPrice = (price: any) => {
     setPriceSelected(price);
   };
+
+  useEffect(() => {
+    if (startDate) {
+      const priceType =
+        discountPrice === 0.5
+          ? 'sale50'
+          : discountPrice === 0.25
+          ? 'sale25'
+          : 'main';
+      getListPrice.mutate(priceType);
+    }
+  }, [discountPrice, startDate]);
 
   useEffect(() => {
     const eventParams: any = {};
