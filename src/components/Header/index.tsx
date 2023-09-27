@@ -12,6 +12,7 @@ import {
 } from 'react-router-dom';
 import { HeaderWrapper } from './style';
 import UserAvatar from '../UserAvatar';
+import IconMyAvatar from '@/assets/images/icon-my-avatar.svg';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -50,7 +51,8 @@ const Header = () => {
       ) : (
         <div className="avatar-wrapper">
           <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
-            View My Generated Avatar
+            <img src={IconMyAvatar} alt="" />
+            My Avatar
           </div>
           <UserAvatar />
         </div>

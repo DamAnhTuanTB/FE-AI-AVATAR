@@ -9,6 +9,8 @@ import DetailAvatarWithStyle from '@/pages/DetailAvatarWithStyle';
 import HomePage from '@/pages/HomePage';
 import SalePage from '@/pages/SalePage';
 import MainLayout from '@/layouts/MainLayout';
+import DetailOriginPhotos from '@/pages/DetailOriginPhotos';
+import DetailGenerateAvatar from '@/pages/DetailGenerateAvatar';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.DETAIL_AVATAR_WITH_STYLE,
             element: <DetailAvatarWithStyle />,
+          },
+          {
+            path: ROUTES.DETAIL_ORIGIN_PHOTOS,
+            element: <DetailOriginPhotos />,
+          },
+          {
+            path: ROUTES.DETAIL_GENERATE_AVATAR,
+            element: <DetailGenerateAvatar />,
           },
         ],
       },

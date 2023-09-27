@@ -38,17 +38,38 @@ export const Wrapper = styled.div`
   .list-styles {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
+    gap: 20px;
     .item-style {
       position: relative;
       border-radius: 12px;
       cursor: pointer;
       overflow: hidden;
-      border: 2px solid transparent;
+      border: 4px solid transparent;
+      filter: brightness(0.5);
       &::after {
         content: '';
         display: inline-block;
-        padding-bottom: 77%;
+        padding-bottom: 100%;
+      }
+      .skeleton-image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        span {
+          background: #ebebeb;
+        }
+      }
+      .skeleton-text {
+        display: block;
+        position: absolute;
+        bottom: 15px;
+        left: 9px;
+        width: calc(100% - 18px);
+        border-radius: 6px;
+        span {
+          background: #d9d9d9;
+        }
       }
       .image-style {
         position: absolute;
@@ -56,7 +77,7 @@ export const Wrapper = styled.div`
         height: 100%;
         object-fit: cover;
         border-radius: 12px;
-        /* border: 2px solid transparent; */
+        /* border: 4px solid transparent; */
       }
       .name-style {
         white-space: nowrap;
@@ -68,10 +89,10 @@ export const Wrapper = styled.div`
         text-align: center;
         font-size: 16px;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
         line-height: 100%; /* 14px */
-        padding-top: 13px;
-        padding-bottom: 13px;
+        padding-top: 12px;
+        padding-bottom: 12px;
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
         background: linear-gradient(
@@ -82,14 +103,43 @@ export const Wrapper = styled.div`
         -webkit-backdrop-filter: blur(9px);
         backdrop-filter: blur(9px);
       }
+      .checkbox {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+
+        input {
+          width: 24px;
+          height: 24px;
+        }
+        .ant-checkbox-inner {
+          width: 24px;
+          height: 24px;
+          border: none;
+          background: transparent;
+          border-radius: 4px;
+          border: 1.5px solid var(--secondary-white, #fff);
+        }
+        .ant-checkbox-checked .ant-checkbox-inner {
+          background-color: #f6c447;
+          border: none;
+        }
+        .ant-checkbox-checked:after {
+          border: none;
+        }
+        .ant-checkbox-checked .ant-checkbox-inner:after {
+          margin-left: 2.5px;
+        }
+      }
     }
     .style-active {
+      filter: brightness(1);
       /* border: 2px solid #f6c447; */
       img {
-        border: 2px solid #f6c447;
+        border: 4px solid #f6c447;
       }
       .name-style {
-        border: 2px solid #f6c447;
+        border: 4px solid #f6c447;
         border-top: none;
       }
       /* img {

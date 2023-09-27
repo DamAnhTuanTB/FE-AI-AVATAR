@@ -34,6 +34,26 @@ export default function ModalViewAvatar({
     setOpen(false);
   };
 
+  // const downloadImage = () => {
+  //   fetch(avatar, {
+  //     method: 'GET',
+  //     headers: {},
+  //   })
+  //     .then((response) => {
+  //       response.blob().then((blob) => {
+  //         const url = window.URL.createObjectURL(new Blob([blob]));
+  //         const link = document.createElement('a');
+  //         link.href = url;
+  //         link.setAttribute('download', 'image.jpg');
+  //         document.body.appendChild(link);
+  //         link.click();
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
   const handleDownload = () => {
     const link = document.createElement('a');
     link.download = 'my-image.jpg';

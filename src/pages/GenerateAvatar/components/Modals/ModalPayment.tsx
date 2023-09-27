@@ -64,7 +64,6 @@ export default function ModalPayment({
     {
       onSuccess: (res: any) => {
         if (res.data?.url) {
-          setSavingData(true);
           handleSaveData(res.data?.url);
         }
       },
@@ -107,10 +106,10 @@ export default function ModalPayment({
       [eventTracking.purchase_click_button.params.package]:
         price?.maxStyle + 'style',
     });
+    setSavingData(true);
     purchaseMutation.mutate(payload);
   };
 
-  console.log('isSaving', savingData);
   return (
     <Wrapper
       width={isMobile ? 328 : 984}
@@ -180,7 +179,4 @@ export default function ModalPayment({
       </div>
     </Wrapper>
   );
-}
-function setSuccessPurchase(arg0: boolean) {
-  throw new Error('Function not implemented.');
 }

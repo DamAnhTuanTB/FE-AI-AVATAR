@@ -101,19 +101,6 @@ export default function GenerateAvatar() {
 
       convertFn();
 
-      // const resultConvert = savedData.map((item: any) => {
-      //   const file = convertBase64toFile(
-      //     item.file,
-      //     item?.name,
-      //     `image/${item?.name?.split('.')[1]}`
-      //   );
-      //   return {
-      //     ...item,
-      //     file,
-      //     src: URL.createObjectURL(file),
-      //   };
-      // });
-
       setImages(resultConvert);
       setGender(getCookie('savedGender') || '');
       setSessionId(getCookie('savedSessionId') || '');
@@ -162,21 +149,28 @@ export default function GenerateAvatar() {
     }
   }, []);
 
-  useQuery(['get-list-style', gender], () => generateService.getListStyles(), {
-    onSuccess: (res: any) => {
-      const stylesFilter = res?.data?.data?.values[gender.toLowerCase()] || [];
-
-      const listStyles = stylesFilter.map((style: any) => ({
-        id: style._id,
-        thumbnail: style.thumbnail,
-        alias: style.alias,
-        displayName: style.displayName,
-      }));
-
-      setListStyles(listStyles);
+  useQuery(
+    ['get-list-style', gender],
+    () => {
+      return generateService.getListStyles();
     },
-    enabled: !!gender,
-  });
+    {
+      onSuccess: (res: any) => {
+        const stylesFilter =
+          res?.data?.data?.values[gender.toLowerCase()] || [];
+
+        const listStyles = stylesFilter.map((style: any) => ({
+          id: style._id,
+          thumbnail: style.thumbnail,
+          alias: style.alias,
+          displayName: style.displayName,
+        }));
+
+        setListStyles(listStyles);
+      },
+      enabled: !!gender,
+    }
+  );
 
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),
@@ -186,20 +180,33 @@ export default function GenerateAvatar() {
           [eventTracking.call_api_generate.params.status]: 'success',
           [eventTracking.call_api_generate.params.session_id]: sessionId,
         });
-        const firstImageValid = images.find((item: any) => !item.textError);
 
-        const presign = await generateService.getPreSignFile({
-          filename: firstImageValid?.file?.name || 'my-photo.jpg',
-        });
+        const listOriginImages = [];
 
-        const formData = new FormData();
-        for (const property in presign.data.fields) {
-          formData.append(property, presign.data.fields[property]);
+        const imagesValid = images.filter((item: any) => !item.textError);
+
+        for (const item of imagesValid) {
+          try {
+            const presign = await generateService.getPreSignFile({
+              filename: item?.file?.name || 'my-photo.jpg',
+            });
+
+            const formData = new FormData();
+            for (const property in presign.data.fields) {
+              formData.append(property, presign.data.fields[property]);
+            }
+
+            formData.append('file', item?.file);
+
+            await generateService.uploadFileS3(presign?.data?.url, formData);
+
+            listOriginImages.push(
+              CONFIG.REACT_APP_AWS_CDN + '/' + presign?.data?.fields?.key
+            );
+          } catch (error) {
+            console.error('Lỗi khi xử lý promise:', error);
+          }
         }
-
-        formData.append('file', firstImageValid?.file);
-
-        await generateService.uploadFileS3(presign?.data?.url, formData);
 
         mutationCreateSession.mutate({
           email: userInfor.userEmail,
@@ -207,8 +214,35 @@ export default function GenerateAvatar() {
           sessionId,
           gender: gender.toLowerCase(),
           styles,
-          originFirstImage: presign?.data?.fields?.key,
+          originImages: listOriginImages,
           timePayment: currentGenerate?.timePayment,
+          results: {
+            ink_stain: [
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f37de994-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f64f79b2-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f4e69fa6-4440-11ee-b652-0242c0a84004.png',
+            ],
+            aborigine: [
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_fa883154-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f7b35350-4440-11ee-b652-0242c0a84004.png',
+              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f9199574-4440-11ee-b652-0242c0a84004.png',
+            ],
+            // wizard: [
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fbefccaa-4440-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fecc048e-4440-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fd5d42c0-4440-11ee-b652-0242c0a84004.png',
+            // ],
+            // angel: [
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_01af340a-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0038d89c-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0325f026-4441-11ee-b652-0242c0a84004.png',
+            // ],
+            // harry_potter: [
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_077ad394-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_049b9640-4441-11ee-b652-0242c0a84004.png',
+            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_060a1484-4441-11ee-b652-0242c0a84004.png',
+            // ],
+          },
         });
       },
       onError: () => {
@@ -253,21 +287,6 @@ export default function GenerateAvatar() {
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };
-    // if (styles.length < price.maxStyle) {
-    //   const additionalStyles: any = [];
-    //   let restListStyles: any = listStyles.filter(
-    //     (item: any) => !styles.includes(item.alias)
-    //   );
-    //   const countRandom = price.maxStyle - styles.length;
-
-    //   for (let i = 0; i < countRandom; i++) {
-    //     const shuffArray = shuffleArray(restListStyles);
-    //     additionalStyles.push(shuffArray[0].alias);
-    //     restListStyles = shuffArray;
-    //     restListStyles.shift();
-    //   }
-    //   payload.styles = [...styles, ...additionalStyles];
-    // }
     mutationGenerate.mutate(payload);
   };
 
@@ -336,12 +355,15 @@ export default function GenerateAvatar() {
       }
     }
 
-    setCookie('savedImages', JSON.stringify(results));
+    const imagesJSON = JSON.stringify(results);
+
+    setCookie('savedImages', imagesJSON);
     setCookie('savedGender', gender);
     setCookie('savedSessionId', sessionId);
-    setCookie('savedImagesCopy', JSON.stringify(results));
+    setCookie('savedImagesCopy', imagesJSON);
     setCookie('savedGenderCopy', gender);
     setCookie('savedSessionIdCopy', sessionId);
+    setCookie('savedMainImages', imagesJSON);
     setSavingData(false);
     window.location.replace(url);
   };

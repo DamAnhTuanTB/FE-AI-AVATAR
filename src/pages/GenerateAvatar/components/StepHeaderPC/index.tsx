@@ -11,19 +11,19 @@ export default function StepHeaderPC({ step, onClickBack }: IProps) {
   const steps = [
     {
       step: 1,
-      text: 'Step 1: Upload Photos',
-    },
+      text: 'Upload Photos',
+    }, 
     {
       step: 2,
-      text: 'Step 2: Select gender',
+      text: 'Select Gender',
     },
     {
       step: 3,
-      text: 'Step 3: Choose styles',
+      text: 'Choose Styles',
     },
     {
       step: 4,
-      text: 'Step 4: Generate',
+      text: 'Generate',
     },
   ];
   return (
@@ -40,7 +40,8 @@ export default function StepHeaderPC({ step, onClickBack }: IProps) {
             className={`item-step ${step === item.step && 'item-step-active'}`}
             key={item.step}
           >
-            {item.text}
+            <div className="number">{item.step}</div>
+            <div className="text">{item.text}</div>
           </div>
         ))}
       </div>

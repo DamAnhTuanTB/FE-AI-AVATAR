@@ -134,7 +134,7 @@ export default function Step1({
       // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
-      const fileType = getFileExtension(file?.name);
+
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
@@ -158,7 +158,7 @@ export default function Step1({
         file,
         // file: originFile,
         textError: '',
-        name,
+        name: file.name,
       });
     });
     // const countAddtionsAbleToAdd = 15 - images.length;

@@ -30,22 +30,23 @@ export const HeaderWrapper = styled.div`
     gap: 12px;
 
     .button {
-      padding: 8px 16px;
-      height: 40px;
+      width: 147px;
+      height: 37px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      border-radius: 100px;
-      background: var(--primary-1, #f6c447);
-      cursor: pointer;
-
-      color: var(--text-primary, #18181b);
-      /* Sub-headings/Sub-head 1/Medium */
-      font-family: Outfit;
+      gap: 8px;
+      color: var(--secondary-white, #fff);
       font-size: 14px;
       font-style: normal;
       font-weight: 500;
-      line-height: 150%; /* 24px */
-
+      line-height: 150%; /* 21px */
+      border-radius: 100px;
+      background: var(--secondary-black, #262626);
+      img {
+        width: 20px;
+      }
+      cursor: pointer;
       @media screen and (max-width: ${breakpoints.md}) {
         display: none;
       }

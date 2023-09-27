@@ -22,11 +22,12 @@ export const Wrapper = styled.div`
   }
   .list-steps {
     display: flex;
-    gap: 24px;
+    gap: 16px;
     .item-step {
+      gap: 8px;
       cursor: not-allowed;
-      width: 195px;
-      height: 45px;
+      width: 173px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -40,12 +41,30 @@ export const Wrapper = styled.div`
       @media screen and (max-width: 1300px) {
         width: 160px;
       }
+      .number {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1.5px solid #d4d4d4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--neutral-500, #d4d4d4);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 150%; /* 21px */
+      }
     }
     .item-step-active {
       color: white;
       font-weight: 600;
       background: var(--secondary-black, #262626);
       border: none;
+      .number {
+        color: #262626;
+        background-color: white;
+        border: none;
+      }
     }
   }
   .view-avatar {
