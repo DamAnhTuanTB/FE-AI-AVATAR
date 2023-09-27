@@ -46,10 +46,10 @@ export default function ListAvatar() {
     sessionId: string,
     pack: number
   ) => {
-    if (status !== TypeSessionStatus.ACTIVE) {
-      logEvent(eventTracking.my_avatar_click_pack.name);
-      navigate(`/my-avatar/${sessionId}?pack=${pack}`);
-    }
+    // if (status !== TypeSessionStatus.ACTIVE) {
+    logEvent(eventTracking.my_avatar_click_pack.name);
+    navigate(`/my-avatar/${sessionId}?pack=${pack}`);
+    // }
   };
 
   useEffect(() => {
@@ -104,35 +104,14 @@ export default function ListAvatar() {
                     {item?.status === TypeSessionStatus.ACTIVE ? (
                       <>
                         <div className="col-1">
-                          <img
-                            src={
-                              item?.originImages?.length > 0
-                                ? item?.originImages[0]
-                                : item?.originFirstImage
-                            }
-                            alt=""
-                          />
+                          <img src={item?.originImages[0]} alt="" />
                         </div>
                         <div className="col-2">
                           <div className="col-21">
-                            <img
-                              src={
-                                item?.originImages?.length > 0
-                                  ? item?.originImages[1]
-                                  : item?.originFirstImage
-                              }
-                              alt=""
-                            />
+                            <img src={item?.originImages[1]} alt="" />
                           </div>
                           <div className="col-22">
-                            <img
-                              src={
-                                item?.originImages?.length > 0
-                                  ? item?.originImages[2]
-                                  : item?.originFirstImage
-                              }
-                              alt=""
-                            />
+                            <img src={item?.originImages[2]} alt="" />
                           </div>
                         </div>
                       </>
@@ -157,7 +136,10 @@ export default function ListAvatar() {
                   </div>
                   <div className="name-pack">Avatar package {index + 1}</div>
                   <div className="info-pack">
-                    <span>{item?.styles?.length} styles</span>
+                    <span>
+                      {item?.styles?.length}{' '}
+                      {item?.styles?.length > 1 ? 'styles' : 'style'}
+                    </span>
                     <span>{item?.styles?.length * 10} images</span>
                   </div>
                 </div>

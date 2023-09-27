@@ -24,11 +24,24 @@ export const Wrapper = styled.div`
     color: var(--text-secondary, #737373);
     font-size: 16px;
     font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    margin-top: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .count-number {
+    color: var(--secondary-black, #262626);
+    font-size: 16px;
+    font-style: normal;
     font-weight: 500;
     line-height: 150%; /* 24px */
-    margin-top: 10px;
-    margin-bottom: 40px;
-    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    & > div:last-child {
+      cursor: pointer;
+    }
   }
   .parent-list-styles {
     flex: 1;
@@ -44,7 +57,7 @@ export const Wrapper = styled.div`
       border-radius: 12px;
       cursor: pointer;
       overflow: hidden;
-      border: 4px solid transparent;
+      /* border: 4px solid transparent; */
       filter: brightness(0.5);
       &::after {
         content: '';
@@ -103,7 +116,17 @@ export const Wrapper = styled.div`
         -webkit-backdrop-filter: blur(9px);
         backdrop-filter: blur(9px);
       }
-      .checkbox {
+      .order-number {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        border-radius: 12px;
+        border: 2.5px solid var(--secondary-white, #fff);
+        background: rgba(32, 32, 32, 0.5);
+        width: 32px;
+        height: 32px;
+      }
+      /* .checkbox {
         position: absolute;
         top: 12px;
         left: 12px;
@@ -130,7 +153,7 @@ export const Wrapper = styled.div`
         .ant-checkbox-checked .ant-checkbox-inner:after {
           margin-left: 2.5px;
         }
-      }
+      } */
     }
     .style-active {
       filter: brightness(1);
@@ -141,6 +164,18 @@ export const Wrapper = styled.div`
       .name-style {
         border: 4px solid #f6c447;
         border-top: none;
+      }
+      .order-number {
+        background: #f6c447;
+        border: none;
+        color: var(--secondary-black, #262626);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 24px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       /* img {
         transform: scale(1.01);

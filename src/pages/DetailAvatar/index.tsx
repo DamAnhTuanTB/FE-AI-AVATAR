@@ -15,6 +15,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { Wrapper } from './style';
+import { TypeDownload } from '../GenerateAvatar/contants';
 
 export default function DetailAvatar() {
   const { isMobile } = useScreenSize();
@@ -41,8 +42,8 @@ export default function DetailAvatar() {
     }
   );
 
-  const mutationDownloadAll = useMutation(
-    () => generateService.downloadAddPack(params.id),
+  const mutationDownload = useMutation(
+    (params: any) => generateService.downloadAvatar(params),
     {
       onSuccess: (res: any) => {
         setOpenModalDownload(false);
@@ -56,7 +57,10 @@ export default function DetailAvatar() {
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
     logEvent(eventTracking.pack_detail_click_save_all.name);
-    mutationDownloadAll.mutate();
+    mutationDownload.mutate({
+      sessionId: params.id,
+      type: TypeDownload.ALL_RESULT,
+    });
     // window.open(
     //   `https://stg.creatorhub.ai/home-page/nextapi/v1/session/download/${params.id}`
     // );
@@ -82,7 +86,7 @@ export default function DetailAvatar() {
         <a
           className="save"
           onClick={handleSaveAll}
-          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download/${params?.id}`}
+          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download-avatar?sessionId=${params.id}&type=${TypeDownload.ALL_RESULT}`}
         >
           <img src={IconDownload} alt="" />
           <span>Save all</span>
@@ -106,13 +110,11 @@ export default function DetailAvatar() {
             variableWidth={true}
             className="list-origin-photo"
           >
-            {detailAvatar?.originImages?.length > 0 ? (
-              detailAvatar?.originImages?.map((item: any) => (
-                <img key={item} src={item} alt="" />
-              ))
-            ) : (
-              <img src={detailAvatar?.originFirstImage} alt="" />
-            )}
+            {detailAvatar?.originImages?.map((item: any) => (
+              <div key={item} className="item-origin">
+                <img src={item} alt="" />
+              </div>
+            ))}
           </Carousel>
         </div>
         <div className="generated-avatars">
@@ -143,7 +145,7 @@ export default function DetailAvatar() {
               >
                 <div className="item-generated">
                   <div className="col-1">
-                    <img src={detailAvatar?.results[style][1]} alt="" />
+                    <img src={detailAvatar?.results[style][0]} alt="" />
                   </div>
                   <div className="col-2">
                     <img src={detailAvatar?.results[style][1]} alt="" />

@@ -155,8 +155,8 @@ export const Wrapper = styled.div`
             display: flex;
             border-radius: 10px;
             overflow: hidden;
-            border: 1.667px solid rgba(255, 255, 255, 0.6);
             position: relative;
+            border: 1.667px solid rgba(255, 255, 255, 0.6);
             .col-1 {
               flex: 2;
               position: relative;
@@ -200,17 +200,19 @@ export const Wrapper = styled.div`
                 border-bottom: 1.667px solid rgba(255, 255, 255, 0.6);
               }
               .col-22 {
-                border-left: 1.667px solid rgba(255, 255, 255, 0.6);
                 border-top: 1.667px solid rgba(255, 255, 255, 0.6);
+                border-left: 1.667px solid rgba(255, 255, 255, 0.6);
               }
             }
             .second-image {
               border-radius: 12px;
               position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
+              bottom: -1px;
+              top: -1px;
+              left: -1px;
+              right: -1px;
+              width: 101%;
+              height: 101%;
               object-fit: cover;
               opacity: 0.4;
             }

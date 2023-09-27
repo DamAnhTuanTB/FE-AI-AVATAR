@@ -26,26 +26,12 @@ export const Wrapper = styled.div`
       align-items: center;
       gap: 24px;
       .title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        flex-direction: column;
-        & > div:first-child {
-          color: var(--secondary-black, #262626);
-          font-size: 24px;
-          font-style: normal;
-          font-weight: 700;
-          line-height: 120%; /* 28.8px */
-          letter-spacing: -1px;
-        }
-        & > div:last-child {
-          color: var(--text-secondary, #737373);
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 150%; /* 24px */
-        }
+        color: var(--secondary-black, #262626);
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%; /* 28.8px */
+        letter-spacing: -1px;
       }
       .big-upload {
         position: relative;
@@ -82,7 +68,7 @@ export const Wrapper = styled.div`
           font-weight: 500;
           line-height: 150%; /* 21px */
         }
-        
+
         .upload-support {
           color: var(--text-secondary, #737373);
           text-align: center;

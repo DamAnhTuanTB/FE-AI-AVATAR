@@ -43,6 +43,7 @@ export default function GenerateAvatar() {
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
   const [savingData, setSavingData] = useState(false);
+  const [loadingGenerate, setLoadingGenerate] = useState(false);
   const listPrice = useAppSelector((state: RootState) => state.app.prices);
   const fromQuery = searchParams.get('from');
   const { logEvent } = useTrackingEvent();
@@ -216,33 +217,33 @@ export default function GenerateAvatar() {
           styles,
           originImages: listOriginImages,
           timePayment: currentGenerate?.timePayment,
-          results: {
-            ink_stain: [
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f37de994-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f64f79b2-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f4e69fa6-4440-11ee-b652-0242c0a84004.png',
-            ],
-            aborigine: [
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_fa883154-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f7b35350-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f9199574-4440-11ee-b652-0242c0a84004.png',
-            ],
-            // wizard: [
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fbefccaa-4440-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fecc048e-4440-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fd5d42c0-4440-11ee-b652-0242c0a84004.png',
-            // ],
-            // angel: [
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_01af340a-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0038d89c-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0325f026-4441-11ee-b652-0242c0a84004.png',
-            // ],
-            // harry_potter: [
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_077ad394-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_049b9640-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_060a1484-4441-11ee-b652-0242c0a84004.png',
-            // ],
-          },
+          // results: {
+          //   ink_stain: [
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f37de994-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f64f79b2-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f4e69fa6-4440-11ee-b652-0242c0a84004.png',
+          //   ],
+          //   aborigine: [
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_fa883154-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f7b35350-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f9199574-4440-11ee-b652-0242c0a84004.png',
+          //   ],
+          //   // wizard: [
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fbefccaa-4440-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fecc048e-4440-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fd5d42c0-4440-11ee-b652-0242c0a84004.png',
+          //   // ],
+          //   // angel: [
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_01af340a-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0038d89c-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0325f026-4441-11ee-b652-0242c0a84004.png',
+          //   // ],
+          //   // harry_potter: [
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_077ad394-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_049b9640-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_060a1484-4441-11ee-b652-0242c0a84004.png',
+          //   // ],
+          // },
         });
       },
       onError: () => {
@@ -265,6 +266,7 @@ export default function GenerateAvatar() {
     (payload: any) => generateService.createSession(payload),
     {
       onSuccess: (res: any) => {
+        setLoadingGenerate(false);
         setStep(StepEnum.GENERATE_SUCCESS);
         muatationSendMail.mutate({
           subject: 'Your AI Avatar is Underway!',
@@ -277,12 +279,14 @@ export default function GenerateAvatar() {
   );
 
   const handleGenerate = () => {
+    setLoadingGenerate(true);
     const payload: any = {
       styles,
       gender: gender.toLowerCase(),
       sessionId,
       numImagesEachStyle: 10,
-      notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      // notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      notifyTo: `https://80ec-222-252-18-217.ngrok-free.app/api/v1/webhook`,
       // notifyTo: `https://9610-222-252-18-109.ngrok-free.app/api/v1/webhook`,
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
@@ -409,6 +413,7 @@ export default function GenerateAvatar() {
               price={price}
               handleGenerate={handleGenerate}
               sessionId={sessionId}
+              loadingGenerate={loadingGenerate}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
@@ -457,6 +462,7 @@ export default function GenerateAvatar() {
               price={price}
               handleGenerate={handleGenerate}
               sessionId={sessionId}
+              loadingGenerate={loadingGenerate}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (

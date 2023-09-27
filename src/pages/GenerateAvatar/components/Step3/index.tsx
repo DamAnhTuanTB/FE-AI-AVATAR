@@ -17,6 +17,7 @@ interface IProps {
   price: any;
   handleGenerate: any;
   sessionId: string;
+  loadingGenerate: boolean;
 }
 
 export default function Step3({
@@ -27,6 +28,7 @@ export default function Step3({
   price,
   handleGenerate,
   sessionId,
+  loadingGenerate,
 }: IProps) {
   // useEffect(() => {
   //   // if (
@@ -75,7 +77,7 @@ export default function Step3({
         styles.join(','),
     });
     setCookie('numberStyle', currentGenerate?.priceInfo?.metadata?.numberStyle);
-    handleGenerate(currentGenerate?.timePayment);
+    handleGenerate();
   };
 
   useEffect(() => {
@@ -86,12 +88,27 @@ export default function Step3({
     });
   }, []);
 
+  const getOrderStyleSelect = (style: string) => {
+    return styles.findIndex((item: string) => item === style) + 1;
+  };
+
+  const handleDeselectAll = () => {
+    setStyles([]);
+  };
+
   return (
     <Wrapper>
       <div className="title">Choose styles</div>
       <div className="description">
-        Select from a diverse range of up to{' '}
-        {currentGenerate?.priceInfo?.metadata?.numberStyle} avatar styles.
+        You can choose up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
+        styles due to your selected package
+      </div>
+      <div className="count-select">
+        <div>
+          Selected Photos: {styles?.length}/
+          {currentGenerate?.priceInfo?.metadata?.numberStyle}
+        </div>
+        <div onClick={handleDeselectAll}>Deselect all</div>
       </div>
       <div className="list-styles">
         {listStyles?.length === 0
@@ -113,12 +130,17 @@ export default function Step3({
               >
                 <img className="image-style" src={item.thumbnail} alt="" />
                 <div className="name-style">{item.displayName}</div>
+                <div className="order-number">
+                  {styles.includes(item.alias) &&
+                    getOrderStyleSelect(item.alias)}
+                </div>
               </div>
             ))}
         {}
       </div>
       <div className="bottom">
         <Button
+          loading={loadingGenerate}
           onClick={handleClickNext}
           text="Generate"
           width="100%"
