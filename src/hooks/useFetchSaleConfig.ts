@@ -2,6 +2,7 @@ import { remoteConfig } from '@/firebase';
 import { fetchAndActivate, getValue } from '@firebase/remote-config';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export const SALE_SCHEDULED = [
   { day: 0, discount: 0.5 },
@@ -21,8 +22,10 @@ export default function useFetchSaleConfig() {
   const [nextDayIncreasePrice, setNextDayIncreasePrice] = useState(0);
   const [nextTimeIncreasePrice, setNextTimeIncreasePrice] = useState(0);
   const [startDate, setStartDate] = useState('');
+  const [searchParams] = useSearchParams();
+  const startDateQuery = searchParams.get('token_code');
 
-  const getConfigSaleSchedule = useCallback((startDate: string) => {
+  const getConfigSaleSchedule = useCallback((startDate: string | number) => {
     const currentDate = moment();
 
     const saleStartAt = moment(startDate).format(format);
@@ -85,20 +88,23 @@ export default function useFetchSaleConfig() {
   };
 
   useEffect(() => {
-    if (remoteConfig) {
-      fetchAndActivate(remoteConfig)
-        .then(() => {
-          const startDate: any = getValue(
-            remoteConfig,
-            'start_date_campaign_config'
-          );
-          const saleStartDateRemote = startDate._value;
+    // if (remoteConfig) {
+    //   fetchAndActivate(remoteConfig)
+    //     .then(() => {
+    //       const startDate: any = getValue(
+    //         remoteConfig,
+    //         'start_date_campaign_config'
+    //       );
+    //       const saleStartDateRemote = startDate._value;
 
-          getConfigSaleSchedule(saleStartDateRemote);
-        })
-        .catch((err) => {
-          console.log('Failed to fetch remote config', err);
-        });
+    //       getConfigSaleSchedule(saleStartDateRemote);
+    //     })
+    //     .catch((err) => {
+    //       console.log('Failed to fetch remote config', err);
+    //     });
+    // }
+    if (startDateQuery) {
+      getConfigSaleSchedule(Number(startDateQuery || 0));
     }
   }, []);
 
