@@ -16,6 +16,9 @@ export const Wrapper = styled.div`
   align-items: center;
   max-width: 716px;
   margin: 0 auto;
+  @media screen and (max-width: ${breakpoints.md}) {
+    padding: 0 16px;
+  }
 `;
 
 export const MainTitle = styled.p`
