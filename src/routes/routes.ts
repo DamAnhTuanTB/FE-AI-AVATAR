@@ -9,4 +9,6 @@ export const ROUTES = {
   // HOME_PAGE: '/home-page',
   ERROR: '*',
   SALE_PAGE: '/sales',
+  PARIVACY_POLICY: '/privacy-policy',
+  TERM_SERVICE: '/term',
 };
