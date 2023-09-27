@@ -1,5 +1,5 @@
 import DefaultAvatar from '@/assets/images/default_avatar.png';
-import LogoHeader from '@/assets/images/logo.svg';
+import LogoHeader from '@/assets/images/logo.png';
 import { AuthEnum } from '@/components/ModalAuthen/constant';
 import { ROUTES } from '@/routes/routes';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';

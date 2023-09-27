@@ -1,4 +1,4 @@
-import LogoSrc from '@/assets/images/logo.svg';
+import LogoSrc from '@/assets/images/logo.png';
 import ArrowRight from '@/components/Icons/ArrowRight';
 import UserAvatar from '@/components/UserAvatar';
 import { analyticsLogEvent } from '@/firebase';
