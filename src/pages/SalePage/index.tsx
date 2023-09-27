@@ -36,7 +36,7 @@ export default function SalePage() {
   // console.log('pricesssss', prices);
 
   useEffect(() => {
-    if (prices.length || priceSelected) {
+    if (prices.length && priceSelected) {
       const increasePrice = getIncreasePrice(prices, priceSelected);
       setIncreasePrice(increasePrice);
     }
