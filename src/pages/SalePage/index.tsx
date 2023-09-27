@@ -17,7 +17,8 @@ import {
   BeforeAfterImage,
   Container,
   ContentWrapper,
-  HeaderFooterWrapper,
+  FooterWrapper,
+  HeaderWrapper,
   PaymentWrapper,
   Wrapper,
 } from './styles';
@@ -71,11 +72,11 @@ export default function SalePage() {
 
   return (
     <Wrapper>
-      <HeaderFooterWrapper>
+      <HeaderWrapper>
         <Container>
           <SaleHeader />
         </Container>
-      </HeaderFooterWrapper>
+      </HeaderWrapper>
 
       <ContentWrapper>
         <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
@@ -101,11 +102,11 @@ export default function SalePage() {
         </PaymentWrapper>
       )}
 
-      <HeaderFooterWrapper>
+      <FooterWrapper>
         <Container>
           <SalePageFooter />
         </Container>
-      </HeaderFooterWrapper>
+      </FooterWrapper>
     </Wrapper>
   );
 }
