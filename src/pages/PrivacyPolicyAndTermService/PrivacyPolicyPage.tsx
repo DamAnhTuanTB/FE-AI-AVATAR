@@ -14,22 +14,31 @@ export default function PrivacyPolicyPage() {
       <UpdatedAt>Last updated July 15, 2023</UpdatedAt>
       <div>
         <Content>
-          {`VisionLab, Inc ("us", "we", or "our") operates the
-          https://avatarist.ai/ website and Creatorhub mobile applications (the
-          "Service"). This page informs you of our policies regarding the
-          collection, use, and disclosure of personal data when you use our
-          Service and the choices you have associated with that data. We use
-          your data to provide and improve the Service. By using the Service,
-          you agree to the collection and use of information in accordance with
-          this policy. Unless otherwise defined in this Privacy Policy, terms
-          used in this Privacy Policy have the same meanings as in our Terms of
-          Use, accessible from https://avatarist.ai//terms/`}
+          VisionLab, Inc {`("us", "we", or "our")`} operates the
+          <a href={'https://avatarist.ai/'}>https://avatarist.ai/</a> website
+          and Creatorhub mobile applications {`(the "Service").`}
+          <br />
+          <br />
+          This page informs you of our policies regarding the collection, use,
+          and disclosure of personal data when you use our Service and the
+          choices you have associated with that data.
+          <br />
+          <br />
+          We use your data to provide and improve the Service. By using the
+          Service, you agree to the collection and use of information in
+          accordance with this policy. Unless otherwise defined in this Privacy
+          Policy, terms used in this Privacy Policy have the same meanings as in
+          our Terms of Use, accessible from{' '}
+          <a href={'https://avatarist.ai/terms/'}>
+            https://avatarist.ai/terms/
+          </a>{' '}
         </Content>
 
         <Title>Definitions</Title>
         <Content>
-          Service: The service is the https://avatarist.ai/ website and the
-          mobile applications operated by VisionLab, Inc
+          Service: The service is the{' '}
+          <a href={' https://avatarist.ai/'}>https://avatarist.ai/</a> website
+          and the mobile applications operated by VisionLab, Inc
           <br />
           <br />
           Personal Data: Personal Data means any data that identifies or that
@@ -515,7 +524,10 @@ export default function PrivacyPolicyPage() {
           {`\n`}
           You can opt-out of Google Analytics for Display Advertising and
           customize the Google Display Network ads by visiting the Google Ads
-          Settings page: http://www.google.com/settings/ads
+          Settings page:{' '}
+          <a href={'http://www.google.com/settings/ads'}>
+            http://www.google.com/settings/ads
+          </a>{' '}
           {`\n`}
           {`\n`}
           Google also recommends installing the Google Analytics Opt-out Browser
@@ -629,8 +641,8 @@ export default function PrivacyPolicyPage() {
           us:
           <ul>
             <li>
-              {' '}
-              By email: <a href={'hello@avatarist.ai'}>hello@avatarist.ai</a>
+              By email:{' '}
+              <a href={'mailto:hello@avatarist.ai'}>hello@avatarist.ai</a>
             </li>
             <li>Through the online form on our website</li>
           </ul>
