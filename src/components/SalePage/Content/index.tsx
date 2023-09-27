@@ -60,8 +60,6 @@ export default function SaleContent({ priceSelected }: PropsType) {
     'start_date_campaign_config'
   );
 
-  console.log('startDate', startDate._value, moment(startDate, "YYYY/MM/DD").add(5, 'days'));
-  
   return (
     <Wrapper>
       <Description>

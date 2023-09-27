@@ -39,16 +39,16 @@ export default function SaleHeader({ prices, priceSelected }: { prices: any[], p
   
   useEffect(() => {
     if (prices.length || priceSelected) {
-      console.log('discountValue', discountValue);
+      // console.log('discountValue', discountValue);
       const discountPrice = priceSelected?.price || prices[1]?.price;
       const originalPrice = discountPrice / (1 - discountValue) + tolerance; 
       
-      console.log('discountPrice', originalPrice, discountPrice);
+      // console.log('discountPrice', originalPrice, discountPrice);
       
       const nextDiscountPrice = originalPrice * (1 - nextDiscountValue);
-      console.log('priceeeee', nextDiscountValue, originalPrice, discountPrice, nextDiscountPrice);
+      // console.log('priceeeee', nextDiscountValue, originalPrice, discountPrice, nextDiscountPrice);
       const newIncreasePrice = (nextDiscountPrice - discountPrice) / discountPrice;
-      console.log('newIncreasePrice', newIncreasePrice);
+      // console.log('newIncreasePrice', newIncreasePrice);
       setIncreasePrice(newIncreasePrice)
     }
   }, [nextDiscountValue, prices, priceSelected])

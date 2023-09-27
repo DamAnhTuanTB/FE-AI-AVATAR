@@ -4,13 +4,13 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 
 const SALE_SCHEDULED = [
+  { day: 0, discount: 0.5 },
   { day: 1, discount: 0.5 },
-  { day: 2, discount: 0.5 },
+  { day: 2, discount: 0.25 },
   { day: 3, discount: 0.25 },
   { day: 4, discount: 0.25 },
-  { day: 5, discount: 0.25 },
+  { day: 5, discount: 0 },
   { day: 6, discount: 0 },
-  { day: 7, discount: 0 },
 ];
 
 export default function useFetchSaleConfig() {
