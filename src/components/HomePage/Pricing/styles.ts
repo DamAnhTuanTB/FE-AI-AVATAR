@@ -1,6 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer, Title } from '@/pages/HomePage/styles';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Wrapper = styled(HomepageContainer)`
   display: flex;
@@ -113,6 +113,29 @@ export const BenefitItemWrapper = styled.div`
     margin: 0px;
   }
 `;
+const PopularSelect = keyframes`
+  from{
+    background-color: #f6c447;
+    color:#18181B;
+  }
+  to
+  {
+    background-color: #F6C447CC;
+    color:#18181B;
+    }
+`;
+
+const NormalSelect = keyframes`
+  from{
+    background-color: #262626;
+    color:#fff;
+  }
+  to
+  {
+    background-color:  #f6c447;
+    color:#18181B;
+    }
+`;
 
 export const SelectButton = styled.div<{ popular: boolean }>`
   cursor: pointer;
@@ -124,8 +147,8 @@ export const SelectButton = styled.div<{ popular: boolean }>`
   gap: 10px;
   border-radius: 100px;
   background: ${(props) => (props.popular ? '#F6C447' : '#262626')};
+  color: ${(props) => (props.popular ? '#18181B' : '#fff')};
   p {
-    color: ${(props) => (props.popular ? '#18181B' : '#fff')};
     text-align: center;
 
     /* Sub-headings/Sub-head 2/Semibold */
@@ -135,6 +158,10 @@ export const SelectButton = styled.div<{ popular: boolean }>`
     font-weight: 600;
     line-height: 150%; /* 21px */
     margin: 0px;
+  }
+  &:hover {
+    animation: ${(props) => (props.popular ? PopularSelect : NormalSelect)} 0.5s;
+    -webkit-animation-fill-mode: forwards;
   }
   @media screen and (max-width: ${breakpoints.md}) {
     width: 100%;
