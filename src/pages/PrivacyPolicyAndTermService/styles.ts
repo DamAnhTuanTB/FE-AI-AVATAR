@@ -37,9 +37,9 @@ export const Title = styled.p`
 
   /* Button/Button 1/Medium */
   font-family: Outfit;
-  font-size: 16px;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 100%; /* 16px */
 `;
 
@@ -58,4 +58,6 @@ export const UpdatedAt = styled(Title)`
   margin: 12px 0 24px;
 `;
 
-export const SubTitle = styled.span``;
+export const SubTitle = styled.span`
+  font-weight: 600;
+`;
