@@ -8,6 +8,7 @@ import { Skeleton } from 'antd';
 import { StepEnum } from '../../contants';
 import Button from '../Button';
 import { Wrapper } from './style';
+import { useSearchParams } from 'react-router-dom';
 
 interface IProps {
   open: boolean;
@@ -26,7 +27,7 @@ export default function ModalPreviewStyle({
 }: IProps) {
   const { logEvent } = useTrackingEvent();
   const { isMobile, isDesktop } = useScreenSize();
-
+  const [searchParams] = useSearchParams();
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
@@ -42,7 +43,10 @@ export default function ModalPreviewStyle({
   };
   const handleClickNext = () => {
     handleCancel();
-    logEvent(eventTracking.preview_style_click_next.name);
+    logEvent(eventTracking.preview_style_click_next.name, {
+      [eventTracking.preview_style_click_next.params.source]:
+        searchParams.get('from'),
+    });
     if (!isLoggedIn || !numberGen) {
       setShowModalPayment(true);
     } else {

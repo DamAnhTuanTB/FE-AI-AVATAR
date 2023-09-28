@@ -10,7 +10,7 @@ import {
   setUserExists,
 } from '@/store/slices/appSlice';
 import { RootState } from '@/store/store';
-import { getCookie, setCookie } from '@/utils/cookies';
+import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { Outlet, useSearchParams } from 'react-router-dom';
@@ -37,7 +37,28 @@ export default function GenerateAvatarLayout() {
           dispatch(setEmailSuccessPaymentButNotAuth(res.data.email));
           dispatch(setUserExists(res.data.exists ? 1 : 0));
           if (res.data.exists) {
+            const price: any = res.data.price;
             logEvent(eventTracking.login_purchase_view.name);
+            const params = {
+              [eventTracking.purchase_buy_package_success.params.package]:
+                price.metadata.numberStyle + 'style',
+              [eventTracking.purchase_buy_package_success.params.sales]:
+                price.metadata.type,
+              [eventTracking.purchase_buy_package_success.params.from]:
+                searchParams.get('from'),
+              [eventTracking.purchase_buy_package_success.params.value]:
+                price.unit_amount / 100,
+              [eventTracking.purchase_buy_package_success.params.mail]:
+                res.data.email,
+            };
+
+            if (getCookie('savedGender') || getCookie('savedGenderCopy')) {
+              params.gender =
+                getCookie('savedGender') || getCookie('savedGenderCopy');
+            }
+            logEvent(eventTracking.purchase_buy_package_success.name, params);
+            eraseCookie('savedGender');
+            eraseCookie('savedGenderCopy');
           } else {
             logEvent(eventTracking.register_purchase_view.name);
           }

@@ -8,6 +8,7 @@ import { Skeleton } from 'antd';
 import { useEffect } from 'react';
 import Button from '../Button';
 import { Wrapper } from './style';
+import { useSearchParams } from 'react-router-dom';
 
 interface IProps {
   styles: any;
@@ -30,14 +31,7 @@ export default function Step3({
   sessionId,
   loadingGenerate,
 }: IProps) {
-  // useEffect(() => {
-  //   // if (
-  //   //   localStorage.getItem('passGender') &&
-  //   //   localStorage.getItem('passGender') !== gender
-  //   // ) {
-  //   setStyles([]);
-  //   // }
-  // }, []);
+  const [searchParams] = useSearchParams();
 
   const listGenerate = useAppSelector(
     (state: RootState) => state.app.userInfor.listGenerate
@@ -75,6 +69,8 @@ export default function Step3({
         styles.join(','),
       [eventTracking.choose_style_click_generate.params.session_id]:
         styles.join(','),
+      [eventTracking.choose_style_click_generate.params.source]:
+        searchParams.get('from'),
     });
     setCookie('numberStyle', currentGenerate?.priceInfo?.metadata?.numberStyle);
     handleGenerate();
@@ -85,6 +81,7 @@ export default function Step3({
       [eventTracking.choose_style_view.params.package]:
         currentGenerate?.priceInfo?.metadata?.numberStyle + 'style',
       [eventTracking.choose_style_view.params.gender]: gender.toLowerCase(),
+      [eventTracking.choose_style_view.params.source]: searchParams.get('from'),
     });
   }, []);
 

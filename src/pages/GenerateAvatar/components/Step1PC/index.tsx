@@ -17,6 +17,7 @@ import { StepEnum } from '../../contants';
 import Button from '../Button';
 import UploadGuidePC from '../UploadGuidePC';
 import { LoadingWrapper, Wrapper } from './style';
+import { useSearchParams } from 'react-router-dom';
 
 const defaultOptions = {
   loop: true,
@@ -68,6 +69,7 @@ export default function Step1PC({
   const [countImageValid, setCountImageValid] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
   const { logEvent } = useTrackingEvent();
+  const [searchParams] = useSearchParams();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -183,9 +185,15 @@ export default function Step1PC({
   const handleClickUpload = () => {
     if (countImageValid < 3) {
       if (images?.length === 0) {
-        logEvent(eventTracking.upload_photo_click_upload.name);
+        logEvent(eventTracking.upload_photo_click_upload.name, {
+          [eventTracking.upload_photo_click_upload.params.source]:
+            searchParams.get('from'),
+        });
       } else {
-        logEvent(eventTracking.upload_photo_click_upload_more.name);
+        logEvent(eventTracking.upload_photo_click_upload_more.name, {
+          [eventTracking.upload_photo_click_upload_more.params.source]:
+            searchParams.get('from'),
+        });
       }
       uploadRef.current?.click();
     } else {
@@ -203,8 +211,14 @@ export default function Step1PC({
         formData.append('files', item.file);
       });
       setShowLoading(true);
-      logEvent(eventTracking.upload_photo_click_next.name);
-      logEvent(eventTracking.upload_photo_checking.name);
+      logEvent(eventTracking.upload_photo_click_next.name, {
+        [eventTracking.upload_photo_click_next.params.source]:
+          searchParams.get('from'),
+      });
+      logEvent(eventTracking.upload_photo_checking.name, {
+        [eventTracking.upload_photo_checking.params.source]:
+          searchParams.get('from'),
+      });
       mutationUpload.mutate(formData);
     }
   };
