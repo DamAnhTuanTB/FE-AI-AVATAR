@@ -61,9 +61,6 @@ export default function DetailAvatar() {
       sessionId: params.id,
       type: TypeDownload.ALL_RESULT,
     });
-    // window.open(
-    //   `https://stg.creatorhub.ai/home-page/nextapi/v1/session/download/${params.id}`
-    // );
   };
 
   const handleClickViewAll = (url: string) => {
@@ -76,8 +73,6 @@ export default function DetailAvatar() {
   }, []);
 
   const handleClickDetail = (event: any, url: string) => {
-    event.stopPropagation();
-    event.preventDefault();
     navigate(url);
   };
 
@@ -116,7 +111,7 @@ export default function DetailAvatar() {
             variableWidth={true}
             className="list-origin-photo"
           >
-            {detailAvatar?.originImages?.map((item: any, index: number) => (
+            {detailAvatar?.originImages?.map((item: any) => (
               <div key={item} className="item-origin">
                 <img src={item} alt="" />
               </div>
