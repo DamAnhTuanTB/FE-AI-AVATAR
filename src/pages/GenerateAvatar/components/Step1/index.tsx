@@ -124,8 +124,6 @@ export default function Step1({
     }
     const files = e.target.files;
 
-    console.log('files', files);
-
     const listImages: any = [];
     const allowedMimeTypes = [
       'image/png',

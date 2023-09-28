@@ -75,12 +75,13 @@ export default function GenerateAvatar() {
     logEvent(eventTracking.uploadPhotoView.name, eventParams);
   }, [fromQuery]);
 
+  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
   useEffect(() => {
     if (
       getCookie('savedImages') &&
       searchParams.get('payment-success') === '1'
     ) {
-      setSearchParams({});
+      // setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImages') || '{}');
 
       const resultConvert: any = [];
@@ -112,13 +113,14 @@ export default function GenerateAvatar() {
     }
   }, []);
 
+  // Logic mở modal resetPassword khi thanh toán thành công
   useEffect(() => {
     if (
       searchParams.get('auth') === AuthEnum.ResetPassword &&
       getCookie('savedImagesCopy') &&
       searchParams.get('payment-success') === '1'
     ) {
-      setSearchParams({});
+      // setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImagesCopy') || '{}');
 
       const resultConvert: any = [];
@@ -150,6 +152,7 @@ export default function GenerateAvatar() {
     }
   }, []);
 
+  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
   useQuery(
     ['get-list-style', gender],
     () => {
@@ -173,6 +176,7 @@ export default function GenerateAvatar() {
     }
   );
 
+  // api call generate
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),
     {
@@ -255,6 +259,7 @@ export default function GenerateAvatar() {
     }
   );
 
+  // api send mail chờ kết quả khi generate thành công
   const muatationSendMail = useMutation(
     (payload: any) => generateService.sendMail(payload),
     {
@@ -262,6 +267,7 @@ export default function GenerateAvatar() {
     }
   );
 
+  // api create new session khi generate thành công
   const mutationCreateSession = useMutation(
     (payload: any) => generateService.createSession(payload),
     {
@@ -333,6 +339,7 @@ export default function GenerateAvatar() {
     setPrice('');
   };
 
+  // Hàm lưu lại data khi điều hướng đến màn thanh toán
   const handleSaveData = async (url: string) => {
     const results = [];
     for (const item of images) {

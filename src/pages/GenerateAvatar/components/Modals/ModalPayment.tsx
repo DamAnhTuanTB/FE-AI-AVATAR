@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import Button from '../Button';
 import { Wrapper } from './style';
-
+import { useSearchParams } from 'react-router-dom';
 interface IProps {
   prices: any;
   open: boolean;
@@ -45,6 +45,8 @@ export default function ModalPayment({
     (state: RootState) => state.auth.isLoggedIn
   );
   const { logEvent } = useTrackingEvent();
+
+  const [searchParams] = useSearchParams();
 
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
@@ -79,13 +81,14 @@ export default function ModalPayment({
     setPrice(item);
   };
   const handleClickPurchase = () => {
+    let redirectUrl = `${window.location.protocol}//${window.location.host}${ROUTES.APP_PAGE}?payment-success=1`;
+    if (searchParams.get('from')) {
+      redirectUrl += `&from=${searchParams.get('from')}`;
+    }
+    console.log(redirectUrl);
     const payload: any = {
       priceId: price.id,
-      redirectUrl:
-        `${window.location.protocol}//${window.location.host}` +
-        ROUTES.APP_PAGE +
-        '?payment-success=1',
-      // redirectUrl: 'https://avatar.apero.vn/',
+      redirectUrl,
     };
     if (isLoggedIn) {
       payload.userId = userInfor.id;
