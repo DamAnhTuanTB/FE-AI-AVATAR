@@ -143,7 +143,7 @@ export default function SaleContent({
         <SectionTitle>Deal Terms:</SectionTitle>
         <TermsWrapper>
           <TermItem>
-            This pre-launch offer is valid until 11h50 PM {endDiscountDate}.
+            This pre-launch offer is valid until {endDiscountDate} at 11:59 pm.
           </TermItem>
           <TermItem>
             Prices will increase by 100% after the pre-launch period ends.
