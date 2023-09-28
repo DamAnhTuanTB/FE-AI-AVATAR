@@ -99,9 +99,9 @@ export default function GenerateAvatarLayout() {
       {showBanner && <SaleBanner src={ROUTES.SALE_PAGE} />}
       <Header />
       <ContentWrapper
-        style={{
-          height: showBanner ? 'calc(100vh - 70px)' : 'calc(100vh - 70px)',
-        }}
+      // style={{
+      //   height: showBanner ? 'calc(100vh - 70px)' : 'calc(100vh - 70px)',
+      // }}
       >
         <Outlet />
       </ContentWrapper>

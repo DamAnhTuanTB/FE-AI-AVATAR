@@ -75,9 +75,10 @@ export default function DetailAvatar() {
     logEvent(eventTracking.pack_detail_view.name);
   }, []);
 
-  const handleClickDetail = (url: string) => {
-    console.log('click');
-    // navigate(url);
+  const handleClickDetail = (event: any, url: string) => {
+    event.stopPropagation();
+    event.preventDefault();
+    navigate(url);
   };
 
   return (
@@ -110,12 +111,12 @@ export default function DetailAvatar() {
           <Carousel
             dots={false}
             infinite={false}
-            slidesToScroll={1}
+            // slidesToScroll={1}
             draggable={true}
             variableWidth={true}
             className="list-origin-photo"
           >
-            {detailAvatar?.originImages?.map((item: any) => (
+            {detailAvatar?.originImages?.map((item: any, index: number) => (
               <div key={item} className="item-origin">
                 <img src={item} alt="" />
               </div>
@@ -142,13 +143,14 @@ export default function DetailAvatar() {
             variableWidth={true}
             className="list-generated"
           >
-            {Object.keys(listAvatar)?.map((style: string) => (
+            {Object.keys(listAvatar)?.map((style: string, index: number) => (
               <div
+                draggable="true"
                 className="item-child"
                 key={style}
-                onClick={() =>
-                  handleClickDetail(`/my-avatar/${params.id}/${style}`)
-                }
+                // onClick={(event: any) =>
+                //   handleClickDetail(event, `/my-avatar/${params.id}/${style}`)
+                // }
               >
                 <div className="item-generated">
                   <div className="col-1">

@@ -356,7 +356,7 @@ export default function GenerateAvatar() {
     for (const item of images) {
       try {
         const presign = await generateService.getPreSignFile({
-          filename: item?.file?.name || 'my-photo.jpg',
+          filename: 'my-photo.jpg',
         });
 
         const formData = new FormData();

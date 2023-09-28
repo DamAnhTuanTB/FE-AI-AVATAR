@@ -14,4 +14,5 @@ export const DefaultLayoutWrapper: any = styled.div`
 
 export const ContentWrapper = styled.div`
   overflow: hidden;
+  flex: 1;
 `;

@@ -133,7 +133,7 @@ export const Wrapper = styled.div`
       .list-generated {
         .item-child {
           cursor: pointer;
-          /* pointer-events: all !important; */
+          pointer-events: all !important;
           margin-right: 20px;
           .item-generated {
             width: 278px !important;
