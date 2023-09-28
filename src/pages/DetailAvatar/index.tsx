@@ -75,6 +75,11 @@ export default function DetailAvatar() {
     logEvent(eventTracking.pack_detail_view.name);
   }, []);
 
+  const handleClickDetail = (url: string) => {
+    console.log('click');
+    // navigate(url);
+  };
+
   return (
     <Wrapper>
       <div className="header-detail">
@@ -122,7 +127,7 @@ export default function DetailAvatar() {
             <span>Generated Avatars</span>
             <span
               onClick={() =>
-                navigate(`/my-avatar/generated-avatars/${params?.id}`)
+                handleClickViewAll(`/my-avatar/generated-avatars/${params?.id}`)
               }
             >
               View all
@@ -141,7 +146,9 @@ export default function DetailAvatar() {
               <div
                 className="item-child"
                 key={style}
-                onClick={() => navigate(`/my-avatar/${params.id}/${style}`)}
+                onClick={() =>
+                  handleClickDetail(`/my-avatar/${params.id}/${style}`)
+                }
               >
                 <div className="item-generated">
                   <div className="col-1">

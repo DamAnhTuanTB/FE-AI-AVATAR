@@ -1,14 +1,11 @@
 import { eventTracking } from '@/firebase/firebase';
 import useScreenSize from '@/hooks/useScreenSize';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
-import { useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/store';
-import { analyticsLogEvent } from '@/firebase';
 import { Skeleton } from 'antd';
-import { StepEnum } from '../../contants';
 import Button from '../Button';
 import { Wrapper } from './style';
 import { useSearchParams } from 'react-router-dom';
+import IconBackPreview from '@/assets/images/icon-back-preview.svg';
 
 interface IProps {
   open: boolean;
@@ -16,6 +13,9 @@ interface IProps {
   setOpen: (open: boolean) => void;
   setShowModalPayment: any;
   setStep: any;
+  gender: string;
+  setGender: any;
+  originGender: string;
 }
 
 export default function ModalPreviewStyle({
@@ -23,23 +23,18 @@ export default function ModalPreviewStyle({
   setOpen,
   listStyles,
   setShowModalPayment,
-  setStep,
+  gender,
+  setGender,
+  originGender,
 }: IProps) {
   const { logEvent } = useTrackingEvent();
   const { isMobile, isDesktop } = useScreenSize();
   const [searchParams] = useSearchParams();
-  const isLoggedIn = useAppSelector(
-    (state: RootState) => state.auth.isLoggedIn
-  );
-
-  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
-
-  const numberGen = userInfor?.listGenerate?.filter(
-    (item: any) => !item.used
-  )?.length;
 
   const handleCancel = () => {
     setOpen(false);
+    setShowModalPayment(true);
+    setGender(originGender);
   };
   const handleClickNext = () => {
     handleCancel();
@@ -47,27 +42,43 @@ export default function ModalPreviewStyle({
       [eventTracking.preview_style_click_next.params.source]:
         searchParams.get('from'),
     });
-    if (!isLoggedIn || !numberGen) {
-      setShowModalPayment(true);
-    } else {
-      setStep(StepEnum.CHOOSE_STYLE);
-    }
   };
   return (
     <Wrapper
-      width={isMobile ? 338 : 1328}
+      width={isMobile ? 343 : 1328}
       centered
       open={open}
-      onCancel={handleCancel}
       footer={false}
       closable={false}
     >
       <div className="modal-preview-style">
-        <div className="title">Preview styles</div>
-        <div className="description">
-          Preview styles that you can use to create amazing avatars the way you
-          want.
+        <div className="title-first">
+          <div className="back" onClick={handleClickNext}>
+            <img src={IconBackPreview} alt="" />
+            <span>Back</span>
+          </div>
+          <div className="title">View all styles</div>
+          <div className="description">
+            Preview those styles that you can use to create amazing avatars the
+            way you want.
+          </div>
         </div>
+
+        <div className="gender">
+          <div
+            onClick={() => setGender('Female')}
+            className={`${gender === 'Female' && 'active'}`}
+          >
+            Female
+          </div>
+          <div
+            onClick={() => setGender('Male')}
+            className={`${gender === 'Male' && 'active'}`}
+          >
+            Male
+          </div>
+        </div>
+
         <div className="parent-list-styles">
           <div className="list-styles">
             {listStyles?.length === 0
@@ -91,7 +102,7 @@ export default function ModalPreviewStyle({
         <div className="bottom">
           <Button
             onClick={handleClickNext}
-            text="Next"
+            text="Continue Purchasing"
             width={isDesktop ? '212px' : '100%'}
             height="45px"
           />

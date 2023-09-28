@@ -6,26 +6,40 @@ import { useEffect } from 'react';
 import Button from '../Button';
 import { Wrapper } from './style';
 import { useSearchParams } from 'react-router-dom';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { StepEnum } from '../../contants';
 
 interface IProps {
   gender: string;
   setGender: any;
   setStep: (step: number) => void;
-  setStyles: any;
-  setShowModalPreviewStyle: any;
+  setOriginGender: any;
+  setShowModalPayment: any;
 }
 export default function Step2({
   gender,
   setGender,
   setStep,
-  setStyles,
-  setShowModalPreviewStyle,
+  setOriginGender,
+  setShowModalPayment,
 }: IProps) {
   const { logEvent } = useTrackingEvent();
   const [searchParams] = useSearchParams();
 
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+
+  const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+
+  const numberGen = userInfor?.listGenerate?.filter(
+    (item: any) => !item.used
+  )?.length;
+
   const handleClickGender = (item: string) => {
     setGender(item);
+    setOriginGender(item);
   };
 
   const handleClickNext = () => {
@@ -36,7 +50,11 @@ export default function Step2({
         searchParams.get('from'),
     });
     logEvent(eventTracking.preview_style_view.name);
-    setShowModalPreviewStyle(true);
+    if (!isLoggedIn || !numberGen) {
+      setShowModalPayment(true);
+    } else {
+      setStep(StepEnum.CHOOSE_STYLE);
+    }
   };
 
   useEffect(() => {

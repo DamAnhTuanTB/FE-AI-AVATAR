@@ -46,10 +46,10 @@ export default function ListAvatar() {
     sessionId: string,
     pack: number
   ) => {
-    // if (status !== TypeSessionStatus.ACTIVE) {
-    logEvent(eventTracking.my_avatar_click_pack.name);
-    navigate(`/my-avatar/${sessionId}?pack=${pack}`);
-    // }
+    if (status !== TypeSessionStatus.ACTIVE) {
+      logEvent(eventTracking.my_avatar_click_pack.name);
+      navigate(`/my-avatar/${sessionId}?pack=${pack}`);
+    }
   };
 
   useEffect(() => {
@@ -134,7 +134,9 @@ export default function ListAvatar() {
                       <img className="second-image" src={LoadingImage} alt="" />
                     )}
                   </div>
-                  <div className="name-pack">Avatar package {index + 1}</div>
+                  <div className="name-pack">
+                    Avatar package {listSession?.length - index}
+                  </div>
                   <div className="info-pack">
                     <span>
                       {item?.styles?.length}{' '}
