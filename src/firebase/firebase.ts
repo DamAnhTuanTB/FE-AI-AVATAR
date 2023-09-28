@@ -26,30 +26,35 @@ export const eventTracking = {
     name: 'upload_photo_click_upload',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   upload_photo_click_next: {
     name: 'upload_photo_click_next',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   upload_photo_click_upload_more: {
     name: 'upload_photo_click_upload_more',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   upload_photo_checking: {
     name: 'upload_photo_checking',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   select_gender_view: {
     name: 'select_gender_view',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   select_gender_click_next: {
@@ -57,18 +62,21 @@ export const eventTracking = {
     params: {
       gender: 'gender',
       userId: 'user_id',
+      source: 'source',
     },
   },
   preview_style_view: {
     name: 'preview_style_view',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   preview_style_click_next: {
     name: 'preview_style_click_next',
     params: {
       userId: 'user_id',
+      source: 'source',
     },
   },
   purchase_view: {
@@ -84,6 +92,7 @@ export const eventTracking = {
       gender: 'gender',
       sales: 'sales',
       userId: 'user_id',
+      source: 'source',
     },
   },
   login_purchase_view: {
@@ -118,6 +127,7 @@ export const eventTracking = {
       package: 'package',
       gender: 'gender',
       userId: 'user_id',
+      source: 'source',
     },
   },
   choose_style_click_generate: {
@@ -128,6 +138,7 @@ export const eventTracking = {
       style: 'style',
       session_id: 'session_id',
       userId: 'user_id',
+      source: 'source',
     },
   },
   generating_view: {
@@ -137,6 +148,7 @@ export const eventTracking = {
       gender: 'gender',
       style: 'style',
       userId: 'user_id',
+      source: 'source',
     },
   },
   generating_click_back: {
@@ -205,7 +217,7 @@ export const eventTracking = {
     name: 'generate_avatar',
     params: {
       status: 'status',
-      form: 'form',
+      session_id: 'session_id',
       time: 'time',
       userId: 'user_id',
     },
@@ -230,6 +242,24 @@ export const eventTracking = {
     params: {
       from: 'from',
       userId: 'user_id',
+    },
+  },
+  purchase_buy_package_success: {
+    name: 'purchase_buy_package_success',
+    params: {
+      from: 'from',
+      userId: 'user_id',
+      value: 'value',
+      mail: 'mail',
+      gender: 'gender',
+      package: 'package',
+      sales: 'sales',
+    },
+  },
+  mail_start_generate_send: {
+    name: 'mail_start_generate_send',
+    params: {
+      time: 'time',
     },
   },
 };

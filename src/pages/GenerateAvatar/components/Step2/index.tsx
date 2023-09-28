@@ -5,6 +5,7 @@ import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useEffect } from 'react';
 import Button from '../Button';
 import { Wrapper } from './style';
+import { useSearchParams } from 'react-router-dom';
 
 interface IProps {
   gender: string;
@@ -21,6 +22,7 @@ export default function Step2({
   setShowModalPreviewStyle,
 }: IProps) {
   const { logEvent } = useTrackingEvent();
+  const [searchParams] = useSearchParams();
 
   const handleClickGender = (item: string) => {
     setGender(item);
@@ -30,13 +32,18 @@ export default function Step2({
     logEvent(eventTracking.select_gender_click_next.name, {
       [eventTracking.select_gender_click_next.params.gender]:
         gender.toLowerCase(),
+      [eventTracking.select_gender_click_next.params.source]:
+        searchParams.get('from'),
     });
     logEvent(eventTracking.preview_style_view.name);
     setShowModalPreviewStyle(true);
   };
 
   useEffect(() => {
-    logEvent(eventTracking.select_gender_view.name);
+    logEvent(eventTracking.select_gender_view.name, {
+      [eventTracking.select_gender_view.params.source]:
+        searchParams.get('from'),
+    });
   }, []);
 
   return (

@@ -108,6 +108,8 @@ export default function ModalPayment({
       [eventTracking.purchase_click_button.params.sales]: 'none',
       [eventTracking.purchase_click_button.params.package]:
         price?.maxStyle + 'style',
+      [eventTracking.purchase_click_button.params.source]:
+        searchParams.get('from'),
     });
     setSavingData(true);
     purchaseMutation.mutate(payload);

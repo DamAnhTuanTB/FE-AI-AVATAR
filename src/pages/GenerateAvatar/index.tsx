@@ -109,7 +109,7 @@ export default function GenerateAvatar() {
       setSessionId(getCookie('savedSessionId') || '');
       setStep(StepEnum.CHOOSE_STYLE);
       eraseCookie('savedImages');
-      eraseCookie('savedGender');
+      // eraseCookie('savedGender');
       eraseCookie('savedSessionId');
     }
   }, []);
@@ -148,7 +148,7 @@ export default function GenerateAvatar() {
       setSessionId(getCookie('savedSessionIdCopy') || '');
       setStep(StepEnum.CHOOSE_STYLE);
       eraseCookie('savedImagesCopy');
-      eraseCookie('savedGenderCopy');
+      // eraseCookie('savedGenderCopy');
       eraseCookie('savedSessionIdCopy');
     }
   }, []);
@@ -264,7 +264,12 @@ export default function GenerateAvatar() {
   const muatationSendMail = useMutation(
     (payload: any) => generateService.sendMail(payload),
     {
-      onSuccess: (res: any) => {},
+      onSuccess: (res: any) => {
+        logEvent(eventTracking.mail_start_generate_send.name, {
+          [eventTracking.mail_start_generate_send.params.time]:
+            new Date().toISOString(),
+        });
+      },
     }
   );
 
@@ -292,9 +297,7 @@ export default function GenerateAvatar() {
       gender: gender.toLowerCase(),
       sessionId,
       numImagesEachStyle: 10,
-      // notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
-      notifyTo: `https://80ec-222-252-18-217.ngrok-free.app/api/v1/webhook`,
-      // notifyTo: `https://9610-222-252-18-109.ngrok-free.app/api/v1/webhook`,
+      notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
     };
