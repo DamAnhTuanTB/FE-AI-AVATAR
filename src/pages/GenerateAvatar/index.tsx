@@ -6,7 +6,7 @@ import useScreenSize from '@/hooks/useScreenSize';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { ROUTES } from '@/routes/routes';
 import generateService from '@/services/generate.service';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import { convertLinkImageToFile } from '@/utils/helpers';
@@ -31,6 +31,7 @@ import StepHeaderPC from './components/StepHeaderPC';
 import { StepEnum } from './contants';
 import { HomeWrapper } from './style';
 import SaleBanner from '@/components/SaleBanner';
+import { setStepGenerate } from '@/store/slices/appSlice';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -49,6 +50,11 @@ export default function GenerateAvatar() {
   const listPrice = useAppSelector((state: RootState) => state.app.prices);
   const fromQuery = searchParams.get('from');
   const { logEvent } = useTrackingEvent();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setStepGenerate(step));
+  }, [step]);
 
   const [showModalPayment, setShowModalPayment] = useState(false);
   const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
@@ -350,7 +356,7 @@ export default function GenerateAvatar() {
     for (const item of images) {
       try {
         const presign = await generateService.getPreSignFile({
-          filename: item?.file?.name || 'my-photo.jpg',
+          filename: 'my-photo.jpg',
         });
 
         const formData = new FormData();
