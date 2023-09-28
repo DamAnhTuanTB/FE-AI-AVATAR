@@ -11,6 +11,7 @@ import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { ROUTES } from '@/routes/routes';
 import { useEffect } from 'react';
 import { BodyWrapper, Wrapper } from './styles';
+import Pricing from '@/components/HomePage/Pricing';
 
 export const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
 export const uploadPhotoLinkFromLandingPage = `${ROUTES.APP_PAGE}?from=landing_page`;
@@ -31,6 +32,7 @@ export default function HomePage() {
         <TransformPhoto />
         <StepsToCreate />
         <UsersSay />
+        <Pricing />
         {/* <MobileApp /> */}
         <Faq />
         <ReadyStarted />

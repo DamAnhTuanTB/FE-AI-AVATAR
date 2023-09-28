@@ -26,8 +26,9 @@ import {
 const links = [
   { title: 'Why AI Avatar', href: '#why-choose-avatar' },
   { title: 'How it works?', href: '#how-it-works' },
-  { title: 'FAQs', href: '#faq' },
   { title: 'Testimonials', href: '#testimonials' },
+  { title: 'Pricing', href: '#pricing' },
+  { title: 'FAQs', href: '#faq' },
 ];
 
 export default function HomePageHeader() {
