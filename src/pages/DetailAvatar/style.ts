@@ -145,17 +145,17 @@ export const Wrapper = styled.div`
               flex: 2;
               img {
                 width: 100%;
-                border: 1.667px solid rgba(255, 255, 255, 0.6);
+                border: 1.5px solid #fff;
               }
             }
             .col-2 {
               flex: 1;
               display: flex;
               flex-direction: column;
-              border-left: 1.667px solid rgba(255, 255, 255, 0.6);
               img {
                 width: 100%;
-                border: 1.667px solid rgba(255, 255, 255, 0.6);
+                border: 1.5px solid #fff;
+                border-left: none;
               }
             }
           }

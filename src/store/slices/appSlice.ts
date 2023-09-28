@@ -34,7 +34,7 @@ const initialState: AppSlice = {
   userExists: -1,
   prices: [],
   showModalUploadFilesExtendLimit: false,
-  step: 1,
+  step: 0,
 };
 
 export const appSlice = createSlice({
