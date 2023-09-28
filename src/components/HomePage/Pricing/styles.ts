@@ -136,6 +136,9 @@ export const SelectButton = styled.div<{ popular: boolean }>`
     line-height: 150%; /* 21px */
     margin: 0px;
   }
+  @media screen and (max-width: ${breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 export const PopularWrapper = styled.div`
