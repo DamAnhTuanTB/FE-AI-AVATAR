@@ -20,9 +20,12 @@ import BlingIcon from '@/components/Icons/BlingIcon';
 import StylesIcon from '@/assets/images/sale-page/pricing-style-icon.png';
 import ImagesIcon from '@/assets/images/sale-page/pricing-images-icon.png';
 import TimeIcon from '@/assets/images/sale-page/pricing-time-icon.png';
+import usePurchase from '@/hooks/usePurchase';
 
 export default function Pricing() {
   const { prices } = useAppSelector((state: RootState) => state.app);
+  const { handlePurchase } = usePurchase();
+
   return (
     <Wrapper id="pricing">
       <SubTitle>PRICING</SubTitle>
@@ -66,7 +69,12 @@ export default function Pricing() {
                 </BenefitItemWrapper>
               </BenefitsWrapper>
 
-              <SelectButton popular={popular}>
+              <SelectButton
+                popular={popular}
+                onClick={() => {
+                  handlePurchase(price?.id);
+                }}
+              >
                 <p>Select</p>
               </SelectButton>
             </PackageWrapper>
