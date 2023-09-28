@@ -10,5 +10,5 @@ export const ROUTES = {
   ERROR: '*',
   SALE_PAGE: '/sales',
   PARIVACY_POLICY: '/privacy-policy',
-  TERM_SERVICE: '/term',
+  TERM_SERVICE: '/terms',
 };
