@@ -1,5 +1,7 @@
 import React from 'react';
 import { ContentWrapper, Links, Wrapper } from './styles';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/routes/routes';
 
 export default function SalePageFooter() {
   return (
@@ -7,15 +9,8 @@ export default function SalePageFooter() {
       <ContentWrapper>
         <p>© 2023 by VisionLab., Inc. All Rights Reserved.</p>
         <Links>
-          <a href="" target="_blank">
-            Privacy Policy
-          </a>
-          <a href="" target="_blank">
-            Terms of Services
-          </a>
-          <a href="" target="_blank">
-            Contact Us
-          </a>
+          <Link to={ROUTES.PARIVACY_POLICY}>Privacy Policy</Link>
+          <Link to={ROUTES.TERM_SERVICE}>Terms of Services</Link>
         </Links>
       </ContentWrapper>
     </Wrapper>

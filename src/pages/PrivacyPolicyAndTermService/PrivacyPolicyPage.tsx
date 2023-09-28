@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
     <Layout>
       <Wrapper>
         <MainTitle>Privacy Policy</MainTitle>
-        <UpdatedAt>Last updated July 15, 2023</UpdatedAt>
+        <UpdatedAt>Last updated September 28, 2023</UpdatedAt>
         <div>
           <Content>
             VisionLab, Inc {`("us", "we", or "our")`} operates the{' '}
@@ -98,6 +98,8 @@ export default function PrivacyPolicyPage() {
             <br />
             While using our Service, we may ask you to provide us with certain
             Personal Data, which may include:
+            <br />
+            <br />
             <ul>
               <li>Email address</li>
               <li>First name and last name</li>
@@ -158,6 +160,8 @@ export default function PrivacyPolicyPage() {
             <br />
             <br />
             Examples of Cookies we use:
+            <br />
+            <br />
             <ul>
               <li>
                 Session Cookies. We use Session Cookies to operate our Service.
@@ -237,6 +241,8 @@ export default function PrivacyPolicyPage() {
           <Title>Use of Data</Title>
           <Content>
             VisionLab, Inc uses the collected data for various purposes:
+            <br />
+            <br />
             <ul>
               <li>To provide and maintain our Service</li>
               <li>To notify you about changes to our Service</li>
@@ -327,6 +333,8 @@ export default function PrivacyPolicyPage() {
             <br />
             VisionLab, Inc may disclose your Personal Data in the good faith
             belief that such action is necessary to:
+            <br />
+            <br />
             <ul>
               <li>To comply with a legal obligation</li>
               <li>
@@ -376,6 +384,8 @@ export default function PrivacyPolicyPage() {
             {'\n'}
             {'\n'}
             VisionLab, Inc may process your Personal Data because:
+            <br />
+            <br />
             <ul>
               <li>We need to perform a contract with you</li>
               <li>You have given us permission to do so</li>
@@ -393,6 +403,8 @@ export default function PrivacyPolicyPage() {
             {'\n'}
             {'\n'}
             You have the following data protection rights:
+            <br />
+            <br />
             <ul>
               <li>
                 The right to access, update or delete the information we have on
@@ -648,6 +660,8 @@ export default function PrivacyPolicyPage() {
           <Content>
             If you have any questions about this Privacy Policy, please contact
             us:
+            <br />
+            <br />
             <ul>
               <li>
                 By email:{' '}

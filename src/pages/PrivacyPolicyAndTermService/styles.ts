@@ -55,7 +55,7 @@ export const Content = styled.p<{ 'pre-line'?: boolean }>`
 `;
 
 export const UpdatedAt = styled(Title)`
-  margin: 12px 0 24px;
+  margin: 12px 0 4px;
 `;
 
 export const SubTitle = styled.span`

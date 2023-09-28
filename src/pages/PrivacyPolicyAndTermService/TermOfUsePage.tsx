@@ -14,11 +14,11 @@ export default function TermOfUsePage() {
     <Layout>
       <Wrapper>
         <MainTitle>Term Of Use</MainTitle>
-        <UpdatedAt>Last updated July 15, 2023</UpdatedAt>
+        <UpdatedAt>Last updated September 28, 2023</UpdatedAt>
         <div>
           <Content>
             Please read these Terms of Use carefully before using the{' '}
-            <a href={'https://VisionLab.ai/'}>https://VisionLab.ai/</a>
+            <a href={' https://avatarist.ai/ '}> https://avatarist.ai/ </a>
             website (the “Service”) operated by VisionLab.
             <br />
             <br />
@@ -244,6 +244,8 @@ export default function TermOfUsePage() {
             <br />
             <br />
             You represent and warrant that:
+            <br />
+            <br />
             <ul>
               <li>
                 You are authorized to use and have fees charged to the credit
@@ -315,13 +317,15 @@ export default function TermOfUsePage() {
           </Content>
 
           <Title>
-            DMCA Notice and Procedure for Copyright Infringement Claims )
+            DMCA Notice and Procedure for Copyright Infringement Claims
           </Title>
           <Content>
             You may submit a notification pursuant to the Digital Millennium
             Copyright Act (DMCA) by providing our Copyright Agent with the
             following information in writing (see 17 U.S.C 512(c)(3) for further
             detail):
+            <br />
+            <br />
             <ul>
               <li>
                 {`an electronic or physical signature of the person authorized to
@@ -491,10 +495,12 @@ export default function TermOfUsePage() {
           <Title>Contact Us</Title>
           <Content>
             If you have any questions about these Terms, please contact us:
+            <br />
+            <br />
             <ul>
               <li>
                 By email:{' '}
-                <a href={'mailto:support@VisionLab.ai'}>support@VisionLab.ai</a>
+                <a href={'mailto:hello@avatarist.ai'}>hello@avatarist.ai</a>
               </li>
               <li>Through the online form on our website</li>
             </ul>
