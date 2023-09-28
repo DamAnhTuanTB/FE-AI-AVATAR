@@ -392,7 +392,7 @@ export default function GenerateAvatar() {
         <meta name="description" content="Home" />
       </Helmet>
       {(step === StepEnum.GUIDE || step === StepEnum.PICK_GENDER) && (
-        <SaleBanner src={ROUTES.APP_PAGE} />
+        <SaleBanner src={ROUTES.SALE_PAGE} />
       )}
       {isDesktop ? (
         <HomeWrapper>
