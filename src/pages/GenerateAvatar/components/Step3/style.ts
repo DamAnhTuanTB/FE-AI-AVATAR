@@ -21,15 +21,29 @@ export const Wrapper = styled.div`
     line-height: 150%; /* 21px */
     margin-bottom: 16px;
   }
+  .count-select {
+    color: var(--secondary-black, #262626);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 21px */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    & > div:last-child {
+      cursor: pointer;
+    }
+  }
   .list-styles {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
     .item-style {
       position: relative;
-      border-radius: 14px;
+      border-radius: 12px;
       cursor: pointer;
       overflow: hidden;
+      filter: brightness(0.5);
       &::after {
         content: '';
         display: inline-block;
@@ -60,7 +74,7 @@ export const Wrapper = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 14px;
+        border-radius: 12px;
       }
       .name-style {
         white-space: nowrap;
@@ -72,11 +86,12 @@ export const Wrapper = styled.div`
         text-align: center;
         font-size: 14px;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
         line-height: 100%; /* 14px */
-        padding-top: 13px;
-        padding-bottom: 13px;
-        border-radius: 0px 0px 4px 4px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
         background: linear-gradient(
           180deg,
           rgba(9, 9, 23, 0) 0%,
@@ -85,12 +100,41 @@ export const Wrapper = styled.div`
         -webkit-backdrop-filter: blur(9px);
         backdrop-filter: blur(9px);
       }
+      .order-number {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        border-radius: 8px;
+        border: 2px solid var(--secondary-white, #fff);
+        background: rgba(54, 54, 54, 0.5);
+        width: 24px;
+        height: 24px;
+      }
     }
     .style-active {
-      border: 2px solid var(--primary-1, #f6c447);
+      filter: brightness(1);
       img {
-        transform: scale(1.01);
+        border: 3px solid #f6c447;
       }
+      .name-style {
+        border: 3px solid #f6c447;
+        border-top: none;
+      }
+      .order-number {
+        background: var(--primary-1, #f6c447);
+        border: none;
+        color: var(--secondary-black, #262626);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 24px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      /* img {
+        transform: scale(1.01);
+      } */
     }
   }
   .bottom {

@@ -26,6 +26,7 @@ export const APIs = {
   GET_USER: '/user',
   CHECK_USER_EXIST: '/user/check-user-exist',
   SEND_MAIL: '/session/send-mail',
+  DOWNLOAD_IMAGE: '/session/download-image'
 };
 
 export const HTTP_STATUS = {

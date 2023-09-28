@@ -17,3 +17,10 @@ export enum TypeSessionStatus {
   ERROR = 'error',
   COMPLETE = 'complete',
 }
+
+export enum TypeDownload {
+  ALL_RESULT = 'ALL_RESULT',
+  ALL_AVATAR = 'ALL_AVATAR',
+  ALL_ORIGIN_PHOTO = 'ALL_ORIGIN_PHOTO',
+  ALL_AVATAR_WITH_STYLE = 'ALL_AVATAR_WITH_STYLE',
+}

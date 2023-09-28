@@ -43,6 +43,7 @@ export default function GenerateAvatar() {
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
   const [savingData, setSavingData] = useState(false);
+  const [loadingGenerate, setLoadingGenerate] = useState(false);
   const listPrice = useAppSelector((state: RootState) => state.app.prices);
   const fromQuery = searchParams.get('from');
   const { logEvent } = useTrackingEvent();
@@ -74,12 +75,13 @@ export default function GenerateAvatar() {
     logEvent(eventTracking.uploadPhotoView.name, eventParams);
   }, [fromQuery]);
 
+  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
   useEffect(() => {
     if (
       getCookie('savedImages') &&
       searchParams.get('payment-success') === '1'
     ) {
-      setSearchParams({});
+      // setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImages') || '{}');
 
       const resultConvert: any = [];
@@ -111,13 +113,14 @@ export default function GenerateAvatar() {
     }
   }, []);
 
+  // Logic mở modal resetPassword khi thanh toán thành công
   useEffect(() => {
     if (
       searchParams.get('auth') === AuthEnum.ResetPassword &&
       getCookie('savedImagesCopy') &&
       searchParams.get('payment-success') === '1'
     ) {
-      setSearchParams({});
+      // setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImagesCopy') || '{}');
 
       const resultConvert: any = [];
@@ -149,6 +152,7 @@ export default function GenerateAvatar() {
     }
   }, []);
 
+  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
   useQuery(
     ['get-list-style', gender],
     () => {
@@ -172,6 +176,7 @@ export default function GenerateAvatar() {
     }
   );
 
+  // api call generate
   const mutationGenerate = useMutation(
     (payload: any) => generateService.generateImage(payload),
     {
@@ -216,33 +221,33 @@ export default function GenerateAvatar() {
           styles,
           originImages: listOriginImages,
           timePayment: currentGenerate?.timePayment,
-          results: {
-            ink_stain: [
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f37de994-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f64f79b2-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f4e69fa6-4440-11ee-b652-0242c0a84004.png',
-            ],
-            aborigine: [
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_fa883154-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f7b35350-4440-11ee-b652-0242c0a84004.png',
-              'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f9199574-4440-11ee-b652-0242c0a84004.png',
-            ],
-            // wizard: [
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fbefccaa-4440-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fecc048e-4440-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fd5d42c0-4440-11ee-b652-0242c0a84004.png',
-            // ],
-            // angel: [
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_01af340a-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0038d89c-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0325f026-4441-11ee-b652-0242c0a84004.png',
-            // ],
-            // harry_potter: [
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_077ad394-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_049b9640-4441-11ee-b652-0242c0a84004.png',
-            //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_060a1484-4441-11ee-b652-0242c0a84004.png',
-            // ],
-          },
+          // results: {
+          //   ink_stain: [
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f37de994-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f64f79b2-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/ink_stain_f4e69fa6-4440-11ee-b652-0242c0a84004.png',
+          //   ],
+          //   aborigine: [
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_fa883154-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f7b35350-4440-11ee-b652-0242c0a84004.png',
+          //     'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/aborigine_f9199574-4440-11ee-b652-0242c0a84004.png',
+          //   ],
+          //   // wizard: [
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fbefccaa-4440-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fecc048e-4440-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/wizard_fd5d42c0-4440-11ee-b652-0242c0a84004.png',
+          //   // ],
+          //   // angel: [
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_01af340a-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0038d89c-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/angel_0325f026-4441-11ee-b652-0242c0a84004.png',
+          //   // ],
+          //   // harry_potter: [
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_077ad394-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_049b9640-4441-11ee-b652-0242c0a84004.png',
+          //   //   'https://static.apero.vn/ai-avatar/qKdSyKeDlh3AN2J/output/harry_potter_060a1484-4441-11ee-b652-0242c0a84004.png',
+          //   // ],
+          // },
         });
       },
       onError: () => {
@@ -254,6 +259,7 @@ export default function GenerateAvatar() {
     }
   );
 
+  // api send mail chờ kết quả khi generate thành công
   const muatationSendMail = useMutation(
     (payload: any) => generateService.sendMail(payload),
     {
@@ -261,10 +267,12 @@ export default function GenerateAvatar() {
     }
   );
 
+  // api create new session khi generate thành công
   const mutationCreateSession = useMutation(
     (payload: any) => generateService.createSession(payload),
     {
       onSuccess: (res: any) => {
+        setLoadingGenerate(false);
         setStep(StepEnum.GENERATE_SUCCESS);
         muatationSendMail.mutate({
           subject: 'Your AI Avatar is Underway!',
@@ -277,12 +285,14 @@ export default function GenerateAvatar() {
   );
 
   const handleGenerate = () => {
+    setLoadingGenerate(true);
     const payload: any = {
       styles,
       gender: gender.toLowerCase(),
       sessionId,
       numImagesEachStyle: 10,
-      notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      // notifyTo: `${CONFIG.BASE_SERVER_URL}/v1/webhook`,
+      notifyTo: `https://80ec-222-252-18-217.ngrok-free.app/api/v1/webhook`,
       // notifyTo: `https://9610-222-252-18-109.ngrok-free.app/api/v1/webhook`,
       notifyType: 'webhook',
       // bundleId: '1:440595538066:web:85b4c721ac6bf45a32c64b',
@@ -329,6 +339,7 @@ export default function GenerateAvatar() {
     setPrice('');
   };
 
+  // Hàm lưu lại data khi điều hướng đến màn thanh toán
   const handleSaveData = async (url: string) => {
     const results = [];
     for (const item of images) {
@@ -409,6 +420,7 @@ export default function GenerateAvatar() {
               price={price}
               handleGenerate={handleGenerate}
               sessionId={sessionId}
+              loadingGenerate={loadingGenerate}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (
@@ -457,6 +469,7 @@ export default function GenerateAvatar() {
               price={price}
               handleGenerate={handleGenerate}
               sessionId={sessionId}
+              loadingGenerate={loadingGenerate}
             />
           )}
           {step === StepEnum.GENERATE_SUCCESS && (

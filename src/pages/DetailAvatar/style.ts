@@ -111,11 +111,15 @@ export const Wrapper = styled.div`
       }
     }
     .list-origin-photo {
-      img {
+      .item-origin {
         width: 278px !important;
         height: 278px !important;
-        object-fit: cover;
         margin-right: 20px;
+      }
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
         border-radius: 12px;
       }
     }
@@ -163,6 +167,10 @@ export const Wrapper = styled.div`
             line-height: 150%; /* 24px */
             margin-top: 12px;
             margin-bottom: 4px;
+            @media screen and (max-width: ${breakpoints.lg}) {
+              font-size: 14px;
+              font-weight: 500;
+            }
           }
           .number-image {
             color: var(--text-secondary, #737373);
@@ -170,6 +178,10 @@ export const Wrapper = styled.div`
             font-style: normal;
             font-weight: 400;
             line-height: 150%; /* 21px */
+            @media screen and (max-width: ${breakpoints.lg}) {
+              font-size: 12px;
+              font-weight: 400;
+            }
           }
         }
       }

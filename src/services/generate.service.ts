@@ -53,12 +53,12 @@ const generateService = {
       VERSION.v1 + APIs.GET_DETAIL_SESSION + `/${id}`
     );
   },
-  downloadAddPack(id: string) {
-    return baseServerRequest.get(
-      VERSION.v1 + APIs.DOWNLOAD_ALL_PACK + `/${id}`
-    );
-  },
-  downloadAllAvatarWithStyle(params: any) {
+  // downloadAddPack(id: string) {
+  //   return baseServerRequest.get(
+  //     VERSION.v1 + APIs.DOWNLOAD_ALL_PACK + `/${id}`
+  //   );
+  // },
+  downloadAvatar(params: any) {
     return baseServerRequest.get(
       VERSION.v1 + APIs.DOWNLOAD_ALL_AVATAR_WITH_STYLE,
       params
@@ -66,6 +66,9 @@ const generateService = {
   },
   sendMail(payload: any) {
     return baseServerRequest.post(VERSION.v1 + APIs.SEND_MAIL, payload);
+  },
+  downloadImage(params: any) {
+    return baseServerRequest.get(VERSION.v1 + APIs.DOWNLOAD_IMAGE, params);
   },
 };
 

@@ -12,6 +12,7 @@ import { CONFIG } from '@/config/service';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import useScreenSize from '@/hooks/useScreenSize';
+import { TypeDownload } from '../GenerateAvatar/contants';
 // import JSZip from 'jszip';
 // import axios from 'axios';
 
@@ -54,8 +55,6 @@ export default function DetailOriginPhotos() {
       onSuccess: (res: any) => {
         if (res.data?.originImages?.length > 0) {
           setListAvatar(res.data.originImages);
-        } else {
-          setListAvatar([res.data?.originFirstImage]);
         }
       },
     }
@@ -78,8 +77,8 @@ export default function DetailOriginPhotos() {
     setImageIdx(index + 1);
   };
 
-  const mutationDownloadAllAvatarWithStyle = useMutation(
-    (params: any) => generateService.downloadAllAvatarWithStyle(params),
+  const mutationDownload = useMutation(
+    (params: any) => generateService.downloadAvatar(params),
     {
       onSuccess: (res: any) => {
         setOpenModalDownload(false);
@@ -93,9 +92,9 @@ export default function DetailOriginPhotos() {
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
     // downloadImagesAsZip(listAvatar);
-    mutationDownloadAllAvatarWithStyle.mutate({
+    mutationDownload.mutate({
       sessionId: params.id,
-      style: params.style,
+      type: TypeDownload.ALL_ORIGIN_PHOTO,
     });
   };
 
@@ -110,7 +109,7 @@ export default function DetailOriginPhotos() {
         <a
           className="save"
           onClick={handleSaveAll}
-          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download-all-image-with-style?sessionId=${params.id}&style=${params.style}`}
+          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download-avatar?sessionId=${params.id}&type=${TypeDownload.ALL_ORIGIN_PHOTO}`}
         >
           <img src={IconDownload} alt="" />
           <span>Save all</span>

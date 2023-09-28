@@ -239,13 +239,7 @@ export default function Step1PC({
       <UploadGuidePC />
       <div className="upload">
         <div className="child-1">
-          <div className="title">
-            <div>Upload your 3 - 15 best images</div>
-            {/* <div>
-              Choose 3-15 images to teach the AI what you look like. The avatars
-              will be based on the images you upload, so choose wisely!
-            </div> */}
-          </div>
+          <div className="title">Upload your 3 - 15 best images</div>
           {images.length === 0 ? (
             <div className="big-upload">
               <img src={IconPlusUpload} alt="" />

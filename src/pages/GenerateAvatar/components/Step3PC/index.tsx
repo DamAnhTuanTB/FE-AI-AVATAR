@@ -17,6 +17,7 @@ interface IProps {
   price: any;
   handleGenerate: any;
   sessionId: string;
+  loadingGenerate: boolean;
 }
 
 export default function Step3PC({
@@ -27,6 +28,7 @@ export default function Step3PC({
   price,
   handleGenerate,
   sessionId,
+  loadingGenerate,
 }: IProps) {
   // useEffect(() => {
   //   // if (
@@ -84,12 +86,27 @@ export default function Step3PC({
     });
   }, []);
 
+  const getOrderStyleSelect = (style: string) => {
+    return styles.findIndex((item: string) => item === style) + 1;
+  };
+
+  const handleDeselectAll = () => {
+    setStyles([]);
+  };
+
   return (
     <Wrapper>
       <div className="title">Choose styles</div>
       <div className="description">
-        Select from a diverse range of up to{' '}
-        {currentGenerate?.priceInfo?.metadata?.numberStyle} avatar styles.
+        You can choose up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
+        styles due to your selected package
+      </div>
+      <div className="count-number">
+        <div>
+          Selected Photos: {styles?.length}/
+          {currentGenerate?.priceInfo?.metadata?.numberStyle}
+        </div>
+        <div onClick={handleDeselectAll}>Deselect all</div>
       </div>
       <div className="parent-list-styles">
         <div className="list-styles">
@@ -112,16 +129,21 @@ export default function Step3PC({
                 >
                   <img className="image-style" src={item.thumbnail} alt="" />
                   <div className="name-style">{item.displayName}</div>
-                  <Checkbox
+                  <div className="order-number">
+                    {styles.includes(item.alias) &&
+                      getOrderStyleSelect(item.alias)}
+                  </div>
+                  {/* <Checkbox
                     checked={styles.includes(item?.alias)}
                     className="checkbox"
-                  />
+                  /> */}
                 </div>
               ))}
         </div>
       </div>
       <div className="btn-generate">
         <Button
+          loading={loadingGenerate}
           onClick={handleClickNext}
           text="Generate"
           width="189px"

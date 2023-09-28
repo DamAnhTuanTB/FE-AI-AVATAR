@@ -12,6 +12,7 @@ import { CONFIG } from '@/config/service';
 import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import useScreenSize from '@/hooks/useScreenSize';
+import { TypeDownload } from '../GenerateAvatar/contants';
 // import JSZip from 'jszip';
 // import axios from 'axios';
 
@@ -74,8 +75,8 @@ export default function DetailAvatarWithStyle() {
     setImageIdx(index + 1);
   };
 
-  const mutationDownloadAllAvatarWithStyle = useMutation(
-    (params: any) => generateService.downloadAllAvatarWithStyle(params),
+  const mutationDownload = useMutation(
+    (params: any) => generateService.downloadAvatar(params),
     {
       onSuccess: (res: any) => {
         setOpenModalDownload(false);
@@ -89,9 +90,10 @@ export default function DetailAvatarWithStyle() {
   const handleSaveAll = async () => {
     setOpenModalDownload(true);
     // downloadImagesAsZip(listAvatar);
-    mutationDownloadAllAvatarWithStyle.mutate({
+    mutationDownload.mutate({
       sessionId: params.id,
       style: params.style,
+      type: TypeDownload.ALL_AVATAR_WITH_STYLE,
     });
   };
 
@@ -102,11 +104,11 @@ export default function DetailAvatarWithStyle() {
           <img src={IconPrev} alt="" />
           <span>Back</span>
         </div>
-        <div className="style">{capitalizeWords(params.style)}</div>
+        <div className="style">Style: {capitalizeWords(params.style)}</div>
         <a
           className="save"
           onClick={handleSaveAll}
-          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download-all-image-with-style?sessionId=${params.id}&style=${params.style}`}
+          href={`${CONFIG.BASE_SERVER_URL}/v1/session/download-avatar?sessionId=${params.id}&style=${params.style}&type=${TypeDownload.ALL_AVATAR_WITH_STYLE}`}
         >
           <img src={IconDownload} alt="" />
           <span>Save all</span>
