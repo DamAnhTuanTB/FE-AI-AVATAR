@@ -30,6 +30,7 @@ import StepHeader from './components/StepHeader';
 import StepHeaderPC from './components/StepHeaderPC';
 import { StepEnum } from './contants';
 import { HomeWrapper } from './style';
+import SaleBanner from '@/components/SaleBanner';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -394,6 +395,9 @@ export default function GenerateAvatar() {
         <title>Home</title>
         <meta name="description" content="Home" />
       </Helmet>
+      {(step === StepEnum.GUIDE || step === StepEnum.PICK_GENDER) && (
+        <SaleBanner src={ROUTES.SALE_PAGE} />
+      )}
       {isDesktop ? (
         <HomeWrapper>
           <StepHeaderPC step={step} onClickBack={handleClickBack} />

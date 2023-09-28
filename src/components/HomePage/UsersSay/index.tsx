@@ -50,7 +50,7 @@ const groups = [
         name: 'Natalie Attired',
         job: 'Student & Content Creator',
         rate: 5,
-        said: `"The best part is that Avatarist is incredibly user-friendly. You don't need to be a tech expert to navigate the platform. It's so intuitive and easy to use, making the entire process a breeze."`,
+        said: `"The best part is that Avatarist is incredibly user-friendly. You don't need to be a tech expert to navigate the platform. It's so intuitive and easy to use, making the entire process a breeze. Really love this tool"`,
         avt: User7,
       },
     ],

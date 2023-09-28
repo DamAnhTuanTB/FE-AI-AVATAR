@@ -220,7 +220,7 @@ export default function ModalPayment({
                   : price?.displayName === 'Basic'
                   ? '#0085FF'
                   : '#D253FF',
-            }} 
+            }}
           >
             <div className="name">
               <span>{price?.displayName}</span>
@@ -268,7 +268,7 @@ export default function ModalPayment({
                 }
                 alt=""
               />
-              <span>{price?.numberImage} styles of your choice</span>
+              <span>{price?.maxImages} avatar images</span>
             </div>
           </div>
           <div className="item-info last-item-info">

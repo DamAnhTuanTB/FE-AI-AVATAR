@@ -53,9 +53,9 @@ export default function MainLayout() {
           price: item.unit_amount / 100,
           maxStyle: Number(item.metadata.numberStyle),
           bestOffer: item.metadata?.popular === 'true',
-          numberImage: item.metadata.numberImage,
-          displayName: item.metadata?.displayName,
-          renderTime: item.metadata?.renderTime,
+          displayName: item.metadata?.displayName || '',
+          renderTime: item.metadata?.renderTime || '',
+          maxImages: Number(item.metadata?.numberImage),
         }));
         dispatch(setListPrice(listPrice));
       },
