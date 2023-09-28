@@ -5,6 +5,7 @@ import { getCookie } from '@/utils/cookies';
 import { useEffect } from 'react';
 import Button from '../Button';
 import { Wrapper } from './style';
+import { useSearchParams } from 'react-router-dom';
 
 interface IProps {
   handleClickBackToHome: any;
@@ -20,12 +21,14 @@ export default function Step4PC({
   styles,
 }: IProps) {
   const { logEvent } = useTrackingEvent();
+  const [searchParams] = useSearchParams();
   useEffect(() => {
     logEvent(eventTracking.generating_view.name, {
       [eventTracking.generating_view.params.package]:
         getCookie('numberStyle') + 'style',
       [eventTracking.generating_view.params.gender]: gender.toLowerCase(),
       [eventTracking.generating_view.params.style]: styles.join(','),
+      [eventTracking.generating_view.params.source]: searchParams.get('from'),
     });
   }, []);
   return (

@@ -17,6 +17,7 @@ import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
+import { useSearchParams } from 'react-router-dom';
 
 const defaultOptions = {
   loop: true,
@@ -62,12 +63,13 @@ export default function Step1({
   setImages,
   setSessionId,
 }: IProps) {
-  const dispatch = useAppDispatch();
+  const dispatch: any = useAppDispatch();
   const uploadRef = useRef<any>(null);
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
   const { logEvent } = useTrackingEvent();
+  const [searchParams] = useSearchParams();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -132,7 +134,6 @@ export default function Step1({
       // 'image/heic',
     ];
     Array.from(files).forEach((file: any, index: number) => {
-
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
@@ -189,9 +190,15 @@ export default function Step1({
   const handleClickUpload = () => {
     if (countImageValid < 3) {
       if (images?.length === 0) {
-        logEvent(eventTracking.upload_photo_click_upload.name);
+        logEvent(eventTracking.upload_photo_click_upload.name, {
+          [eventTracking.upload_photo_click_upload.params.source]:
+            searchParams.get('from'),
+        });
       } else {
-        logEvent(eventTracking.upload_photo_click_upload_more.name);
+        logEvent(eventTracking.upload_photo_click_upload_more.name, {
+          [eventTracking.upload_photo_click_upload_more.params.source]:
+            searchParams.get('from'),
+        });
       }
       uploadRef.current?.click();
     } else {
@@ -209,8 +216,14 @@ export default function Step1({
         formData.append('files', item.file);
       });
       setShowLoading(true);
-      logEvent(eventTracking.upload_photo_click_next.name);
-      logEvent(eventTracking.upload_photo_checking.name);
+      logEvent(eventTracking.upload_photo_click_next.name, {
+        [eventTracking.upload_photo_click_next.params.source]:
+          searchParams.get('from'),
+      });
+      logEvent(eventTracking.upload_photo_checking.name, {
+        [eventTracking.upload_photo_checking.params.source]:
+          searchParams.get('from'),
+      });
       mutationUpload.mutate(formData);
     }
   };
