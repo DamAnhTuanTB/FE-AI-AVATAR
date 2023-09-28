@@ -37,7 +37,7 @@ export const Title = styled.p`
 
   /* Button/Button 1/Medium */
   font-family: Outfit;
-  font-size: 20px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 100%; /* 16px */

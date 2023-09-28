@@ -358,10 +358,10 @@ export default function PrivacyPolicyPage() {
             method of transmission over the Internet, or method of electronic
             storage is 100% secure. While we strive to use commercially
             acceptable means to protect your Personal Data, we cannot guarantee
-            its absolute security
+            its absolute security.
             {'\n'}
             {'\n'}
-            <SubTitle>{`Business Transaction`}</SubTitle>
+            <SubTitle>{`"Do Not Track" Signals`}</SubTitle>
             {'\n'}
             {'\n'}
             {
@@ -499,6 +499,8 @@ export default function PrivacyPolicyPage() {
             <br />
             We may use third-party Service Providers to show advertisements to
             you to help support and maintain our Service.
+            <br />
+            <br />
             <SubTitle>Google AdSense & DoubleClick Cookie</SubTitle>
             <br />
             <br />
