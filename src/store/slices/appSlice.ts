@@ -14,6 +14,7 @@ export interface AppSlice {
   userExists: number;
   prices: any[];
   showModalUploadFilesExtendLimit: boolean;
+  step: number;
 }
 
 export const initialUserInfo = {
@@ -33,6 +34,7 @@ const initialState: AppSlice = {
   userExists: -1,
   prices: [],
   showModalUploadFilesExtendLimit: false,
+  step: 1,
 };
 
 export const appSlice = createSlice({
@@ -65,6 +67,9 @@ export const appSlice = createSlice({
     setListPrice: (state, action: PayloadAction<any[]>) => {
       state.prices = action.payload;
     },
+    setStepGenerate: (state, action: PayloadAction<number>) => {
+      state.step = action.payload;
+    },
     setShowModalUploadFilesExtendLimit: (
       state,
       action: PayloadAction<boolean>
@@ -90,5 +95,6 @@ export const {
   setUserExists,
   setListPrice,
   setShowModalUploadFilesExtendLimit,
+  setStepGenerate,
 } = appSlice.actions;
 export default appSlice.reducer;
