@@ -40,6 +40,7 @@ export default function GenerateAvatar() {
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
   const [gender, setGender] = useState('');
+  const [originGender, setOriginGender] = useState('');
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
@@ -414,8 +415,8 @@ export default function GenerateAvatar() {
               setStep={setStep}
               gender={gender}
               setGender={setGender}
-              setStyles={setStyles}
-              setShowModalPreviewStyle={setShowModalPreviewStyle}
+              setOriginGender={setOriginGender}
+              setShowModalPayment={setShowModalPayment}
             />
           )}
           {step === StepEnum.CHOOSE_STYLE && (
@@ -456,8 +457,8 @@ export default function GenerateAvatar() {
               setStep={setStep}
               gender={gender}
               setGender={setGender}
-              setStyles={setStyles}
-              setShowModalPreviewStyle={setShowModalPreviewStyle}
+              setOriginGender={setOriginGender}
+              setShowModalPayment={setShowModalPayment}
             />
           )}
           {step === StepEnum.PREVIEW_STYLE && (
@@ -491,7 +492,6 @@ export default function GenerateAvatar() {
       )}
       {showModalPayment && (
         <ModalPayment
-          setStep={setStep}
           prices={listPrice}
           open={showModalPayment}
           setOpen={setShowModalPayment}
@@ -501,6 +501,7 @@ export default function GenerateAvatar() {
           gender={gender}
           savingData={savingData}
           setSavingData={setSavingData}
+          setShowModalPreviewStyle={setShowModalPreviewStyle}
         />
       )}
 
@@ -511,6 +512,9 @@ export default function GenerateAvatar() {
           setStep={setStep}
           setShowModalPayment={setShowModalPayment}
           listStyles={listStyles}
+          gender={gender}
+          setGender={setGender}
+          originGender={originGender}
         />
       )}
 
