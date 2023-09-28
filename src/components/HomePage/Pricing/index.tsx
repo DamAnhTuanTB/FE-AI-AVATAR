@@ -24,7 +24,7 @@ import TimeIcon from '@/assets/images/sale-page/pricing-time-icon.png';
 export default function Pricing() {
   const { prices } = useAppSelector((state: RootState) => state.app);
   return (
-    <Wrapper>
+    <Wrapper id="pricing">
       <SubTitle>PRICING</SubTitle>
       <CustomTitle>Premium quality avatar with affordable price</CustomTitle>
       <Description>
