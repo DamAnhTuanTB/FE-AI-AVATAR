@@ -1,5 +1,6 @@
 import LogoSrc from '@/assets/images/logo.png';
 import ArrowRight from '@/components/Icons/ArrowRight';
+import SaleBanner from '@/components/SaleBanner';
 import UserAvatar from '@/components/UserAvatar';
 import { landingPageTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
@@ -11,10 +12,6 @@ import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { useNavigate } from 'react-router-dom';
 import {
-  BannerContent,
-  BannerLink,
-  BannerLinkWrapper,
-  BannerWrapper,
   ContainerWrapper,
   GetStartedWrapper,
   Logo,
@@ -39,17 +36,7 @@ export default function HomePageHeader() {
   const { logEvent } = useTrackingEvent();
   return (
     <Root>
-      <BannerWrapper
-        onClick={() => {
-          navigate(salePageLinkFromLandingPage);
-        }}
-      >
-        <BannerContent>Limited Time Deal! Get Up to 50% off</BannerContent>
-        <BannerLinkWrapper>
-          <BannerLink>Grab deal</BannerLink>
-          <ArrowRight />
-        </BannerLinkWrapper>
-      </BannerWrapper>
+      <SaleBanner src={salePageLinkFromLandingPage} />
       <ContainerWrapper>
         <Wrapper>
           <Logo
