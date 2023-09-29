@@ -71,8 +71,8 @@ export const NameWrapper = styled.div`
   }
 `;
 
-export const Price = styled.p`
-  color: var(--secondary-black, #262626);
+export const Price = styled.p<{ popular: boolean }>`
+  color: ${(props) => (props.popular ? '#FF8F28' : '#262626')};
   font-family: Rubik;
   font-size: 40px;
   font-style: normal;

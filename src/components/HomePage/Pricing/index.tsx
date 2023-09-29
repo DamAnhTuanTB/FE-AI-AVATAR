@@ -49,7 +49,7 @@ export default function Pricing() {
                   <p>{price?.displayName}</p>
                   <BlingIcon />
                 </NameWrapper>
-                <Price>${price?.price}</Price>
+                <Price popular={popular}>${price?.price}</Price>
                 <Recurring>one time</Recurring>
               </BasicInfo>
               <BenefitsWrapper>
