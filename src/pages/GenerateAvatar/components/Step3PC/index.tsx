@@ -93,9 +93,6 @@ export default function Step3PC({
     setStyles([]);
   };
 
-  console.log('numberrrr', currentGenerate?.priceInfo?.metadata?.numberStyle, styles?.length);
-  
-
   return (
     <Wrapper>
       <div className="title">Choose styles</div>
@@ -127,24 +124,26 @@ export default function Step3PC({
                   </div>
                 ))
             : listStyles.map((item: any) => (
-                <div
-                  onClick={() => handleClickStyle(item.alias)}
-                  key={item.id}
-                  className={`${
-                    styles.includes(item.alias) ? 'style-active' : styles.length == currentGenerate?.priceInfo?.metadata?.numberStyle ? 'style-deactive' :''
+                <div className='style-item-wrapper' key={item.id} onClick={() => handleClickStyle(item.alias)}>
+                  {styles.includes(item.alias) &&  <div className="border-style" />}
+                  <div
+                      className={`${
+                    styles.includes(item.alias) ? 'style-active' : styles.length == currentGenerate?.priceInfo?.metadata?.numberStyle ? 'style-inactive' :''
                   } item-style`}
-                >
-                  <img className="image-style" src={item.thumbnail} alt="" />
-                  <div className="name-style">{item.displayName}</div>
-                  <div className="order-number">
-                    {styles.includes(item.alias) &&
-                      getOrderStyleSelect(item.alias)}
-                  </div>
-                  {/* <Checkbox
+                  >
+                    <img className="image-style" src={item.thumbnail} alt=""/>
+                    <div className="name-style">{item.displayName}</div>
+                    <div className="order-number">
+                      {styles.includes(item.alias) &&
+                          getOrderStyleSelect(item.alias)}
+                    </div>
+                    {/* <Checkbox
                     checked={styles.includes(item?.alias)}
                     className="checkbox"
                   /> */}
+                  </div>
                 </div>
+
               ))}
         </div>
       </div>
