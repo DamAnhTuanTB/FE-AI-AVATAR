@@ -137,10 +137,21 @@ const NormalSelect = keyframes`
     }
 `;
 
+const Loading = keyframes`
+  from{
+    transform: rotate(0);
+  }
+  to
+  {
+    transform: rotate(360deg);
+    }
+`;
+
 export const SelectButton = styled.div<{ popular: boolean }>`
   cursor: pointer;
   display: flex;
   width: 170px;
+  min-height: 37px;
   padding: 8px 32px;
   justify-content: center;
   align-items: center;
@@ -158,6 +169,11 @@ export const SelectButton = styled.div<{ popular: boolean }>`
     font-weight: 600;
     line-height: 150%; /* 21px */
     margin: 0px;
+  }
+  img {
+    animation: ${Loading} 1s infinite;
+    animation-timing-function: linear;
+    -webkit-animation-fill-mode: forwards;
   }
   &:hover {
     animation: ${(props) => (props.popular ? PopularSelect : NormalSelect)} 0.5s;

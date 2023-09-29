@@ -1,5 +1,5 @@
 import { Description, SubTitle } from '@/pages/HomePage/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BasicInfo,
   BenefitItemWrapper,
@@ -21,10 +21,12 @@ import StylesIcon from '@/assets/images/sale-page/pricing-style-icon.png';
 import ImagesIcon from '@/assets/images/sale-page/pricing-images-icon.png';
 import TimeIcon from '@/assets/images/sale-page/pricing-time-icon.png';
 import usePurchase from '@/hooks/usePurchase';
+import LoadingIcon from '@/assets/images/loading-icon.svg';
 
 export default function Pricing() {
   const { prices } = useAppSelector((state: RootState) => state.app);
-  const { handlePurchase } = usePurchase();
+  const { handlePurchase, loading } = usePurchase();
+  const [priceSelected, setPriceSelected] = useState('');
 
   return (
     <Wrapper id="pricing">
@@ -73,9 +75,14 @@ export default function Pricing() {
                 popular={popular}
                 onClick={() => {
                   handlePurchase(price?.id);
+                  setPriceSelected(price?.id);
                 }}
               >
-                <p>Select</p>
+                {loading && priceSelected === price?.id ? (
+                  <img src={LoadingIcon} alt="loading-icon" />
+                ) : (
+                  <p>Select</p>
+                )}
               </SelectButton>
             </PackageWrapper>
           );

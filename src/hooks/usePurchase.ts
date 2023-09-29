@@ -3,6 +3,7 @@ import generateService from '@/services/generate.service';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { eraseCookie, setCookie } from '@/utils/cookies';
+import { useState } from 'react';
 import { useMutation } from 'react-query';
 
 export default function usePurchase() {
@@ -10,19 +11,25 @@ export default function usePurchase() {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
+  const [loading, setLoading] = useState(false);
 
   const purchaseMutation = useMutation(
     (payload: any) => generateService.purchaseNow(payload),
     {
       onSuccess: (res: any) => {
+        setLoading(false);
         if (res.data?.url) {
           window.location.assign(res.data?.url);
         }
+      },
+      onError: () => {
+        setLoading(false);
       },
     }
   );
 
   const handlePurchase = (priceId?: string) => {
+    setLoading(true);
     const payload: any = {
       priceId,
       redirectUrl: `${window.location.protocol}//${window.location.host}${ROUTES.APP_PAGE}?from=email_pre_launch&payment-success=1`,
@@ -42,5 +49,5 @@ export default function usePurchase() {
     purchaseMutation.mutate(payload);
   };
 
-  return { handlePurchase };
+  return { handlePurchase, loading };
 }
