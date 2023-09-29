@@ -6,6 +6,8 @@ import {useSearchParams} from "react-router-dom";
 import authServices from "@/services/auth.service";
 import {HTTP_STATUS} from "@/services/config/api";
 import IcLogo from '@/assets/images/ic_logo.png'
+import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
+import {eventTracking} from "@/firebase/firebase";
 
 export default function ResetPasswordComponent() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -48,10 +50,19 @@ export default function ResetPasswordComponent() {
         try {
             const res = await authServices.resetPassword(payload);
             if (res && res.status === HTTP_STATUS.CREATED) {
+                analyticsLogEvent(eventTracking.resetNewPasswordClick.name, {
+                    [eventTracking.resetNewPasswordClick.params.status]: 'success'
+                });
+                userPropertiesLogEvent();
+
                 searchParams.set('auth', AuthEnum.Login);
                 setSearchParams(searchParams)
             }
         } catch (err: any) {
+            analyticsLogEvent(eventTracking.resetNewPasswordClick.name, {
+                [eventTracking.resetNewPasswordClick.params.status]: 'failed'
+            });
+            userPropertiesLogEvent();
             console.log('err', err)
             let errMsg = err?.response.data.message || AUTH_ERROR_MESSAGE.RESET_PASSWORD.RESET_PASSWORD_FAILED;
             if (errMsg === AUTH_ERROR_MESSAGE.RESET_PASSWORD.INVALID_TOKEN_API) {

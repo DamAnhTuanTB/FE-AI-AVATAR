@@ -8,12 +8,18 @@ import {
   Title,
 } from './styles';
 import Layout from './Layout';
+import {Helmet} from "react-helmet";
 
 export default function TermOfUsePage() {
   return (
     <Layout>
+      <Helmet>
+        <title>Terms Of Use - Avatarist.ai</title>
+        <meta name="description"
+              content='Review our terms of service for information on using the Avatarist platform and services.'/>
+      </Helmet>
       <Wrapper>
-        <MainTitle>Term Of Use</MainTitle>
+        <MainTitle>Terms Of Use</MainTitle>
         <UpdatedAt>Last updated September 28, 2023</UpdatedAt>
         <div>
           <Content>

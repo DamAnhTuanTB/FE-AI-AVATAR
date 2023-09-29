@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding-bottom: 24px;
+  padding-bottom: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,8 +26,8 @@ export const Wrapper = styled.div`
     .item-step {
       gap: 8px;
       cursor: not-allowed;
-      width: 173px;
-      height: 48px;
+      // width: 173px;
+      // height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -37,9 +37,10 @@ export const Wrapper = styled.div`
       font-size: 14px;
       font-style: normal;
       font-weight: 500;
+      padding: 12px 24px;
       line-height: 150%; /* 21px */
       @media screen and (max-width: 1300px) {
-        width: 160px;
+        // width: 160px;
       }
       .number {
         width: 24px;

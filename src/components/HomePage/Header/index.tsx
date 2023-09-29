@@ -26,7 +26,7 @@ import {
 import { ROUTES } from '@/routes/routes';
 
 const links = [
-  { title: 'Why AI Avatar', href: '#why-choose-avatar' },
+  { title: 'Why Avatarist?', href: '#why-choose-avatar' },
   { title: 'How it works?', href: '#how-it-works' },
   { title: 'Testimonials', href: '#testimonials' },
   { title: 'Pricing', href: '#pricing' },
@@ -38,6 +38,8 @@ export default function HomePageHeader() {
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
   const location = useLocation();
+
+
   return (
     <Root>
       <SaleBanner src={salePageLinkFromLandingPage} />
@@ -68,7 +70,7 @@ export default function HomePageHeader() {
 
           {userInfor?.userEmail ? (
             <UserInfoWrapper>
-              <UserName>{userInfor?.userEmail}</UserName>
+              {location.pathname !== ROUTES.HOME && <UserName>{userInfor?.userEmail}</UserName>}
               <UserAvatar />
             </UserInfoWrapper>
           ) : (

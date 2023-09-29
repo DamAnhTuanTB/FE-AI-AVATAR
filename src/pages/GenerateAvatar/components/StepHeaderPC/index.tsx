@@ -19,7 +19,7 @@ export default function StepHeaderPC({ step, onClickBack }: IProps) {
     },
     {
       step: 3,
-      text: 'Choose Styles',
+      text: 'Select Styles',
     },
     {
       step: 4,

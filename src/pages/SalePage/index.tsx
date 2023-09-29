@@ -23,8 +23,10 @@ import {
   Root,
   Wrapper,
 } from './styles';
+import {Helmet} from "react-helmet";
 
-export default function SalePage() {
+export default function
+    SalePage() {
   const { isMobile, isTablet } = useScreenSize();
   const [priceSelected, setPriceSelected] = useState<any>(null);
   const [prices, setPrices] = useState<any[]>([]);
@@ -86,6 +88,11 @@ export default function SalePage() {
 
   return (
     <Root>
+      <Helmet>
+        <title>Limited time deals - Avatarist.ai</title>
+        <meta name="description"
+              content="Don't let this opportunity slip through your fingers. Get started now and get ready to see your online presence soar to new heights."/>
+      </Helmet>
       <Wrapper>
         <HeaderWrapper>
           <Container>

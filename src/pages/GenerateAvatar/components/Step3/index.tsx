@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
@@ -50,7 +51,7 @@ export default function Step3({
         Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
       ) {
         // price.maxStyle - 1
-        ToastError('The maximum quantity has been selected.', true);
+        ToastError('You have reached the limit for choosing styles.', true);
       } else {
         styles.push(alias);
       }
@@ -95,14 +96,14 @@ export default function Step3({
 
   return (
     <Wrapper>
-      <div className="title">Choose styles</div>
+      <div className="title">Select styles</div>
       <div className="description">
-        You can choose up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
-        styles due to your selected package
+        You can select up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
+        styles due to your select package
       </div>
       <div className="count-select">
         <div>
-          Selected Photos: {styles?.length}/
+          Selected Styled: {styles?.length}/
           {currentGenerate?.priceInfo?.metadata?.numberStyle}
         </div>
         <div onClick={handleDeselectAll}>Deselect all</div>
@@ -118,20 +119,39 @@ export default function Step3({
                 </div>
               ))
           : listStyles.map((item: any) => (
-              <div
-                onClick={() => handleClickStyle(item.alias)}
-                key={item.id}
-                className={`${
-                  styles.includes(item.alias) && 'style-active'
-                } item-style`}
-              >
-                <img className="image-style" src={item.thumbnail} alt="" />
-                <div className="name-style">{item.displayName}</div>
-                <div className="order-number">
-                  {styles.includes(item.alias) &&
-                    getOrderStyleSelect(item.alias)}
+                <div className='style-item-wrapper' key={item.id} onClick={() => handleClickStyle(item.alias)}>
+                  {styles.includes(item.alias) && <div className="border-style"/>}
+                  <div
+                      className={`${
+                    styles.includes(item.alias) ? 'style-active' : styles.length === parseInt(currentGenerate?.priceInfo?.metadata?.numberStyle) ? 'style-inactive' :''
+                  } item-style`}
+                  >
+                    <img className="image-style" src={item.thumbnail} alt=""/>
+                    <div className="name-style">{item.displayName}</div>
+                    <div className="order-number">
+                      {styles.includes(item.alias) &&
+                          getOrderStyleSelect(item.alias)}
+                    </div>
+                    {/* <Checkbox
+                    checked={styles.includes(item?.alias)}
+                    className="checkbox"
+                  /> */}
+                  </div>
                 </div>
-              </div>
+              // <div
+              //   onClick={() => handleClickStyle(item.alias)}
+              //   key={item.id}
+              //   className={`${
+              //     styles.includes(item.alias) && 'style-active'
+              //   } item-style`}
+              // >
+              //   <img className="image-style" src={item.thumbnail} alt="" />
+              //   <div className="name-style">{item.displayName}</div>
+              //   <div className="order-number">
+              //     {styles.includes(item.alias) &&
+              //       getOrderStyleSelect(item.alias)}
+              //   </div>
+              // </div>
             ))}
         {}
       </div>

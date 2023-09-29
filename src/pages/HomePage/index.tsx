@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { BodyWrapper, Wrapper } from './styles';
 import Pricing from '@/components/HomePage/Pricing';
 import { useLocation } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 export const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
 export const uploadPhotoLinkFromLandingPage = `${ROUTES.APP_PAGE}?from=landing_page`;
@@ -32,6 +33,10 @@ export default function HomePage() {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>Avatarist.ai - Transform your photos into AI avatars</title>
+        <meta name="description" content="Transform your photos into AI-powered avatars that mirror your style and persona. Elevate your digital presence with Avatarist today!"/>
+      </Helmet>
       <Header />
 
       <BodyWrapper>

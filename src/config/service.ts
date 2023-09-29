@@ -1,4 +1,6 @@
 export const CONFIG = {
+  COOKIE_SIGN_IN_PLATFORM: 'cookie-signin-platform',
+  COOKIE_SIGN_UP_PLATFORM: 'cookie-signup-platform',
   COOKIE_AUTH_TOKEN: 'ai-avatar-token',
   LOCAL_STORAGE_REFRESH_TOKEN: 'ai-avatar-refresh-token',
   LOCAL_STORAGE_TOKEN: 'ai-avatar-access-token',

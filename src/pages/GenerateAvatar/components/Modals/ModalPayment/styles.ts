@@ -28,6 +28,12 @@ export const Wrapper = styled(Modal)`
         @media screen and (max-width: ${breakpoints.md}) {
           flex-direction: column;
         }
+
+        .most-popular {
+          position: absolute;
+          top: -12px;
+          left: -9px;
+        }
         .content-modal-payment {
           width: 257px;
           @media screen and (max-width: ${breakpoints.md}) {
