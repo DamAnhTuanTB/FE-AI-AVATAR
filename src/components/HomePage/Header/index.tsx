@@ -26,7 +26,7 @@ import {
 import { ROUTES } from '@/routes/routes';
 
 const links = [
-  { title: 'Why AI Avatar', href: '#why-choose-avatar' },
+  { title: 'Why Avatarist?', href: '#why-choose-avatar' },
   { title: 'How it works?', href: '#how-it-works' },
   { title: 'Testimonials', href: '#testimonials' },
   { title: 'Pricing', href: '#pricing' },
