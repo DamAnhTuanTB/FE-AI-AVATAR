@@ -119,20 +119,39 @@ export default function Step3({
                 </div>
               ))
           : listStyles.map((item: any) => (
-              <div
-                onClick={() => handleClickStyle(item.alias)}
-                key={item.id}
-                className={`${
-                  styles.includes(item.alias) ? 'style-active' : styles.length == currentGenerate?.priceInfo?.metadata?.numberStyle ? 'style-deactive' :''
-                } item-style`}
-              >
-                <img className="image-style" src={item.thumbnail} alt="" />
-                <div className="name-style">{item.displayName}</div>
-                <div className="order-number">
-                  {styles.includes(item.alias) &&
-                    getOrderStyleSelect(item.alias)}
+                <div className='style-item-wrapper' key={item.id} onClick={() => handleClickStyle(item.alias)}>
+                  {styles.includes(item.alias) && <div className="border-style"/>}
+                  <div
+                      className={`${
+                    styles.includes(item.alias) ? 'style-active' : styles.length === parseInt(currentGenerate?.priceInfo?.metadata?.numberStyle) ? 'style-inactive' :''
+                  } item-style`}
+                  >
+                    <img className="image-style" src={item.thumbnail} alt=""/>
+                    <div className="name-style">{item.displayName}</div>
+                    <div className="order-number">
+                      {styles.includes(item.alias) &&
+                          getOrderStyleSelect(item.alias)}
+                    </div>
+                    {/* <Checkbox
+                    checked={styles.includes(item?.alias)}
+                    className="checkbox"
+                  /> */}
+                  </div>
                 </div>
-              </div>
+              // <div
+              //   onClick={() => handleClickStyle(item.alias)}
+              //   key={item.id}
+              //   className={`${
+              //     styles.includes(item.alias) && 'style-active'
+              //   } item-style`}
+              // >
+              //   <img className="image-style" src={item.thumbnail} alt="" />
+              //   <div className="name-style">{item.displayName}</div>
+              //   <div className="order-number">
+              //     {styles.includes(item.alias) &&
+              //       getOrderStyleSelect(item.alias)}
+              //   </div>
+              // </div>
             ))}
         {}
       </div>
