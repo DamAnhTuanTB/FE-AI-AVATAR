@@ -200,3 +200,65 @@ export const Wrapper = styled.div`
     }
   }
 `;
+
+export const AvatarsSlider = styled.div`
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 0px;
+  }
+  .item-child {
+    cursor: pointer;
+    pointer-events: all !important;
+    margin-right: 20px;
+    .item-generated {
+      width: 278px !important;
+      display: flex !important;
+
+      border-radius: 10px;
+      overflow: hidden;
+      .col-1 {
+        flex: 2;
+        img {
+          width: 100%;
+          border: 1.5px solid #fff;
+        }
+      }
+      .col-2 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        img {
+          width: 100%;
+          border: 1.5px solid #fff;
+          border-left: none;
+        }
+      }
+    }
+    .name-style {
+      color: var(--text-primary, #18181b);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%; /* 24px */
+      margin-top: 12px;
+      margin-bottom: 4px;
+      @media screen and (max-width: ${breakpoints.lg}) {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+    .number-image {
+      color: var(--text-secondary, #737373);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%; /* 21px */
+      @media screen and (max-width: ${breakpoints.lg}) {
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+  }
+`;
