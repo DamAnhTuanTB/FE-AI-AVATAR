@@ -1,5 +1,6 @@
 import { breakpoints } from '@/config/breakpoints';
 import { HomepageContainer } from '@/pages/HomePage/styles';
+import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
 export const Root = styled.div`
@@ -49,6 +50,19 @@ export const MenusLink = styled.div`
 `;
 
 export const MenuLink = styled.a`
+  color: var(--text-primary, #18181b);
+  font-family: Outfit;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  margin: 0;
+  &:hover {
+    color: #f6c447;
+  }
+`;
+
+export const CustomLink = styled(Link)`
   color: var(--text-primary, #18181b);
   font-family: Outfit;
   font-size: 16px;

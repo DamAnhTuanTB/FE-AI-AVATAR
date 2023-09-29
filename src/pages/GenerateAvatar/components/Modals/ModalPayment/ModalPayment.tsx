@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import IconBestSale from '@/assets/images/best-sale.svg';
+import IconMostPopular from '@/assets/images/most-popular.svg';
 import IconCheck from '@/assets/images/icon-check-v2.svg';
 import IconClose from '@/assets/images/icon-delete-image.svg';
 import { eventTracking } from '@/firebase/firebase';
@@ -162,8 +163,6 @@ export default function ModalPayment({
     setOpen(false);
   };
 
-  console.log(price);
-
   return (
     <Wrapper
       width={isMobile ? 343 : 673}
@@ -193,7 +192,7 @@ export default function ModalPayment({
                   onClick={() => handleClickPrice(item)}
                 >
                   {item.bestOffer && (
-                    <img src={IconBestSale} className="best-offer" />
+                    <img src={IconMostPopular} className="most-popular" />
                   )}
                   {item?.id === price?.id ? (
                     <img className="icon-check" src={IconCheck} alt="" />

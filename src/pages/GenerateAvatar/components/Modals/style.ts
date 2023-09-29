@@ -62,7 +62,7 @@ export const Wrapper = styled(Modal)`
               border: 1px solid var(--neutral-200, #e5e5e5);
               align-items: center;
               position: relative;
-              .best-offer {
+              .most-popular {
                 width: 52px;
                 position: absolute;
                 top: -10px;
@@ -90,6 +90,7 @@ export const Wrapper = styled(Modal)`
                   display: flex;
                   flex-direction: column;
                   gap: 4px;
+                  text-align: end;
                   & > div:first-child {
                     color: var(--text-primary, #18181b);
                     font-size: 12px;
