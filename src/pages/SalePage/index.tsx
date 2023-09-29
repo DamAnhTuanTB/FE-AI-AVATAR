@@ -20,6 +20,7 @@ import {
   FooterWrapper,
   HeaderWrapper,
   PaymentWrapper,
+  Root,
   Wrapper,
 } from './styles';
 
@@ -84,16 +85,32 @@ export default function SalePage() {
   }, [fromQuery]);
 
   return (
-    <Wrapper>
-      <HeaderWrapper>
-        <Container>
-          <SaleHeader increasePrice={increasePrice} />
-        </Container>
-      </HeaderWrapper>
+    <Root>
+      <Wrapper>
+        <HeaderWrapper>
+          <Container>
+            <SaleHeader increasePrice={increasePrice} />
+          </Container>
+        </HeaderWrapper>
 
-      <ContentWrapper>
-        <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
-        {(isMobile || isTablet) && (
+        <ContentWrapper>
+          <BeforeAfterImage src={BeforeAfterImageSrc} alt="before-after" />
+          {(isMobile || isTablet) && (
+            <PaymentWrapper>
+              <Payment
+                handleSelectPrice={handleSelectPrice}
+                priceSelected={priceSelected}
+                prices={prices}
+              />
+            </PaymentWrapper>
+          )}
+          <SaleContent
+            priceSelected={priceSelected}
+            increasePrice={increasePrice}
+          />
+        </ContentWrapper>
+
+        {!(isMobile || isTablet) && (
           <PaymentWrapper>
             <Payment
               handleSelectPrice={handleSelectPrice}
@@ -102,27 +119,12 @@ export default function SalePage() {
             />
           </PaymentWrapper>
         )}
-        <SaleContent
-          priceSelected={priceSelected}
-          increasePrice={increasePrice}
-        />
-      </ContentWrapper>
-
-      {!(isMobile || isTablet) && (
-        <PaymentWrapper>
-          <Payment
-            handleSelectPrice={handleSelectPrice}
-            priceSelected={priceSelected}
-            prices={prices}
-          />
-        </PaymentWrapper>
-      )}
-
+      </Wrapper>
       <FooterWrapper>
         <Container>
           <SalePageFooter />
         </Container>
       </FooterWrapper>
-    </Wrapper>
+    </Root>
   );
 }
