@@ -38,7 +38,6 @@ export default function HomePageHeader() {
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
   const location = useLocation();
-  console.log(location);
   return (
     <Root>
       <SaleBanner src={salePageLinkFromLandingPage} />

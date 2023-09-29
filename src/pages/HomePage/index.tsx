@@ -12,15 +12,22 @@ import { ROUTES } from '@/routes/routes';
 import { useEffect } from 'react';
 import { BodyWrapper, Wrapper } from './styles';
 import Pricing from '@/components/HomePage/Pricing';
+import { useLocation } from 'react-router-dom';
 
 export const salePageLinkFromLandingPage = `${ROUTES.SALE_PAGE}?from=landing_page`;
 export const uploadPhotoLinkFromLandingPage = `${ROUTES.APP_PAGE}?from=landing_page`;
 
 export default function HomePage() {
   const { logEvent } = useTrackingEvent();
+  const location = useLocation();
 
   useEffect(() => {
     logEvent(landingPageTracking.view.name);
+    const elementId = location.hash.replace('#', '');
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }, []);
 
   return (
