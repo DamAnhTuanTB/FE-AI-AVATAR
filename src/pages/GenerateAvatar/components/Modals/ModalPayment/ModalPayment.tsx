@@ -88,7 +88,8 @@ export default function ModalPayment({
 
   const { logEvent } = useTrackingEvent();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const packageId = searchParams.get('package');
 
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { isMobile } = useScreenSize();
@@ -96,13 +97,19 @@ export default function ModalPayment({
     logEvent(eventTracking.purchase_view.name);
     if (prices?.length) {
       console.log('prices', prices)
-      prices.forEach((item: any) => {
-        if (item.bestOffer) {
-          setPrice(item);
-        }
-      });
+      if (!packageId) {
+        prices.forEach((item: any) => {
+          if (item.bestOffer) {
+            setPrice(item);
+          }
+        });
+      } else {
+        const specificPackage = prices.find((item: any) => item.id === packageId);
+        setPrice(specificPackage);
+      }
+
     }
-  }, [prices]);
+  }, [prices, packageId]);
 
   const purchaseMutation = useMutation(
     (payload: any) => generateService.purchaseNow(payload),
@@ -115,15 +122,21 @@ export default function ModalPayment({
     }
   );
   const handleCancel = () => {
+    searchParams.delete('package');
+    setSearchParams(searchParams)
     setOpen(false);
     if (prices?.length) {
       setPrice(prices[1]);
     }
   };
   const handleClickPrice = (item: any) => {
+    searchParams.set('package', item.id);
+    setSearchParams(searchParams)
     setPrice(item);
   };
   const handleClickPurchase = () => {
+    searchParams.delete('package');
+    setSearchParams(searchParams)
     let redirectUrl = `${window.location.protocol}//${window.location.host}${ROUTES.APP_PAGE}?payment-success=1`;
     if (searchParams.get('from')) {
       redirectUrl += `&from=${searchParams.get('from')}`;
