@@ -1,4 +1,3 @@
-import AuthenForm from '@/components/ModalAuthen/AuthenForm';
 import {
   LoginWithSocialWrapper,
   ModalTextTitle,
@@ -22,9 +21,10 @@ import {
 } from '@/store/slices/appSlice';
 import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { RootState } from '@/store/store';
-import { getCookie } from '@/utils/cookies';
+import {eraseCookie, getCookie} from '@/utils/cookies';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
 
 const LoginComponent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -63,6 +63,13 @@ const LoginComponent: React.FC = () => {
       } else {
         error = 'Access denied. Please login again!';
       }
+        analyticsLogEvent(eventTracking.signInClick.name, {
+            [eventTracking.signInClick.params.status]: 'failed',
+            [eventTracking.signInClick.params.source]: `${platform}`,
+        });
+        userPropertiesLogEvent();
+        eraseCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM);
+
       setErrorMessageApi(error);
     }
   }, [errorCode, accessToken]);
@@ -74,6 +81,14 @@ const LoginComponent: React.FC = () => {
         const payload = { accessToken, refreshToken };
         dispatch(loginWithSocialAccount(payload));
         localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, accessToken);
+
+        analyticsLogEvent(eventTracking.signInClick.name, {
+          [eventTracking.signInClick.params.status]: 'success',
+          [eventTracking.signInClick.params.source]: cookiesPlatform || 'google',
+        });
+        userPropertiesLogEvent();
+        eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM);
+
         searchParams.delete('auth');
         searchParams.delete('token');
         searchParams.delete('refresh_token');
@@ -94,6 +109,7 @@ const LoginComponent: React.FC = () => {
     const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}`;
 
     const redirectRoute = `${process.env.REACT_APP_AUTHEN_BASE_URL}/${platform}?redirect_url=${newPath}&user_type=${process.env.REACT_APP_USER_TYPE}&platform=${platform}`;
+    setCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM, platform)
     window.location.href = redirectRoute;
   };
 
@@ -116,6 +132,13 @@ const LoginComponent: React.FC = () => {
         localStorage.removeItem('userIdFake');
         dispatch(setEmailSuccessPaymentButNotAuth(''));
         dispatch(setUserExists(-1));
+
+        analyticsLogEvent(eventTracking.signInClick.name, {
+          [eventTracking.signInClick.params.status]: 'success',
+          [eventTracking.signInClick.params.source]: 'enter_email',
+        });
+        userPropertiesLogEvent()
+
         setSearchParams(searchParams);
         if (emailSuccessPaymentButNotAuth) {
           logEvent(eventTracking.login_purchase_click_button.name);
@@ -128,6 +151,12 @@ const LoginComponent: React.FC = () => {
       if (errMsg === AUTH_ERROR_MESSAGE.LOGIN.EMAIL_PASSWORD_WRONG_API) {
         errMsg = AUTH_ERROR_MESSAGE.LOGIN.EMAIL_PASSWORD_WRONG_DISPLAY;
       }
+      analyticsLogEvent(eventTracking.signInClick.name, {
+          [eventTracking.signInClick.params.status]: 'failed',
+          [eventTracking.signInClick.params.source]: 'enter_email',
+        });
+        userPropertiesLogEvent()
+
       setErrorMessageApi(errMsg);
     }
   };

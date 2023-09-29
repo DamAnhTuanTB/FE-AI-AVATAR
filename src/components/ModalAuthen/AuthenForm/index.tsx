@@ -23,6 +23,8 @@ import { TxtLabel } from '@/components/ModalAuthen/ModalLogin/styles';
 import IcBackToSignIn from '@/assets/icons/ic_back_to_sign_in.svg';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
+import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
+import {eventTracking} from "@/firebase/firebase";
 
 const bottomTextArr = [
   {
@@ -220,6 +222,8 @@ const AuthenForm: React.FC<IAuthForm> = (props) => {
   };
 
   const handleMoveToForgetPasswordLayout = () => {
+    analyticsLogEvent(eventTracking.signInClickForgotPassword.name);
+    userPropertiesLogEvent();
     searchParams.set('auth', AuthEnum.ForgetPassword);
     setSearchParams(searchParams);
   };
