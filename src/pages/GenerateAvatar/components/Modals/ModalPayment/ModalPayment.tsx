@@ -13,8 +13,8 @@ import { RootState } from '@/store/store';
 import { eraseCookie, setCookie } from '@/utils/cookies';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
-import Button from '../Button';
-import { Wrapper } from './style';
+import Button from '../../Button';
+import { Wrapper } from './styles';
 import { useSearchParams } from 'react-router-dom';
 import IconRingLite from '@/assets/images/icon-ring.svg';
 import IconRingBasic from '@/assets/images/icon-ring-basic.svg';
@@ -95,6 +95,7 @@ export default function ModalPayment({
   useEffect(() => {
     logEvent(eventTracking.purchase_view.name);
     if (prices?.length) {
+      console.log('prices', prices)
       prices.forEach((item: any) => {
         if (item.bestOffer) {
           setPrice(item);
@@ -282,7 +283,10 @@ export default function ModalPayment({
                 }
                 alt=""
               />
-              <span>Medium render time </span>
+              <span>
+              {price?.displayName === 'Premium' ? 'Fast render time' : 'Medium render time'}
+
+              </span>
             </div>
           </div>
           <div className="comment">

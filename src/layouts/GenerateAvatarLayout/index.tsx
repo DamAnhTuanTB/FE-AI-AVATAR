@@ -15,6 +15,9 @@ import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { ContentWrapper, DefaultLayoutWrapper } from './style';
+import SaleBanner from '@/components/SaleBanner';
+import { StepEnum } from '@/pages/GenerateAvatar/contants';
+import { ROUTES } from '@/routes/routes';
 
 export default function GenerateAvatarLayout() {
   const dispatch = useAppDispatch();
@@ -84,10 +87,22 @@ export default function GenerateAvatarLayout() {
 
   const openModal = (auth && !isLoggedIn) || !!emailSuccessPaymentButNotAuth;
 
+  const step = useAppSelector((state: RootState) => state.app.step);
+
+  const showBanner =
+    step === StepEnum.GUIDE ||
+    step === StepEnum.UPLOAD_IMAGE ||
+    step === StepEnum.PICK_GENDER;
+
   return (
     <DefaultLayoutWrapper>
+      {showBanner && <SaleBanner src={ROUTES.SALE_PAGE} />}
       <Header />
-      <ContentWrapper>
+      <ContentWrapper
+      // style={{
+      //   height: showBanner ? 'calc(100vh - 70px)' : 'calc(100vh - 70px)',
+      // }}
+      >
         <Outlet />
       </ContentWrapper>
       {/* <Footer /> */}

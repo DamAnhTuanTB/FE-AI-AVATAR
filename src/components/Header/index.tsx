@@ -13,6 +13,7 @@ import {
 import { HeaderWrapper } from './style';
 import UserAvatar from '../UserAvatar';
 import IconMyAvatar from '@/assets/images/icon-my-avatar.svg';
+import { setStepGenerate } from '@/store/slices/appSlice';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -50,7 +51,13 @@ const Header = () => {
         </div>
       ) : (
         <div className="avatar-wrapper">
-          <div className="button" onClick={() => navigate(ROUTES.LIST_AVATAR)}>
+          <div
+            className="button"
+            onClick={() => {
+              dispatch(setStepGenerate(0));
+              navigate(ROUTES.LIST_AVATAR);
+            }}
+          >
             <img src={IconMyAvatar} alt="" />
             My Avatar
           </div>
