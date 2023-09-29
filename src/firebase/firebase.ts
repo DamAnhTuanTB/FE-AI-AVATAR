@@ -9,6 +9,63 @@ export const firebaseConfig = {
 };
 
 export const eventTracking = {
+
+//   signin
+  signInView: {
+    name: 'signin_view',
+    params: {
+      userId: 'user_id'
+    }
+  },
+    signInClick: {
+      name: 'signin_click',
+      params: {
+        userId: 'user_id',
+        status: 'status',
+        source: 'source'
+      }
+    },
+    signInClickForgotPassword: {
+      name: 'signin_click_forgot_password',
+      params: {
+        userId: 'user_id'
+      }
+    },
+
+  //   signup
+    signUpView: {
+      name: 'signup_view',
+      params: {
+        userId: 'user_id'
+      },
+    },
+      signUpClick: {
+        name: 'signup_click',
+        params: {
+          userId: 'user_id',
+          status: 'status',
+          source: 'source'
+        }
+      },
+
+    //   forget password
+      forgetPasswordClickRequest: {
+        name: 'forgot_password_click_request',
+        params: {
+          userId: 'user_id',
+          status: 'status'
+        }
+      },
+
+    // reset password
+  resetNewPasswordClick: {
+    name: 'setnew_password_click_button',
+    params: {
+      userId: 'user_id',
+      status: 'status'
+    }
+  },
+
   // landingPageView: {
   //   name: 'view_landing_page',
   //   params: {

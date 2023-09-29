@@ -11,7 +11,6 @@ import {
   loginWithSocialArr,
 } from '@/components/ModalAuthen/constant';
 import { CONFIG } from '@/config/service';
-import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import authServices from '@/services/auth.service';
 import { HTTP_STATUS } from '@/services/config/api';
@@ -22,10 +21,12 @@ import {
 } from '@/store/slices/appSlice';
 import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { RootState } from '@/store/store';
-import { getCookie } from '@/utils/cookies';
+import {eraseCookie, getCookie, setCookie} from '@/utils/cookies';
 import { generateRandomString } from '@/utils/helpers';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
+import {eventTracking} from "@/firebase/firebase";
 
 const SignUpComponent = () => {
   const dispatch = useAppDispatch();
@@ -42,6 +43,8 @@ const SignUpComponent = () => {
   const authUser = getCookie(CONFIG.COOKIE_AUTH_TOKEN);
   const parseAuthUser = authUser ? JSON.parse(authUser) : '';
   const cookieToken = parseAuthUser.token;
+
+  const cookiesPlatform = getCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM)
 
   const tokenFromLocalStorage = localStorage.getItem(
     CONFIG.LOCAL_STORAGE_TOKEN
@@ -61,6 +64,15 @@ const SignUpComponent = () => {
       } else {
         error = 'Access denied. Please login again!';
       }
+
+      analyticsLogEvent(eventTracking.signUpClick.name, {
+        [eventTracking.signUpClick.params.status]: 'failed',
+        [eventTracking.signUpClick.params.source]: cookiesPlatform || 'google',
+      });
+      userPropertiesLogEvent()
+
+      eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM)
+
       setErrorMessageApi(error);
     }
   }, [errorCode, accessToken]);
@@ -72,6 +84,15 @@ const SignUpComponent = () => {
         const payload = { accessToken, refreshToken };
         dispatch(loginWithSocialAccount(payload));
         localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, accessToken);
+
+        analyticsLogEvent(eventTracking.signUpClick.name, {
+          [eventTracking.signUpClick.params.status]: 'success',
+          [eventTracking.signUpClick.params.source]: cookiesPlatform || 'google',
+        });
+        userPropertiesLogEvent()
+
+        eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM)
+
         searchParams.delete('auth');
         searchParams.delete('token');
         searchParams.delete('refresh_token');
@@ -90,9 +111,9 @@ const SignUpComponent = () => {
       searchParams.delete('errorCode');
     }
     const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}`;
-    console.log('newPath', newPath);
 
     const redirectRoute = `${process.env.REACT_APP_AUTHEN_BASE_URL}/${platform}?redirect_url=${newPath}&user_type=${process.env.REACT_APP_USER_TYPE}&platform=${platform}`;
+    setCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM, platform)
     window.location.href = redirectRoute;
   };
 
@@ -109,6 +130,12 @@ const SignUpComponent = () => {
       const res = await authServices.signUp(payload);
 
       if (res && res.status === HTTP_STATUS.CREATED) {
+        analyticsLogEvent(eventTracking.signUpClick.name, {
+          [eventTracking.signUpClick.params.status]: 'success',
+          [eventTracking.signUpClick.params.source]: 'enter_email',
+        });
+        userPropertiesLogEvent()
+
         const payloadLogin = {
           email: formData?.email.trim(),
           password: formData?.password,
@@ -135,6 +162,12 @@ const SignUpComponent = () => {
       }
     } catch (err: any) {
       console.log('err', err, err.response);
+      analyticsLogEvent(eventTracking.signUpClick.name, {
+        [eventTracking.signUpClick.params.status]: 'failed',
+        [eventTracking.signUpClick.params.source]: 'enter_email',
+      });
+      userPropertiesLogEvent();
+
       const errMsg =
         err?.response?.data?.message ||
         AUTH_ERROR_MESSAGE.SIGN_UP.SIGN_UP_FAILED;
