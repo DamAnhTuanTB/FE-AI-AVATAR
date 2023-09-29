@@ -398,8 +398,8 @@ export default function GenerateAvatar() {
   return (
     <>
       <Helmet>
-        <title>Home</title>
-        <meta name="description" content="Home" />
+        <title>Generate - Avatarist.ai</title>
+        <meta name="description" content="Your AI avatar is in the making. Stay tuned for its grand reveal." />
       </Helmet>
       {/* {(step === StepEnum.GUIDE || step === StepEnum.PICK_GENDER) && (
         <SaleBanner src={ROUTES.SALE_PAGE} />
