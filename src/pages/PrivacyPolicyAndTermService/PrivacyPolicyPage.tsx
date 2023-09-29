@@ -7,10 +7,16 @@ import {
   UpdatedAt,
   Wrapper,
 } from './styles';
+import {Helmet} from "react-helmet";
 
 export default function PrivacyPolicyPage() {
   return (
     <Layout>
+      <Helmet>
+        <title>Privacy Policy - Avatarist.ai</title>
+        <meta name="description"
+              content='Read our privacy policy to understand how we protect your data and ensure a secure avatar creation experience.'/>
+      </Helmet>
       <Wrapper>
         <MainTitle>Privacy Policy</MainTitle>
         <UpdatedAt>Last updated September 28, 2023</UpdatedAt>

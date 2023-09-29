@@ -16,6 +16,7 @@ import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloadi
 import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { Wrapper } from './style';
 import { TypeDownload } from '../GenerateAvatar/contants';
+import {Helmet} from "react-helmet";
 
 export default function DetailAvatar() {
   const { isMobile } = useScreenSize();
@@ -78,6 +79,11 @@ export default function DetailAvatar() {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>My Avatar - Avatarist.ai</title>
+        <meta name="description"
+              content='Access your unique AI avatar on the "My Avatar" page. Showcase your digital identity to the world.'/>
+      </Helmet>
       <div className="header-detail">
         <div className="back" onClick={() => window.history.back()}>
           <img src={IconPrev} alt="" />
