@@ -50,7 +50,7 @@ export default function Step3({
         Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
       ) {
         // price.maxStyle - 1
-        ToastError('The maximum quantity has been selected.', true);
+        ToastError('You have reached the limit for choosing styles.', true);
       } else {
         styles.push(alias);
       }
@@ -97,12 +97,12 @@ export default function Step3({
     <Wrapper>
       <div className="title">Choose styles</div>
       <div className="description">
-        You can choose up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
-        styles due to your selected package
+        You can select up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
+        styles due to your select package
       </div>
       <div className="count-select">
         <div>
-          Selected Photos: {styles?.length}/
+          Selected Styled: {styles?.length}/
           {currentGenerate?.priceInfo?.metadata?.numberStyle}
         </div>
         <div onClick={handleDeselectAll}>Deselect all</div>

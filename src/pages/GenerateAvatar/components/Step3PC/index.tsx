@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
@@ -50,7 +51,7 @@ export default function Step3PC({
         Number(currentGenerate?.priceInfo?.metadata?.numberStyle) - 1
       ) {
         // price.maxStyle - 1
-        ToastError('The maximum quantity has been selected.');
+        ToastError('You have reached the limit for choosing styles.');
       } else {
         styles.push(alias);
       }
@@ -92,16 +93,19 @@ export default function Step3PC({
     setStyles([]);
   };
 
+  console.log('numberrrr', currentGenerate?.priceInfo?.metadata?.numberStyle, styles?.length);
+  
+
   return (
     <Wrapper>
       <div className="title">Choose styles</div>
       <div className="description">
-        You can choose up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
-        styles due to your selected package
+        You can select up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
+        styles due to your select package
       </div>
       <div className="count-number">
         <div>
-          Selected Photos: {styles?.length}/
+          Selected Styled: {styles?.length}/
           {currentGenerate?.priceInfo?.metadata?.numberStyle}
         </div>
         <div
@@ -127,7 +131,7 @@ export default function Step3PC({
                   onClick={() => handleClickStyle(item.alias)}
                   key={item.id}
                   className={`${
-                    styles.includes(item.alias) && 'style-active'
+                    styles.includes(item.alias) ? 'style-active' : styles.length == currentGenerate?.priceInfo?.metadata?.numberStyle ? 'style-deactive' :''
                   } item-style`}
                 >
                   <img className="image-style" src={item.thumbnail} alt="" />

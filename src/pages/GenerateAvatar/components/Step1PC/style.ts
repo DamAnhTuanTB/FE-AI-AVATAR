@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   .upload {
     height: 100%;
     overflow-y: auto;
-    padding-top: 40px;
+    padding-top: 24px;
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 30px;
