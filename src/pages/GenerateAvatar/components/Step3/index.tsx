@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
 import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
@@ -122,7 +123,7 @@ export default function Step3({
                 onClick={() => handleClickStyle(item.alias)}
                 key={item.id}
                 className={`${
-                  styles.includes(item.alias) && 'style-active'
+                  styles.includes(item.alias) ? 'style-active' : styles.length == currentGenerate?.priceInfo?.metadata?.numberStyle ? 'style-deactive' :''
                 } item-style`}
               >
                 <img className="image-style" src={item.thumbnail} alt="" />

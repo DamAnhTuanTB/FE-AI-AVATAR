@@ -13,7 +13,7 @@ export default function TermOfUsePage() {
   return (
     <Layout>
       <Wrapper>
-        <MainTitle>Term Of Use</MainTitle>
+        <MainTitle>Terms Of Use</MainTitle>
         <UpdatedAt>Last updated September 28, 2023</UpdatedAt>
         <div>
           <Content>

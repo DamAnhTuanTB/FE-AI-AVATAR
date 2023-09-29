@@ -181,6 +181,9 @@ export const Wrapper = styled.div`
       } */
     }
 
+    .style-deactive {
+      filter: brightness(0.5);
+    }
     .style-active {
       filter: brightness(1);
       /* border: 2px solid #f6c447; */
