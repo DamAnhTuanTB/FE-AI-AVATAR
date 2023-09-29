@@ -3,6 +3,17 @@ import styled from 'styled-components';
 import DesktopBg from '@/assets/images/sale-page/bg.png';
 import MobileBg from '@/assets/images/sale-page/bg-mobile.png';
 
+export const Root = styled.div`
+  background-image: url(${DesktopBg});
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  @media screen and (max-width: ${breakpoints.md}) {
+    background-image: url(${MobileBg});
+    padding-top: 32px;
+  }
+`;
+
 export const Wrapper = styled.div`
   padding-top: 28px;
   /* height: 100vh;
@@ -13,14 +24,6 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   /* background: var(--neutral-50, #fafafa); */
-  background-image: url(${DesktopBg});
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  @media screen and (max-width: ${breakpoints.md}) {
-    background-image: url(${MobileBg});
-    padding-top: 32px;
-  }
 `;
 
 export const HeaderWrapper = styled.div`
@@ -83,6 +86,7 @@ export const PaymentWrapper = styled.div`
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  /* bottom: 100px; */
   right: 0;
   z-index: 1;
   @media screen and (max-width: ${breakpoints.lg}) {
