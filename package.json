@@ -1,6 +1,6 @@
 {
   "name": "app-template",
-  "version": "0.3.25",
+  "version": "0.3.26",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

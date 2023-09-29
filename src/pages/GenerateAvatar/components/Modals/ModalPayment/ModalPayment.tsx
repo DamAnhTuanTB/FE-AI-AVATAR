@@ -47,21 +47,21 @@ interface IProps {
 }
 
 const listComment: any = {
-  Lite: {
+  lite: {
     avatar: C1,
     name: 'Jaylen Smith',
     job: 'Gamer & Streamer',
     comment:
       'As a streamer, my avatar is my brand. Avatarist gave me the freedom to design a character that represents my gaming style.',
   },
-  Basic: {
+  basic: {
     avatar: C2,
     name: 'Michael Anderson',
     job: 'Small Business Owner',
     comment:
       "Our AI avatar has become the face of our brand. It's professional, engaging, and it's helped us connect with our customers on a personal level.",
   },
-  Premium: {
+  premium: {
     avatar: C3,
     name: 'Emily Davis',
     job: 'Marketing Manager',
@@ -307,17 +307,17 @@ export default function ModalPayment({
               <div className="first">
                 <Avatar
                   size={24}
-                  src={listComment[price?.displayName]?.avatar}
+                  src={listComment[price?.displayName?.trim()?.toLowerCase()]?.avatar}
                 />
                 <div className="text">
-                  <div>{listComment[price?.displayName]?.name}</div>
-                  <div>{listComment[price?.displayName]?.job}</div>
+                  <div>{listComment[price?.displayName?.trim()?.toLowerCase()]?.name}</div>
+                  <div>{listComment[price?.displayName?.trim()?.toLowerCase()]?.job}</div>
                 </div>
               </div>
               <img src={RowStar} alt="" />
             </div>
             <div className="row-2">
-              "{listComment[price?.displayName]?.comment}"
+              "{listComment[price?.displayName?.trim()?.toLowerCase()]?.comment}"
             </div>
           </div>
           <Button
