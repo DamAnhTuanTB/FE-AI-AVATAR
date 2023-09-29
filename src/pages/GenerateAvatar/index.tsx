@@ -288,7 +288,7 @@ export default function GenerateAvatar() {
         setLoadingGenerate(false);
         setStep(StepEnum.GENERATE_SUCCESS);
         muatationSendMail.mutate({
-          subject: 'Your AI Avatar is Underway!',
+          subject: 'Your AI Avatar is generating... ⌛',
           template: './await-result',
         });
         queryClient.refetchQueries({ queryKey: ['get-info-user'] });
