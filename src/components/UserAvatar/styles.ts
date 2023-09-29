@@ -15,11 +15,14 @@ export const Wrapper = styled.div`
 export const PopoverAvatarWrapper = styled(Popover)``;
 
 export const ContentPopoverWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   .title {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
 
     .infor {
       .name {
@@ -54,12 +57,25 @@ export const ContentPopoverWrapper = styled.div`
     font-family: Outfit;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 150%; /* 18px */
+  }
+  .my-avatars {
+    color: var(--neutral-800, #262626);
+
+    /* Body/Body 2/Regular */
+    font-family: Outfit;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 18px */
+    &:hover {
+      color: #f6c447;
+    }
   }
 
   .dash {
-    margin: 12px 0;
+    /* margin: 12px 0; */
     width: 100%;
     height: 1px;
     background: var(--neutral-200, #e5e5e5);
@@ -79,7 +95,7 @@ export const ContentPopoverWrapper = styled.div`
       font-family: Outfit;
       font-size: 14px;
       font-style: normal;
-      font-weight: 400;
+      font-weight: 500;
       line-height: 150%; /* 21px */
     }
   }
