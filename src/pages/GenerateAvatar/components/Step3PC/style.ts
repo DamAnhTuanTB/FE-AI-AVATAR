@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
   .title {
     text-align: center;
     color: var(--secondary-black, #262626);
@@ -20,6 +21,7 @@ export const Wrapper = styled.div`
     line-height: 120%; /* 28.8px */
     letter-spacing: -1px;
   }
+
   .description {
     color: var(--text-secondary, #737373);
     font-size: 16px;
@@ -30,6 +32,7 @@ export const Wrapper = styled.div`
     margin-bottom: 20px;
     text-align: center;
   }
+
   .count-number {
     color: var(--secondary-black, #262626);
     font-size: 16px;
@@ -39,40 +42,59 @@ export const Wrapper = styled.div`
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
-    & > div:last-child {
+
+    .deselect-all-button {
+      border: none;
+      outline: 0;
+      background: transparent;
+      padding-right: 20px;
       cursor: pointer;
     }
+
+    .deselect-all-button-disabled {
+      background: transparent;
+      padding-right: 20px;
+      color: #737373;
+      cursor: not-allowed;
+    }
   }
+
   .parent-list-styles {
     flex: 1;
     overflow-y: auto;
     padding-right: 10px;
   }
+
   .list-styles {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+
     .item-style {
       position: relative;
       border-radius: 12px;
       cursor: pointer;
       overflow: hidden;
       /* border: 4px solid transparent; */
-      filter: brightness(0.5);
+      //filter: brightness(0.5);
+
       &::after {
         content: '';
         display: inline-block;
         padding-bottom: 100%;
       }
+
       .skeleton-image {
         position: absolute;
         width: 100%;
         height: 100%;
         border-radius: 12px;
+
         span {
           background: #ebebeb;
         }
       }
+
       .skeleton-text {
         display: block;
         position: absolute;
@@ -80,10 +102,12 @@ export const Wrapper = styled.div`
         left: 9px;
         width: calc(100% - 18px);
         border-radius: 6px;
+
         span {
           background: #d9d9d9;
         }
       }
+
       .image-style {
         position: absolute;
         width: 100%;
@@ -92,6 +116,7 @@ export const Wrapper = styled.div`
         border-radius: 12px;
         /* border: 4px solid transparent; */
       }
+
       .name-style {
         white-space: nowrap;
         width: 100%;
@@ -108,14 +133,13 @@ export const Wrapper = styled.div`
         padding-bottom: 12px;
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
-        background: linear-gradient(
-          180deg,
-          rgba(9, 9, 23, 0) 0%,
-          rgba(9, 9, 23, 0.3) 100%
-        );
+        background: linear-gradient(180deg,
+        rgba(9, 9, 23, 0) 0%,
+        rgba(9, 9, 23, 0.3) 100%);
         -webkit-backdrop-filter: blur(9px);
         backdrop-filter: blur(9px);
       }
+
       .order-number {
         position: absolute;
         top: 16px;
@@ -126,6 +150,7 @@ export const Wrapper = styled.div`
         width: 32px;
         height: 32px;
       }
+
       /* .checkbox {
         position: absolute;
         top: 12px;
@@ -155,16 +180,20 @@ export const Wrapper = styled.div`
         }
       } */
     }
+
     .style-active {
       filter: brightness(1);
       /* border: 2px solid #f6c447; */
+
       img {
         border: 4px solid #f6c447;
       }
+
       .name-style {
         border: 4px solid #f6c447;
         border-top: none;
       }
+
       .order-number {
         background: #f6c447;
         border: none;
@@ -177,11 +206,13 @@ export const Wrapper = styled.div`
         align-items: center;
         justify-content: center;
       }
+
       /* img {
         transform: scale(1.01);
       } */
     }
   }
+
   .btn-generate {
     display: flex;
     justify-content: center;

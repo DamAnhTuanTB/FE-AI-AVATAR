@@ -31,6 +31,7 @@ export default function Step3PC({
   sessionId,
   loadingGenerate,
 }: IProps) {
+  console.log('listStyles', listStyles, listStyles.length)
   const [searchParams] = useSearchParams();
   const { logEvent } = useTrackingEvent();
   const listGenerate = useAppSelector(
@@ -103,7 +104,12 @@ export default function Step3PC({
           Selected Photos: {styles?.length}/
           {currentGenerate?.priceInfo?.metadata?.numberStyle}
         </div>
-        <div onClick={handleDeselectAll}>Deselect all</div>
+        <div
+            className={styles?.length === 0 ? 'deselect-all-button-disabled' : 'deselect-all-button'}
+            onClick={handleDeselectAll}
+        >
+          Deselect all
+        </div>
       </div>
       <div className="parent-list-styles">
         <div className="list-styles">
