@@ -21,10 +21,11 @@ import {
 } from '@/store/slices/appSlice';
 import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { RootState } from '@/store/store';
-import {eraseCookie, getCookie} from '@/utils/cookies';
+import {eraseCookie, getCookie, setCookie} from '@/utils/cookies';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
+import AuthenForm from "@/components/ModalAuthen/AuthenForm";
 
 const LoginComponent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -73,6 +74,8 @@ const LoginComponent: React.FC = () => {
       setErrorMessageApi(error);
     }
   }, [errorCode, accessToken]);
+
+  const cookiesPlatform = getCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM)
 
   useEffect(() => {
     if (accessToken && refreshToken) {
