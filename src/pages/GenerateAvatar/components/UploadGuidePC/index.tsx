@@ -37,8 +37,8 @@ export default function UploadGuidePC() {
           Bad photos
         </div>
         <div className="section-description">
-          Group shots, full-length, kids, covered faces, animals, monotonous
-          pics, nudes.
+          Group shots, full body, kids, covered faces, animals, monotonous pics,
+          nudes.
         </div>
         <div className="section-images">
           {[Bad1, Bad2, Bad3, Bad4].map((item: any, index: number) => (

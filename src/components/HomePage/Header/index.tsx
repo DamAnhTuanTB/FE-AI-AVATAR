@@ -10,9 +10,10 @@ import {
 } from '@/pages/HomePage';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   ContainerWrapper,
+  CustomLink,
   GetStartedWrapper,
   Logo,
   MenuLink,
@@ -22,6 +23,7 @@ import {
   UserName,
   Wrapper,
 } from './style';
+import { ROUTES } from '@/routes/routes';
 
 const links = [
   { title: 'Why AI Avatar', href: '#why-choose-avatar' },
@@ -35,6 +37,7 @@ export default function HomePageHeader() {
   const navigate = useNavigate();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
+  const location = useLocation();
   return (
     <Root>
       <SaleBanner src={salePageLinkFromLandingPage} />
@@ -48,14 +51,19 @@ export default function HomePageHeader() {
           />
 
           <MenusLink>
-            {links.map((link) => (
-              <MenuLink
-                key={link.title}
-                href={`http://localhost:3030/${link.href}`}
-              >
-                {link.title}
-              </MenuLink>
-            ))}
+            {links.map((link) => {
+              if (location.pathname === ROUTES.HOME)
+                return (
+                  <MenuLink key={link.title} href={link.href}>
+                    {link.title}
+                  </MenuLink>
+                );
+              return (
+                <CustomLink key={link.title} to={ROUTES.HOME + link.href}>
+                  {link.title}
+                </CustomLink>
+              );
+            })}
           </MenusLink>
 
           {userInfor?.userEmail ? (

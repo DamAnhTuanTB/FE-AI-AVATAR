@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ContentPopoverWrapper, PopoverAvatarWrapper, Wrapper } from './styles';
 import { Avatar } from 'antd';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logOut } from '@/store/slices/authSlice';
 import { ROUTES } from '@/routes/routes';
@@ -46,9 +46,13 @@ export default function UserAvatar() {
             <div className="email">{userInfor?.userEmail}</div>
           </div>
         </div>
+        <div className="dash" />
         <div className="remaining-generated-count">
           Remaining generate count: {numberGenerate}
         </div>
+        <Link to={ROUTES.LIST_AVATAR} className="my-avatars">
+          View My Avatars
+        </Link>
         <div className="dash" />
 
         <div className="sign-out-btn" onClick={() => handleLogout()}>

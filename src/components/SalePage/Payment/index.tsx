@@ -1,6 +1,7 @@
 import Facebook from '@/assets/images/socials/facebook.svg';
-import Linkedin from '@/assets/images/socials/linkedin.svg';
+import Discord from '@/assets/images/socials/discord.svg';
 import Twitter from '@/assets/images/socials/twitter.svg';
+import Tiktok from '@/assets/images/socials/tiktok.svg';
 import Star from '@/components/Icons/Star';
 import { salePageTracking } from '@/firebase/firebase';
 import usePurchase from '@/hooks/usePurchase';
@@ -157,7 +158,10 @@ export default function Payment({
           <img src={Facebook} alt="facebook" />
         </a>
         <a href="" target="_blank">
-          <img src={Linkedin} alt="linkedin" />
+          <img src={Discord} alt="discord" />
+        </a>
+        <a href="" target="_blank">
+          <img src={Tiktok} alt="tiktok" />
         </a>
       </SocialsWrapper>
     </Wrapper>
