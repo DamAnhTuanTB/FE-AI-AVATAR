@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { TypeSessionStatus } from '../GenerateAvatar/contants';
 import { Wrapper } from './style';
+import {Helmet} from "react-helmet";
 
 const getImage = (results: any, index: number) => {
   const keys = Object.keys(results);
@@ -58,6 +59,11 @@ export default function ListAvatar() {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>My Avatar - Avatarist.ai</title>
+        <meta name="description"
+              content='Access your unique AI avatar on the "My Avatar" page. Showcase your digital identity to the world.'/>
+      </Helmet>
       <div className="content-list-avatar">
         <div className="title-my-generate">
           <div className="text">My Avatars</div>
