@@ -15,7 +15,7 @@ import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import ModalPayment from './components/Modals/ModalPayment';
+import ModalPayment from './components/Modals/ModalPayment/ModalPayment';
 import ModalPreviewStyle from './components/Modals/ModalPreviewStyle';
 import PreviewStyle from './components/PreviewStyle';
 import Step1 from './components/Step1';
