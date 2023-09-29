@@ -66,7 +66,7 @@ export default function SaleContent({
     (saleDate) => saleDate.discount > 0
   ).length;
   const endDiscountDate = moment(startDate)
-    .add(discountDays, 'd')
+    .add(discountDays - 1, 'd')
     .format(format);
 
   return (
