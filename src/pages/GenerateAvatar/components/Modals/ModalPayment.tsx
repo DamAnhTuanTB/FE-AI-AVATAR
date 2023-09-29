@@ -161,8 +161,6 @@ export default function ModalPayment({
     setOpen(false);
   };
 
-  console.log(price);
-
   return (
     <Wrapper
       width={isMobile ? 343 : 673}
@@ -202,8 +200,8 @@ export default function ModalPayment({
                   <div className="text">
                     <div className="display-name">{item.displayName}</div>
                     <div className="text-price">
-                      <div>{item.name}</div>
                       <div>${item.price} one time</div>
+                      <div>{item.name}</div>
                     </div>
                   </div>
                 </div>

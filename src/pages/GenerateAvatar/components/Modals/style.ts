@@ -90,6 +90,7 @@ export const Wrapper = styled(Modal)`
                   display: flex;
                   flex-direction: column;
                   gap: 4px;
+                  text-align: end;
                   & > div:first-child {
                     color: var(--text-primary, #18181b);
                     font-size: 12px;
