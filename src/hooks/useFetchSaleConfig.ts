@@ -70,21 +70,22 @@ export default function useFetchSaleConfig() {
   }, []);
 
   const getIncreasePrice = (prices: any[], priceSelected: any) => {
-    const tolerance = discountValue > 0 ? 0.01 : 0;
-    if (!(prices.length || priceSelected)) return 0;
+    // const tolerance = discountValue > 0 ? 0.01 : 0;
+    // if (!(prices.length || priceSelected)) return 0;
 
-    // console.log('discountValue', discountValue);
-    const discountPrice = priceSelected?.price || prices[1]?.price;
-    const originalPrice = discountPrice / (1 - discountValue) + tolerance;
+    // // console.log('discountValue', discountValue);
+    // const discountPrice = priceSelected?.price || prices[1]?.price;
+    // const originalPrice = discountPrice / (1 - discountValue) + tolerance;
 
-    // console.log('discountPrice', originalPrice, discountPrice);
+    // // console.log('discountPrice', originalPrice, discountPrice);
 
-    const nextDiscountPrice = originalPrice * (1 - nextDiscountValue);
-    // console.log('priceeeee', nextDiscountValue, originalPrice, discountPrice, nextDiscountPrice);
-    const newIncreasePrice =
-      (nextDiscountPrice - discountPrice) / discountPrice;
-    // console.log('newIncreasePrice', newIncreasePrice);
-    return newIncreasePrice;
+    // const nextDiscountPrice = originalPrice * (1 - nextDiscountValue);
+    // // console.log('priceeeee', nextDiscountValue, originalPrice, discountPrice, nextDiscountPrice);
+    // const newIncreasePrice =
+    //   (nextDiscountPrice - discountPrice) / discountPrice;
+    // // console.log('newIncreasePrice', newIncreasePrice);
+    // return newIncreasePrice;
+    return discountValue;
   };
 
   useEffect(() => {
