@@ -96,7 +96,7 @@ export default function Step3({
 
   return (
     <Wrapper>
-      <div className="title">Choose styles</div>
+      <div className="title">Select styles</div>
       <div className="description">
         You can select up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
         styles due to your select package
