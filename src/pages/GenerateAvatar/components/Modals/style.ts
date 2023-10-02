@@ -3,6 +3,10 @@ import { Modal } from 'antd';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled(Modal)`
+  // width: 1328px;
+  // @media screen and (max-width: ${breakpoints.md}) {
+  //   width: 343px;
+  // }
   .ant-modal-content {
     border-radius: 12px;
     .ant-modal-body {

@@ -264,7 +264,7 @@ export default function Step1PC({
                 Supported formats: PNG, JPEG, JPG, JFIF.
               </div>
               <div className="upload-support">
-                File size limit: 5MB. Image size limit: 768 px.
+                File size limit: 5MB. Minimum size: 768 px.
               </div>
               <input
                 className="big-input-upload"
