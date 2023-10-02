@@ -1,4 +1,4 @@
-import { analyticsLogEvent } from '@/firebase';
+import { analyticsLogEvent, userPropertiesLogEvent } from '@/firebase';
 import { eventTracking } from '@/firebase/firebase';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
@@ -16,6 +16,7 @@ export default function useTrackingEvent() {
       }
 
       analyticsLogEvent(event, { ...params, ...userIdParam });
+      userPropertiesLogEvent();
     },
     [userInfor?.id]
   );

@@ -107,9 +107,15 @@ export default function ModalPayment({
         const specificPackage = prices.find((item: any) => item.id === packageId);
         setPrice(specificPackage);
       }
-
     }
   }, [prices, packageId]);
+
+  // useEffect(() => {
+  //   if (!open) {
+  //     searchParams.delete('package');
+  //     setSearchParams(searchParams)
+  //   }
+  // }, [open])
 
   const purchaseMutation = useMutation(
     (payload: any) => generateService.purchaseNow(payload),
@@ -130,13 +136,9 @@ export default function ModalPayment({
     }
   };
   const handleClickPrice = (item: any) => {
-    searchParams.set('package', item.id);
-    setSearchParams(searchParams)
     setPrice(item);
   };
   const handleClickPurchase = () => {
-    searchParams.delete('package');
-    setSearchParams(searchParams)
     let redirectUrl = `${window.location.protocol}//${window.location.host}${ROUTES.APP_PAGE}?payment-success=1`;
     if (searchParams.get('from')) {
       redirectUrl += `&from=${searchParams.get('from')}`;
@@ -173,7 +175,7 @@ export default function ModalPayment({
 
   const handleSeeAllStyles = () => {
     setShowModalPreviewStyle(true);
-    setOpen(false);
+    // setOpen(false);
   };
 
   return (

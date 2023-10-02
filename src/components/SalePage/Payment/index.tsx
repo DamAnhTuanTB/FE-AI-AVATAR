@@ -52,6 +52,8 @@ export default function Payment({
   const tolerance = discountValue > 0 ? 0.01 : 0;
 
   useEffect(() => {
+    console.log('changeee');
+    
     if (prices.length > 1) {
       handleSelectPrice(prices[1]);
     }

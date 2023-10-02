@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
           <Content>
             VisionLab, Inc {`("us", "we", or "our")`} operates the{' '}
             <a href={'https://avatarist.ai/'}>https://avatarist.ai/</a> website
-            and Creatorhub mobile applications {`(the "Service").`}
+            and Avatarist mobile applications {`(the "Service").`}
             <br />
             <br />
             This page informs you of our policies regarding the collection, use,
@@ -197,8 +197,8 @@ export default function PrivacyPolicyPage() {
             ever elect to make your photographs and graphics that you upload to
             our website to be public, we may use them for editorial purposes in
             line with our Terms of Use, accessible from{' '}
-            <a href={'https://avatarist.ai//terms/'}>
-              https://avatarist.ai//terms/
+            <a href={'https://avatarist.ai/terms/'}>
+              https://avatarist.ai/terms/
             </a>
             , for example, your photograph may appear on our website as a
             featured image. You may always make your public photographs and
