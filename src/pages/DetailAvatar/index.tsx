@@ -14,9 +14,10 @@ import { useMutation, useQuery } from 'react-query';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
-import { Wrapper } from './style';
+import { AvatarsSlider, Wrapper } from './style';
 import { TypeDownload } from '../GenerateAvatar/contants';
-import {Helmet} from "react-helmet";
+import GeneratedAvatars from './GeneratedAvatars';
+import { Helmet } from 'react-helmet';
 
 export default function DetailAvatar() {
   const { isMobile } = useScreenSize();
@@ -81,8 +82,10 @@ export default function DetailAvatar() {
     <Wrapper>
       <Helmet>
         <title>My Avatar - Avatarist.ai</title>
-        <meta name="description"
-              content='Access your unique AI avatar on the "My Avatar" page. Showcase your digital identity to the world.'/>
+        <meta
+          name="description"
+          content='Access your unique AI avatar on the "My Avatar" page. Showcase your digital identity to the world.'
+        />
       </Helmet>
       <div className="header-detail">
         <div className="back" onClick={() => window.history.back()}>
@@ -135,7 +138,7 @@ export default function DetailAvatar() {
               View all
             </span>
           </div>
-          <Carousel
+          {/* <Carousel
             dots={false}
             infinite={false}
             // slidesToScroll={1}
@@ -144,31 +147,12 @@ export default function DetailAvatar() {
             variableWidth={true}
             className="list-generated"
           >
-            {Object.keys(listAvatar)?.map((style: string, index: number) => (
-              <div
-                draggable="true"
-                className="item-child"
-                key={style}
-                // onClick={(event: any) =>
-                //   handleClickDetail(event, `/my-avatar/${params.id}/${style}`)
-                // }
-              >
-                <div className="item-generated">
-                  <div className="col-1">
-                    <img src={detailAvatar?.results[style][0]} alt="" />
-                  </div>
-                  <div className="col-2">
-                    <img src={detailAvatar?.results[style][1]} alt="" />
-                    <img src={detailAvatar?.results[style][2]} alt="" />
-                  </div>
-                </div>
-                <div className="name-style">
-                  Style: {capitalizeWords(style)}
-                </div>
-                <div className="number-image">10 images</div>
-              </div>
-            ))}
-          </Carousel>
+            
+          </Carousel> */}
+          <GeneratedAvatars
+            listAvatar={listAvatar}
+            detailAvatar={detailAvatar}
+          />
         </div>
       </div>
       <div className="bottom">
