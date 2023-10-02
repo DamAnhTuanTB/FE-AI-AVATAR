@@ -110,10 +110,12 @@ const LoginComponent: React.FC = () => {
       searchParams.delete('errorCode');
     }
     const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}`;
-
+    console.log('newPath', newPath);
+    
     const redirectRoute = `${process.env.REACT_APP_AUTHEN_BASE_URL}/${platform}?redirect_url=${newPath}&user_type=${process.env.REACT_APP_USER_TYPE}&platform=${platform}`;
+    console.log('redirectRoute', redirectRoute);
     setCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM, platform)
-    window.location.href = redirectRoute;
+    // window.location.href = redirectRoute;
   };
 
   const handleSubmit = async (formData: any) => {
@@ -181,7 +183,7 @@ const LoginComponent: React.FC = () => {
       )}
 
       {/*    Login via social buttons */}
-      {!emailSuccessPaymentButNotAuth && (
+      {/* {!emailSuccessPaymentButNotAuth && ( */}
         <LoginWithSocialWrapper>
           {loginWithSocialArr.map((item: any) => {
             return (
@@ -198,7 +200,7 @@ const LoginComponent: React.FC = () => {
             );
           })}
         </LoginWithSocialWrapper>
-      )}
+      {/* )} */}
 
       {/*    OR text */}
       {!emailSuccessPaymentButNotAuth && (
