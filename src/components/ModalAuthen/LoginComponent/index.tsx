@@ -17,15 +17,17 @@ import { HTTP_STATUS } from '@/services/config/api';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   setEmailSuccessPaymentButNotAuth,
+  setPaymentSuccessLoginGoogle,
   setUserExists,
 } from '@/store/slices/appSlice';
 import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { RootState } from '@/store/store';
-import {eraseCookie, getCookie, setCookie} from '@/utils/cookies';
+import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
-import AuthenForm from "@/components/ModalAuthen/AuthenForm";
+import { analyticsLogEvent, userPropertiesLogEvent } from '@/firebase';
+import AuthenForm from '@/components/ModalAuthen/AuthenForm';
+import { ROUTES } from '@/routes/routes';
 
 const LoginComponent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -64,18 +66,18 @@ const LoginComponent: React.FC = () => {
       } else {
         error = 'Access denied. Please login again!';
       }
-        analyticsLogEvent(eventTracking.signInClick.name, {
-            [eventTracking.signInClick.params.status]: 'failed',
-            [eventTracking.signInClick.params.source]: `${platform}`,
-        });
-        userPropertiesLogEvent();
-        eraseCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM);
+      analyticsLogEvent(eventTracking.signInClick.name, {
+        [eventTracking.signInClick.params.status]: 'failed',
+        [eventTracking.signInClick.params.source]: `${platform}`,
+      });
+      userPropertiesLogEvent();
+      eraseCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM);
 
       setErrorMessageApi(error);
     }
   }, [errorCode, accessToken]);
 
-  const cookiesPlatform = getCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM)
+  const cookiesPlatform = getCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM);
 
   useEffect(() => {
     if (accessToken && refreshToken) {
@@ -87,15 +89,18 @@ const LoginComponent: React.FC = () => {
 
         analyticsLogEvent(eventTracking.signInClick.name, {
           [eventTracking.signInClick.params.status]: 'success',
-          [eventTracking.signInClick.params.source]: cookiesPlatform || 'google',
+          [eventTracking.signInClick.params.source]:
+            cookiesPlatform || 'google',
         });
         userPropertiesLogEvent();
         eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM);
-
         searchParams.delete('auth');
         searchParams.delete('token');
         searchParams.delete('refresh_token');
         setSearchParams(searchParams);
+        if (getCookie('paymentSuccessLoginGoogle') === '1') {
+          dispatch(setPaymentSuccessLoginGoogle(true));
+        }
       }
       // Đã Login
       else {
@@ -106,13 +111,19 @@ const LoginComponent: React.FC = () => {
   }, []);
 
   const handleLoginWithSocial = (platform: string) => {
+    if (emailSuccessPaymentButNotAuth) {
+      setCookie('paymentSuccessLoginGoogle', '1');
+      setCookie('emailPaymentSuccess', emailSuccessPaymentButNotAuth);
+    }
     if (errorCode) {
       searchParams.delete('errorCode');
     }
-    const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}`;
+    const newPath = `${window.location.protocol}//${window.location.host}${
+      window.location.pathname
+    }?auth=${emailSuccessPaymentButNotAuth ? 'login' : auth}`;
 
     const redirectRoute = `${process.env.REACT_APP_AUTHEN_BASE_URL}/${platform}?redirect_url=${newPath}&user_type=${process.env.REACT_APP_USER_TYPE}&platform=${platform}`;
-    setCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM, platform)
+    setCookie(CONFIG.COOKIE_SIGN_IN_PLATFORM, platform);
     window.location.href = redirectRoute;
   };
 
@@ -140,11 +151,14 @@ const LoginComponent: React.FC = () => {
           [eventTracking.signInClick.params.status]: 'success',
           [eventTracking.signInClick.params.source]: 'enter_email',
         });
-        userPropertiesLogEvent()
+        userPropertiesLogEvent();
 
         setSearchParams(searchParams);
         if (emailSuccessPaymentButNotAuth) {
           logEvent(eventTracking.login_purchase_click_button.name);
+        }
+        if (location.pathname === ROUTES.LIST_AVATAR) {
+          window.location.reload();
         }
       }
     } catch (err: any) {
@@ -155,10 +169,10 @@ const LoginComponent: React.FC = () => {
         errMsg = AUTH_ERROR_MESSAGE.LOGIN.EMAIL_PASSWORD_WRONG_DISPLAY;
       }
       analyticsLogEvent(eventTracking.signInClick.name, {
-          [eventTracking.signInClick.params.status]: 'failed',
-          [eventTracking.signInClick.params.source]: 'enter_email',
-        });
-        userPropertiesLogEvent()
+        [eventTracking.signInClick.params.status]: 'failed',
+        [eventTracking.signInClick.params.source]: 'enter_email',
+      });
+      userPropertiesLogEvent();
 
       setErrorMessageApi(errMsg);
     }
@@ -181,24 +195,28 @@ const LoginComponent: React.FC = () => {
       )}
 
       {/*    Login via social buttons */}
-      {!emailSuccessPaymentButNotAuth && (
-        <LoginWithSocialWrapper>
-          {loginWithSocialArr.map((item: any) => {
-            return (
-              <div
-                key={item.platform}
-                className={'login-social-button'}
-                onClick={() => handleLoginWithSocial(item.platform)}
-              >
-                <div className="login-icon-wrapper">
-                  <img src={item.icon} alt="" className="login-icon" />
-                </div>
-                <div className="button-title">{item.title}</div>
+
+      <LoginWithSocialWrapper>
+        {loginWithSocialArr.map((item: any) => {
+          if (emailSuccessPaymentButNotAuth) {
+            if (item.platform !== 'google') {
+              return '';
+            }
+          }
+          return (
+            <div
+              key={item.platform}
+              className={'login-social-button'}
+              onClick={() => handleLoginWithSocial(item.platform)}
+            >
+              <div className="login-icon-wrapper">
+                <img src={item.icon} alt="" className="login-icon" />
               </div>
-            );
-          })}
-        </LoginWithSocialWrapper>
-      )}
+              <div className="button-title">{item.title}</div>
+            </div>
+          );
+        })}
+      </LoginWithSocialWrapper>
 
       {/*    OR text */}
       {!emailSuccessPaymentButNotAuth && (

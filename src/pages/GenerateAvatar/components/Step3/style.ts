@@ -57,7 +57,6 @@ export const Wrapper = styled.div`
         filter: brightness(0.5);
       }
 
-
       .item-style {
         position: relative;
         border-radius: 12px;
@@ -65,7 +64,6 @@ export const Wrapper = styled.div`
         overflow: hidden;
         /* border: 4px solid transparent; */
         //filter: brightness(0.5);
-
 
         &::after {
           content: '';
@@ -122,22 +120,24 @@ export const Wrapper = styled.div`
           padding-bottom: 12px;
           border-bottom-left-radius: 12px;
           border-bottom-right-radius: 12px;
-          background: linear-gradient(180deg,
-          rgba(9, 9, 23, 0) 0%,
-          rgba(9, 9, 23, 0.3) 100%);
+          background: linear-gradient(
+            180deg,
+            rgba(9, 9, 23, 0) 0%,
+            rgba(9, 9, 23, 0.3) 100%
+          );
           -webkit-backdrop-filter: blur(9px);
           backdrop-filter: blur(9px);
         }
 
         .order-number {
           position: absolute;
-          top: 16px;
-          left: 16px;
-          border-radius: 12px;
-          border: 2.5px solid var(--secondary-white, #fff);
+          top: 12px;
+          left: 12px;
+          border-radius: 8px;
+          border: 2px solid var(--secondary-white, #fff);
           background: rgba(32, 32, 32, 0.5);
-          width: 32px;
-          height: 32px;
+          width: 24px;
+          height: 24px;
         }
 
         /* .checkbox {
@@ -200,7 +200,6 @@ export const Wrapper = styled.div`
         } */
       }
     }
-
   }
   .bottom {
     padding: 10px 16px;

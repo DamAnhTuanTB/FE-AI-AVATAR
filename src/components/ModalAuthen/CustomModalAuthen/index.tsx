@@ -1,5 +1,6 @@
 import React from 'react';
 import BgModalLogin from '@/assets/images/bg_modal_login.png';
+import BgPaymentSuccess from '@/assets/images/bg-payment-success.png';
 import BgSmallLogin from '@/assets/images/bg-small-authen.png';
 import IcCloseModal from '@/assets/icons/ic_close_modal.svg';
 import { CustomModalWrapper } from '@/components/ModalAuthen/CustomModalAuthen/styles';
@@ -19,6 +20,7 @@ const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const auth = searchParams.get('auth');
 
+  const userExists = useAppSelector((state: RootState) => state.app.userExists);
   const emailSuccessPaymentButNotAuth = useAppSelector(
     (state: RootState) => state.app.emailSuccessPaymentButNotAuth
   );
@@ -33,7 +35,7 @@ const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
     <CustomModalWrapper
       open={open}
       centered
-      width={940}
+      width={userExists === 0 ? 840 : 940}
       footer={null}
       closable={false}
     >
@@ -43,19 +45,35 @@ const CustomModalAuthentication: React.FC<ICustomModalAuthentication> = ({
         </div>
       )}
 
-      <div className="modal-wrapper">
+      <div
+        className={`modal-wrapper ${
+          userExists === 0 && 'payment-modal-wrapper'
+        }`}
+      >
         {/*    children */}
         <div className="children-wrapper">{children}</div>
 
         {/*    background */}
-        <div className="background-wrapper">
-          <div className="background">
-            <img
-              src={emailSuccessPaymentButNotAuth ? BgSmallLogin : BgModalLogin}
-              alt=""
-            />
+        {userExists === 0 ? (
+          <div className="payment-success">
+            <img src={BgPaymentSuccess} alt="" />
+            <div className="text-1">Payment successfully</div>
+            <div className="text-2">
+              Please check your email to view your payment details
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="background-wrapper">
+            <div className="background">
+              <img
+                src={
+                  emailSuccessPaymentButNotAuth ? BgSmallLogin : BgModalLogin
+                }
+                alt=""
+              />
+            </div>
+          </div>
+        )}
       </div>
     </CustomModalWrapper>
   );

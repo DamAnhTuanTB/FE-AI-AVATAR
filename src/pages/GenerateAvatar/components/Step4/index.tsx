@@ -36,12 +36,15 @@ export default function Step4({
       <div className="content-text">
         <img className="icon-success" src={IconGenerateSuccess} alt="" />
         <div className="title-success">
-          On our way! About 15 minutes left...
+          On our way! Your Avatar is being generated...
         </div>
         <div className="description-success">
-          Please wait for a few minutes, your Avatar is being generated. We will
-          notify you when the results are ready and will send them to your
-          email.
+          Hey it&lsquo;s time to sit back and relax! Our advanced AI technology
+          works its magic to deliver your result.
+          <div>
+            Your personalized AI avatar will be crafted and promptly delivered
+            straight to your email inbox when it&lsquo;s done.
+          </div>
         </div>
       </div>
       <div className="group-button">
@@ -52,7 +55,7 @@ export default function Step4({
           onClick={handleClickBackToHome}
         />
         <Button
-          text="My Avatars"
+          text="Check My Avatars"
           width="100%"
           height="45px"
           background={false}

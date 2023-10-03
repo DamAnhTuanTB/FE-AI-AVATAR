@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding-bottom: 60px;
   .title {
     color: var(--secondary-black, #262626);
     font-size: 16px;
@@ -43,6 +42,6 @@ export const Wrapper = styled.div`
   }
   .last-section {
     margin-top: 24px;
-    margin-bottom: 74px;
+    margin-bottom: 12px;
   }
 `;

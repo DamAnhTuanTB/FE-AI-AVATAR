@@ -22,6 +22,7 @@ import AvatarScroll8 from '@/assets/images/home-page/avt-scroll-8.png';
 import AvatarScroll9 from '@/assets/images/home-page/avt-scroll-9.png';
 import ShadowBottom from '@/assets/images/home-page/shadow-avt-scroll-bottom.png';
 import ShadowTop from '@/assets/images/home-page/shadow-avt-scroll-top.png';
+import IconCrown from '@/assets/images/home-page/vuong-mien.svg';
 import ArrowRight from '@/components/Icons/ArrowRight';
 import Star from '@/components/Icons/Star';
 import { landingPageTracking } from '@/firebase/firebase';
@@ -39,6 +40,7 @@ import {
   ContentWrapper,
   GetStartedWrapper,
   IntroDescription,
+  ParentGetStarted,
   RateWrapper,
   Reviewer,
   ReviewersWrapper,
@@ -47,10 +49,13 @@ import {
   ReviewsWrapper,
   ScrollAvatarWrapper,
   ScrollWrapper,
+  SeeAllStyles,
   Shadow,
   StarsWrapper,
   Wrapper,
 } from './styles';
+import ModalPreviewStyle from '@/pages/GenerateAvatar/components/Modals/ModalPreviewStyle';
+import { useState } from 'react';
 
 const reviewers = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
 
@@ -88,6 +93,7 @@ export default function Intro() {
   const navigate = useNavigate();
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
   const { logEvent } = useTrackingEvent();
+  const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
   return (
     <ContainerWrapper id={'intro'}>
       <Wrapper>
@@ -100,20 +106,28 @@ export default function Intro() {
               today!
             </IntroDescription>
           </div>
+          <ParentGetStarted>
+            <GetStartedWrapper
+              onClick={() => {
+                const eventParams: any = {
+                  [landingPageTracking.clickStart.params.from]: 'hero',
+                };
 
-          <GetStartedWrapper
-            onClick={() => {
-              const eventParams: any = {
-                [landingPageTracking.clickStart.params.from]: 'hero',
-              };
-
-              logEvent(landingPageTracking.clickStart.name, eventParams);
-              navigate(uploadPhotoLinkFromLandingPage);
-            }}
-          >
-            <p>Get started</p>
-            <ArrowRight />
-          </GetStartedWrapper>
+                logEvent(landingPageTracking.clickStart.name, eventParams);
+                navigate(uploadPhotoLinkFromLandingPage);
+              }}
+            >
+              <p>Get started</p>
+              <ArrowRight />
+            </GetStartedWrapper>
+            <SeeAllStyles onClick={() => setShowModalPreviewStyle(true)}>
+              <div>See all styles</div>
+              <div>
+                <span>NEW</span>
+                <img src={IconCrown} alt="" />
+              </div>
+            </SeeAllStyles>
+          </ParentGetStarted>
 
           <ReviewsWrapper>
             <ReviewersWrapper>
@@ -169,6 +183,14 @@ export default function Intro() {
           />
         </ScrollWrapper>
       </Wrapper>
+      {showModalPreviewStyle && (
+        <ModalPreviewStyle
+          open={showModalPreviewStyle}
+          setOpen={setShowModalPreviewStyle}
+          gender="Female"
+          hasClose={true}
+        />
+      )}
     </ContainerWrapper>
   );
 }

@@ -23,20 +23,24 @@ export const Wrapper = styled.div`
       color: var(--text-primary, #18181b);
       text-align: center;
       font-family: Outfit;
-      font-size: 16px;
+      font-size: 20px;
       font-style: normal;
-      font-weight: 500;
-      line-height: 150%; /* 24px */
-      margin-top: 12px;
-      margin-bottom: 4px;
+      font-weight: 700;
+      line-height: 120%; /* 24px */
+      margin-top: 16px;
+      margin-bottom: 12px;
     }
     .description-success {
       color: var(--text-primary, #18181b);
       text-align: center;
-      font-size: 14px;
+      font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: 150%; /* 21px */
+      max-width: 1057px;
+      div {
+        font-weight: 600;
+      }
     }
   }
   .group-button {

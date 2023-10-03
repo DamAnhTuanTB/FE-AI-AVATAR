@@ -23,24 +23,6 @@ export default function ModalLogin(props: IModalLogin) {
 
   const userExists = useAppSelector((state: RootState) => state.app.userExists);
 
-  // const [userExist, setUserExist] = useState(0);
-
-  // useQuery(
-  //   ['check-user-exist', localStorage.getItem('userIdFake')],
-  //   () =>
-  //     generateService.checkUserExist(localStorage.getItem('userIdFake') || ''),
-  //   {
-  //     onSuccess: (res: any) => {
-  //       if (res.data.exist) {
-  //         setUserExist(1);
-  //       } else {
-  //         setUserExist(-1);
-  //       }
-  //     },
-  //     enabled: !!localStorage.getItem('userIdFake'),
-  //   }
-  // );
-
   const renderForm = () => {
     if (
       auth === AuthEnum.Login ||

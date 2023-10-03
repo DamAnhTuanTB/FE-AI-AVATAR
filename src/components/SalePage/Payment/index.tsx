@@ -8,8 +8,9 @@ import usePurchase from '@/hooks/usePurchase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CountDown from './CountDown';
+import IconCrown from '@/assets/images/home-page/vuong-mien.svg';
 import {
   BuyButton,
   CustomRadio,
@@ -25,12 +26,14 @@ import {
   RatesWrapper,
   SaveItem,
   Saving,
+  SeeAllStyles,
   SelectPackageSection,
   SocialsWrapper,
   StatisticPrimaryText,
   Wrapper,
 } from './styles';
 import useFetchSaleConfig from '@/hooks/useFetchSaleConfig';
+import ModalPreviewStyle from '@/pages/GenerateAvatar/components/Modals/ModalPreviewStyle';
 
 interface PropsType {
   handleSelectPrice: (price: any) => void;
@@ -45,6 +48,7 @@ export default function Payment({
 }: PropsType) {
   // const prices = useAppSelector((state: RootState) => state.app.prices);
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const [showModalPreviewStyle, setShowModalPreviewStyle] = useState(false);
   const { logEvent } = useTrackingEvent();
   const { discountValue } = useFetchSaleConfig();
 
@@ -91,21 +95,31 @@ export default function Payment({
         </div>
       </SelectPackageSection>
 
-      <BuyButton
-        onClick={() => {
-          const eventParams: any = {};
-          if (priceSelected?.maxStyle) {
-            eventParams[
-              salePageTracking.clickBuyNow.params.package
-            ] = `${priceSelected?.maxStyle}style`;
-          }
+      <div>
+        <BuyButton
+          onClick={() => {
+            const eventParams: any = {};
+            if (priceSelected?.maxStyle) {
+              eventParams[
+                salePageTracking.clickBuyNow.params.package
+              ] = `${priceSelected?.maxStyle}style`;
+            }
 
-          logEvent(salePageTracking.clickBuyNow.name, eventParams);
-          handlePurchase(priceSelected?.id);
-        }}
-      >
-        <p>Buy now</p>
-      </BuyButton>
+            logEvent(salePageTracking.clickBuyNow.name, eventParams);
+            handlePurchase(priceSelected?.id);
+          }}
+        >
+          <p>Buy now</p>
+        </BuyButton>
+
+        <SeeAllStyles onClick={() => setShowModalPreviewStyle(true)}>
+          <div>See all styles</div>
+          <div>
+            <span>NEW</span>
+            <img src={IconCrown} alt="" />
+          </div>
+        </SeeAllStyles>
+      </div>
 
       <Saving>
         <SaveItem first>
@@ -166,6 +180,14 @@ export default function Payment({
           <img src={Tiktok} alt="tiktok" />
         </a>
       </SocialsWrapper>
+      {showModalPreviewStyle && (
+        <ModalPreviewStyle
+          open={showModalPreviewStyle}
+          setOpen={setShowModalPreviewStyle}
+          gender="Female"
+          hasClose={true}
+        />
+      )}
     </Wrapper>
   );
 }

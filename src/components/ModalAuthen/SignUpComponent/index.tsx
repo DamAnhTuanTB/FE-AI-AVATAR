@@ -21,12 +21,12 @@ import {
 } from '@/store/slices/appSlice';
 import { loginWithSocialAccount } from '@/store/slices/authSlice';
 import { RootState } from '@/store/store';
-import {eraseCookie, getCookie, setCookie} from '@/utils/cookies';
+import { eraseCookie, getCookie, setCookie } from '@/utils/cookies';
 import { generateRandomString } from '@/utils/helpers';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {analyticsLogEvent, userPropertiesLogEvent} from "@/firebase";
-import {eventTracking} from "@/firebase/firebase";
+import { analyticsLogEvent, userPropertiesLogEvent } from '@/firebase';
+import { eventTracking } from '@/firebase/firebase';
 
 const SignUpComponent = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ const SignUpComponent = () => {
   const parseAuthUser = authUser ? JSON.parse(authUser) : '';
   const cookieToken = parseAuthUser.token;
 
-  const cookiesPlatform = getCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM)
+  const cookiesPlatform = getCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM);
 
   const tokenFromLocalStorage = localStorage.getItem(
     CONFIG.LOCAL_STORAGE_TOKEN
@@ -69,9 +69,9 @@ const SignUpComponent = () => {
         [eventTracking.signUpClick.params.status]: 'failed',
         [eventTracking.signUpClick.params.source]: cookiesPlatform || 'google',
       });
-      userPropertiesLogEvent()
+      userPropertiesLogEvent();
 
-      eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM)
+      eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM);
 
       setErrorMessageApi(error);
     }
@@ -87,11 +87,12 @@ const SignUpComponent = () => {
 
         analyticsLogEvent(eventTracking.signUpClick.name, {
           [eventTracking.signUpClick.params.status]: 'success',
-          [eventTracking.signUpClick.params.source]: cookiesPlatform || 'google',
+          [eventTracking.signUpClick.params.source]:
+            cookiesPlatform || 'google',
         });
-        userPropertiesLogEvent()
+        userPropertiesLogEvent();
 
-        eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM)
+        eraseCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM);
 
         searchParams.delete('auth');
         searchParams.delete('token');
@@ -113,7 +114,7 @@ const SignUpComponent = () => {
     const newPath = `${window.location.protocol}//${window.location.host}${window.location.pathname}?auth=${auth}`;
 
     const redirectRoute = `${process.env.REACT_APP_AUTHEN_BASE_URL}/${platform}?redirect_url=${newPath}&user_type=${process.env.REACT_APP_USER_TYPE}&platform=${platform}`;
-    setCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM, platform)
+    setCookie(CONFIG.COOKIE_SIGN_UP_PLATFORM, platform);
     window.location.href = redirectRoute;
   };
 
@@ -134,7 +135,7 @@ const SignUpComponent = () => {
           [eventTracking.signUpClick.params.status]: 'success',
           [eventTracking.signUpClick.params.source]: 'enter_email',
         });
-        userPropertiesLogEvent()
+        userPropertiesLogEvent();
 
         const payloadLogin = {
           email: formData?.email.trim(),
@@ -183,7 +184,9 @@ const SignUpComponent = () => {
     <>
       {/* Title */}
       <ModalTextTitle>
-        {emailSuccessPaymentButNotAuth ? 'Welcome back' : ' Sign up'}
+        {emailSuccessPaymentButNotAuth
+          ? 'Create an account to continue'
+          : ' Sign up'}
       </ModalTextTitle>
 
       {emailSuccessPaymentButNotAuth && (

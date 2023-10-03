@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AvatarsSlider } from './style';
 import { capitalizeWords } from '@/utils/helpers';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function GeneratedAvatars({
   listAvatar,
@@ -9,6 +10,8 @@ export default function GeneratedAvatars({
   listAvatar: any[];
   detailAvatar: any;
 }) {
+  const navigate = useNavigate();
+  const params = useParams();
   const ourRef = useRef<any>(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const mouseCoords = useRef({
@@ -71,12 +74,9 @@ export default function GeneratedAvatars({
       <AvatarsSlider>
         {Object.keys(listAvatar)?.map((style: string, index: number) => (
           <div
-            //   draggable="true"
             className="item-child"
             key={style}
-            // onClick={(event: any) =>
-            //   handleClickDetail(event, `/my-avatar/${params.id}/${style}`)
-            // }
+            onClick={() => navigate(`/my-avatar/${params.id}/${style}`)}
           >
             <div className="item-generated">
               <div className="col-1">

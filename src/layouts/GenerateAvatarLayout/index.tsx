@@ -89,10 +89,7 @@ export default function GenerateAvatarLayout() {
 
   const step = useAppSelector((state: RootState) => state.app.step);
 
-  const showBanner =
-    step === StepEnum.GUIDE ||
-    step === StepEnum.UPLOAD_IMAGE ||
-    step === StepEnum.PICK_GENDER;
+  const showBanner = step === StepEnum.GUIDE || step === StepEnum.PICK_GENDER;
 
   return (
     <DefaultLayoutWrapper>

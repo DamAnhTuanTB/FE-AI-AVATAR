@@ -8,7 +8,7 @@ interface IProps {
   background?: boolean;
   disable?: boolean;
   loading?: boolean;
-  onClick: () => void;
+  onClick: any;
 }
 export default function Button({
   text,

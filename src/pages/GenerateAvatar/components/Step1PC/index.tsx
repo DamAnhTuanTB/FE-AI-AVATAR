@@ -13,11 +13,13 @@ import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie';
 import { useMutation } from 'react-query';
-import { StepEnum } from '../../contants';
+import { StepEnum, mesageError } from '../../contants';
 import Button from '../Button';
 import UploadGuidePC from '../UploadGuidePC';
 import { LoadingWrapper, Wrapper } from './style';
 import { useSearchParams } from 'react-router-dom';
+import IconCrop from '@/assets/images/icon-crop.svg';
+import ModalCropImage from '../Modals/ModalCropImage';
 
 const defaultOptions = {
   loop: true,
@@ -26,26 +28,6 @@ const defaultOptions = {
   rendererSettings: {
     preserveAspectRatio: 'xMidYMid slice',
   },
-};
-
-const mesageError: any = {
-  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif':
-    'Not supported image format',
-  'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
-    'Image too small',
-  'File too large.': 'File too large',
-  'Unable to detect any face in the provided image. Please provide another clear image.':
-    'Unable to detect any face',
-  'The detected face size is too small or too big. Please ensure the face size is appropriate.':
-    'The face is too small',
-  'The detected face is significantly different from the majority in the cluster. Please use images with face similarity.':
-    'Different face detected',
-  'The provided image is blurry. Please provide a clearer image.':
-    'Blurred image',
-  'The provided image contains multiple faces, please provide an image containing only one face.':
-    'Multiple faces',
-  'The image is duplicated. Please provide different images.':
-    'Duplicated image',
 };
 
 interface IProps {
@@ -57,7 +39,6 @@ interface IProps {
 }
 
 export default function Step1PC({
-  step,
   setStep,
   images,
   setImages,
@@ -68,8 +49,10 @@ export default function Step1PC({
   const animationRef = useRef(null);
   const [countImageValid, setCountImageValid] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
+  const [showModalCrop, setShowModalCrop] = useState(false);
   const { logEvent } = useTrackingEvent();
   const [searchParams] = useSearchParams();
+  const [indexImageCrop, setIndexImageCrop] = useState<any>();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -81,9 +64,6 @@ export default function Step1PC({
       },
       onError: (err: any) => {
         setShowLoading(false);
-        // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
-        //   ToastError(err?.response?.data?.message);
-        // }
         if (err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE') {
           ToastError(
             err?.response?.data?.message ===
@@ -107,13 +87,6 @@ export default function Step1PC({
     }
   );
 
-  const getFileExtension = (fileName: string) => {
-    return (
-      fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) ||
-      fileName
-    );
-  };
-
   const handleChangeFile = (e: any) => {
     if (images?.length === 0) {
       logEvent(eventTracking.upload_photo_click_upload.name);
@@ -127,27 +100,10 @@ export default function Step1PC({
       'image/jfif',
       // 'image/heic',
     ];
-
     Array.from(files).forEach((file: any, index: number) => {
       if (!allowedMimeTypes.includes(file.type)) {
         return;
       }
-
-      // let originFile: any = file;
-      // let name = file.name;
-      // images.forEach((image: any) => {
-      //   if (image.name === file.name) {
-      //     name =
-      //       'avatar' +
-      //       (Math.floor(Math.random() * (99999999999999 - 1 + 1)) + 1) +
-      //       file.name;
-      //     const blob = originFile.slice(0, file.size, file.type);
-      //     const newFile = new File([blob], name, {
-      //       type: file.type,
-      //     });
-      //     originFile = newFile;
-      //   }
-      // });
       listImages.push({
         src: URL.createObjectURL(file),
         file,
@@ -155,13 +111,7 @@ export default function Step1PC({
         name: file.name,
       });
     });
-    // const countAddtionsAbleToAdd = 15 - images.length;
-    // const countAddtionsValid =
-    //   countAddtionsAbleToAdd === 0
-    //     ? 0
-    //     : listImages.length > countAddtionsAbleToAdd
-    //     ? countAddtionsAbleToAdd
-    //     : listImages.length;
+
     let validNumber = countImageValid;
 
     const arrImage = [...images];
@@ -170,19 +120,22 @@ export default function Step1PC({
       arrImage.push(listImages.shift());
       validNumber += 1;
     }
-    // const arrImage = [...images, ...listImages].slice(0, 15);
+
     setImages([...arrImage]);
-    // setCountImageValid(countImageValid + countAddtionsValid);
     uploadRef.current.value = '';
   };
 
   const handleClickIconPlus = () => {
-    if (countImageValid < 15) {
+    if (images?.length < 15) {
       uploadRef.current?.click();
     }
   };
 
   const handleClickUpload = () => {
+    if (images?.length === 15 && countImageValid < 3) {
+      ToastError('Please upload 3 - 15 images');
+      return;
+    }
     if (countImageValid < 3) {
       if (images?.length === 0) {
         logEvent(eventTracking.upload_photo_click_upload.name, {
@@ -223,10 +176,6 @@ export default function Step1PC({
     }
   };
 
-  const handleClickBigUpload = () => {
-    uploadRef.current?.click();
-  };
-
   const handleDeleteImage = (index: number) => {
     images.splice(index, 1);
     setImages([...images]);
@@ -247,6 +196,11 @@ export default function Step1PC({
     });
     setCountImageValid(countValid);
   }, [images]);
+
+  const handleCropImage = (index: number) => {
+    setIndexImageCrop(index);
+    setShowModalCrop(true);
+  };
 
   return (
     <Wrapper>
@@ -279,7 +233,7 @@ export default function Step1PC({
               <div className="list-images">
                 <div
                   className={`parent-image upload-image ${
-                    countImageValid >= 15 && 'disable'
+                    images?.length >= 15 && 'disable'
                   }`}
                   onClick={handleClickIconPlus}
                 >
@@ -303,6 +257,12 @@ export default function Step1PC({
                         <div>{item?.textError}</div>
                       </div>
                     )}
+                    <div
+                      className={`icon-crop`}
+                      onClick={() => handleCropImage(index)}
+                    >
+                      <img src={IconCrop} alt="" />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -346,6 +306,16 @@ export default function Step1PC({
             <div>Loading...</div>
           </div>
         </LoadingWrapper>
+      )}
+      {showModalCrop && (
+        <ModalCropImage
+          open={showModalCrop}
+          setOpen={setShowModalCrop}
+          file={images[indexImageCrop]?.file}
+          setImages={setImages}
+          images={images}
+          indexImageCrop={indexImageCrop}
+        />
       )}
     </Wrapper>
   );

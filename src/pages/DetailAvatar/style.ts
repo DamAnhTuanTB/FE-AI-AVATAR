@@ -138,7 +138,6 @@ export const Wrapper = styled.div`
           .item-generated {
             width: 278px !important;
             display: flex !important;
-
             border-radius: 10px;
             overflow: hidden;
             .col-1 {
@@ -215,9 +214,9 @@ export const AvatarsSlider = styled.div`
     .item-generated {
       width: 278px !important;
       display: flex !important;
-
       border-radius: 10px;
       overflow: hidden;
+
       .col-1 {
         flex: 2;
         img {
@@ -232,7 +231,9 @@ export const AvatarsSlider = styled.div`
         img {
           width: 100%;
           border: 1.5px solid #fff;
-          border-left: none;
+        }
+        & > img:last-child {
+          border-bottom: none !important;
         }
       }
     }

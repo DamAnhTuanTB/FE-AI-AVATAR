@@ -14,14 +14,12 @@ interface IProps {
   gender: string;
   setGender: any;
   setStep: (step: number) => void;
-  setOriginGender: any;
   setShowModalPayment: any;
 }
 export default function Step2({
   gender,
   setGender,
   setStep,
-  setOriginGender,
   setShowModalPayment,
 }: IProps) {
   const { logEvent } = useTrackingEvent();
@@ -39,7 +37,6 @@ export default function Step2({
 
   const handleClickGender = (item: string) => {
     setGender(item);
-    setOriginGender(item);
   };
 
   const handleClickNext = () => {

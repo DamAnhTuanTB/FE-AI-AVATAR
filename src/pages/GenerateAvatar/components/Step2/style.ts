@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
   flex: 1;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 12px 16px;
   .title {
     color: var(--text-primary, #18181b);

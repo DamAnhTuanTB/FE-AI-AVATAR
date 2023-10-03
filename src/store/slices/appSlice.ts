@@ -15,6 +15,7 @@ export interface AppSlice {
   prices: any[];
   showModalUploadFilesExtendLimit: boolean;
   step: number;
+  paymentSuccessLoginGoogle: boolean;
 }
 
 export const initialUserInfo = {
@@ -35,6 +36,7 @@ const initialState: AppSlice = {
   prices: [],
   showModalUploadFilesExtendLimit: false,
   step: 0,
+  paymentSuccessLoginGoogle: false,
 };
 
 export const appSlice = createSlice({
@@ -70,6 +72,9 @@ export const appSlice = createSlice({
     setStepGenerate: (state, action: PayloadAction<number>) => {
       state.step = action.payload;
     },
+    setPaymentSuccessLoginGoogle: (state, action: PayloadAction<boolean>) => {
+      state.paymentSuccessLoginGoogle = action.payload;
+    },
     setShowModalUploadFilesExtendLimit: (
       state,
       action: PayloadAction<boolean>
@@ -96,5 +101,6 @@ export const {
   setListPrice,
   setShowModalUploadFilesExtendLimit,
   setStepGenerate,
+  setPaymentSuccessLoginGoogle,
 } = appSlice.actions;
 export default appSlice.reducer;
