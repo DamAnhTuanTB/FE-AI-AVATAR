@@ -5,7 +5,6 @@ import Button from '../Button';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { useEffect, useRef, useState } from 'react';
-import { getImageSize } from '@/utils/helpers';
 
 interface IProps {
   open: boolean;
@@ -52,49 +51,45 @@ export default function ModalCropImage({
 
   useEffect(() => {
     if (file) {
-      // getImageSize(file).then(([width, height]) => {
       const reader = new FileReader();
       reader.addEventListener('load', () => setUpImg(reader.result));
       reader.readAsDataURL(file);
-      // });
     }
   }, [file]);
 
-  const saveImageCrop = (canvas: any, crop: any) => {
+  const saveImageCrop = (originCanvas: any, crop: any) => {
     setLoading(true);
-    if (!crop || !canvas) {
+    if (!crop || !originCanvas) {
       return;
     }
+    // Scale originCanvas to new scale image
+    const ratio =
+      768 / crop.height > 768 / crop.width
+        ? 768 / crop.height
+        : 768 / crop.width;
+    const newHeight = ratio * crop.height;
+    const newWidth = ratio * crop.width;
+    const canvas: any = scaleCanvasRef.current;
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    const ctx: any = canvas.getContext('2d');
+    ctx.drawImage(originCanvas, 0, 0, newWidth, newHeight);
 
-    canvas.toBlob(
-      (blob: any) => {
-        const file = new File([blob], 'fileName.jpg', { type: 'image/jpeg' });
-
-        getImageSize(file).then(([width, height]) => {
-          const ratio = 768 / height > 768 / width ? 768 / height : 768 / width;
-          const newHeight = ratio * height;
-          const newWidth = ratio * width;
-          const canvas: any = scaleCanvasRef.current;
-          const ctx: any = canvas.getContext('2d');
-          ctx.drawImage(previewCanvasRef.current, 0, 0, newWidth, newHeight);
-
-          // images[indexImageCrop].file = file;
-          // images[indexImageCrop].src = URL.createObjectURL(file);
-          // setImages([...images]);
-          // // handleCancel();
-          setLoading(false);
-        });
-
-        // const previewUrl = window.URL.createObjectURL(blob);
-        // const anchor = document.createElement('a');
-        // anchor.download = 'cropPreview.png';
-        // anchor.href = URL.createObjectURL(blob);
-        // anchor.click();
-        // window.URL.revokeObjectURL(previewUrl);
-      },
-      'image/png',
-      1
-    );
+    // convert canvas to file
+    canvas.toBlob((blob: any) => {
+      const file = new File([blob], 'fileName.jpg', { type: 'image/jpeg' });
+      images[indexImageCrop].file = file;
+      images[indexImageCrop].src = URL.createObjectURL(file);
+      setImages([...images]);
+      handleCancel();
+      setLoading(false);
+    });
+    // const previewUrl = window.URL.createObjectURL(blob);
+    // const anchor = document.createElement('a');
+    // anchor.download = 'cropPreview.png';
+    // anchor.href = URL.createObjectURL(blob);
+    // anchor.click();
+    // window.URL.revokeObjectURL(previewUrl);
   };
 
   const setCanvasImage = (image: any, canvas: any, crop: any) => {
@@ -162,11 +157,11 @@ export default function ModalCropImage({
             style={{
               width: Math.round(completedCrop?.width ?? 0),
               height: Math.round(completedCrop?.height ?? 0),
-              // display: 'none',
+              display: 'none',
             }}
           />
           <br />
-          <canvas ref={scaleCanvasRef} />
+          <canvas ref={scaleCanvasRef} style={{ display: 'none' }} />
         </div>
 
         <Button

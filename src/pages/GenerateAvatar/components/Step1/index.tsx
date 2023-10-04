@@ -140,13 +140,13 @@ export default function Step1({
     //     : listImages.length > countAddtionsAbleToAdd
     //     ? countAddtionsAbleToAdd
     //     : listImages.length;
-    let validNumber = countImageValid;
+    let numberImageCurrent = images?.length;
 
     const arrImage = [...images];
 
-    while (validNumber < 15 && listImages.length > 0) {
+    while (numberImageCurrent < 15 && listImages.length > 0) {
       arrImage.push(listImages.shift());
-      validNumber += 1;
+      numberImageCurrent += 1;
     }
     // const arrImage = [...images, ...listImages].slice(0, 15);
     setImages([...arrImage]);

@@ -138,12 +138,12 @@ export default function ModalPayment({
   const handleClickPrice = (item: any) => {
     setPrice(item);
   };
+
   const handleClickPurchase = () => {
     let redirectUrl = `${window.location.protocol}//${window.location.host}${ROUTES.APP_PAGE}?payment-success=1`;
     if (searchParams.get('from')) {
       redirectUrl += `&from=${searchParams.get('from')}`;
     }
-    console.log(redirectUrl);
     const payload: any = {
       priceId: price.id,
       redirectUrl,

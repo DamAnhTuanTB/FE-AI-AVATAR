@@ -534,10 +534,14 @@ export default function GenerateAvatar() {
 
       {showModalPreviewStyle && (
         <ModalPreviewStyle
+          price={price}
+          savingData={savingData}
+          setSavingData={setSavingData}
           open={showModalPreviewStyle}
           setOpen={setShowModalPreviewStyle}
           setShowModalPayment={setShowModalPayment}
           gender={gender}
+          handleSaveData={handleSaveData}
         />
       )}
 

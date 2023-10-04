@@ -15,7 +15,7 @@ export const NoticeText = styled.div`
   color: var(--text-secondary, #737373);
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400;k
   line-height: 150%; /* 21px */
   margin-bottom: 20px;
   margin-top: -12px;
@@ -29,17 +29,14 @@ export const LoginWithSocialWrapper = styled.div`
 
   .login-social-button {
     height: 48px;
-    border-radius: 100px;
     border: 1px solid var(--neutral-300, #d4d4d4);
-    box-shadow: 0px 4px 13px 0px rgba(48, 48, 48, 0.05);
-
     padding: 14px 32px;
     position: relative;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    border-radius: 12px;
     .login-icon-wrapper {
       height: 47px;
       position: absolute;

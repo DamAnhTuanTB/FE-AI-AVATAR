@@ -169,6 +169,7 @@ export const Wrapper = styled.div`
             }
           }
           .upload-image {
+            position: relative;
             & > div {
               top: 0;
               left: 0;
@@ -199,6 +200,15 @@ export const Wrapper = styled.div`
                 line-height: 150%; /* 21px */
               }
             }
+            input {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              cursor: pointer;
+            }
           }
           .disable {
             opacity: 0.4;
@@ -227,6 +237,27 @@ export const Wrapper = styled.div`
         line-height: 150%; /* 24px */
         /* justify-self: flex-start; */
         justify-self: flex-end;
+      }
+      .button-upload {
+        width: 212px;
+        height: 48px;
+        border-radius: 24px;
+        background: var(--primary-1, #f6c447);
+        color: var(--text-primary, #18181b);
+        text-align: center;
+        cursor: pointer;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 150%; /* 21px */
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+        &:hover {
+          background: #f3b612;
+        }
       }
     }
   }
