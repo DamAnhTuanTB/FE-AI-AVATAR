@@ -15,11 +15,12 @@ remoteConfig.settings.minimumFetchIntervalMillis = 0;
 
 const analytics = getAnalytics(app);
 export const analyticsLogEvent = (event: string, params?: any) => {
-  if (process.env.REACT_APP_ENABLE_TRACKING === 'true') {
+  // if (process.env.REACT_APP_ENABLE_TRACKING === 'true') {
+    const cusParams = {...params, enviroment: process.env.REACT_APP_ENVIROMENT || 'development'}
     console.log('event 111');
     // console.log('params', event, params);
-    return logEvent(analytics, event, params);
-  }
+    return logEvent(analytics, event, cusParams);
+  // }
 };
 export const userPropertiesLogEvent = () => {
   const userInforData = localStorage.getItem('user-infor');
@@ -42,11 +43,11 @@ export const userPropertiesLogEvent = () => {
 
   // console.log('payload', payload);
 
-  if (process.env.REACT_APP_ENABLE_TRACKING === 'true') {
+  // if (process.env.REACT_APP_ENABLE_TRACKING === 'true') {
     console.log('event 2222');
     
     return setUserProperties(analytics, payload);
-  }
+  // }
 };
 
 // export const fetchToken = async (setTokenFound: any, setToken: any) => {
