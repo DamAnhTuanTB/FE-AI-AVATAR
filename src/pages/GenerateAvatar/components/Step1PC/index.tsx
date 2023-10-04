@@ -112,24 +112,24 @@ export default function Step1PC({
       });
     });
 
-    let validNumber = countImageValid;
+    let numberImageCurrent = images?.length;
 
     const arrImage = [...images];
 
-    while (validNumber < 15 && listImages.length > 0) {
+    while (numberImageCurrent < 15 && listImages.length > 0) {
       arrImage.push(listImages.shift());
-      validNumber += 1;
+      numberImageCurrent += 1;
     }
 
     setImages([...arrImage]);
     uploadRef.current.value = '';
   };
 
-  const handleClickIconPlus = () => {
-    if (images?.length < 15) {
-      uploadRef.current?.click();
-    }
-  };
+  // const handleClickIconPlus = () => {
+  //   if (images?.length < 15) {
+  //     uploadRef.current?.click();
+  //   }
+  // };
 
   const handleClickUpload = () => {
     if (images?.length === 15 && countImageValid < 3) {
@@ -235,12 +235,21 @@ export default function Step1PC({
                   className={`parent-image upload-image ${
                     images?.length >= 15 && 'disable'
                   }`}
-                  onClick={handleClickIconPlus}
+                  // onClick={handleClickIconPlus}
                 >
                   <div>
                     <img src={IconPlus} alt="" />
                     <div>Upload photo</div>
                   </div>
+                  {images?.length < 15 && (
+                    <input
+                      className="small-input-upload"
+                      type="file"
+                      multiple={true}
+                      onChange={handleChangeFile}
+                      accept=".png,.jpg,.jpeg,.jfif"
+                    />
+                  )}
                 </div>
                 {images.map((item: any, index: number) => (
                   <div className="parent-image" key={index}>
@@ -271,12 +280,15 @@ export default function Step1PC({
         </div>
         <div className="child-2">
           {images.length > 0 && (
-            <Button
+            <div
+              className="button-upload"
               onClick={handleClickUpload}
-              text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
-              width="212px"
-              height="48px"
-            />
+              // text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
+              // width="212px"
+              // height="48px"
+            >
+              {countImageValid < 3 ? 'Upload more photos' : 'Next'}
+            </div>
           )}
           <div className="tip">
             <img src={IconTip} alt="" />

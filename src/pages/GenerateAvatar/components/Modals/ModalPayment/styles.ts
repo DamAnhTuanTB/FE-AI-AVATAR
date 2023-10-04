@@ -179,6 +179,9 @@ export const Wrapper = styled(Modal)`
               color: var(--secondary-black, #262626);
               text-decoration-line: underline;
               cursor: pointer;
+              &:hover {
+                color: var(--text-primary, #f6c447);
+              }
             }
             margin-bottom: 12px;
           }

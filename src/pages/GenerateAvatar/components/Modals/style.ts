@@ -105,13 +105,13 @@ export const Wrapper = styled(Modal)`
       .modal-preview-style {
         width: 100%;
         padding: 24px;
-        padding-bottom: 104px;
+        /* padding-bottom: 104px; */
         height: 90vh;
         position: relative;
         display: flex;
         flex-direction: column;
         @media screen and (max-width: ${breakpoints.md}) {
-          padding: 24px 16px;
+          padding: 24px 16px !important;
         }
         .title-first {
           position: relative;
@@ -198,15 +198,24 @@ export const Wrapper = styled(Modal)`
           flex: 1;
           overflow-y: auto;
           padding-right: 5px;
+          @media screen and (max-width: ${breakpoints.md}) {
+            padding-right: 0px;
+            &::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+              background: transparent;
+            }
+          }
           .list-styles {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            padding-bottom: 56px;
+            /* padding-bottom: 56px; */
             @media screen and (min-width: ${breakpoints.lg}) {
               grid-template-columns: repeat(6, 1fr);
               gap: 20px;
-              padding-bottom: 0px;
+              padding-bottom: 0px !important;
             }
             .item-style {
               position: relative;

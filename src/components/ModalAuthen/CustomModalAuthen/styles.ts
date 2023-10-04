@@ -99,6 +99,9 @@ export const CustomModalWrapper = styled(Modal)`
           justify-content: center;
           flex-direction: column;
           align-items: center;
+          @media screen and (max-width: ${breakpoints.lg}) {
+            display: none;
+          }
           .text-1 {
             color: var(--text-primary, #18181b);
             text-align: center;

@@ -219,13 +219,12 @@ const LoginComponent: React.FC = () => {
       </LoginWithSocialWrapper>
 
       {/*    OR text */}
-      {!emailSuccessPaymentButNotAuth && (
-        <OrTextWrapper>
-          <div className="dash" />
-          <div className="text">or</div>
-          <div className="dash" />
-        </OrTextWrapper>
-      )}
+
+      <OrTextWrapper>
+        <div className="dash" />
+        <div className="text">or</div>
+        <div className="dash" />
+      </OrTextWrapper>
 
       {/*    Form */}
       <AuthenForm

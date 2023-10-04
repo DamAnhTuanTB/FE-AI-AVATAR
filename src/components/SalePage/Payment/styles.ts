@@ -61,6 +61,11 @@ export const SeeAllStyles = styled.div`
       right: -8px;
     }
   }
+  &:hover {
+    & > div:first-child {
+      color: var(--text-primary, #f6c447);
+    }
+  }
 `;
 
 export const OptionWrapper = styled.div`
