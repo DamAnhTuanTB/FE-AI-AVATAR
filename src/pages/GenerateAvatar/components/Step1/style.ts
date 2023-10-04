@@ -15,7 +15,6 @@ export const Wrapper = styled.div`
       @media screen and (max-width: ${breakpoints.md}) {
         margin-bottom: 8px;
       }
-      
     }
     .des-top-upload {
       color: var(--text-secondary, #737373);
@@ -47,7 +46,7 @@ export const Wrapper = styled.div`
         font-weight: 500;
         line-height: 150%; /* 21px */
       }
-      
+
       .upload-support {
         color: var(--text-secondary, #737373);
         text-align: center;
@@ -79,15 +78,15 @@ export const Wrapper = styled.div`
       font-style: normal;
       font-weight: 400;
       line-height: 150%; /* 21px */
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
   }
   .list-images {
     display: grid;
-    padding-bottom: 40px;
+    /* padding-bottom: 40px; */
+    margin-bottom: 24px;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
-    margin-bottom: 12px;
     .parent-image {
       position: relative;
       border-radius: 4px;
@@ -136,6 +135,20 @@ export const Wrapper = styled.div`
           height: 35px;
         }
       }
+      .icon-crop {
+        cursor: pointer;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.1);
+        bottom: 4px;
+        left: 4px;
+        border-radius: 4px;
+        z-index: 10;
+      }
     }
     .upload-image {
       cursor: pointer;
@@ -154,16 +167,10 @@ export const Wrapper = styled.div`
     }
   }
   .bottom {
-    padding: 0px 16px;
-    padding-bottom: 10px;
+    padding: 10px 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding-top: 10px;
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    bottom: 0;
     background: white;
     z-index: 6;
   }

@@ -30,8 +30,11 @@ import StepHeader from './components/StepHeader';
 import StepHeaderPC from './components/StepHeaderPC';
 import { StepEnum } from './contants';
 import { HomeWrapper } from './style';
-import SaleBanner from '@/components/SaleBanner';
-import { setStepGenerate } from '@/store/slices/appSlice';
+import {
+  setPaymentSuccessLoginGoogle,
+  setStepGenerate,
+} from '@/store/slices/appSlice';
+import useGetListStyles from '@/hooks/useGetListStyles';
 
 export default function GenerateAvatar() {
   const queryClient = useQueryClient();
@@ -41,7 +44,6 @@ export default function GenerateAvatar() {
   const [sessionId, setSessionId] = useState('');
   const [images, setImages] = useState<any>([]);
   const [gender, setGender] = useState('');
-  const [originGender, setOriginGender] = useState('');
   const [styles, setStyles] = useState<any>([]);
   const [listStyles, setListStyles] = useState<any>([]);
   const [price, setPrice] = useState<any>();
@@ -62,6 +64,9 @@ export default function GenerateAvatar() {
   const { isDesktop } = useScreenSize();
 
   const userInfor = useAppSelector((state: RootState) => state.app.userInfor);
+  const paymentSuccessGoogleLogin = useAppSelector(
+    (state: RootState) => state.app.paymentSuccessLoginGoogle
+  );
   const showModalUploadFilesExtendLimit = useAppSelector(
     (state: RootState) => state.app.showModalUploadFilesExtendLimit
   );
@@ -121,6 +126,47 @@ export default function GenerateAvatar() {
     }
   }, []);
 
+  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
+  useEffect(() => {
+    if (
+      paymentSuccessGoogleLogin &&
+      getCookie('savedImagesGoogleLogin') &&
+      userInfor?.userEmail &&
+      getCookie('emailPaymentSuccess') === userInfor?.userEmail
+    ) {
+      // setSearchParams({});
+      const savedData = JSON.parse(getCookie('savedImagesGoogleLogin') || '{}');
+
+      const resultConvert: any = [];
+
+      const convertFn = async () => {
+        for (const item of savedData) {
+          try {
+            const file: any = await convertLinkImageToFile(item.file);
+            resultConvert.push({
+              ...item,
+              file,
+              src: URL.createObjectURL(file),
+            });
+          } catch (error) {
+            console.error('Lỗi khi xử lý promise:', error);
+          }
+        }
+      };
+
+      convertFn();
+
+      setImages(resultConvert);
+      setGender(getCookie('savedGenderGoogleLogin') || '');
+      setSessionId(getCookie('savedSessionIdGoogleLogin') || '');
+      setStep(StepEnum.CHOOSE_STYLE);
+      eraseCookie('savedImagesGoogleLogin');
+      eraseCookie('savedSessionIdGoogleLogin');
+      eraseCookie('emailPaymentSuccess');
+      dispatch(setPaymentSuccessLoginGoogle(false));
+    }
+  }, [paymentSuccessGoogleLogin, JSON.stringify(userInfor)]);
+
   // Logic mở modal resetPassword khi thanh toán thành công
   useEffect(() => {
     if (
@@ -160,29 +206,7 @@ export default function GenerateAvatar() {
     }
   }, []);
 
-  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
-  useQuery(
-    ['get-list-style', gender],
-    () => {
-      return generateService.getListStyles();
-    },
-    {
-      onSuccess: (res: any) => {
-        const stylesFilter =
-          res?.data?.data?.values[gender.toLowerCase()] || [];
-
-        const listStyles = stylesFilter.map((style: any) => ({
-          id: style._id,
-          thumbnail: style.thumbnail,
-          alias: style.alias,
-          displayName: style.displayName,
-        }));
-
-        setListStyles(listStyles);
-      },
-      enabled: !!gender,
-    }
-  );
+  useGetListStyles(gender, setListStyles);
 
   // api call generate
   const mutationGenerate = useMutation(
@@ -312,30 +336,24 @@ export default function GenerateAvatar() {
   };
 
   const handleClickBack = () => {
-    if (step === StepEnum.UPLOAD_IMAGE) {
+    if (step === StepEnum.PICK_GENDER) {
       setStep(StepEnum.GUIDE);
-      setImages([]);
-      setGender('');
-      setSessionId('');
-      setStyles([]);
-      setListStyles([]);
-      setPrice('');
-    } else if (step === StepEnum.PICK_GENDER) {
-      if (isDesktop) {
-        setStep(StepEnum.GUIDE);
-      } else {
-        setStep(StepEnum.UPLOAD_IMAGE);
-      }
+      // if (!isDesktop) {
+      //   setImages([]);
+      //   setGender('');
+      //   setSessionId('');
+      //   setStyles([]);
+      //   setListStyles([]);
+      //   setPrice('');
+      // }
       setGender('');
     } else if (step === StepEnum.PREVIEW_STYLE) {
       setStep(StepEnum.PICK_GENDER);
     } else if (step === StepEnum.CHOOSE_STYLE) {
       setStep(StepEnum.PICK_GENDER);
       setStyles([]);
-      // setCookie('passGender', gender);
     } else if (step === StepEnum.GENERATE_SUCCESS) {
       setStep(StepEnum.CHOOSE_STYLE);
-      // eraseCookie('passGender');
     }
   };
 
@@ -385,7 +403,9 @@ export default function GenerateAvatar() {
     setCookie('savedImagesCopy', imagesJSON);
     setCookie('savedGenderCopy', gender);
     setCookie('savedSessionIdCopy', sessionId);
-    setCookie('savedMainImages', imagesJSON);
+    setCookie('savedImagesGoogleLogin', imagesJSON);
+    setCookie('savedGenderGoogleLogin', gender);
+    setCookie('savedSessionIdGoogleLogin', sessionId);
     setSavingData(false);
     window.location.replace(url);
   };
@@ -399,7 +419,10 @@ export default function GenerateAvatar() {
     <>
       <Helmet>
         <title>Generate - Avatarist.ai</title>
-        <meta name="description" content="Your AI avatar is in the making. Stay tuned for its grand reveal." />
+        <meta
+          name="description"
+          content="Your AI avatar is in the making. Stay tuned for its grand reveal."
+        />
       </Helmet>
       {/* {(step === StepEnum.GUIDE || step === StepEnum.PICK_GENDER) && (
         <SaleBanner src={ROUTES.SALE_PAGE} />
@@ -421,7 +444,6 @@ export default function GenerateAvatar() {
               setStep={setStep}
               gender={gender}
               setGender={setGender}
-              setOriginGender={setOriginGender}
               setShowModalPayment={setShowModalPayment}
             />
           )}
@@ -449,7 +471,7 @@ export default function GenerateAvatar() {
       ) : (
         <HomeWrapper>
           <StepHeader step={step} onClick={handleClickBack} />
-          {(step === StepEnum.GUIDE || step === StepEnum.UPLOAD_IMAGE) && (
+          {step === StepEnum.GUIDE && (
             <Step1
               step={step}
               setStep={setStep}
@@ -463,7 +485,6 @@ export default function GenerateAvatar() {
               setStep={setStep}
               gender={gender}
               setGender={setGender}
-              setOriginGender={setOriginGender}
               setShowModalPayment={setShowModalPayment}
             />
           )}
@@ -515,12 +536,8 @@ export default function GenerateAvatar() {
         <ModalPreviewStyle
           open={showModalPreviewStyle}
           setOpen={setShowModalPreviewStyle}
-          setStep={setStep}
           setShowModalPayment={setShowModalPayment}
-          listStyles={listStyles}
           gender={gender}
-          setGender={setGender}
-          originGender={originGender}
         />
       )}
 

@@ -145,12 +145,27 @@ export const Wrapper = styled.div`
               font-weight: 500;
               line-height: 150%; /* 18px */
               text-align: center;
+              z-index: 11;
               img {
                 margin-top: 22px;
               }
               div {
                 height: 35px;
               }
+            }
+            .icon-crop {
+              cursor: pointer;
+              position: absolute;
+              width: 24px;
+              height: 24px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: rgba(0, 0, 0, 0.1);
+              bottom: 8px;
+              left: 8px;
+              border-radius: 4px;
+              z-index: 10;
             }
           }
           .upload-image {
@@ -187,7 +202,9 @@ export const Wrapper = styled.div`
           }
           .disable {
             opacity: 0.4;
-            cursor: not-allowed;
+            div {
+              cursor: not-allowed;
+            }
           }
         }
       }

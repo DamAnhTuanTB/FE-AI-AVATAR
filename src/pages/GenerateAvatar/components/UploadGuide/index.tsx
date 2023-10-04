@@ -4,7 +4,7 @@ import IconBad from '@/assets/images/icon-bad.svg';
 import Good1 from '@/assets/images/g1.png';
 import Good2 from '@/assets/images/g2.png';
 import Good3 from '@/assets/images/good3.svg';
-import Good4 from '@/assets/images/good4.svg';
+import Good4 from '@/assets/images/g4.png';
 import Bad1 from '@/assets/images/bad1.svg';
 import Bad2 from '@/assets/images/bad2.svg';
 import Bad3 from '@/assets/images/bad3.svg';

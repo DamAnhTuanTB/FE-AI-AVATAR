@@ -1,9 +1,9 @@
-import {styled} from "styled-components";
-import {Modal} from "antd";
-import {breakpoints} from "@/config/breakpoints";
+import { styled } from 'styled-components';
+import { Modal } from 'antd';
+import { breakpoints } from '@/config/breakpoints';
 
 export const CustomModalWrapper = styled(Modal)`
-  .ant-modal{
+  .ant-modal {
     @media screen and (max-width: ${breakpoints.sm}) {
       margin: 16px auto;
     }
@@ -18,7 +18,7 @@ export const CustomModalWrapper = styled(Modal)`
       height: 100%;
       padding: 32px 24px;
       border-radius: 12px;
-      background: #FFF;
+      background: #fff;
 
       @media screen and (max-width: ${breakpoints.sm}) {
         padding: 48px 24px;
@@ -29,7 +29,7 @@ export const CustomModalWrapper = styled(Modal)`
         top: -10px;
         right: -12px;
         cursor: pointer;
-        
+
         @media screen and (max-width: ${breakpoints.sm}) {
           right: -7px;
         }
@@ -40,20 +40,21 @@ export const CustomModalWrapper = styled(Modal)`
         display: flex;
         gap: 24px;
         align-items: center;
-        
+
         @media screen and (max-width: ${breakpoints.lg}) {
           align-items: center;
           justify-content: center;
         }
 
-        .ant-checkbox-wrapper:hover .ant-checkbox:after, .ant-checkbox:hover:after {
-            border: none;
+        .ant-checkbox-wrapper:hover .ant-checkbox:after,
+        .ant-checkbox:hover:after {
+          border: none;
         }
-         .ant-checkbox-input:focus+.ant-checkbox-inner {
-           border-color: #E5E5E5;
-         }
+        .ant-checkbox-input:focus + .ant-checkbox-inner {
+          border-color: #e5e5e5;
+        }
         .ant-checkbox:hover .ant-checkbox-inner {
-          border-color: #F6C447;
+          border-color: #f6c447;
         }
 
         .children-wrapper {
@@ -66,7 +67,7 @@ export const CustomModalWrapper = styled(Modal)`
           display: flex;
           align-items: center;
           justify-content: center;
-          
+
           @media screen and (max-width: ${breakpoints.lg}) {
             display: none;
           }
@@ -86,6 +87,35 @@ export const CustomModalWrapper = styled(Modal)`
           .small-background {
             max-height: 300px !important;
             /* overflow: hidden; */
+          }
+        }
+      }
+
+      .payment-modal-wrapper {
+        flex-direction: row-reverse;
+        .payment-success {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          .text-1 {
+            color: var(--text-primary, #18181b);
+            text-align: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%; /* 21px */
+            margin-top: 12px;
+            margin-bottom: 8px;
+          }
+          .text-2 {
+            color: var(--text-primary, #18181b);
+            text-align: center;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%; /* 18px */
           }
         }
       }

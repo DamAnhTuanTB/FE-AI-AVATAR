@@ -74,10 +74,6 @@ export default function DetailAvatar() {
     logEvent(eventTracking.pack_detail_view.name);
   }, []);
 
-  const handleClickDetail = (event: any, url: string) => {
-    navigate(url);
-  };
-
   return (
     <Wrapper>
       <Helmet>

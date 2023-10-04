@@ -9,6 +9,7 @@ import { initialUserInfo, setUserInfor } from '@/store/slices/appSlice';
 import DefaultAvatar from '@/assets/images/avatar-default.svg';
 import IcSignOut from '@/assets/icons/ic_signout.svg';
 import { RootState } from '@/store/store';
+import { eraseCookie } from '@/utils/cookies';
 
 export default function UserAvatar() {
   const dispatch = useAppDispatch();
@@ -22,6 +23,15 @@ export default function UserAvatar() {
       dispatch(logOut());
       navigate(ROUTES.HOME);
       localStorage.clear();
+      eraseCookie('savedImages');
+      eraseCookie('savedGender');
+      eraseCookie('savedSessionId');
+      eraseCookie('savedImagesCopy');
+      eraseCookie('savedGenderCopy');
+      eraseCookie('savedSessionIdCopy');
+      eraseCookie('savedImagesGoogleLogin');
+      eraseCookie('savedSessionIdGoogleLogin');
+      eraseCookie('emailPaymentSuccess');
     };
 
     const numberGenerate = userInfor?.listGenerate?.filter(

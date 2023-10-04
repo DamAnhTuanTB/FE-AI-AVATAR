@@ -32,6 +32,9 @@ export const Wrapper = styled.div`
       font-style: normal;
       font-weight: 400;
       line-height: 150%; /* 18px */
+      div {
+        font-weight: 600;
+      }
     }
   }
   .group-button {

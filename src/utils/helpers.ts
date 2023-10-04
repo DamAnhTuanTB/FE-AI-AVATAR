@@ -101,3 +101,27 @@ export const convertLinkImageToFile = async (src: string) => {
     return null;
   }
 };
+
+export const getImageSize = (file: File): Promise<[number, number]> => {
+  return new Promise((resolve: any, reject: any) => {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      const image = new Image();
+
+      if (e.target) {
+        image.src = e.target.result as string;
+        image.onload = function () {
+          const height = image.height;
+          const width = image.width;
+
+          resolve([width, height]);
+        };
+        image.onerror = function () {};
+      } else {
+        reject(new Error());
+      }
+    };
+  });
+};

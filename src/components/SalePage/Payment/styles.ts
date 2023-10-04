@@ -19,6 +19,50 @@ export const SelectPackageSection = styled.div`
   gap: 8px;
 `;
 
+export const SeeAllStyles = styled.div`
+  padding: 8px 0px;
+  justify-content: center;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  & > div:first-child {
+    color: var(--text-primary, #18181b);
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 24px */
+    white-space: nowrap;
+  }
+  & > div:last-child {
+    border-radius: 100px;
+    background: linear-gradient(
+      283deg,
+      #2858ff 0%,
+      rgba(255, 74, 74, 0.87) 100%
+    );
+    color: var(--White, #fff);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 10px */
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    position: relative;
+    width: 37px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      position: absolute;
+      top: -10px;
+      right: -8px;
+    }
+  }
+`;
+
 export const OptionWrapper = styled.div`
   cursor: pointer;
   padding: 8px;

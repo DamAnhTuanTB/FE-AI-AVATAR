@@ -11,13 +11,15 @@ import TabBottom from '../TabBottom';
 import IconPlus from '@/assets/images/icon-plus.svg';
 import IconError from '@/assets/images/icon-error.svg';
 import { ToastError } from '@/components/ToastMessage/ToastMessage';
-import { StepEnum } from '../../contants';
+import { StepEnum, mesageError } from '../../contants';
 import IconPlusUpload from '@/assets/images/icon-plus-upload.svg';
 import { setShowModalUploadFilesExtendLimit } from '@/store/slices/appSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useSearchParams } from 'react-router-dom';
+import IconCrop from '@/assets/images/icon-crop.svg';
+import ModalCropImage from '../Modals/ModalCropImage';
 
 const defaultOptions = {
   loop: true,
@@ -26,26 +28,6 @@ const defaultOptions = {
   rendererSettings: {
     preserveAspectRatio: 'xMidYMid slice',
   },
-};
-
-const mesageError: any = {
-  'The provided image format is not accepted. Please use a supported image format: png, jpg, jpeg, jfif':
-    'Not supported image format',
-  'The image size is too small. Both dimensions must be greater or equal to 768 pixels. Please use a larger image.':
-    'Image too small',
-  'File too large.': 'File too large',
-  'Unable to detect any face in the provided image. Please provide another clear image.':
-    'Unable to detect any face',
-  'The detected face size is too small or too big. Please ensure the face size is appropriate.':
-    'The face is too small',
-  'The detected face is significantly different from the majority in the cluster. Please use images with face similarity.':
-    'Different face detected',
-  'The provided image is blurry. Please provide a clearer image.':
-    'Blurred image',
-  'The provided image contains multiple faces, please provide an image containing only one face.':
-    'Multiple faces',
-  'The image is duplicated. Please provide different images.':
-    'Duplicated image',
 };
 
 interface IProps {
@@ -70,6 +52,8 @@ export default function Step1({
   const [showLoading, setShowLoading] = useState(false);
   const { logEvent } = useTrackingEvent();
   const [searchParams] = useSearchParams();
+  const [showModalCrop, setShowModalCrop] = useState(false);
+  const [indexImageCrop, setIndexImageCrop] = useState<any>();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -113,19 +97,8 @@ export default function Step1({
     }
   );
 
-  const getFileExtension = (fileName: string) => {
-    return (
-      fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) ||
-      fileName
-    );
-  };
-
   const handleChangeFile = (e: any) => {
-    if (step === StepEnum.GUIDE) {
-      setStep(StepEnum.UPLOAD_IMAGE);
-    }
     const files = e.target.files;
-
     const listImages: any = [];
     const allowedMimeTypes = [
       'image/png',
@@ -188,6 +161,10 @@ export default function Step1({
   };
 
   const handleClickUpload = () => {
+    if (images?.length === 15 && countImageValid < 3) {
+      ToastError('Please upload 3 - 15 images');
+      return;
+    }
     if (countImageValid < 3) {
       if (images?.length === 0) {
         logEvent(eventTracking.upload_photo_click_upload.name, {
@@ -249,35 +226,18 @@ export default function Step1({
     setCountImageValid(countValid);
   }, [images]);
 
+  const handleCropImage = (index: number) => {
+    setIndexImageCrop(index);
+    setShowModalCrop(true);
+  };
+
   return (
     <Wrapper>
-      {step === StepEnum.GUIDE ? (
-        <>
-          <div className="top-upload">
-            <div className="title-top-upload">
-              Upload your 3 - 15 best images
-            </div>
-            {/* <div className="des-top-upload">
-              Choose 3-15 images to teach the AI what you look like.
-            </div> */}
-            <div className="btn-top-upload" onClick={handleClickUpload}>
-              <img src={IconPlusUpload} alt="" />
-              <div className="upload-title">Click here to upload photos</div>
-              <div className="upload-support">
-                Supported formats: PNG, JPEG, JPG, JFIF.
-              </div>
-              <div className="upload-support">
-                File size limit: 5MB. Minimum size: 768 px.
-              </div>
-            </div>
-          </div>
-          <UploadGuide />
-        </>
-      ) : (
-        <>
+      {images?.length > 0 ? (
+        <div className="list-image-upload">
           <div className="title-list-image">
             <div>Uploaded {countImageValid}/15 photos</div>
-            {/* <div>Choose 3-15 images to teach the AI what you look like.</div> */}
+            <div>Choose 3-15 images to teach the AI what you look like.</div>
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (
@@ -295,20 +255,40 @@ export default function Step1({
                     <div>{item?.textError}</div>
                   </div>
                 )}
+                <div
+                  className={`icon-crop`}
+                  onClick={() => handleCropImage(index)}
+                >
+                  <img src={IconCrop} alt="" />
+                </div>
               </div>
             ))}
             <div
               className={`parent-image upload-image ${
-                countImageValid >= 15 && 'disable'
+                images?.length >= 15 && 'disable'
               }`}
               onClick={handleClickIconPlus}
             >
               <img src={IconPlus} alt="" />
             </div>
           </div>
-        </>
+        </div>
+      ) : (
+        <div className="top-upload">
+          <div className="title-top-upload">Upload your 3 - 15 best images</div>
+          <div className="btn-top-upload" onClick={handleClickUpload}>
+            <img src={IconPlusUpload} alt="" />
+            <div className="upload-title">Click here to upload photos</div>
+            <div className="upload-support">
+              Supported formats: PNG, JPEG, JPG, JFIF.
+            </div>
+            <div className="upload-support">
+              File size limit: 5MB. Minimum size: 768 px.
+            </div>
+          </div>
+        </div>
       )}
-
+      <UploadGuide />
       <div className="bottom">
         <input
           className="input-upload"
@@ -318,17 +298,13 @@ export default function Step1({
           onChange={handleChangeFile}
           accept=".png,.jpg,.jpeg,.jfif"
         />
-
-        {step === StepEnum.GUIDE ? (
-          <TabBottom />
-        ) : (
-          <Button
-            onClick={handleClickUpload}
-            text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
-            width="100%"
-            height="45px"
-          />
-        )}
+        <Button
+          onClick={handleClickUpload}
+          text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
+          width="100%"
+          height="45px"
+        />
+        <TabBottom />
       </div>
 
       {showLoading && (
@@ -343,6 +319,16 @@ export default function Step1({
             <div>Loading...</div>
           </div>
         </LoadingWrapper>
+      )}
+      {showModalCrop && (
+        <ModalCropImage
+          open={showModalCrop}
+          setOpen={setShowModalCrop}
+          file={images[indexImageCrop]?.file}
+          setImages={setImages}
+          images={images}
+          indexImageCrop={indexImageCrop}
+        />
       )}
     </Wrapper>
   );
