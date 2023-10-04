@@ -31,6 +31,8 @@ export default function ModalCropImage({
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
 
+  const scaleCanvasRef = useRef(null);
+
   const [crop, setCrop] = useState<any>({
     unit: '%',
     width: 100,
@@ -38,6 +40,7 @@ export default function ModalCropImage({
     aspect: 1,
   });
   const [completedCrop, setCompletedCrop] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleCancel = () => {
     setOpen(false);
@@ -49,15 +52,16 @@ export default function ModalCropImage({
 
   useEffect(() => {
     if (file) {
-      getImageSize(file).then(([width, height]) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => setUpImg(reader.result));
-        reader.readAsDataURL(file);
-      });
+      // getImageSize(file).then(([width, height]) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => setUpImg(reader.result));
+      reader.readAsDataURL(file);
+      // });
     }
   }, [file]);
 
   const saveImageCrop = (canvas: any, crop: any) => {
+    setLoading(true);
     if (!crop || !canvas) {
       return;
     }
@@ -65,10 +69,22 @@ export default function ModalCropImage({
     canvas.toBlob(
       (blob: any) => {
         const file = new File([blob], 'fileName.jpg', { type: 'image/jpeg' });
-        images[indexImageCrop].file = file;
-        images[indexImageCrop].src = URL.createObjectURL(file);
-        setImages([...images]);
-        handleCancel();
+
+        getImageSize(file).then(([width, height]) => {
+          const ratio = 768 / height > 768 / width ? 768 / height : 768 / width;
+          const newHeight = ratio * height;
+          const newWidth = ratio * width;
+          const canvas: any = scaleCanvasRef.current;
+          const ctx: any = canvas.getContext('2d');
+          ctx.drawImage(previewCanvasRef.current, 0, 0, newWidth, newHeight);
+
+          // images[indexImageCrop].file = file;
+          // images[indexImageCrop].src = URL.createObjectURL(file);
+          // setImages([...images]);
+          // // handleCancel();
+          setLoading(false);
+        });
+
         // const previewUrl = window.URL.createObjectURL(blob);
         // const anchor = document.createElement('a');
         // anchor.download = 'cropPreview.png';
@@ -132,6 +148,7 @@ export default function ModalCropImage({
           <ReactCrop
             // minHeight={768}
             // minWidth={768}
+            ruleOfThirds={true}
             crop={crop}
             onChange={(c) => setCrop(c)}
             onComplete={(c) => setCompletedCrop(c)}
@@ -145,12 +162,15 @@ export default function ModalCropImage({
             style={{
               width: Math.round(completedCrop?.width ?? 0),
               height: Math.round(completedCrop?.height ?? 0),
-              display: 'none',
+              // display: 'none',
             }}
           />
+          <br />
+          <canvas ref={scaleCanvasRef} />
         </div>
 
         <Button
+          loading={loading}
           disable={!completedCrop?.width || !completedCrop?.height}
           text="Save"
           width={isDesktop ? '228px' : '100%'}
