@@ -71,10 +71,11 @@ export default function Step1({
           [eventTracking.call_api_checking_photo.params.status]: 'failed',
         });
         setShowLoading(false);
-        // if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
-        //   ToastError(err?.response?.data?.message);
-        // }
-        if (err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE') {
+        if (err?.response?.data?.message && !err?.response?.data?.error?.data) {
+          ToastError(err?.response?.data?.message);
+        } else if (
+          err?.response?.data?.error?.name === 'ERROR_UPLOAD_VALIDATE'
+        ) {
           ToastError(
             err?.response?.data?.message ===
               'Image limit exceeded. You cannot upload more than 20 images'
@@ -241,7 +242,7 @@ export default function Step1({
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (
-              <div className="parent-image" key={index}>
+              <div className="parent-image" key={item?.src}>
                 <img className="image" src={item?.src} alt="" />
                 <img
                   className="icon-delete"

@@ -126,14 +126,15 @@ export default function GenerateAvatar() {
     }
   }, []);
 
-  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công
+  // Logic chuyển đến step3 và hiển thị lại dữ liệu trước đó khi thanh toán thành công và đăng nhập bằng google
   useEffect(() => {
     if (
       paymentSuccessGoogleLogin &&
       getCookie('savedImagesGoogleLogin') &&
       userInfor?.userEmail &&
       getCookie('emailPaymentSuccess') === userInfor?.userEmail
-    ) {
+      ) {
+      setStep(StepEnum.CHOOSE_STYLE);
       // setSearchParams({});
       const savedData = JSON.parse(getCookie('savedImagesGoogleLogin') || '{}');
 
@@ -159,7 +160,6 @@ export default function GenerateAvatar() {
       setImages(resultConvert);
       setGender(getCookie('savedGenderGoogleLogin') || '');
       setSessionId(getCookie('savedSessionIdGoogleLogin') || '');
-      setStep(StepEnum.CHOOSE_STYLE);
       eraseCookie('savedImagesGoogleLogin');
       eraseCookie('savedSessionIdGoogleLogin');
       eraseCookie('emailPaymentSuccess');

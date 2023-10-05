@@ -120,7 +120,7 @@ export const Wrapper = styled.div`
               border-radius: 12px;
             }
             .icon-delete {
-              z-index: 5;
+              z-index: 12;
               cursor: pointer;
               width: 24px;
               position: absolute;
