@@ -1,5 +1,5 @@
 import ImageDecorSrc from '@/assets/images/home-page/ready-started-decor.svg';
-import ReadyStartedImg from '@/assets/images/home-page/ready-started-img.jpg';
+import ReadyStartedImg from '@/assets/images/home-page/ready-started-img.png';
 import UnderlineSrc from '@/assets/images/home-page/ready-started-underline.svg';
 import WardIcon from '@/components/Icons/WardIcon';
 import { landingPageTracking } from '@/firebase/firebase';
