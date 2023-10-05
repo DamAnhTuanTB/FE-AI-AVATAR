@@ -2,6 +2,7 @@ import {
   baseRequest,
   generateRequest,
   baseServerRequest,
+  baseServerDownloadImage,
 } from './base.service';
 import axios from 'axios';
 import { APIs, VERSION } from './config/api';
@@ -68,7 +69,10 @@ const generateService = {
     return baseServerRequest.post(VERSION.v1 + APIs.SEND_MAIL, payload);
   },
   downloadImage(params: any) {
-    return baseServerRequest.get(VERSION.v1 + APIs.DOWNLOAD_IMAGE, params);
+    return baseServerDownloadImage.get(
+      VERSION.v1 + APIs.DOWNLOAD_IMAGE,
+      params
+    );
   },
 };
 

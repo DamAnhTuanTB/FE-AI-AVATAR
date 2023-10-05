@@ -119,7 +119,10 @@ class BaseRequest {
                       refreshToken: data.refreshToken,
                     })
                   );
-                  localStorage.setItem(CONFIG.LOCAL_STORAGE_TOKEN, data.accessToken);
+                  localStorage.setItem(
+                    CONFIG.LOCAL_STORAGE_TOKEN,
+                    data.accessToken
+                  );
                 }
               } catch (_error) {
                 // Logging out the user by removing all the tokens from local
@@ -192,5 +195,9 @@ export const baseRequest = new BaseRequest('', {
 export const generateRequest = new BaseRequest();
 
 export const baseServerRequest = new BaseRequest(CONFIG.BASE_SERVER_URL);
+
+export const baseServerDownloadImage = new BaseRequest(CONFIG.BASE_SERVER_URL, {
+  responseType: 'arraybuffer',
+});
 
 export const authRequest = new BaseRequest(CONFIG.AUTHEN_BASE_URL);
