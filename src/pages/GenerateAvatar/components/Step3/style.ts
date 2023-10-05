@@ -202,6 +202,7 @@ export const Wrapper = styled.div`
     }
   }
   .bottom {
+    z-index: 1000;
     padding: 10px 16px;
     flex-direction: column;
     position: fixed;

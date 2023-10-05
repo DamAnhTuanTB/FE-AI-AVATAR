@@ -92,8 +92,9 @@ export default function Step1PC({
       logEvent(eventTracking.upload_photo_click_upload.name);
     }
     const files = e.target.files;
+
     const listImages: any = [];
-    console.log('files', files);
+
     const allowedMimeTypes = [
       'image/png',
       'image/jpeg',
@@ -252,7 +253,7 @@ export default function Step1PC({
                   )}
                 </div>
                 {images.map((item: any, index: number) => (
-                  <div className="parent-image" key={index}>
+                  <div className="parent-image" key={item?.src}>
                     <img className="image" src={item?.src} alt="" />
                     <img
                       className="icon-delete"

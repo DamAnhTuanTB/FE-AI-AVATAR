@@ -241,7 +241,7 @@ export default function Step1({
           </div>
           <div className="list-images">
             {images.map((item: any, index: number) => (
-              <div className="parent-image" key={index}>
+              <div className="parent-image" key={item?.src}>
                 <img className="image" src={item?.src} alt="" />
                 <img
                   className="icon-delete"
