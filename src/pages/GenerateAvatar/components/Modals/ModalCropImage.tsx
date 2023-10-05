@@ -101,12 +101,16 @@ export default function ModalCropImage({
     const scaleY = image.naturalHeight / image.height;
     const ctx = canvas.getContext('2d');
 
-    const pixelRatio = window.devicePixelRatio;
+    // const pixelRatio = window.devicePixelRatio;
 
-    canvas.width = crop.width * pixelRatio * scaleX;
-    canvas.height = crop.height * pixelRatio * scaleY;
+    // canvas.width = crop.width * pixelRatio * scaleX;
+    // canvas.height = crop.height * pixelRatio * scaleY;
 
-    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    // ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    canvas.width = crop.width * scaleX;
+    canvas.height = crop.height * scaleY;
+
     ctx.imageSmoothingQuality = 'high';
 
     ctx.drawImage(

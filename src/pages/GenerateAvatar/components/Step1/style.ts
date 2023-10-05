@@ -103,7 +103,7 @@ export const Wrapper = styled.div`
         border-radius: 4px;
       }
       .icon-delete {
-        z-index: 5;
+        z-index: 12;
         cursor: pointer;
         width: 16px;
         position: absolute;
@@ -128,6 +128,7 @@ export const Wrapper = styled.div`
         font-weight: 500;
         line-height: 150%; /* 18px */
         text-align: center;
+        z-index: 11;
         img {
           margin-top: 22px;
         }
