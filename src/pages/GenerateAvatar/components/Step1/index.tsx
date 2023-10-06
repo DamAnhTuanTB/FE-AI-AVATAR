@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie';
 import { useMutation } from 'react-query';
-import { LoadingWrapper, Wrapper } from './style';
+import { LoadingWrapper, Wrapper, WrapperPC } from './style';
 import IconDeleteImage from '@/assets/images/icon-delete-image.svg';
 import Button from '../Button';
 import UploadGuide from '../UploadGuide';
@@ -20,6 +20,8 @@ import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useSearchParams } from 'react-router-dom';
 import IconCrop from '@/assets/images/icon-crop.svg';
 import ModalCropImage from '../Modals/ModalCropImage';
+import IconTip from '@/assets/images/icon-tip.svg';
+import useScreenSize from '@/hooks/useScreenSize';
 
 const defaultOptions = {
   loop: true,
@@ -31,7 +33,6 @@ const defaultOptions = {
 };
 
 interface IProps {
-  step: number;
   setStep: any;
   images: any[];
   setImages: any;
@@ -39,7 +40,6 @@ interface IProps {
 }
 
 export default function Step1({
-  step,
   setStep,
   images,
   setImages,
@@ -54,6 +54,7 @@ export default function Step1({
   const [searchParams] = useSearchParams();
   const [showModalCrop, setShowModalCrop] = useState(false);
   const [indexImageCrop, setIndexImageCrop] = useState<any>();
+  const { isDesktop } = useScreenSize();
 
   const mutationUpload = useMutation(
     (payload: any) => generateService.checkingUpload(payload),
@@ -231,7 +232,135 @@ export default function Step1({
     setShowModalCrop(true);
   };
 
-  return (
+  return isDesktop ? (
+    <WrapperPC>
+      <UploadGuide />
+      <div className="upload">
+        <div className="child-1">
+          <div className="title">Upload your 3 - 15 best images</div>
+          {images.length === 0 ? (
+            <div className="big-upload">
+              <img src={IconPlusUpload} alt="" />
+              <div className="upload-title">
+                Drag and drop or click here to upload photos
+              </div>
+              <div className="upload-support">
+                Supported formats: PNG, JPEG, JPG, JFIF.
+              </div>
+              <div className="upload-support">
+                File size limit: 5MB. Minimum size: 768 px.
+              </div>
+              <input
+                className="big-input-upload"
+                type="file"
+                multiple={true}
+                onChange={handleChangeFile}
+                accept=".png,.jpg,.jpeg,.jfif"
+              />
+            </div>
+          ) : (
+            <div className="content-upload">
+              <div className="list-images">
+                <div
+                  className={`parent-image upload-image ${
+                    images?.length >= 15 && 'disable'
+                  }`}
+                  // onClick={handleClickIconPlus}
+                >
+                  <div>
+                    <img src={IconPlus} alt="" />
+                    <div>Upload photo</div>
+                  </div>
+                  {images?.length < 15 && (
+                    <input
+                      className="small-input-upload"
+                      type="file"
+                      multiple={true}
+                      onChange={handleChangeFile}
+                      accept=".png,.jpg,.jpeg,.jfif"
+                    />
+                  )}
+                </div>
+                {images.map((item: any, index: number) => (
+                  <div className="parent-image" key={item?.src}>
+                    <img className="image" src={item?.src} alt="" />
+                    <img
+                      className="icon-delete"
+                      src={IconDeleteImage}
+                      alt=""
+                      onClick={() => handleDeleteImage(index)}
+                    />
+                    {item?.textError && (
+                      <div className="item-error">
+                        <img src={IconError} alt="" />
+                        <div>{item?.textError}</div>
+                      </div>
+                    )}
+                    <div
+                      className={`icon-crop`}
+                      onClick={() => handleCropImage(index)}
+                    >
+                      <img src={IconCrop} alt="" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="child-2">
+          {images.length > 0 && (
+            <div
+              className="button-upload"
+              onClick={handleClickUpload}
+              // text={countImageValid < 3 ? 'Upload more photos' : 'Next'}
+              // width="212px"
+              // height="48px"
+            >
+              {countImageValid < 3 ? 'Upload more photos' : 'Next'}
+            </div>
+          )}
+          <div className="tip">
+            <img src={IconTip} alt="" />
+            <span>
+              Tip: The more the number of photos, the higher the quality!
+            </span>
+          </div>
+        </div>
+      </div>
+      <input
+        className="input-upload"
+        ref={uploadRef}
+        type="file"
+        multiple={true}
+        onChange={handleChangeFile}
+        accept=".png,.jpg,.jpeg,.jfif"
+      />
+      {showLoading && (
+        <LoadingWrapper onClick={handleClickLottie}>
+          <div>
+            <Lottie
+              options={defaultOptions}
+              width={74}
+              height={74}
+              ref={animationRef}
+            />
+            <div>Loading...</div>
+          </div>
+        </LoadingWrapper>
+      )}
+      {showModalCrop && (
+        <ModalCropImage
+          open={showModalCrop}
+          setOpen={setShowModalCrop}
+          file={images[indexImageCrop]?.file}
+          setImages={setImages}
+          images={images}
+          indexImageCrop={indexImageCrop}
+        />
+      )}
+    </WrapperPC>
+  ) : (
     <Wrapper>
       {images?.length > 0 ? (
         <div className="list-image-upload">

@@ -4,11 +4,12 @@ import { eventTracking } from '@/firebase/firebase';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import { useEffect } from 'react';
 import Button from '../Button';
-import { Wrapper } from './style';
+import { Wrapper, WrapperPC } from './style';
 import { useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { StepEnum } from '../../contants';
+import useScreenSize from '@/hooks/useScreenSize';
 
 interface IProps {
   gender: string;
@@ -22,6 +23,7 @@ export default function Step2({
   setStep,
   setShowModalPayment,
 }: IProps) {
+  const { isDesktop } = useScreenSize();
   const { logEvent } = useTrackingEvent();
   const [searchParams] = useSearchParams();
 
@@ -46,7 +48,7 @@ export default function Step2({
       [eventTracking.select_gender_click_next.params.source]:
         searchParams.get('from'),
     });
-    logEvent(eventTracking.preview_style_view.name);
+
     if (!isLoggedIn || !numberGen) {
       setShowModalPayment(true);
     } else {
@@ -61,7 +63,33 @@ export default function Step2({
     });
   }, []);
 
-  return (
+  return isDesktop ? (
+    <WrapperPC>
+      <div className="text-gender">
+        <div className="title">Select your gender</div>
+        <div className="description">Select a gender you want to generate</div>
+      </div>
+      <div className="list-gender">
+        {['Female', 'Male'].map((item: string, index: number) => (
+          <div
+            className={`gender ${gender === item && 'gender-active'}`}
+            key={index}
+            onClick={() => handleClickGender(item)}
+          >
+            <img src={item === 'Female' ? IconFemale : IconMale} alt="" />
+            {item}
+          </div>
+        ))}
+      </div>
+      <Button
+        onClick={handleClickNext}
+        text="Next"
+        width="212px"
+        height="45px"
+        disable={!gender}
+      />
+    </WrapperPC>
+  ) : (
     <Wrapper>
       <div className="title">Select your gender</div>
       <div className="description">

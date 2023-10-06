@@ -8,8 +8,9 @@ import { setCookie } from '@/utils/cookies';
 import { Skeleton } from 'antd';
 import { useEffect } from 'react';
 import Button from '../Button';
-import { Wrapper } from './style';
+import { Wrapper, WrapperPC } from './style';
 import { useSearchParams } from 'react-router-dom';
+import useScreenSize from '@/hooks/useScreenSize';
 
 interface IProps {
   styles: any;
@@ -27,11 +28,11 @@ export default function Step3({
   setStyles,
   gender,
   listStyles,
-  price,
   handleGenerate,
   sessionId,
   loadingGenerate,
 }: IProps) {
+  const { isDesktop } = useScreenSize();
   const [searchParams] = useSearchParams();
 
   const listGenerate = useAppSelector(
@@ -39,7 +40,9 @@ export default function Step3({
   );
   const { logEvent } = useTrackingEvent();
 
-  const currentGenerate = listGenerate?.filter((item: any) => !item.used)[0];
+  const currentGenerate = listGenerate
+    ?.filter((item: any) => !item.used)
+    .reverse()[0];
 
   const handleClickStyle = (alias: string) => {
     const index = styles.findIndex((style: string) => style === alias);
@@ -68,8 +71,7 @@ export default function Step3({
         gender.toLowerCase(),
       [eventTracking.choose_style_click_generate.params.style]:
         styles.join(','),
-      [eventTracking.choose_style_click_generate.params.session_id]:
-        styles.join(','),
+      [eventTracking.choose_style_click_generate.params.session_id]: sessionId,
       [eventTracking.choose_style_click_generate.params.source]:
         searchParams.get('from'),
     });
@@ -94,7 +96,86 @@ export default function Step3({
     setStyles([]);
   };
 
-  return (
+  return isDesktop ? (
+    <WrapperPC>
+      <div className="title">Select styles</div>
+      <div className="description">
+        You can select up to {currentGenerate?.priceInfo?.metadata?.numberStyle}{' '}
+        styles due to your select package
+      </div>
+      <div className="count-number">
+        <div>
+          Selected Styled: {styles?.length}/
+          {currentGenerate?.priceInfo?.metadata?.numberStyle}
+        </div>
+        <div
+          className={
+            styles?.length === 0
+              ? 'deselect-all-button-disabled'
+              : 'deselect-all-button'
+          }
+          onClick={handleDeselectAll}
+        >
+          Deselect all
+        </div>
+      </div>
+      <div className="parent-list-styles">
+        <div className="list-styles">
+          {listStyles?.length === 0
+            ? Array(20)
+                .fill(1)
+                .map((item: any, index: number) => (
+                  <div className="item-style" key={index}>
+                    <Skeleton.Button className="skeleton-image" active />
+                    <Skeleton.Button className="skeleton-text" active />
+                  </div>
+                ))
+            : listStyles.map((item: any) => (
+                <div
+                  className="style-item-wrapper"
+                  key={item.id}
+                  onClick={() => handleClickStyle(item.alias)}
+                >
+                  {styles.includes(item.alias) && (
+                    <div className="border-style" />
+                  )}
+                  <div
+                    className={`${
+                      styles.includes(item.alias)
+                        ? 'style-active'
+                        : styles.length ==
+                          currentGenerate?.priceInfo?.metadata?.numberStyle
+                        ? 'style-inactive'
+                        : ''
+                    } item-style`}
+                  >
+                    <img className="image-style" src={item.thumbnail} alt="" />
+                    <div className="name-style">{item.displayName}</div>
+                    <div className="order-number">
+                      {styles.includes(item.alias) &&
+                        getOrderStyleSelect(item.alias)}
+                    </div>
+                    {/* <Checkbox
+                    checked={styles.includes(item?.alias)}
+                    className="checkbox"
+                  /> */}
+                  </div>
+                </div>
+              ))}
+        </div>
+      </div>
+      <div className="btn-generate">
+        <Button
+          loading={loadingGenerate}
+          onClick={handleClickNext}
+          text="Generate"
+          width="189px"
+          height="45px"
+          disable={!styles.length}
+        />
+      </div>
+    </WrapperPC>
+  ) : (
     <Wrapper>
       <div className="title">Select styles</div>
       <div className="description">
@@ -119,25 +200,38 @@ export default function Step3({
                 </div>
               ))
           : listStyles.map((item: any) => (
-                <div className='style-item-wrapper' key={item.id} onClick={() => handleClickStyle(item.alias)}>
-                  {styles.includes(item.alias) && <div className="border-style"/>}
-                  <div
-                      className={`${
-                    styles.includes(item.alias) ? 'style-active' : styles.length === parseInt(currentGenerate?.priceInfo?.metadata?.numberStyle) ? 'style-inactive' :''
+              <div
+                className="style-item-wrapper"
+                key={item.id}
+                onClick={() => handleClickStyle(item.alias)}
+              >
+                {styles.includes(item.alias) && (
+                  <div className="border-style" />
+                )}
+                <div
+                  className={`${
+                    styles.includes(item.alias)
+                      ? 'style-active'
+                      : styles.length ===
+                        parseInt(
+                          currentGenerate?.priceInfo?.metadata?.numberStyle
+                        )
+                      ? 'style-inactive'
+                      : ''
                   } item-style`}
-                  >
-                    <img className="image-style" src={item.thumbnail} alt=""/>
-                    <div className="name-style">{item.displayName}</div>
-                    <div className="order-number">
-                      {styles.includes(item.alias) &&
-                          getOrderStyleSelect(item.alias)}
-                    </div>
-                    {/* <Checkbox
+                >
+                  <img className="image-style" src={item.thumbnail} alt="" />
+                  <div className="name-style">{item.displayName}</div>
+                  <div className="order-number">
+                    {styles.includes(item.alias) &&
+                      getOrderStyleSelect(item.alias)}
+                  </div>
+                  {/* <Checkbox
                     checked={styles.includes(item?.alias)}
                     className="checkbox"
                   /> */}
-                  </div>
                 </div>
+              </div>
               // <div
               //   onClick={() => handleClickStyle(item.alias)}
               //   key={item.id}

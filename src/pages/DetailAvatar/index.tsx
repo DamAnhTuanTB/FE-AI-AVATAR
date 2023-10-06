@@ -4,17 +4,15 @@ import { ToastSuccess } from '@/components/ToastMessage/ToastMessage';
 import { CONFIG } from '@/config/service';
 import { eventTracking } from '@/firebase/firebase';
 import { Carousel } from 'antd';
-import { ROUTES } from '@/routes/routes';
 import useScreenSize from '@/hooks/useScreenSize';
 import useTrackingEvent from '@/hooks/useTrackingEvent';
 import generateService from '@/services/generate.service';
-import { capitalizeWords } from '@/utils/helpers';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import ModalDownloading from '../GenerateAvatar/components/Modals/ModalDownloading';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
-import { AvatarsSlider, Wrapper } from './style';
+import { Wrapper } from './style';
 import { TypeDownload } from '../GenerateAvatar/contants';
 import GeneratedAvatars from './GeneratedAvatars';
 import { Helmet } from 'react-helmet';
@@ -29,7 +27,7 @@ export default function DetailAvatar() {
   const [openModalDownload, setOpenModalDownload] = useState(false);
   const { logEvent } = useTrackingEvent();
 
-  const { isDesktop, isTablet } = useScreenSize();
+  const { isTablet } = useScreenSize();
 
   useQuery(
     ['get-detail-session'],
