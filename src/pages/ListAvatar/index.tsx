@@ -12,14 +12,27 @@ import { useNavigate } from 'react-router-dom';
 import TabBottom from '../GenerateAvatar/components/TabBottom';
 import { TypeSessionStatus } from '../GenerateAvatar/contants';
 import { Wrapper } from './style';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet';
 
 const getImage = (results: any, index: number) => {
-  const keys = Object.keys(results);
+  const keys = Object.keys(results)?.filter(
+    (key: string) => results[key]?.length > 0
+  );
   if (keys?.length < 3) {
     return results[keys[0]][index];
   } else {
     return results[keys[index]][0];
+  }
+};
+
+const getCountStyle = (results: any, styles: any) => {
+  if (results) {
+    const keys = Object.keys(results)?.filter(
+      (key: string) => results[key]?.length > 0
+    );
+    return keys?.length;
+  } else {
+    return styles?.length;
   }
 };
 
@@ -61,8 +74,10 @@ export default function ListAvatar() {
     <Wrapper>
       <Helmet>
         <title>My Avatar - Avatarist.ai</title>
-        <meta name="description"
-              content='Access your unique AI avatar on the "My Avatar" page. Showcase your digital identity to the world.'/>
+        <meta
+          name="description"
+          content='Access your unique AI avatar on the "My Avatar" page. Showcase your digital identity to the world.'
+        />
       </Helmet>
       <div className="content-list-avatar">
         <div className="title-my-generate">
@@ -145,10 +160,14 @@ export default function ListAvatar() {
                   </div>
                   <div className="info-pack">
                     <span>
-                      {item?.styles?.length}{' '}
-                      {item?.styles?.length > 1 ? 'styles' : 'style'}
+                      {getCountStyle(item?.results, item?.styles)}{' '}
+                      {getCountStyle(item?.results, item?.styles) > 1
+                        ? 'styles'
+                        : 'style'}
                     </span>
-                    <span>{item?.styles?.length * 10} images</span>
+                    <span>
+                      {getCountStyle(item?.results, item?.styles) * 10} images
+                    </span>
                   </div>
                 </div>
               ))}

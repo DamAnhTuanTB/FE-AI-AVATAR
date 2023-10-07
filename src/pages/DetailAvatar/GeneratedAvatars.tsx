@@ -72,25 +72,33 @@ export default function GeneratedAvatars({
       onMouseMove={handleDrag}
     >
       <AvatarsSlider>
-        {Object.keys(listAvatar)?.map((style: string, index: number) => (
-          <div
-            className="item-child"
-            key={style}
-            onClick={() => navigate(`/my-avatar/${params.id}/${style}`)}
-          >
-            <div className="item-generated">
-              <div className="col-1">
-                <img src={detailAvatar?.results[style][0]} alt="" />
+        {Object.keys(listAvatar)?.map((style: string, index: number) => {
+          if (detailAvatar?.results[style]?.length > 0) {
+            return (
+              <div
+                className="item-child"
+                key={style}
+                onClick={() => navigate(`/my-avatar/${params.id}/${style}`)}
+              >
+                <div className="item-generated">
+                  <div className="col-1">
+                    <img src={detailAvatar?.results[style][0]} alt="" />
+                  </div>
+                  <div className="col-2">
+                    <img src={detailAvatar?.results[style][1]} alt="" />
+                    <img src={detailAvatar?.results[style][2]} alt="" />
+                  </div>
+                </div>
+                <div className="name-style">
+                  Style: {capitalizeWords(style)}
+                </div>
+                <div className="number-image">10 images</div>
               </div>
-              <div className="col-2">
-                <img src={detailAvatar?.results[style][1]} alt="" />
-                <img src={detailAvatar?.results[style][2]} alt="" />
-              </div>
-            </div>
-            <div className="name-style">Style: {capitalizeWords(style)}</div>
-            <div className="number-image">10 images</div>
-          </div>
-        ))}
+            );
+          } else {
+            return <></>;
+          }
+        })}
       </AvatarsSlider>
     </div>
   );
